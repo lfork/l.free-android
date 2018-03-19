@@ -3,7 +3,9 @@ L.Free-Android
 校内二手交易平台 ——Android端
 
 一、开发环境
+   
    Android Studio 3.0.1
+   
    详细配置见 gradle文件
 
 二、命名规范Android(参考资料:阿里巴巴Android开发手册)
