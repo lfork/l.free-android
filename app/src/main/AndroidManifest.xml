@@ -16,6 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".chatwindow.ChatWindowActivity" />
+        <activity android:name=".goodsdetail.GoodsDetailActivity" />
+        <activity android:name=".goodsupload.GoodsUploadActivity" />
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".mygoods.MyGoodsActivity" />
+        <activity android:name=".searchresult.SearchResultActivity" />
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".userinfo.UserInfoActivity" />
+        <activity android:name=".userinfothis.UserInfoThisActivity" />
+        <activity android:name=".welcome.WelcomeActivity"></activity>
     </application>
 
 </manifest>
