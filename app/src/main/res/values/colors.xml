@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="ForeColor">#0aa4ea</color>
+    <color name="white">#ffffff</color>
+    <color name="loginButton">#b1bc39</color>
 </resources>
