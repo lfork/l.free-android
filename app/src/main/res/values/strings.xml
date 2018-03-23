@@ -13,6 +13,5 @@
         completions."</string>
     <string name="register">注册新用户</string>
     <string name="forget_password">忘记密码？</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+   
 </resources>
