@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.login_act);
+        setContentView(R.layout.main_act);
         //登录界面部分界面操作需要在这里控制后才能添加
     }
 }

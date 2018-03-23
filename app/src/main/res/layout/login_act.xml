@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg">
-
+    android:background="#05A2E9"
+    android:orientation="vertical">
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
@@ -12,84 +12,112 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-
-    <ScrollView
-        android:id="@+id/login_form"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:overScrollMode="never">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
-
-        <LinearLayout
-            android:id="@+id/email_login_form"
+        <ImageView
+            android:id="@+id/login_logo"
             android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            android:background="#000"
+            android:contentDescription="@string/action_sign_in"
+            android:scaleType="centerCrop" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="300dp">
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shapes">
+
+            <ImageView
+                android:id="@+id/login_username_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/login_icon_username" />
 
             <EditText
                 android:id="@+id/user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/login_username_icon"
                 android:background="@drawable/shapes"
                 android:hint="@string/prompt_email"
                 android:inputType="text"
                 android:padding="10dp"
                 android:textSize="20sp" />
 
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shapes">
+
+
+            <ImageView
+                android:id="@+id/login_password_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/login_icon_password" />
+
             <EditText
+                android:layout_toRightOf="@+id/login_password_icon"
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+
                 android:background="@drawable/shapes"
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textSize="20sp" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/email_sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/loginButton"
+            android:text="@string/action_sign_in"
+            android:textColor="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/email_sign_in_button"
-                android:layout_width="match_parent"
+                android:id="@+id/forget_password"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/loginButton"
-                android:text="@string/action_sign_in"
+                android:layout_alignParentStart="true"
+                android:background="@null"
+                android:text="@string/forget_password"
                 android:textColor="@color/white" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/register"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/forget_password"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="center|start"
-                    android:text="@string/forget_password"
-                    android:textColor="@color/white" />
-
-                <Button
-                    android:id="@+id/register"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="center|end"
-                    android:text="@string/register"
-                    android:textColor="@color/white" />
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/forget_password"
+                android:background="@null"
+                android:gravity="center|end"
+                android:text="@string/register"
+                android:textColor="@color/white" />
 
 
-            </LinearLayout>
+        </RelativeLayout>
 
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+
 </LinearLayout>
