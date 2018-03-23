@@ -5,5 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="ForeColor">#0aa4ea</color>
     <color name="white">#ffffff</color>
-    <color name="loginButton">#b1bc39</color>
+    <color name="Button">#b1bc39</color>
+    <color name="EditColor">#f4f4f8</color>
+    <color name="BorderColor">#c1c4d6</color>
+
 </resources>

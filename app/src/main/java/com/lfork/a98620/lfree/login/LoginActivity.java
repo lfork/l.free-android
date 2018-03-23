@@ -25,7 +25,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_act);
         ImageView loginLogo = findViewById(R.id.login_logo);
-        Glide.with(this).load(getResources().getDrawable(R.drawable.login_bg))
+
+        Glide.with(this).load(getResources().getDrawable(R.drawable.login_logo))
                 .into(loginLogo);
         Log.d(TAG, "onCreate:  image setted successfully");
     }
