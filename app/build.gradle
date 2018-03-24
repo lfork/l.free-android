@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -33,4 +37,10 @@ dependencies {
 
     //图片压缩库  https://github.com/Curzibn/Luban
     implementation  'top.zibin:Luban:1.1.3'
+
+    //网络库
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+
+    //JSON库
+    compile 'com.google.code.gson:gson:2.8.0'
 }

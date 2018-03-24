@@ -41,18 +41,29 @@ public class UserDataRepository implements UserDataSource {
 
 
     @Override
-    public void login(GeneralCallback<User> callback, User user) {
-        remoteDataSource.login(callback, user);
+    public void login(final GeneralCallback<User> callback, User user) {
+        remoteDataSource.login(new GeneralCallback<User>() {
+            @Override
+            public void success(User data) {
+                callback.success(data);
+                mUser = data;
+            }
+
+            @Override
+            public void failed(String log) {
+                callback.failed(log);
+            }
+        }, user);
     }
 
     @Override
     public void register(GeneralCallback<String> callback, User user) {
-
+            remoteDataSource.register(callback, user);
     }
 
     @Override
-    public void getThisUser() {
-
+    public User getThisUser() {
+        return mUser;
     }
 
     @Override

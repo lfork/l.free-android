@@ -8,6 +8,8 @@ package com.lfork.a98620.lfree.data.entity;
 public class User {
     private int userId;     //用户的ID
 
+    private String studentId;
+
     private String userName;    //用户姓名
 
     private String userPassword;  //用户密码
@@ -23,6 +25,24 @@ public class User {
     private String userDesc;          //用户描述
 
     private String userMakeDate;        //用户修改或者注册时间
+
+    public User() {
+    }
+
+    /**
+     * 注册的时候用
+     */
+    public User(String userName, String userPassword, String userEmail, String userPhone, String userAddress,
+                String userImagePath, String userDesc, String userMakeDate) {
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userEmail = userEmail;
+        this.userPhone = userPhone;
+        this.userAddress = userAddress;
+        this.userImagePath = userImagePath;
+        this.userDesc = userDesc;
+        this.userMakeDate = userMakeDate;
+    }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
@@ -111,26 +131,17 @@ public class User {
         this.userMakeDate = userMakeDate;
     }
 
-
-    /**
-     * 注册的时候用
-     */
-    public User(String userName, String userPassword, String userEmail, String userPhone, String userAddress,
-                String userImagePath, String userDesc, String userMakeDate) {
-        this.userName = userName;
-        this.userPassword = userPassword;
-        this.userEmail = userEmail;
-        this.userPhone = userPhone;
-        this.userAddress = userAddress;
-        this.userImagePath = userImagePath;
-        this.userDesc = userDesc;
-        this.userMakeDate = userMakeDate;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-
-    public User() {
+    public String getStudentId() {
+        return studentId;
     }
 
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
 
     @Override
     public String toString() {

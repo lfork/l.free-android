@@ -12,7 +12,7 @@ public interface UserDataSource extends DataSource {
 
     void register(GeneralCallback<String> callback, User user);
 
-    void getThisUser();
+    User getThisUser();
 
     void updateThisUser();
 }

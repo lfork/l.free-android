@@ -1,26 +1,27 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:background="@color/EditColor">
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.login.LoginActivity"/>
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/EditColor"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingLeft="26dp"
+        android:paddingRight="26dp">
 
+        <!-- Login progress -->
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/login_logo"
@@ -36,15 +37,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:paddingTop="10dp"
-            android:textColor="@color/ForeColor"
-            android:text="@string/welcome" />
+            android:text="@string/welcome"
+            android:textColor="@color/ForeColor" />
 
 
         <EditText
-            android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:text="@={viewModel.username}"
             android:background="@drawable/login_shape_user_rectangle"
             android:hint="@string/prompt_email"
             android:inputType="text"
@@ -55,7 +56,7 @@
 
 
         <EditText
-            android:id="@+id/password"
+            android:text="@={viewModel.password}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -68,10 +69,10 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/email_sign_in_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:onClick="@{()->viewModel.login()}"
             android:background="@color/ForeColor"
             android:text="@string/action_sign_in"
             android:textColor="@color/white"
@@ -87,6 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:onClick="@{()->viewModel.forgetPassword()}"
                 android:background="@null"
                 android:text="@string/forget_password"
                 android:textColor="#c1c4d6" />
@@ -94,6 +96,7 @@
             <Button
                 android:id="@+id/register"
                 style="?android:attr/buttonBarButtonStyle"
+                android:onClick="@{()->viewModel.startRegisterActivity()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -102,9 +105,7 @@
                 android:text="@string/register"
                 android:textColor="#c1c4d6" />
 
-
         </RelativeLayout>
-
     </LinearLayout>
 
-</LinearLayout>
+</layout>

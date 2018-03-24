@@ -1,28 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/EditColor"
-    android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.register.RegisterActivity"/>
+    </data>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/EditColor"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
+        android:paddingLeft="26dp"
+        android:paddingRight="26dp">
 
 
         <EditText
-            android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:background="@drawable/login_shape_user_rectangle"
-            android:hint="@string/prompt_email"
+            android:hint="@string/prompt_student_id"
+            android:inputType="text"
+            android:text="@={viewModel.studentId}"
+            android:padding="12dp"
+            android:textColor="@color/BorderColor"
+            android:textColorHint="@color/BorderColor"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.username}"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/login_shape_user_rectangle"
+            android:hint="@string/prompt_username_register"
             android:inputType="text"
             android:padding="12dp"
             android:textColor="@color/BorderColor"
@@ -30,22 +43,24 @@
             android:textSize="18sp" />
 
 
+
         <EditText
-            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/login_shape_user_rectangle"
-            android:hint="@string/prompt_password"
+            android:hint="@string/prompt_password_register"
+            android:text="@={viewModel.password}"
             android:inputType="textPassword"
             android:padding="12dp"
             android:textColor="@color/BorderColor"
             android:textColorHint="@color/BorderColor"
             android:textSize="18sp" />
+
         <EditText
-            android:id="@+id/password_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewModel.passwordConfirm}"
             android:layout_marginTop="16dp"
             android:background="@drawable/login_shape_user_rectangle"
             android:hint="@string/confirm_password"
@@ -60,13 +75,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:onClick="@{()->viewModel.register()}"
             android:background="@color/Button"
             android:text="@string/prompt_register"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
 
-
     </LinearLayout>
 
-</LinearLayout>
+</layout>
