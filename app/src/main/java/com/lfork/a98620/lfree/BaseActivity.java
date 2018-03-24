@@ -5,4 +5,5 @@ package com.lfork.a98620.lfree;
  */
 
 public class BaseActivity {
+
 }
