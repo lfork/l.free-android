@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.login;
+﻿package com.lfork.a98620.lfree.login;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -37,9 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         binding.setViewModel(this);
 
         ImageView loginLogo = findViewById(R.id.login_logo);
-//        Glide.with(this).load(getResources().getDrawable(R.drawable.login_logo))
-//                .into(loginLogo);
-//        Log.d(TAG, "onCreate:  image setted successfully");
+        Glide.with(this).load(getResources().getDrawable(R.drawable.login_logo))
+               .into(loginLogo);
+        Log.d(TAG, "onCreate:  image setted successfully");
     }
 
     private void startMainActivity() {
