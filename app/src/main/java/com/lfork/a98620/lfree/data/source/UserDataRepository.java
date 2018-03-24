@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.data.source;
 
 import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.source.remote.UserRemoteDataSource;
 
 /**
  *
@@ -14,12 +15,12 @@ public class UserDataRepository implements UserDataSource {
 
     private static final String TAG = "UserDataRepository ";
 
+    private UserRemoteDataSource remoteDataSource;
+
     private User mUser;
 
-    private UserDataRepository() {
-        // dbHelper = null; //这里的Context 默认是用来进行数据库操作的
-        // fileHelper = new MessageFileHelper();
-//		UserDataRepository .user = user;
+    private UserDataRepository(UserRemoteDataSource remoteDataSource) {
+        this.remoteDataSource = remoteDataSource;
         mUser = new User();
 
     }
@@ -28,7 +29,7 @@ public class UserDataRepository implements UserDataSource {
         if (INSTANCE != null) {
             return INSTANCE;
         } else {
-            INSTANCE = new UserDataRepository();
+            INSTANCE = new UserDataRepository(UserRemoteDataSource.getInstance());
         }
         return INSTANCE;
     }
@@ -41,7 +42,7 @@ public class UserDataRepository implements UserDataSource {
 
     @Override
     public void login(GeneralCallback<User> callback, User user) {
-
+        remoteDataSource.login(callback, user);
     }
 
     @Override
