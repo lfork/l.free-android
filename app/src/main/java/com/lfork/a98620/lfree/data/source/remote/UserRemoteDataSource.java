@@ -88,9 +88,10 @@ public class UserRemoteDataSource implements UserDataSource {
         });
 
         if (result != null) {
-            if (result.getCode() == 1)
+            Log.d(TAG, "register: ");
+            if (result.getCode() == 1) {
                 callback.success(result.getMessage());
-            else {
+            } else {
                 callback.failed(result.getMessage());
             }
         } else {

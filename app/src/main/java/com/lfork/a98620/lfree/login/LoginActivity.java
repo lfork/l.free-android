@@ -1,4 +1,4 @@
-﻿package com.lfork.a98620.lfree.login;
+package com.lfork.a98620.lfree.login;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
@@ -18,7 +19,6 @@ import com.lfork.a98620.lfree.databinding.LoginActBinding;
 import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.register.RegisterActivity;
 import com.lfork.a98620.lfree.util.UserValidation;
-
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ImageView loginLogo = findViewById(R.id.login_logo);
         Glide.with(this).load(getResources().getDrawable(R.drawable.login_logo))
-               .into(loginLogo);
+                .into(loginLogo);
         Log.d(TAG, "onCreate:  image setted successfully");
     }
 
@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                             showDealResult("登录成功" + data.toString());
                             startMainActivity();
                         }
+
                         @Override
                         public void failed(String log) {
                             Log.d(TAG, "failed: " + log);
@@ -103,6 +104,6 @@ public class LoginActivity extends AppCompatActivity {
      */
     private boolean validate(String username, String password) {
         Log.d(TAG, "validate u: " + username + " p:" + password);
-        return  UserValidation.LoginValidation(username, password);
+        return UserValidation.LoginValidation(username, password);
     }
 }

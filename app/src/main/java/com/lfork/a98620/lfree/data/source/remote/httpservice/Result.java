@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result<T> {
 
+    @SerializedName("id")
     private int code;
 
     @SerializedName("msg")
