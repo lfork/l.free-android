@@ -10,8 +10,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.main_act);
-        //登录界面部分界面操作需要在这里控制后才能添加
     }
 }

@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">L.Free</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">账号</string>
+    <string name="prompt_email">用户名/学号/邮箱</string>
     <string name="prompt_password">密码 </string>
+    <string name="prompt_register">注册</string>
+    <string name="register">注册新用户</string>
+    <string name="welcome">Welcome to L.free!</string>
+
     <string name="action_sign_in">登录</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -11,13 +15,11 @@
     <string name="error_field_required">请输入账号</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
-    <string name="register">注册新用户</string>
+
     <string name="forget_password">忘记密码？</string>
-
-
-    <!-- TODO: Remove or change this placeholder text 啊啊啊啊-->
-
-    <!-- TODO: Remove or change this placeholder text  git 测试  测试  测试 -->
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_user_icon">login_user_icon</string>
+    <string name="login_password_icon">login_password_icon</string>
+    <string name="confirm_password">请再输入一遍密码</string>
+
 </resources>
