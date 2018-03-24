@@ -18,6 +18,10 @@
             android:theme="@style/LoginTheme"
             android:name=".login.LoginActivity"
             >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name=".mygoods.MyGoodsActivity" />
@@ -27,11 +31,7 @@
         <activity android:name=".userinfothis.UserInfoThisActivity" />
         <activity android:name=".welcome.WelcomeActivity" />
         <activity android:name=".register.RegisterActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
