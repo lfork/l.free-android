@@ -1,11 +1,15 @@
 package com.lfork.a98620.lfree.data.entity;
 
+import org.litepal.crud.DataSupport;
+
 /**
  *
  * Created by 98620 on 2018/3/23.
  */
 
-public class User {
+public class User extends DataSupport {
+    private int id; //储存在本地数据库里面的id
+
     private int userId;     //用户的ID
 
     private String studentId;
@@ -26,6 +30,8 @@ public class User {
 
     private String userMakeDate;        //用户修改或者注册时间
 
+    private boolean isLogin;
+
     public User() {
     }
 
@@ -44,9 +50,6 @@ public class User {
         this.userMakeDate = userMakeDate;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -141,6 +144,22 @@ public class User {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
     }
 
     @Override

@@ -46,6 +46,12 @@ public class UserRemoteDataSource implements UserDataSource {
     @Override
     public void login(final GeneralCallback<User> callback, User user) {
 
+//        user.setStudentId("2016081074");
+//        user.setUserId(5);
+//        user.setUserPhone("101324564561");
+//        user.setUserEmail("enenenen");
+//        callback.success(user); //假装登录成功
+
         String url = "http://www.lfork.top/22y/user_login";
 
         RequestBody requestbody = new FormBody.Builder()
@@ -107,7 +113,18 @@ public class UserRemoteDataSource implements UserDataSource {
     }
 
     @Override
-    public void updateThisUser() {
+    public void getThisUser(GeneralCallback<User> callback) {
+
+    }
+
+    @Override
+    public boolean saveThisUser(User user) {
+        return false;
+    }
+
+
+    @Override
+    public void updateThisUser(GeneralCallback<String> callback, User user) {
 
     }
 }

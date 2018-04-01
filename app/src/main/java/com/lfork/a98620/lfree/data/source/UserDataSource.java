@@ -14,5 +14,18 @@ public interface UserDataSource extends DataSource {
 
     User getThisUser();
 
-    void updateThisUser();
+    /**
+     * 从本地数据库获取当前用户信息
+     * @param callback
+     */
+    void getThisUser(GeneralCallback<User> callback);
+
+    /**
+     * 将已经登录的用户保存到数据库
+     */
+    boolean saveThisUser(User user);
+
+    void updateThisUser(GeneralCallback<String> callback, User user);
+
+
 }
