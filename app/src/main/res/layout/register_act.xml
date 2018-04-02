@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/EditColor"
+        android:background="@color/Login_EditColor"
         android:orientation="vertical"
         android:paddingLeft="26dp"
         android:paddingRight="26dp">
@@ -25,8 +25,8 @@
             android:inputType="text"
             android:text="@={viewModel.studentId}"
             android:padding="12dp"
-            android:textColor="@color/BorderColor"
-            android:textColorHint="@color/BorderColor"
+            android:textColor="@color/Login_BorderColor"
+            android:textColorHint="@color/Login_BorderColor"
             android:textSize="18sp" />
 
         <EditText
@@ -38,8 +38,8 @@
             android:hint="@string/prompt_username_register"
             android:inputType="text"
             android:padding="12dp"
-            android:textColor="@color/BorderColor"
-            android:textColorHint="@color/BorderColor"
+            android:textColor="@color/Login_BorderColor"
+            android:textColorHint="@color/Login_BorderColor"
             android:textSize="18sp" />
 
 
@@ -53,8 +53,8 @@
             android:text="@={viewModel.password}"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:textColor="@color/BorderColor"
-            android:textColorHint="@color/BorderColor"
+            android:textColor="@color/Login_BorderColor"
+            android:textColorHint="@color/Login_BorderColor"
             android:textSize="18sp" />
 
         <EditText
@@ -66,8 +66,8 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:textColor="@color/BorderColor"
-            android:textColorHint="@color/BorderColor"
+            android:textColor="@color/Login_BorderColor"
+            android:textColorHint="@color/Login_BorderColor"
             android:textSize="18sp" />
 
         <Button
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:onClick="@{()->viewModel.register()}"
-            android:background="@color/Button"
+            android:background="@color/Login_Button"
             android:text="@string/prompt_register"
             android:textColor="@color/white"
             android:textSize="16sp" />

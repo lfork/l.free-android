@@ -12,7 +12,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="81dp"
+        android:layout_height="60dp"
 
         android:orientation="vertical"
         tools:ignore="UseCompoundDrawables">
@@ -30,9 +30,9 @@
 
                 <ImageView
                     android:id="@+id/contacts_portrait"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="10dp"
                     android:background="@drawable/ic_contacts_black_24dp" />
 
                 <TextView
@@ -40,12 +40,12 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="联系人姓名"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
 
             </LinearLayout>
