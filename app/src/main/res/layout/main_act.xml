@@ -4,6 +4,7 @@
     tools:context="com.lfork.a98620.lfree.main.MainActivity">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.MainActivity" />
@@ -24,6 +25,7 @@
         </FrameLayout>
 
         <LinearLayout
+            android:background="#fafafa"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:baselineAligned="false">
@@ -41,12 +43,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:onClick="@{()->viewModel.onClick(1)}"
-                    android:src="@drawable/publish"
-
-
-                    />
-
-
+                    android:padding="3dp"
+                    android:src="@drawable/home_publish" />
 
 
             </RelativeLayout>
@@ -61,26 +59,24 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="8dp"
+                    android:layout_above="@+id/textView"
                     android:layout_centerHorizontal="true"
                     android:onClick="@{()->viewModel.onClick(0)}"
-                    android:src="@drawable/home_goods_side"
-                    />
+                    android:src="@drawable/home_goods_side" />
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:text="商品"
-                    android:textSize="12sp"
-                    android:textColor="@color/Home_Goods_Text" />
+                    android:textColor="@color/Home_act_text"
+                    android:textSize="14sp" />
 
 
             </RelativeLayout>
-
 
 
             <RelativeLayout
@@ -93,23 +89,21 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/textView2"
                     android:layout_centerHorizontal="true"
                     android:onClick="@{()->viewModel.onClick(2)}"
-                    android:src="@drawable/home_talk_side"
-
-                    />
+                    android:src="@drawable/home_talk_side" />
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:text="聊天"
-                    android:textSize="12sp"
-                    android:textColor="@color/Home_Goods_Text" />
+                    android:textColor="@color/Home_act_text"
+                    android:textSize="14sp" />
 
 
             </RelativeLayout>
@@ -124,23 +118,21 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="34dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/textView3"
                     android:layout_centerHorizontal="true"
                     android:onClick="@{()->viewModel.onClick(3)}"
-                    android:src="@drawable/home_my_side"
-
-                    />
+                    android:src="@drawable/home_my_side" />
 
                 <TextView
+                    android:id="@+id/textView3"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:text="我的"
-                    android:textSize="12sp"
-                    android:textColor="@color/Home_Goods_Text" />
+                    android:textColor="@color/Home_act_text"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

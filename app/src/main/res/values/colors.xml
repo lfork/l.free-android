@@ -7,6 +7,7 @@
     <color name="Login_BorderColor">#c1c4d6</color>
     <color name="Home_Goods_Text">#abafae</color>
     <color name="Home_Goods_Money">#ffd648</color>
+    <color name="Home_act_text">#d7d7d7</color>
 
     <color name="halfTransparent">#e0000000</color>
     <color name="transparent">#00000000</color>
