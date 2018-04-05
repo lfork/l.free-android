@@ -32,7 +32,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
 
 
     IndexPagerItemViewModel(String category, ViewDataBinding binding, Context context) {
-        super();
+        super(context);
         this.category = category;
         this.binding = (MainIndexViewpagerItemBinding) binding;
         this.context = context;

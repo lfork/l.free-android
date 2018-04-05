@@ -31,7 +31,7 @@
             android:baselineAligned="false">
 
             <RelativeLayout
-                android:id="@+id/extension_btn_2"
+                android:id="@+id/publish_btn"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
@@ -42,30 +42,32 @@
                     android:layout_height="60dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:onClick="@{()->viewModel.onClick(1)}"
+                    android:onClick="@{(view)->viewModel.onClick(view,0)}"
                     android:padding="3dp"
-                    android:src="@drawable/home_publish" />
+                    android:src="@drawable/main_publish" />
 
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/extension_btn_1"
+
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/goods_btn"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_above="@+id/textView"
+                    android:checked="true"
+                    android:layout_above="@+id/goods_text"
                     android:layout_centerHorizontal="true"
-                    android:onClick="@{()->viewModel.onClick(0)}"
-                    android:src="@drawable/home_goods_side" />
+                    android:onClick="@{(view)->viewModel.onClick(view,1)}"
+                    android:src="@drawable/main_goods_btn_selector" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/goods_text"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
@@ -80,22 +82,23 @@
 
 
             <RelativeLayout
-                android:id="@+id/extension_btn_3"
+
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/chat_btn"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_above="@+id/textView2"
+                    android:layout_above="@+id/chat_text"
                     android:layout_centerHorizontal="true"
-                    android:onClick="@{()->viewModel.onClick(2)}"
-                    android:src="@drawable/home_talk_side" />
+                    android:onClick="@{(view)->viewModel.onClick(view,2)}"
+                    android:src="@drawable/main_talk_btn_selector" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/chat_text"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
@@ -109,22 +112,22 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/extension_btn_4"
+
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/my_btn"
                     android:layout_width="35dp"
                     android:layout_height="34dp"
-                    android:layout_above="@+id/textView3"
                     android:layout_centerHorizontal="true"
-                    android:onClick="@{()->viewModel.onClick(3)}"
-                    android:src="@drawable/home_my_side" />
+                    android:onClick="@{(view)->viewModel.onClick(view,3)}"
+                    android:src="@drawable/main_my_btn_selector" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/my_text"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"

@@ -31,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public final ObservableBoolean isLogging = new ObservableBoolean(false);
 
+    public final static int LOGOUT = 2;
+
     private int status;
 
     private static final String TAG = "LoginActivity";
@@ -138,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         status = intent.getIntExtra("status", -1);
-        int LOGOUT = 2;
+
         if (status == LOGOUT) {
             saveLoginStatus(status);
             return;
