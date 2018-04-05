@@ -4,6 +4,7 @@
     tools:context="com.lfork.a98620.lfree.main.MainActivity">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.MainActivity" />
@@ -24,38 +25,10 @@
         </FrameLayout>
 
         <LinearLayout
+            android:background="#fafafa"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:baselineAligned="false">
-
-            <RelativeLayout
-                android:id="@+id/extension_btn_1"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:onClick="@{()->viewModel.onClick(0)}"
-                    android:src="@drawable/ic_launcher_background"
-
-                    />
-
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:text="商品"
-                    android:textColor="@color/main_button_bar_text_color" />
-
-
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/extension_btn_2"
@@ -70,21 +43,41 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:onClick="@{()->viewModel.onClick(1)}"
-                    android:src="@drawable/ic_launcher_background"
+                    android:padding="3dp"
+                    android:src="@drawable/home_publish" />
 
-                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/extension_btn_1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_above="@+id/textView"
+                    android:layout_centerHorizontal="true"
+                    android:onClick="@{()->viewModel.onClick(0)}"
+                    android:src="@drawable/home_goods_side" />
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="上传"
-                    android:textColor="@color/main_button_bar_text_color" />
+                    android:text="商品"
+                    android:textColor="@color/Home_act_text"
+                    android:textSize="14sp" />
 
 
             </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/extension_btn_3"
@@ -94,23 +87,23 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_above="@+id/textView2"
                     android:layout_centerHorizontal="true"
                     android:onClick="@{()->viewModel.onClick(2)}"
-                    android:src="@drawable/ic_launcher_background"
-
-                    />
+                    android:src="@drawable/home_talk_side" />
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="私聊"
-                    android:textColor="@color/main_button_bar_text_color" />
+                    android:text="聊天"
+                    android:textColor="@color/Home_act_text"
+                    android:textSize="14sp" />
 
 
             </RelativeLayout>
@@ -123,23 +116,23 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_width="35dp"
+                    android:layout_height="34dp"
+                    android:layout_above="@+id/textView3"
                     android:layout_centerHorizontal="true"
                     android:onClick="@{()->viewModel.onClick(3)}"
-                    android:src="@drawable/ic_launcher_background"
-
-                    />
+                    android:src="@drawable/home_my_side" />
 
                 <TextView
+                    android:id="@+id/textView3"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:text="我的"
-                    android:textColor="@color/main_button_bar_text_color" />
+                    android:textColor="@color/Home_act_text"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

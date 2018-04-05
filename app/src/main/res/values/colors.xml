@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="ForeColor">#0aa4ea</color>
+    <color name="Login_ForeColor">#0aa4ea</color>
     <color name="white">#ffffff</color>
-    <color name="Button">#b1bc39</color>
-    <color name="EditColor">#f4f4f8</color>
-    <color name="BorderColor">#c1c4d6</color>
+    <color name="Login_Button">#b1bc39</color>
+    <color name="Login_EditColor">#f4f4f8</color>
+    <color name="Login_BorderColor">#c1c4d6</color>
+    <color name="Home_Goods_Text">#abafae</color>
+    <color name="Home_Goods_Money">#ffd648</color>
+    <color name="Home_act_text">#d7d7d7</color>
 
     <color name="halfTransparent">#e0000000</color>
     <color name="transparent">#00000000</color>

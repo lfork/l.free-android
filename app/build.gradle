@@ -51,4 +51,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support:cardview-v7:26.1.0'
 
+    //Shape Image View
+    compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
 }
