@@ -1,9 +1,472 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context="com.lfork.a98620.lfree.userinfothis.UserInfoThisActivity">
+    <!--<data>-->
+    <!--<variable-->
+    <!--name="currentUserViewModel"-->
+    <!--type="com.example.yangq.lab_manage_sys.currentuser.CurrentUserViewModel"/>-->
+    <!--<import type="android.view.View"/>-->
+    <!--</data>-->
 
-</android.support.constraint.ConstraintLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="portrait" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/largeLabel"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/largeLabel"
+                        android:background="#fff"
+                        android:inputType="text"
+                        android:text="name" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/largeLabe2"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/largeLabe2"
+                        android:background="#fff"
+                        android:inputType="text"
+                        android:text="description" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/largeLabe3"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/largeLabe3"
+                        android:background="#fff"
+                        android:inputType="text"
+                        android:text="phone" />
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/largeLabe4"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/largeLabe4"
+                        android:background="#fff"
+                        android:inputType="text"
+                        android:text="email" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/all"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:background="@color/bg_main">-->
+        <!--<com.example.yangq.lab_manage_sys.utils.customview.PreviousView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:id="@+id/pv_selfinfo"/>-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp">-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textColor="@color/primary_text"-->
+        <!--android:text="修改信息"-->
+        <!--/>-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+        <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/divider"/>-->
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="90dp"-->
+        <!--android:background="#fff">-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<TextView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:textSize="20sp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/primary_text"-->
+        <!--android:text="头像"/>-->
+        <!--</LinearLayout>-->
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <!--android:id="@+id/image_head"-->
+        <!--android:layout_toLeftOf="@+id/pic_head"-->
+        <!--android:layout_width="85dp"-->
+        <!--android:layout_height="85dp" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/pic_head"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:background="@drawable/ic_right" />-->
+        <!--</RelativeLayout>-->
+        <!--<View-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/divider"/>-->
+        <!--</LinearLayout>-->
+
+
+        <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="#fff">-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<TextView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:textSize="20sp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/primary_text"-->
+        <!--android:text="姓名"/>-->
+        <!--</LinearLayout>-->
+        <!--<TextView-->
+        <!--android:id="@+id/text_name"-->
+        <!--android:layout_toLeftOf="@+id/pic_name"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="@color/secondary_text"-->
+        <!--android:text="@{currentUserViewModel.name}"/>-->
+        <!--<ImageView-->
+        <!--android:id="@+id/pic_name"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--/>-->
+
+        <!--&lt;!&ndash;姓名暂时不可以改&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="@drawable/ic_right"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:clickCommand="@{currentUserViewModel.click_name}"&ndash;&gt;-->
+        <!--</RelativeLayout>-->
+        <!--<ImageView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/divider"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="#fff">-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<TextView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:textSize="20sp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/primary_text"-->
+        <!--android:text="学号"/>-->
+        <!--</LinearLayout>-->
+        <!--<TextView-->
+        <!--android:id="@+id/text_schoolNumber"-->
+        <!--android:layout_toLeftOf="@+id/pic_schoolNumber"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="@color/secondary_text"-->
+        <!--android:text="@{currentUserViewModel.schoolNumber}"/>-->
+        <!--<ImageView-->
+        <!--android:id="@+id/pic_schoolNumber"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--/>-->
+        <!--&lt;!&ndash;学号也暂时不能改&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="@drawable/ic_right"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:clickCommand="@{currentUserViewModel.click_schoolNumber}"&ndash;&gt;-->
+        <!--</RelativeLayout>-->
+        <!--<ImageView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/divider"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="#fff">-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<TextView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:textSize="20sp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/primary_text"-->
+        <!--android:text="专业"/>-->
+        <!--</LinearLayout>-->
+        <!--<TextView-->
+        <!--android:id="@+id/text_major"-->
+        <!--android:layout_toLeftOf="@+id/pic_major"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="@color/secondary_text"-->
+        <!--android:text="@{currentUserViewModel.major}"/>-->
+        <!--<ImageView-->
+        <!--android:id="@+id/pic_major"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--/>-->
+        <!--&lt;!&ndash;专业也暂时不能改&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="@drawable/ic_right"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:clickCommand="@{currentUserViewModel.click_major}"&ndash;&gt;-->
+        <!--</RelativeLayout>-->
+        <!--<ImageView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/divider"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="#fff">-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<TextView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:textSize="20sp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/primary_text"-->
+        <!--android:text="电话"/>-->
+        <!--</LinearLayout>-->
+        <!--<TextView-->
+        <!--android:id="@+id/text_phone"-->
+        <!--android:layout_toLeftOf="@+id/pic_phone"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="@color/secondary_text"-->
+        <!--android:text="@{currentUserViewModel.phone}"/>-->
+        <!--<ImageView-->
+        <!--android:id="@+id/pic_phone"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:background="@drawable/ic_right"-->
+        <!--app:clickCommand="@{currentUserViewModel.click_phone}"/>-->
+        <!--</RelativeLayout>-->
+        <!--<ImageView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/divider"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="#fff">-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<TextView-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:textSize="20sp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/primary_text"-->
+        <!--android:text="邮箱"/>-->
+        <!--</LinearLayout>-->
+        <!--<TextView-->
+        <!--android:id="@+id/text_email"-->
+        <!--android:layout_toLeftOf="@+id/pic_email"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="@color/secondary_text"-->
+        <!--android:text="@{currentUserViewModel.email}"/>-->
+        <!--<ImageView-->
+        <!--android:id="@+id/pic_email"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:background="@drawable/ic_right"-->
+        <!--app:clickCommand="@{currentUserViewModel.click_email}"/>-->
+        <!--</RelativeLayout>-->
+        <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/divider"/>-->
+        <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="#70000000"-->
+        <!--android:visibility="@{currentUserViewModel.isUpdating ? View.VISIBLE : View.INVISIBLE}" >-->
+
+        <!--<ProgressBar-->
+        <!--android:id="@+id/login_progress"-->
+        <!--style="?android:attr/progressBarStyleLarge"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--/>-->
+        <!--<TextView-->
+        <!--android:layout_below="@id/login_progress"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:text="正在更新..."-->
+        <!--android:textColor="#fff"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"/>-->
+
+
+        <!--</RelativeLayout>-->
+    </FrameLayout>
+
+</layout>

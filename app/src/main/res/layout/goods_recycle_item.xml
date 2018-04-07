@@ -3,83 +3,91 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.index.GoodsItemViewModel"/>
+            type="com.lfork.a98620.lfree.main.index.GoodsItemViewModel" />
     </data>
 
-
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="5dp">
-
-    <LinearLayout
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content"
-        android:background="#fff">
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp">
 
-        <ImageView
-            android:id="@+id/news_image"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:background="#f7f9fa"
-            android:scaleType="centerCrop" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linearOfNewsItem1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#fff"
-            android:orientation="vertical"
-            android:paddingEnd="1dp"
-            android:paddingStart="5dp"
 
-            >
-
-            <TextView
-                android:id="@+id/news_title"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:ellipsize="end"
-                android:text="@{viewModel.name}"
-                android:maxLines="1"
-                android:textColor="@color/Home_Goods_Text"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/news_date"
-                android:layout_width="match_parent"
-                android:layout_height="13dp"
-                android:layout_gravity="end"
-                android:text="@{viewModel.description}"
-                android:layout_marginEnd="6dp"
-                android:textColor="@color/Home_Goods_Text"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/news_description"
+            <ImageView
+                android:id="@+id/goods_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@{viewModel.price}"
-                android:ellipsize="end"
-                android:maxLines="4"
-                android:textColor="@color/Home_Goods_Text"
-                android:textSize="16sp" />
+                android:scaleType="centerCrop"
+                app:setImageWithDiskCache="@{viewModel.imagePath}" />
+
+            <RelativeLayout
+                android:id="@+id/linearOfNewsItem1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom"
+                android:background="#50000000"
+                android:orientation="vertical"
+                android:paddingEnd="1dp"
+                android:paddingStart="5dp">
+
+                <ImageView
+                    android:id="@+id/user_portrait"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    app:setImageWithDiskCache="@{viewModel.userPortraitPath}"/>
+
+                <TextView
+                    android:id="@+id/goods_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@id/user_portrait"
+                    android:ellipsize="end"
+                    android:text="@{viewModel.name}"
+                    android:textColor="@color/Home_Goods_Text2"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_toRightOf="@id/user_portrait"
+                    android:layout_below="@id/goods_name"
+                    android:id="@+id/goods_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:text="@{viewModel.publishDate}"
+                    android:textColor="@color/Home_Goods_Text2"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/goods_price"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@id/goods_name"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:ellipsize="end"
+                    android:text="@{viewModel.price}"
+                    android:textColor="@color/Home_Goods_Text2"
+                    android:textSize="16sp" />
 
 
-        </LinearLayout>
+            </RelativeLayout>
 
-    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        </FrameLayout>
 
-</android.support.v7.widget.CardView>
+
+    </android.support.v7.widget.CardView>
 </layout>

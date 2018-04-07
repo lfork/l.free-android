@@ -25,10 +25,7 @@
             android:theme="@style/LoginTheme"
             android:name=".login.LoginActivity"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
 
         </activity>
         <activity android:name=".mygoods.MyGoodsActivity" />
@@ -36,7 +33,12 @@
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".userinfo.UserInfoActivity" />
         <activity android:name=".userinfothis.UserInfoThisActivity" />
-        <activity android:name=".welcome.WelcomeActivity" />
+        <activity android:name=".welcome.WelcomeActivity" android:theme="@style/WelcomeTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".register.RegisterActivity">
 
         </activity>

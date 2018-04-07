@@ -16,6 +16,11 @@ public class Goods {
 
     private String description;
 
+    public String userPortraitPath;
+
+    public String publishDate;
+
+
     public String getName() {
         return name;
     }
@@ -54,5 +59,21 @@ public class Goods {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUserPortraitPath() {
+        return userPortraitPath;
+    }
+
+    public void setUserPortraitPath(String userPortraitPath) {
+        this.userPortraitPath = userPortraitPath;
+    }
+
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
     }
 }

@@ -8,6 +8,7 @@ import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.UserDataSource;
 import com.lfork.a98620.lfree.data.source.remote.httpservice.Result;
 import com.lfork.a98620.lfree.data.source.remote.httpservice.Service;
+import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.JSONUtil;
 
 import java.util.ArrayList;
@@ -46,13 +47,7 @@ public class UserRemoteDataSource implements UserDataSource {
     @Override
     public void login(final GeneralCallback<User> callback, User user) {
 
-//        user.setStudentId("2016081074");
-//        user.setUserId(5);
-//        user.setUserPhone("101324564561");
-//        user.setUserEmail("enenenen");
-//        callback.success(user); //假装登录成功
-
-        String url = "http://www.lfork.top/22y/user_login";
+        String url = Config.ServerURL +  "22y/user_login";
 
         RequestBody requestbody = new FormBody.Builder()
                 .add("studentId", user.getUserName())
@@ -78,7 +73,7 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void register(GeneralCallback<String> callback, User user) {
-        String url = "http://www.lfork.top/22y/user_regist";
+        String url = Config.ServerURL + "22y/user_regist";
 
         RequestBody requestbody = new FormBody.Builder()
                 .add("studentId", user.getStudentId())

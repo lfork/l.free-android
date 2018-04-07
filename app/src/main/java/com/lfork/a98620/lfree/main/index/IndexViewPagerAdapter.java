@@ -4,16 +4,20 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lfork.a98620.lfree.data.entity.Category;
+
+import java.util.ArrayList;
 import java.util.List;
 
 class IndexViewPagerAdapter extends PagerAdapter {
 
-    private final String[] pageTitles = {"推荐", "电子产品", "书本信息", "生活用品", "其他1", "其他2", "其他3", "其他4", "其他5", "其他6"};
+    private final ArrayList<Category> pageTitles;
 
     private List<View> viewList;//view数组
 
-    public IndexViewPagerAdapter(List<View> viewList) {
+    public IndexViewPagerAdapter(List<View> viewList, ArrayList<Category> pageTitles) {
         this.viewList = viewList;
+        this.pageTitles = pageTitles;
     }
 
     //判断是否是由对象生成的界面
@@ -46,6 +50,6 @@ class IndexViewPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pageTitles[position];
+        return pageTitles.get(position).getName();
     }
 }

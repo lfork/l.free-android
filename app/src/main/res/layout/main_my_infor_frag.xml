@@ -40,7 +40,8 @@
                         android:src="@drawable/login_logo"
                         app:siBorderColor="@color/white"
                         app:siBorderWidth="1dp"
-                        app:siRadius="5dp" />
+                        app:siRadius="5dp"
+                        app:setImageNoCache="@{viewModel.imageUrl}"/>
 
                     <TextView
                         android:id="@+id/name"
@@ -49,7 +50,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@id/head"
-                        android:text="用户名"
+                        android:text="@{viewModel.username}"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
@@ -63,7 +64,7 @@
                         android:layout_toEndOf="@+id/head"
 
                         android:paddingRight="20dp"
-                        android:text="这里暂时就是随便填一点东西上去看看"
+                        android:text="@{viewModel.description}"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -76,7 +77,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:background="#fff">
+                    android:background="#fff"
+                    android:onClick="@{()->viewModel.openUserInfoDetail()}"
+                    >
 
                     <ImageView
                         android:id="@+id/img_data"
@@ -116,7 +119,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:background="#fff">
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:background="#fff"
+                    android:onClick="@{()->viewModel.openMyGoods()}">
 
                     <ImageView
                         android:id="@+id/img_mygoods"
@@ -156,7 +162,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:background="#fff">
+                    android:background="#fff"
+                    android:onClick="@{()->viewModel.openSettings()}">
 
                     <ImageView
                         android:id="@+id/img_settings"

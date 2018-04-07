@@ -42,8 +42,6 @@
             android:textColorHint="@color/Login_BorderColor"
             android:textSize="18sp" />
 
-
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

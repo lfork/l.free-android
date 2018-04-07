@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.lfork.a98620.lfree.welcome.WelcomeActivity">
 
+    <ImageView
+        android:contentDescription="@string/prompt_username_register"
+        android:scaleType="centerCrop"
+        android:id="@+id/welcome_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </android.support.constraint.ConstraintLayout>

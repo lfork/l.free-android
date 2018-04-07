@@ -33,8 +33,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public final static int LOGOUT = 2;
 
-    private int status;
-
     private static final String TAG = "LoginActivity";
 
     private UserDataRepository mRepository = UserDataRepository.getInstance();
@@ -72,28 +70,23 @@ public class LoginActivity extends AppCompatActivity {
         user.setUserPassword(password.get());
         //合法检测
         if (!isNull(user.getUserName()) || !isNull(user.getUserPassword())) {
-            new Thread(new Runnable() {
+            new Thread(() -> mRepository.login(new DataSource.GeneralCallback<User>() {
                 @Override
-                public void run() {
-                    mRepository.login(new DataSource.GeneralCallback<User>() {
-                        @Override
-                        public void success(User data) {
-                            Log.d(TAG, "success: " + data);
-                            showDealResult("登录成功" + data.toString());
-                            saveLoginStatus(1);
-                            closeLoginDialog();
-                            startMainActivity();
-                        }
-
-                        @Override
-                        public void failed(String log) {
-                            Log.d(TAG, "failed: " + log);
-                            closeLoginDialog();
-                            showDealResult("登录失败" + log);
-                        }
-                    }, user);
+                public void success(User data) {
+                    Log.d(TAG, "success: " + data);
+                    showDealResult("登录成功" + data.toString());
+                    saveLoginStatus(1);
+                    closeLoginDialog();
+                    startMainActivity();
                 }
-            }).start();
+
+                @Override
+                public void failed(String log) {
+                    Log.d(TAG, "failed: " + log);
+                    closeLoginDialog();
+                    showDealResult("登录失败" + log);
+                }
+            }, user)).start();
 
         } else {
             showDealResult("输入的信息不能为空");
@@ -139,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
         password.set(pref.getString("password", ""));
 
         Intent intent = getIntent();
-        status = intent.getIntExtra("status", -1);
+        int status = intent.getIntExtra("status", -1);
 
         if (status == LOGOUT) {
             saveLoginStatus(status);

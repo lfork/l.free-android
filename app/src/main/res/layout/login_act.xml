@@ -104,12 +104,12 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <!-- Login progress -->
+        <!-- progress -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/halfTransparent"
-            android:visibility="@{viewModel.isLogging ? View.VISIBLE : View.INVISIBLE}" >
+            android:visibility="@{viewModel.isLogging ? View.VISIBLE : View.GONE}" >
 
             <ProgressBar
                 android:id="@+id/login_progress"

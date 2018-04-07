@@ -3,8 +3,11 @@ package com.lfork.a98620.lfree.main.index;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -13,9 +16,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lfork.a98620.lfree.BR;
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.data.DataSource;
+import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
 import com.lfork.a98620.lfree.databinding.MainIndexFragBinding;
 
 import java.util.ArrayList;
@@ -28,35 +35,56 @@ import java.util.List;
 public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
 
     private static final String TAG = "IndexFragmentViewModel";
-    private String[] categories = {"推荐", "电子产品", "书本信息", "生活用品", "其他1", "其他2", "其他3", "其他4", "其他5", "其他6"};
+
+    private ArrayList<Category> categories;
     ;
     private List<View> pagerList;
     private MainIndexFragBinding binding;
-    private Context context;
+    private FragmentActivity context;
     private LayoutInflater inflater;
     private ViewPager viewPager;
+    private GoodsDataRepository repository;
+    private ArrayList<IndexPagerItemViewModel> pagerItemViewModelList;
 
-    IndexFragmentViewModel(MainIndexFragBinding binding, Context context, LayoutInflater layoutInflater) {
+    IndexFragmentViewModel(MainIndexFragBinding binding, FragmentActivity context, LayoutInflater layoutInflater) {
         this.binding = binding;
         this.context = context;
         this.inflater = layoutInflater;
-        initViewPager();
-        initTabLayout();
+        initData();
+    }
+
+
+    private void initData() {
+        repository = GoodsDataRepository.getInstance();
+        new Thread(() -> {
+            repository.getCategories(new DataSource.GeneralCallback<List<Category>>() {
+                @Override
+                public void success(List<Category> data) {
+                    context.runOnUiThread(() -> {
+                        categories = (ArrayList<Category>) data;
+                        initViewPager();
+                        initTabLayout();
+                    });
+                }
+
+                @Override
+                public void failed(String log) {
+                    context.runOnUiThread(() -> {
+                        Toast.makeText(context, log, Toast.LENGTH_SHORT).show();
+                    });
+                }
+            });
+        }).start();
+
+
     }
 
     private void initTabLayout() {
-
         TabLayout tabLayout = binding.tabLayout;
-        if (categories != null && categories.length > 0) {
-            for (String category : categories) {
+        if (categories != null && categories.size() > 0) {
+            for (Category category : categories) {
                 TabItem item = new TabItem(context);
-                item.setTag(category);
-//                button.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                    }
-//                });
-//                tableRow.addView(button);
+                item.setTag(category.getName());
                 tabLayout.addView(item);
             }
 
@@ -68,62 +96,46 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
         tabLayout.addOnTabSelectedListener(this);
         tabLayout.setupWithViewPager(viewPager);
 
+
     }
 
 
     private void initViewPager() {
         pagerList = new ArrayList<>();
-        if (categories != null && categories.length > 0) {
+        pagerItemViewModelList = new ArrayList<>();
+        if (categories != null && categories.size() > 0) {
             ViewDataBinding dataBinding;
-            for (String category : categories) {
+            for (Category category : categories) {
                 dataBinding = DataBindingUtil.inflate(inflater, R.layout.main_index_viewpager_item, viewPager, false);
-                dataBinding.setVariable(BR.viewModel, new IndexPagerItemViewModel(category, dataBinding,context));
+                IndexPagerItemViewModel itemViewModel = new IndexPagerItemViewModel(category, dataBinding, context);
+                dataBinding.setVariable(BR.viewModel, itemViewModel);
                 pagerList.add(dataBinding.getRoot());
+                pagerItemViewModelList.add(itemViewModel);
             }
             viewPager = binding.mainIndexFragViewpager;
-            PagerAdapter pagerAdapter = new IndexViewPagerAdapter(pagerList);
+            PagerAdapter pagerAdapter = new IndexViewPagerAdapter(pagerList, categories);
             viewPager.setAdapter(pagerAdapter);
         } else {
             Log.d(TAG, "addTabItem:  没有数据");
         }
-//        View view1 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view2 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view3 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view4 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view5 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view6 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view7 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view8 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view9 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//        View view10 = inflater.inflate(R.layout.main_index_viewpager_item, null);
-//
-//
-//        pagerList.add(view2);
-//        pagerList.add(view3);
-//        pagerList.add(view4);
-//        pagerList.add(view5);
-//        pagerList.add(view6);
-//        pagerList.add(view7);
-//        pagerList.add(view8);
-//        pagerList.add(view9);
-//        pagerList.add(view10);
 
     }
 
-
-    private void onTabClicked() {
-        //进行viewPager的切换
-    }
 
     /**
+     * 先加载前3个页面，当点击到指定页面的时候就加载指定的前后三个页面的数据
      *
+     * @param tab
      */
-    private void loadPagerItem() {
-        //把当前的viewPager 进行初始化， 加载数据列表
-    }
-
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
+        int position = tab.getPosition();
+
+        //获取当前页面数据
+        IndexPagerItemViewModel itemViewModel = pagerItemViewModelList.get(position);
+        if (itemViewModel != null) {
+            itemViewModel.initData();
+        }
 
     }
 

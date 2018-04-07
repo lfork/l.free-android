@@ -10,6 +10,7 @@ import com.lfork.a98620.lfree.data.source.remote.UserRemoteDataSource;
 import org.litepal.crud.DataSupport;
 
 /**
+ *
  * Created by 98620 on 2018/3/23.
  */
 
@@ -49,23 +50,17 @@ public class UserDataRepository implements UserDataSource {
     }
 
     private void initUser() {
-        new Thread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        getThisUser(new GeneralCallback<User>() {
-                            @Override
-                            public void success(User data) {
-                                mUser = data;
-                            }
+        new Thread(() -> getThisUser(new GeneralCallback<User>() {
+            @Override
+            public void success(User data) {
+                mUser = data;
+            }
 
-                            @Override
-                            public void failed(String log) {
-                                Log.d(TAG, "failed: " + log);
-                            }
-                        });
-                    }
-                }
+            @Override
+            public void failed(String log) {
+                Log.d(TAG, "failed: " + log);
+            }
+        })
         ).start();
 
     }

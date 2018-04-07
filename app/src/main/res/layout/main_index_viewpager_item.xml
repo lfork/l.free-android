@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.index.IndexPagerItemViewModel"/>
-
+            type="com.lfork.a98620.lfree.main.index.IndexPagerItemViewModel" />
+        <import type="android.view.View"/>
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}" >
+            <ProgressBar
+                android:id="@+id/login_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                />
+            <TextView
+                android:layout_below="@id/login_progress"
+                android:layout_width="match_parent"
+                android:text="@string/loading"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+        </RelativeLayout>
+
         <android.support.v7.widget.RecyclerView
+            android:visibility="@{viewModel.dataIsLoading?View.GONE:View.VISIBLE}"
             android:id="@+id/main_index_recycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
 
-    </RelativeLayout>
-
+    </LinearLayout>
 
 
 </layout>

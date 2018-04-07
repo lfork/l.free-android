@@ -19,6 +19,9 @@ public class Service {
 
     private static final String TAG = "Service";
 
+    /**
+     *  异步请求
+     */
     public String sendPostRequest(String url, RequestBody requestBody) {
         OkHttpClient client = new OkHttpClient();
 
@@ -33,8 +36,6 @@ public class Service {
         } catch (IOException e) {
             return null;
         }
-
-
     }
 
 }
