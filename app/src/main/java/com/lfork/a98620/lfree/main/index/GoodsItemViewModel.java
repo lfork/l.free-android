@@ -1,13 +1,9 @@
 package com.lfork.a98620.lfree.main.index;
 
 import android.databinding.ObservableField;
-import android.view.View;
 
 import com.lfork.a98620.lfree.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.Goods;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -17,8 +13,6 @@ import java.util.List;
 public class GoodsItemViewModel extends BaseViewModel{
 
     public String name;
-
-    public final ObservableField<String> userPortraitPath = new ObservableField<>();
 
     public String publishDate;
 
@@ -32,9 +26,8 @@ public class GoodsItemViewModel extends BaseViewModel{
         name = g.getName();
         id = g.getId();
         price = g.getPrice();
-        imagePath = g.getImagePath();
+        imagePath = g.getCoverImagePath();
         publishDate = g.getPublishDate();
-        imagePath = g.getImagePath();
-        userPortraitPath.set(g.getUserPortraitPath());
+        imagePath = g.getCoverImagePath();
     }
 }

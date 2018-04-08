@@ -1,24 +1,42 @@
 package com.lfork.a98620.lfree.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
+ *
  * Created by 98620 on 2018/3/31.
  */
 
-public class Goods {
+public class Goods implements Serializable{
 
+    @SerializedName("gName")
     private String name;
 
+    @SerializedName("gId")
     private int id;
 
+    @SerializedName("gBuyPrice")
+    private String originPrice;
+
+    @SerializedName("gSellPrice")
     private String price;
 
-    private String imagePath;
+    @SerializedName("gCoverImage")
+    private String coverImagePath;
 
+    private String[] imagesPath;
+
+    @SerializedName("gDesc")
     private String description;
 
-    public String userPortraitPath;
+    private String userPortraitPath;
 
-    public String publishDate;
+    @SerializedName("gMakeDate")
+    private String publishDate;
+
+    private int userId;
 
 
     public String getName() {
@@ -45,12 +63,12 @@ public class Goods {
         this.price = price;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getCoverImagePath() {
+        return coverImagePath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setCoverImagePath(String coverImagePath) {
+        this.coverImagePath = coverImagePath;
     }
 
     public String getDescription() {
@@ -75,5 +93,29 @@ public class Goods {
 
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public String[] getImagesPath() {
+        return imagesPath;
+    }
+
+    public void setImagesPath(String[] imagesPath) {
+        this.imagesPath = imagesPath;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getOriginPrice() {
+        return originPrice;
+    }
+
+    public void setOriginPrice(String originPrice) {
+        this.originPrice = originPrice;
     }
 }

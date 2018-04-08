@@ -29,16 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  * Created by 98620 on 2018/3/31.
  */
 
 public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
 
     private static final String TAG = "IndexFragmentViewModel";
-
     private ArrayList<Category> categories;
-    ;
-    private List<View> pagerList;
     private MainIndexFragBinding binding;
     private FragmentActivity context;
     private LayoutInflater inflater;
@@ -92,16 +90,14 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
             Log.d(TAG, "addTabItem:  没有数据");
         }
 
-
         tabLayout.addOnTabSelectedListener(this);
         tabLayout.setupWithViewPager(viewPager);
-
 
     }
 
 
     private void initViewPager() {
-        pagerList = new ArrayList<>();
+        List<View> pagerList = new ArrayList<>();
         pagerItemViewModelList = new ArrayList<>();
         if (categories != null && categories.size() > 0) {
             ViewDataBinding dataBinding;

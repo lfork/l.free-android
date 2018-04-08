@@ -110,7 +110,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
 //            goods.setName("goods" + i);
 //            goods.setId(i);
 //            goods.setPrice(String.valueOf(i * 100));
-//            goods.setImagePath("???");
+//            goods.setCoverImagePath("???");
 //            goodsList.add(goods);
 ////            Log.d(TAG, "initGoodsList: test1" + i );
 //        }

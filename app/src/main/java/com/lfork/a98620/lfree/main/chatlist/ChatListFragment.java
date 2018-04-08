@@ -39,11 +39,10 @@ public class ChatListFragment extends Fragment {
         contactsList = new ArrayList<>();
         for (int i =0; i < 20; i++){
             Goods goods = new Goods();
-            goods.setDescription("aaaaaaa");
             goods.setName("goods" + i);
             goods.setId(i);
             goods.setPrice(String.valueOf(i * 100));
-            goods.setImagePath("???");
+            goods.setCoverImagePath("???");
             contactsList.add(goods);
             Log.d(TAG, "initGoodsList: test1" + i );
         }
