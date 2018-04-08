@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.index.GoodsItemViewModel" />
@@ -32,21 +33,33 @@
                     android:id="@+id/contacts_portrait"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_margin="6dp"
                     android:background="@drawable/ic_contacts_black_24dp" />
 
-                <TextView
-                    android:id="@+id/contacts_name"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="联系人姓名"
-                    android:textSize="20sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/contacts_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:singleLine="true"
+                        android:text="这是一个聊天记录"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/contacts_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:singleLine="true"
+                        android:text="2018年4月8日19:32:45"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
