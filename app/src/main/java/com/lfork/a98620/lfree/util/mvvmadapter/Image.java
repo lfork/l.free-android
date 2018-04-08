@@ -15,7 +15,7 @@ import com.lfork.a98620.lfree.util.GlideOptions;
 public class Image {
     @BindingAdapter({"setImageNoCache"})
     public static void setImage(ImageView view, String imageUrl) {
-        GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
+        GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).placeholder(R.drawable.login_logo).skipMemoryCache(true);
         Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
     }
 

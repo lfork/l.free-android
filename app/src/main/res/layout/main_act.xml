@@ -35,6 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:onClick="@{(view)->viewModel.onClick(view,0)}"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -42,7 +43,6 @@
                     android:layout_height="60dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:onClick="@{(view)->viewModel.onClick(view,0)}"
                     android:padding="3dp"
                     android:src="@drawable/main_publish" />
 
@@ -54,6 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:onClick="@{(view)->viewModel.onClick(view,1)}"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -63,7 +64,7 @@
                     android:checked="true"
                     android:layout_above="@+id/goods_text"
                     android:layout_centerHorizontal="true"
-                    android:onClick="@{(view)->viewModel.onClick(view,1)}"
+
                     android:src="@drawable/main_goods_btn_selector" />
 
                 <TextView
@@ -86,6 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:onClick="@{(view)->viewModel.onClick(view,2)}"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -94,7 +96,7 @@
                     android:layout_height="35dp"
                     android:layout_above="@+id/chat_text"
                     android:layout_centerHorizontal="true"
-                    android:onClick="@{(view)->viewModel.onClick(view,2)}"
+
                     android:src="@drawable/main_talk_btn_selector" />
 
                 <TextView
@@ -116,6 +118,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:onClick="@{(view)->viewModel.onClick(view,3)}"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -123,7 +126,7 @@
                     android:layout_width="35dp"
                     android:layout_height="34dp"
                     android:layout_centerHorizontal="true"
-                    android:onClick="@{(view)->viewModel.onClick(view,3)}"
+
                     android:src="@drawable/main_my_btn_selector" />
 
                 <TextView

@@ -23,6 +23,8 @@ import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.register.RegisterActivity;
 import com.lfork.a98620.lfree.util.GlideOptions;
 
+import static com.lfork.a98620.lfree.util.StringUtil.isNull;
+
 public class LoginActivity extends AppCompatActivity {
 
     public final ObservableField<String> username = new ObservableField<>();
@@ -119,9 +121,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private boolean isNull(String str) {
-        return str == null || str.equals("") || str.length() == 0;
-    }
 
     /**
      * 用户启动后对登录状态进行判断

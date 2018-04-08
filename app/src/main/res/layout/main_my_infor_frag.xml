@@ -37,7 +37,6 @@
                         android:id="@+id/head"
                         android:layout_width="85dp"
                         android:layout_height="85dp"
-                        android:src="@drawable/login_logo"
                         app:siBorderColor="@color/white"
                         app:siBorderWidth="1dp"
                         app:siRadius="5dp"

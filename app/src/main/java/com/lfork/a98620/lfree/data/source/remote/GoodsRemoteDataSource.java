@@ -99,7 +99,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
                 callback.failed(result.getMessage());
             }
         } else {
-            callback.failed("error");
+            callback.failed("error:1 服务器异常");
         }
     }
 

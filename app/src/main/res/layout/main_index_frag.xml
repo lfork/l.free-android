@@ -6,29 +6,112 @@
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.index.IndexFragmentViewModel"/>
+        <import type="android.view.View"/>
     </data>
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            app:tabIndicatorColor="@color/Login_ForeColor"
-            app:tabSelectedTextColor="@color/Login_ForeColor"
-            android:background="#efefef"
-            app:tabMode="scrollable">
-        </android.support.design.widget.TabLayout>
+            android:layout_height="wrap_content">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/main_index_frag_viewpager"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:layout_toStartOf="@id/search_btn"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:textSize="28sp"
+                    android:text="@string/app_name"
+                    android:layout_height="match_parent" />
+
+                <SearchView
+                    android:id="@+id/search_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:onClick="@{()->viewModel.openSearch()}"
+                    android:iconifiedByDefault="false"
+                    android:shadowColor="@color/white"
+                    android:queryHint="Java从入门到精通"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"/>
+
+
+                <!--<Button-->
+                    <!--android:id="@+id/search_btn"-->
+                    <!--android:background="@drawable/ic_search_white_24dp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_width="40dp"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:layout_gravity="end" />-->
+
+            </RelativeLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:id="@+id/login_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_progress"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/loading"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v4.view.ViewPager>
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.dataIsLoading?View.GONE:View.VISIBLE}">
 
-    </LinearLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                app:tabIndicatorColor="@color/Login_ForeColor"
+                app:tabSelectedTextColor="@color/Login_ForeColor"
+                android:background="#efefef"
+                app:tabMode="scrollable">
+            </android.support.design.widget.TabLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/main_index_frag_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v4.view.ViewPager>
+
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
 
 </layout>

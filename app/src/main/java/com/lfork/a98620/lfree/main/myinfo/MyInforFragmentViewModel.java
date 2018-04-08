@@ -13,6 +13,7 @@ import com.lfork.a98620.lfree.login.LoginActivity;
 import com.lfork.a98620.lfree.mygoods.MyGoodsActivity;
 import com.lfork.a98620.lfree.settings.SettingsActivity;
 import com.lfork.a98620.lfree.userinfothis.UserInfoThisActivity;
+import com.lfork.a98620.lfree.util.StringUtil;
 
 /**
  *
@@ -36,7 +37,12 @@ public class MyInforFragmentViewModel extends BaseViewModel {
     private void initData(){
         User user = UserDataRepository.getInstance().getThisUser();
         username.set(user.getUserName());
-        description.set(user.getUserDesc());
+        if (StringUtil.isNull(user.getUserDesc())){
+            description.set("该用户还没有自我介绍....");
+        } else {
+            description.set(user.getUserDesc());
+        }
+
         imageUrl.set(user.getUserImagePath());
     }
 

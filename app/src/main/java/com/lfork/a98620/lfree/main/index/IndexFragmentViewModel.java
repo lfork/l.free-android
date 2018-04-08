@@ -1,7 +1,9 @@
 package com.lfork.a98620.lfree.main.index;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableBoolean;
 import android.databinding.ViewDataBinding;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +26,7 @@ import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
 import com.lfork.a98620.lfree.databinding.MainIndexFragBinding;
+import com.lfork.a98620.lfree.searchresult.SearchResultActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +46,13 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
     private ViewPager viewPager;
     private GoodsDataRepository repository;
     private ArrayList<IndexPagerItemViewModel> pagerItemViewModelList;
+    public final ObservableBoolean dataIsLoading = new ObservableBoolean(true);
 
     IndexFragmentViewModel(MainIndexFragBinding binding, FragmentActivity context, LayoutInflater layoutInflater) {
         this.binding = binding;
         this.context = context;
         this.inflater = layoutInflater;
+        binding.searchBtn.clearFocus(); //取消searchview的焦点
         initData();
     }
 
@@ -60,15 +65,17 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
                 public void success(List<Category> data) {
                     context.runOnUiThread(() -> {
                         categories = (ArrayList<Category>) data;
+
                         initViewPager();
                         initTabLayout();
+                        dataIsLoading.set(false);
                     });
                 }
 
                 @Override
                 public void failed(String log) {
                     context.runOnUiThread(() -> {
-                        Toast.makeText(context, log, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, log, Toast.LENGTH_LONG).show();
                     });
                 }
             });
@@ -115,6 +122,11 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
             Log.d(TAG, "addTabItem:  没有数据");
         }
 
+    }
+
+    public void openSearch(){
+        Intent intent = new Intent(context, SearchResultActivity.class);
+        context.startActivity(intent);
     }
 
 

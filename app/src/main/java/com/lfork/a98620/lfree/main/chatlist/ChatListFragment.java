@@ -37,7 +37,7 @@ public class ChatListFragment extends Fragment {
 
     private void initGoodsList() {
         contactsList = new ArrayList<>();
-        for (int i =0; i < 20; i++){
+        for (int i =0; i < 10; i++){
             Goods goods = new Goods();
             goods.setName("goods" + i);
             goods.setId(i);

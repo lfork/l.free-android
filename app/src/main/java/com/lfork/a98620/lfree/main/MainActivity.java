@@ -48,18 +48,20 @@ public class MainActivity extends AppCompatActivity {
         binding.chatText.setTextColor(getResources().getColor(R.color.Home_act_text));
         binding.myText.setTextColor(getResources().getColor(R.color.Home_act_text));
 
-        imageView.setSelected(true);
         switch (index){
             case 0:
                 break;
             case 1:
                 binding.goodsText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
+                binding.goodsBtn.setSelected(true);
                 break;
             case 2:
                 binding.chatText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
+                binding.chatBtn.setSelected(true);
                 break;
             case 3:
                 binding.myText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
+                binding.myBtn.setSelected(true);
                 break;
         }
 
