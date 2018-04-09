@@ -13,20 +13,20 @@ import android.view.ViewGroup;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.main.RecyclerViewItemAdapter;
-import com.lfork.a98620.lfree.main.index.GoodsItemViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatListFragment extends Fragment {
     private List<Goods> contactsList;
-    private List<GoodsItemViewModel> models = new ArrayList<>();
+    private List<ChatListItemViewModel> models = new ArrayList<>();
     private static final String TAG = "ChatListFragment";
     RecyclerView recyclerView ;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.main_chat_list_frag, container, false);
         recyclerView = view.findViewById(R.id.main_chat_recycler);
@@ -48,7 +48,7 @@ public class ChatListFragment extends Fragment {
         }
 
         for (Goods g : contactsList) {
-            models.add(new GoodsItemViewModel(g));
+            models.add(new ChatListItemViewModel(getContext()));
         }
         Log.d(TAG, "initGoodsList: test1" );
 
@@ -59,7 +59,7 @@ public class ChatListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         //        recyclerView .setLayoutManager(new LinearLayoutManager(context,
 //                LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new RecyclerViewItemAdapter<>(models, R.layout.contacts_item));
+        recyclerView.setAdapter(new RecyclerViewItemAdapter<>(models, R.layout.main_chat_list_contacts_item));
     }
 
 

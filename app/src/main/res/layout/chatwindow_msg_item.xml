@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/message_rec_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chatwindow_mesage_left_9"
+        android:layout_gravity="start"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/message_rec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/message_sent_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chatwindow_message_right"
+        android:layout_gravity="end">
+
+        <TextView
+            android:id="@+id/message_sent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:inputType="none"
+            android:gravity="end"
+            android:textIsSelectable="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

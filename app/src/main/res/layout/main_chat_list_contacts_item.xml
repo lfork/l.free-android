@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.index.GoodsItemViewModel" />
+            type="com.lfork.a98620.lfree.main.chatlist.ChatListItemViewModel" />
 
     </data>
 
@@ -14,7 +14,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-
+        android:onClick="@{()->viewModel.onClick()}"
         android:orientation="vertical"
         tools:ignore="UseCompoundDrawables">
 

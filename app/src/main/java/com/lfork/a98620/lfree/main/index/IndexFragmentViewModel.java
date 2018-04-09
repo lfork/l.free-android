@@ -52,7 +52,7 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
         this.binding = binding;
         this.context = context;
         this.inflater = layoutInflater;
-        binding.searchBtn.clearFocus(); //取消searchview的焦点
+//        binding.searchBtn.clearFocus(); //取消searchView的焦点
         initData();
     }
 
@@ -125,6 +125,7 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
     }
 
     public void openSearch(){
+        Log.d(TAG, "openSearch: ");
         Intent intent = new Intent(context, SearchResultActivity.class);
         context.startActivity(intent);
     }

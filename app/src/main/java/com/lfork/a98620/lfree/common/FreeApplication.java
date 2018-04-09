@@ -1,10 +1,9 @@
-package com.lfork.a98620.lfree;
+package com.lfork.a98620.lfree.common;
 
 import android.app.Application;
 import android.content.Context;
 
 import org.litepal.LitePal;
-import org.litepal.LitePalApplication;
 
 /**
  * Created by 98620 on 2018/3/19.

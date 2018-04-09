@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree;
+package com.lfork.a98620.lfree.common;
 
 import android.content.Context;
 import android.databinding.BaseObservable;

@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.databinding.ObservableField;
 import android.view.LayoutInflater;
 
-import com.lfork.a98620.lfree.BaseViewModel;
+import com.lfork.a98620.lfree.common.BaseViewModel;
+import com.lfork.a98620.lfree.common.viewmodel.UserViewModel;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.MainMyInforFragBinding;
@@ -20,14 +21,7 @@ import com.lfork.a98620.lfree.util.StringUtil;
  * Created by 98620 on 2018/4/5.
  */
 
-public class MyInforFragmentViewModel extends BaseViewModel {
-
-    public final ObservableField<String> username = new ObservableField<>();
-
-    public final ObservableField<String> description = new ObservableField<>();
-
-    public final ObservableField<String> imageUrl = new ObservableField<>();
-
+public class MyInforFragmentViewModel extends UserViewModel{
 
     MyInforFragmentViewModel(MainMyInforFragBinding binding, Context context, LayoutInflater layoutInflater) {
         super(context);

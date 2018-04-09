@@ -1,15 +1,12 @@
 package com.lfork.a98620.lfree.main.index;
 
-import android.content.Context;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 import android.databinding.ViewDataBinding;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 
-import com.lfork.a98620.lfree.BaseViewModel;
+import com.lfork.a98620.lfree.common.BaseViewModel;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
@@ -87,7 +84,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
                 public void success(List<Goods> data) {
                     goodsList = data;
                     for (Goods g : goodsList) {
-                        models.add(new GoodsItemViewModel(g));
+                        models.add(new GoodsItemViewModel(context, g));
                     }
 
                     context.runOnUiThread(() -> {

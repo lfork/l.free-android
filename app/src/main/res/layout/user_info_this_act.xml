@@ -4,7 +4,7 @@
 
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.myinfo.MyInforFragmentViewModel" />
+            type="com.lfork.a98620.lfree.userinfothis.UserInfoThisViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,14 +22,14 @@
             <LinearLayout
                 android:id="@+id/all"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 android:orientation="vertical">
 
-                <FrameLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@mipmap/ic_launcher">
+                    android:background="@color/Home_act_text">
 
                     <com.github.siyamed.shapeimageview.RoundedImageView
                         android:id="@+id/head"
@@ -37,21 +37,55 @@
                         android:layout_height="85dp"
                         android:layout_gravity="center"
                         android:src="@drawable/login_logo"
+                        android:layout_centerInParent="true"
                         app:setImageNoCache="@{viewModel.imageUrl}"
                         app:siBorderColor="@color/white"
                         app:siBorderWidth="1dp"
                         app:siRadius="5dp" />
 
-                    <Button
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/head"
                         android:id="@+id/edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_centerHorizontal="true"
                         android:background="@null"
-                        android:text="编辑"
+                        android:text="点击上传我的头像"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
-                </FrameLayout>
+                </RelativeLayout
+                 >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="#fff">
+
+                    <ImageView
+                        android:id="@+id/img_sno"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/user_user" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/img_sno"
+                        android:gravity="center"
+                        
+                        android:text="@{viewModel.studentNumber}"
+                        android:hint="学号"
+                        android:textSize="14sp" />
+
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -75,11 +109,14 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/img_user"
                         android:gravity="center"
-                        android:text="用户名"
+                        android:hint="用户名"
+                        android:text="@{viewModel.username}"
                         android:textSize="14sp" />
 
 
                 </RelativeLayout>
+
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -104,7 +141,8 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/img_phone"
                         android:gravity="center"
-                        android:text="电话号码"
+                        android:hint="电话号码"
+                        android:text="@{viewModel.phone}"
                         android:textSize="14sp" />
                 </RelativeLayout>
 
@@ -130,7 +168,8 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/img_email"
                         android:gravity="center"
-                        android:text="邮箱"
+                        android:hint="邮箱"
+                        android:text="@{viewModel.email}"
                         android:textSize="14sp" />
 
                 </RelativeLayout>
@@ -154,8 +193,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/img_detail"
-                        android:gravity="left"
-                        android:text="个人备注和描述。个人备注和描述。个人备注和描述。个人备注和描述。个人备注和描述。个人备注和描述。"
+                        android:gravity="start"
+                        android:text="@{viewModel.description}"
+                        android:hint="个人备注和描述."
                         android:textSize="14sp" />
 
                 </RelativeLayout>
