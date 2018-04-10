@@ -9,7 +9,7 @@
         android:id="@+id/message_rec_parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chatwindow_mesage_left_9"
+        android:background="@drawable/chatwindow_mesage_left"
         android:layout_gravity="start"
         android:visibility="gone">
 

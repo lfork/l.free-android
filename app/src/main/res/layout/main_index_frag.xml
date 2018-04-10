@@ -41,25 +41,26 @@
 
 
                 <Button
-                    android:onClick="@{()->viewModel.openSearch()}"
                     android:id="@+id/search_btn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="40dp"
-                    android:background="@drawable/main_ic_search_grey_24dp" />
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/main_ic_search_grey_24dp"
+                    android:onClick="@{()->viewModel.openSearch()}" />
 
                 <EditText
-                    android:onClick="@{()->viewModel.openSearch()}"
-                    android:focusable="false"
+                    android:id="@+id/editText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="40dp"
-                    android:layout_toEndOf="@+id/search_btn"
-                    android:hint="Java从入门到精通" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/search_btn"
+                    android:focusable="false"
+                    android:hint="Java从入门到精通"
+                    android:onClick="@{()->viewModel.openSearch()}" />
 
             </RelativeLayout>
 
@@ -105,10 +106,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="#efefef"
+                android:elevation="3dp"
                 app:tabIndicatorColor="@color/Login_ForeColor"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/Login_ForeColor"
-                android:elevation="3dp"
                 tools:targetApi="lollipop">
 
             </android.support.design.widget.TabLayout>

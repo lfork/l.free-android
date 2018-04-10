@@ -15,5 +15,10 @@
     <color name="transparent">#00000000</color>
     <color name="main_button_bar_text_color">#000</color>
 
+    <color name="red">#FF3B00</color>
+    <color name="red_press">#990000</color>
+    <color name="dark_gray">#4C535B</color>
+    <color name="dark_gray_press">#ff7e8a97</color>
+
 
 </resources>
