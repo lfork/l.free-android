@@ -55,10 +55,6 @@ public class UserInfoThisEditActivity extends AppCompatActivity {
                 break;
             case R.id.menu1:
                 viewModel.updateUserInfo();
-                Intent intent= new Intent();
-                intent.putExtra("data_return", "Hello FirstActivity");
-                setResult(RESULT_OK, intent);
-                finish();
             default:
                 break;
         }

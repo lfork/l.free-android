@@ -1,20 +1,19 @@
 package com.lfork.a98620.lfree.userinfothis;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,24 +25,33 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.databinding.UserInfoThisActBinding;
 import com.lfork.a98620.lfree.util.ImageTool;
+import com.lfork.a98620.lfree.util.ProviderHelper;
+import com.lfork.a98620.lfree.util.mvvmadapter.Image;
 
 import java.io.File;
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class UserInfoThisActivity extends AppCompatActivity {
+import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+
+public class UserInfoThisActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "UserInfoThisActivity";
 
     UserInfoThisActBinding binding;
 
-    UserInfoThisViewModel viewModel ;
+    UserInfoThisViewModel viewModel;
+
+    private Uri imageUri;
 
     /**
      * 定义三种状态
@@ -54,16 +62,15 @@ public class UserInfoThisActivity extends AppCompatActivity {
 
     PopupWindow avatorPop;
 
-    private File mFile;
+    private File portraitFile;
 
     protected int mScreenWidth;
-
 
     //刷新一下数据
     @Override
     protected void onResume() {
         super.onResume();
-        if (viewModel != null){
+        if (viewModel != null) {
             viewModel.refreshData();
         }
 
@@ -75,12 +82,17 @@ public class UserInfoThisActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.user_info_this_act);
         viewModel = new UserInfoThisViewModel(this);
         binding.setViewModel(viewModel);
-
+        binding.head.setOnClickListener(this);
         initActionBar();
-
     }
 
-    public void initActionBar(){
+
+    public void portraitOnClick(ImageView view) {
+        showMyDialog();
+    }
+
+
+    public void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle("用户信息详情");
@@ -92,14 +104,13 @@ public class UserInfoThisActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
             case R.id.menu1:
                 Intent intent = new Intent(UserInfoThisActivity.this, UserInfoThisEditActivity.class);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 4);
             default:
                 break;
         }
@@ -111,128 +122,147 @@ public class UserInfoThisActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.common_action_bar, menu);
         MenuItem item = menu.getItem(0);
         item.setTitle("编辑");
-
         return true;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK)
-                Toast.makeText(this, "修改成功", Toast.LENGTH_LONG).show();
+        switch (requestCode) {
+            case 4:
+                String log = data.getStringExtra("data_return");
+                if (resultCode == RESULT_OK) {
+                    Toast.makeText(this, log, Toast.LENGTH_LONG).show();
+                } else if (resultCode == RESULT_CANCELED) {
+                    Toast.makeText(this, log, Toast.LENGTH_LONG).show();
+                }
+                break;
+            case REQUESTCODE_CAM:
+                if (portraitFile.length() < 1){
+                    return;
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    startPhotoZoom(ProviderHelper.getImageContentUri(getApplicationContext(), portraitFile.getPath()));     //小结， 最有用的是file路径。  我们需要把其他的uri转化为file路径，也要会把file路径转化成uri
+                } else {
+                    startPhotoZoom(imageUri);
+                }
+                break;
+            case REQUESTCODE_PIC:
+                if (data== null || data.getData() == null){
+                    return;
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    File uriFile = new File(ImageTool.getPath(UserInfoThisActivity.this, data.getData()));
+                    startPhotoZoom(ProviderHelper.getImageContentUri(getApplicationContext(), uriFile.getPath()));
+                } else {
+                    startPhotoZoom(data.getData());
+
+                }
+
+
+                break;
+            case REQUESTCODE_CUT:
+                if (data != null) {
+                    setPicToView(data);
+                }
+                break;
         }
 
     }
 
-
-
     private void showMyDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.user_info_this_pop_show_dialog, null);
+        RelativeLayout layout_choose = view.findViewById(R.id.layout_choose);
+        RelativeLayout layout_photo = view.findViewById(R.id.layout_photo);
+        RelativeLayout layout_close = view.findViewById(R.id.layout_close);
+        layout_photo.setOnClickListener(arg0 -> {
+            int checkCallPhonePermission = ActivityCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.CAMERA);
+            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(UserInfoThisActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
+            } else {
+                openCamera();
+                avatorPop.dismiss();
+            }
+        });
 
-//        View view = LayoutInflater.from(this).inflate(R.layout.currentuserinfo_pop_show_dialog, null);
-//        RelativeLayout layout_choose = (RelativeLayout) view.findViewById(R.id.layout_choose);
-//        RelativeLayout layout_photo = (RelativeLayout) view.findViewById(R.id.layout_photo);
-//        RelativeLayout layout_close = (RelativeLayout) view.findViewById(R.id.layout_close);
-//
-//        layout_photo.setOnClickListener(arg0 -> {
-//            openCamera();
-//            avatorPop.dismiss();
-//        });
-//
-//        layout_choose.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View arg0) {
-//
-//                if (ContextCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//
-//                    //6.0及以上的系统在使用危险权限的时候必须进行运行时权限处理
-//                    ActivityCompat.requestPermissions(UserInfoThisActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-//
-//                } else {
-//                    openPic();
-//                    avatorPop.dismiss();
-//                }
-//
-//            }
-//        });
-//
-//        layout_close.setOnClickListener(v -> avatorPop.dismiss());
-//
-//
-//        DisplayMetrics metric = new DisplayMetrics();
-//        //getWindowManager().getDefaultDisplay().getMetrics(metric);
-//        mScreenWidth = metric.widthPixels;
-//        avatorPop = new PopupWindow(view, mScreenWidth, 200);
-//        avatorPop.setTouchInterceptor(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-//                    avatorPop.dismiss();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//
-//        avatorPop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-//        avatorPop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-//        avatorPop.setTouchable(true);
-//        avatorPop.setFocusable(true);
-//        avatorPop.setOutsideTouchable(true);
-//        avatorPop.setBackgroundDrawable(new BitmapDrawable());
-//        // 动画效果 从底部弹起
-//        avatorPop.setAnimationStyle(R.style.AppTheme);
-//        avatorPop.showAtLocation(mBinding.all, Gravity.BOTTOM, 0, 0);
+        layout_choose.setOnClickListener(arg0 -> {
+            if (ContextCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                //6.0及以上的系统在使用危险权限的时候必须进行运行时权限处理
+                ActivityCompat.requestPermissions(UserInfoThisActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            } else {
+                openAlbum();
+                avatorPop.dismiss();
+            }
+        });
+
+        layout_close.setOnClickListener(v -> avatorPop.dismiss());
+        DisplayMetrics metric = new DisplayMetrics();
+        //getWindowManager().getDefaultDisplay().getMetrics(metric);
+        mScreenWidth = metric.widthPixels;
+        avatorPop = new PopupWindow(view, mScreenWidth, 200);
+        avatorPop.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                    avatorPop.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        avatorPop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        avatorPop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        avatorPop.setTouchable(true);
+        avatorPop.setFocusable(true);
+        avatorPop.setOutsideTouchable(true);
+        avatorPop.setBackgroundDrawable(new BitmapDrawable());
+        // 动画效果 从底部弹起
+        avatorPop.setAnimationStyle(R.style.AppTheme);
+        avatorPop.showAtLocation(binding.all, Gravity.BOTTOM, 0, 0);
     }
 
     /**
      * 打开相册
      */
-    private void openPic() {
-        Intent picIntent = new Intent(Intent.ACTION_PICK, null);
-        picIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(picIntent, REQUESTCODE_PIC);
+    private void openAlbum() {
+        Intent intent = new Intent(Intent.ACTION_PICK, null);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, REQUESTCODE_PIC);
     }
 
     /**
      * 调用相机
      */
     private void openCamera() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            if (!file.exists()) {
-                file.mkdirs();
+        //创建file对象用于储存拍摄的照片
+        portraitFile = new File(getExternalCacheDir(), "output_image.jpg");
+
+        try {
+            if (portraitFile.exists()) {
+                portraitFile.delete();
             }
-            mFile = new File(file, System.currentTimeMillis() + ".jpg");
-            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-            if (currentapiVersion < 24) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFile));
-                startActivityForResult(intent, REQUESTCODE_CAM);
-            } else {
-                int checkCallPhonePermission = ActivityCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.CAMERA);
-                if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(UserInfoThisActivity.this, new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
-                } else {
-                    ContentValues contentValues = new ContentValues(1);
-                    contentValues.put(MediaStore.Images.Media.DATA, mFile.getAbsolutePath());
-                    Uri uri = FileProvider.getUriForFile(this.getApplicationContext(), "com.example.yangq.lab_manage_sys.SwApplication.fileprovider", mFile);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                    startActivityForResult(intent, REQUESTCODE_CAM);
-                }
-            }
-        } else {
-            Toast.makeText(this, "请确认已经插入SD卡", Toast.LENGTH_SHORT).show();
+            portraitFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            imageUri = FileProvider.getUriForFile(UserInfoThisActivity.this, "com.lfork.a98620.lfree.fileprovider", portraitFile);
+        } else {
+            imageUri = Uri.fromFile(portraitFile);
+        }
+
+        //启动相机程序
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        //将url关联到相机拍摄的图片上面
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, REQUESTCODE_CAM);
     }
 
-//    private void setPicToView(Intent data) {
-//        Uri uri = data.getData();
-//        if (uri != null) {
-//            Glide.with(this).load(uri.getPath()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mBinding.imageHead);
+    private void setPicToView(Intent data) {
+        Uri uri = data.getData();
+        if (uri != null) {
+            Image.setImage(binding.head, ProviderHelper.getFilePathOnKitKat(getApplicationContext(), uri));
 //            ContactsRepository repository = ContactsRepository.getInstance(this);
 //            viewModel.setIsUpdating(true);
 //            repository.updateUserPortrait(new DataSource.GeneralCallback<String>() {
@@ -262,8 +292,8 @@ public class UserInfoThisActivity extends AppCompatActivity {
 //
 //                }
 //            }, uri.getPath());
-//        }
-//    }
+        }
+    }
 
     /**
      * 打开系统图片裁剪功能
@@ -272,15 +302,8 @@ public class UserInfoThisActivity extends AppCompatActivity {
      */
     private void startPhotoZoom(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            File uriFile = new File(ImageTool.getPath(getApplicationContext(), uri));
-            intent.setDataAndType(Uri.fromFile(uriFile), "image/*");
-        } else {
-            intent.setDataAndType(uri, "image/*");
-        }
-
-
+        intent.setDataAndType(uri, "image/*");
+        intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.putExtra("crop", true);
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
@@ -288,7 +311,7 @@ public class UserInfoThisActivity extends AppCompatActivity {
         intent.putExtra("outputY", 300);
         intent.putExtra("scale", true); //黑边
         intent.putExtra("scaleUpIfNeeded", true); //黑边
-        intent.putExtra("return-data", true);        //设置为true的话将会返回一个bitmap 设置为false的话就会返回路径
+        intent.putExtra("return-data", false);        //设置为true的话将会返回一个bitmap 设置为false的话就会返回路径
         intent.putExtra("noFaceDetection", true);
         startActivityForResult(intent, REQUESTCODE_CUT);
     }
@@ -296,22 +319,11 @@ public class UserInfoThisActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            //就像onActivityResult一样这个地方就是判断你是从哪来的。
             case 222:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                    if (!file.exists()) {
-                        file.mkdirs();
-                    }
-                    mFile = new File(file, System.currentTimeMillis() + ".jpg");
-                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                    ContentValues contentValues = new ContentValues(1);
-                    contentValues.put(MediaStore.Images.Media.DATA, mFile.getAbsolutePath());
-                    Uri uri = FileProvider.getUriForFile(this.getApplicationContext(), "com.example.yangq.lab_manage_sys.SwApplication.fileprovider", mFile);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                    startActivityForResult(intent, REQUESTCODE_CAM);
+                    openCamera();
+                    avatorPop.dismiss();
                 } else {
                     // Permission Denied
                     Toast.makeText(UserInfoThisActivity.this, "很遗憾你把相机权限禁用了", Toast.LENGTH_SHORT)
@@ -320,7 +332,7 @@ public class UserInfoThisActivity extends AppCompatActivity {
                 break;
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openPic();
+                    openAlbum();
                     avatorPop.dismiss();
                 } else {
                     Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
@@ -331,4 +343,8 @@ public class UserInfoThisActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        portraitOnClick((ImageView) view);
+    }
 }

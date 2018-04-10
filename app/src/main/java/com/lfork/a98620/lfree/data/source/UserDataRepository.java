@@ -105,16 +105,29 @@ public class UserDataRepository implements UserDataSource {
 
     @Override
     public void updateThisUser(GeneralCallback<String> callback, User user) {
-        localDataSource.updateThisUser(new GeneralCallback<String>() {
-            @Override
-            public void success(String data) {
-                Log.d(TAG, "success: " + data);
-            }
+        callback.success("okok");
+        updateLocalUserInfo(user);
 
-            @Override
-            public void failed(String log) {
-                Log.d(TAG, "failed: " + log);
-            }
-        }, user);
+
+//        localDataSource.updateThisUser(new GeneralCallback<String>() {
+//            @Override
+//            public void success(String data) {
+//                Log.d(TAG, "success: " + data);
+//            }
+//
+//            @Override
+//            public void failed(String log) {
+//                Log.d(TAG, "failed: " + log);
+//            }
+//        }, user);
+    }
+
+    private void updateLocalUserInfo(User newUser){
+
+        //更新本地的user信息
+       mUser.setUserPhone(newUser.getUserPhone());
+        mUser.setUserEmail(newUser.getUserEmail());
+        mUser.setUserDesc(newUser.getUserDesc());
+        //user.save(); //将新的信息保存到数据库
     }
 }
