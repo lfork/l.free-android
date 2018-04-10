@@ -1,15 +1,22 @@
 package com.lfork.a98620.lfree.chatwindow;
 
+import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
+import com.lfork.a98620.lfree.userinfothis.UserInfoThisActivity;
+import com.lfork.a98620.lfree.userinfothis.UserInfoThisEditActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +33,14 @@ public class ChatWindowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initActionBar("张二蛋");
         setContentView(R.layout.chat_window_act);
         initMeg(); //初始化几条message数据
+        initUI();
 
+    }
+
+    private void initUI(){
         //消息界面的List设置
         recyclerView = (RecyclerView) findViewById(R.id.message_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -79,4 +91,38 @@ public class ChatWindowActivity extends AppCompatActivity {
         messageList.add(watermelon);
 
     }
+
+    public void initActionBar(String title) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(title);
+        actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
+        // 有小箭头，并且图标可以点击
+        actionBar.setDisplayShowHomeEnabled(false);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.menu1:
+                Intent intent = new Intent(ChatWindowActivity.this, UserInfoActivity.class);
+                startActivityForResult(intent, 4);
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.common_action_bar, menu);
+        MenuItem item = menu.getItem(0);
+        item.setTitle("卖家信息");
+        return true;
+    }
+
 }

@@ -2,25 +2,20 @@
 <layout>
 
     <data>
-
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.chatlist.ChatListItemViewModel" />
-
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/Login_BorderColor"
-        android:onClick="@{()->viewModel.onClick()}"
         android:orientation="vertical"
         tools:ignore="UseCompoundDrawables">
 
-        <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        <com.daimajia.swipe.SwipeLayout
             android:id="@+id/swipe"
             android:layout_width="match_parent"
             android:layout_height="59dp">
@@ -64,6 +59,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="59dp"
+                android:onClick="@{()->viewModel.onClick()}"
                 android:background="@drawable/item_selector">
 
                 <LinearLayout

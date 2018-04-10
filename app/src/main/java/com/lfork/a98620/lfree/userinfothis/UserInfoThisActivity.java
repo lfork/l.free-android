@@ -158,7 +158,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
 
                 }
 
-
                 break;
             case REQUESTCODE_CUT:
                 if (data != null) {

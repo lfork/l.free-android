@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.main.chatlist;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -21,13 +22,11 @@ public class ChatListFragment extends Fragment {
     private List<Goods> contactsList;
     private List<ChatListItemViewModel> models = new ArrayList<>();
     private static final String TAG = "ChatListFragment";
-    RecyclerView recyclerView ;
+    RecyclerView recyclerView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.main_chat_list_frag, container, false);
         recyclerView = view.findViewById(R.id.main_chat_recycler);
         initGoodsList();
@@ -37,31 +36,26 @@ public class ChatListFragment extends Fragment {
 
     private void initGoodsList() {
         contactsList = new ArrayList<>();
-        for (int i =0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             Goods goods = new Goods();
             goods.setName("goods" + i);
             goods.setId(i);
             goods.setPrice(String.valueOf(i * 100));
             goods.setCoverImagePath("???");
             contactsList.add(goods);
-            Log.d(TAG, "initGoodsList: test1" + i );
+            Log.d(TAG, "initGoodsList: test1" + i);
         }
 
         for (Goods g : contactsList) {
             models.add(new ChatListItemViewModel(getContext()));
         }
-        Log.d(TAG, "initGoodsList: test1" );
+        Log.d(TAG, "initGoodsList: test1");
 
 
-
-
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        //        recyclerView .setLayoutManager(new LinearLayoutManager(context,
-//                LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new RecyclerViewItemAdapter<>(models, R.layout.main_chat_list_contacts_item));
     }
-
 
 
 }
