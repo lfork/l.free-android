@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                android:background="#50000000"
+                android:background="#9d000000"
                 android:orientation="vertical"
                 >
 
@@ -71,7 +71,7 @@
                     android:gravity="center"
                     android:ellipsize="end"
                     android:text="@{viewModel.price}"
-                    android:textColor="@color/Home_Goods_Text2"
+                    android:textColor="@color/Home_Goods_Money"
                     android:textSize="16sp" />
 
 

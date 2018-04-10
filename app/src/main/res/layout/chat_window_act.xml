@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="0dp">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -25,38 +25,42 @@
 
 
     <RelativeLayout
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/send_window"
+            android:background="#dfdfdf" />
 
         <LinearLayout
             android:id="@+id/send_window"
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            >
+            android:layout_alignParentBottom="true"
+            android:background="#f8f8fa">
 
             <EditText
                 android:id="@+id/edit_window"
-                android:labelFor="@+id/edit_window"
-                android:hint="@string/type_something_here"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="3"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="4"
-                android:inputType="none" />
+                android:hint="@string/type_something_here"
+                android:inputType="none"
+                android:labelFor="@+id/edit_window"
+                android:maxLines="3" />
 
             <Button
                 android:id="@+id/btn_send"
-                android:text="@string/send"
-                android:textAllCaps="false"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:background="#8dc33b"
+                android:text="@string/send"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
@@ -64,8 +68,7 @@
             android:id="@+id/message_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/send_window"
-            >
+            android:layout_above="@id/send_window">
 
         </android.support.v7.widget.RecyclerView>
 

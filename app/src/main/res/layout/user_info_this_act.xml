@@ -70,7 +70,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="10dp"
-                        android:background="@drawable/user_user" />
+                        android:background="@drawable/user_no" />
 
 
                     <TextView

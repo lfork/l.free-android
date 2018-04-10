@@ -101,13 +101,7 @@
                         android:textSize="16sp" />
 
 
-                    <ImageView
-                        android:id="@+id/btn_img1"
-                        android:layout_width="15dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="24dp" />
+
                 </RelativeLayout>
 
                 <View
@@ -144,13 +138,7 @@
                         android:textSize="16sp" />
 
 
-                    <ImageView
-                        android:id="@+id/btn_img2"
-                        android:layout_width="15dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="24dp" />
+
                 </RelativeLayout>
 
                 <View
@@ -184,14 +172,6 @@
                         android:text="设置"
                         android:textSize="16sp" />
 
-
-                    <ImageView
-                        android:id="@+id/btn_img4"
-                        android:layout_width="15dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="24dp" />
                 </RelativeLayout>
 
                 <View
