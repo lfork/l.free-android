@@ -3,9 +3,11 @@ package com.lfork.a98620.lfree.data.source;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.source.local.GoodsLocalDataSource;
 import com.lfork.a98620.lfree.data.source.remote.GoodsRemoteDataSource;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,6 +24,8 @@ public class GoodsDataRepository implements GoodsDataSource {
     private GoodsRemoteDataSource remoteDataSource;
 
     private GoodsLocalDataSource localDataSource;
+
+    private HashMap<Integer, List<Goods>> goodsMap = new HashMap<>();
 
     private boolean mCachedDataIsDirty = true;
 
@@ -49,7 +53,25 @@ public class GoodsDataRepository implements GoodsDataSource {
 
     @Override
     public void getGoodsList(GeneralCallback<List<Goods>> callback, String cursor, int categoryId) {
-        remoteDataSource.getGoodsList(callback, cursor,categoryId);
+        remoteDataSource.getGoodsList(new GeneralCallback<List<Goods>>() {
+            @Override
+            public void success(List<Goods> data) {
+                List<Goods> localData = goodsMap.get(categoryId);
+                if (localData == null){
+                    localData = data;
+                    goodsMap.put(categoryId, localData);
+                } else {
+                    localData.addAll(data);
+                }
+                callback.success(localData);
+            }
+
+            @Override
+            public void failed(String log) {
+                callback.failed(log);
+
+            }
+        }, cursor, categoryId);
     }
 
     @Override
@@ -61,5 +83,23 @@ public class GoodsDataRepository implements GoodsDataSource {
     @Override
     public void refreshData() {
         mCachedDataIsDirty = true;
+    }
+
+    @Override
+    public void getGoods(GeneralCallback<GoodsDetailInfo> callback, int goodsId) {
+        remoteDataSource.getGoods(callback, goodsId);
+    }
+
+
+    public Goods getGoods(int categoryId,int goodsId){
+        List<Goods> localData = goodsMap.get(categoryId);
+
+        for(Goods g: localData){
+            if (g.getId() == goodsId){
+                return g;
+            }
+        }
+
+        return null;
     }
 }

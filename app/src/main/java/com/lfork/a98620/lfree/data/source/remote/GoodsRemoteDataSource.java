@@ -1,8 +1,10 @@
 package com.lfork.a98620.lfree.data.source.remote;
 
 import com.google.gson.reflect.TypeToken;
+import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.source.GoodsDataSource;
 import com.lfork.a98620.lfree.data.source.remote.httpservice.Result;
 import com.lfork.a98620.lfree.data.source.remote.httpservice.Service;
@@ -105,6 +107,11 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
 
     @Override
     public void refreshData() {
+
+    }
+
+    @Override
+    public void getGoods(GeneralCallback<GoodsDetailInfo> callback, int goodsId) {
 
     }
 }

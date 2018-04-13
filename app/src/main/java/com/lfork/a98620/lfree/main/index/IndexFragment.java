@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.common.GlideImageLoader;
 import com.lfork.a98620.lfree.databinding.MainIndexFragBinding;
+import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class IndexFragment extends Fragment {
             MainIndexFragBinding binding = DataBindingUtil.inflate(inflater, R.layout.main_index_frag, container, false);
             binding.setViewModel(new IndexFragmentViewModel(binding, getActivity(), getLayoutInflater()));
             rootView = binding.getRoot();
+            initBanner();
         }
         // 缓存的rootView需要判断是否已经被加过parent，
         // 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
@@ -43,6 +46,14 @@ public class IndexFragment extends Fragment {
 
     }
 
+    private void initBanner(){
+        Banner banner = rootView.findViewById(R.id.announcement_banner);
+        List<String> images = new ArrayList<>();
+        images.add("http://www.lfork.top/Test/2.png");
+        images.add("http://www.lfork.top/Test/3.png");
+        images.add("http://www.lfork.top/Test/4.png");
+        banner.setImages(images).setImageLoader(new GlideImageLoader()).start();
+    }
     private static final String TAG = "A";
 
 

@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.main_act);
         binding.setViewModel(this);
-        UserDataRepository mRepository = UserDataRepository.getInstance();
         initFragments();
     }
 

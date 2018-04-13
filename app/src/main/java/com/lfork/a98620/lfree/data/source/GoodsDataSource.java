@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.data.source;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.entity.User;
 
 import java.util.ArrayList;
@@ -18,5 +19,7 @@ public interface GoodsDataSource extends DataSource {
     void getCategories(GeneralCallback<List<Category>> callback);
 
     void refreshData();
+
+    void getGoods(GeneralCallback<GoodsDetailInfo> callback, int goodsId);
 
 }

@@ -11,10 +11,14 @@ import com.lfork.a98620.lfree.data.source.remote.httpservice.Service;
 import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.JSONUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -120,6 +124,35 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void updateThisUser(GeneralCallback<String> callback, User user) {
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), new File(""));
 
+//        Log.d(TAG, "fileUploadTest: " + file.length());
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+//                .addPart(Headers.of("Content-Disposition"
+//                        , "form-data; name=\"image\"; filename=\"enen.png\"")
+//                        , RequestBody.create(MEDIA_TYPE_PNG, file))
+//                .addFormDataPart("image", "image.png", fileBody)
+                .addFormDataPart("studentId", user.getUserId() + "")
+                .addFormDataPart("userEmail", user.getUserEmail())
+//                .addFormDataPart("userDesc", user.getUserDesc())
+                .addFormDataPart("userPhone", user.getUserPhone())
+                .addFormDataPart("userName", user.getUserName())
+                .build();
+        String responseData = new Service().sendPostRequest("http://www.lfork.top/22y/user_save", requestBody);
+
+        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {
+        });
+
+        if (result != null) {
+            if (result.getCode() == 1) {
+                callback.success(result.getMessage());
+            } else {
+                callback.failed(result.getMessage());
+            }
+        } else {
+            callback.failed("error 服务器异常");
+        }
     }
 }

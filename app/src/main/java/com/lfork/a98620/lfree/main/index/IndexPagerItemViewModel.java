@@ -98,7 +98,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
                 public void success(List<Goods> data) {
                     goodsList = data;
                     for (Goods g : goodsList) {
-                        models.add(new GoodsItemViewModel(context, g));
+                        models.add(new GoodsItemViewModel(context, g, category.getId()));
                     }
                     context.runOnUiThread(() -> {
                         refreshUI();

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:id="@+id/review_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/review_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp" />
+
+        <Button
+            android:text="发布评论"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/review_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

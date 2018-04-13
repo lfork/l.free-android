@@ -52,7 +52,7 @@
                         android:layout_toEndOf="@+id/img_phone"
                         android:gravity="start"
                         android:hint="电话号码"
-                        android:text="@{viewModel.phone}"
+                        android:text="@={viewModel.phone}"
                         android:textSize="14sp" />
                 </RelativeLayout>
 
@@ -80,7 +80,7 @@
                         android:layout_toEndOf="@+id/img_email"
                         android:gravity="start"
                         android:hint="邮箱"
-                        android:text="@{viewModel.email}"
+                        android:text="@={viewModel.email}"
                         android:textSize="14sp" />
 
                 </RelativeLayout>
@@ -108,7 +108,7 @@
                         android:layout_toEndOf="@+id/img_detail"
                         android:gravity="start"
                         android:hint="个人备注和描述."
-                        android:text="@{viewModel.description}"
+                        android:text="@={viewModel.description}"
                         android:textSize="14sp" />
                 </RelativeLayout>
 

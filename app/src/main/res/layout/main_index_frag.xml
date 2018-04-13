@@ -22,22 +22,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:focusableInTouchMode="true"
-                app:layout_scrollFlags="scroll|enterAlways|snap">
+                app:layout_scrollFlags="scroll">
                 <!--android:focusableInTouchMode="true" 这个可以禁用 search view自动获取焦点-->
-
-
-                <!--<SearchView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="50dp"-->
-                <!--"-->
-                <!--android:iconifiedByDefault="false"-->
-                <!--android:shadowColor="@color/white"-->
-                <!--android:queryHint="Java从入门到精通"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--/>-->
 
 
                 <Button
@@ -45,6 +34,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/main_ic_search_grey_24dp"
@@ -54,6 +44,7 @@
                     android:id="@+id/editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
@@ -61,6 +52,14 @@
                     android:focusable="false"
                     android:hint="Java从入门到精通"
                     android:onClick="@{()->viewModel.openSearch()}" />
+
+                <com.youth.banner.Banner
+                    android:id="@+id/announcement_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_below="@+id/editText">
+
+                </com.youth.banner.Banner>
 
             </RelativeLayout>
 

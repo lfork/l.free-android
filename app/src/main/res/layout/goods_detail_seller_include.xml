@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel"/>
+
+
+    </data>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
+
+    <ImageView
+        android:layout_marginStart="10dp"
+        android:id="@+id/portrait"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:onClick="@{()->viewModel.openSellerInfo()}"
+        app:setImageWithDiskCache="@{viewModel.sellerImage}"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:text="@{viewModel.sellerName}"
+        android:id="@+id/user_name"
+       android:layout_toEndOf="@id/portrait"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:text="私聊"
+        android:onClick="@{()->viewModel.startPrivateChat()}"
+        android:layout_alignParentEnd="true"
+        android:layout_width="60dp"
+        android:layout_centerVertical="true"
+        android:layout_height="60dp"
+        />
+
+
+
+</RelativeLayout>
+</layout>

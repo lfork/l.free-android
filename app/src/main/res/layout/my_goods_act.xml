@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.lfork.a98620.lfree.mygoods.MyGoodsActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_goods_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+    </android.support.v7.widget.RecyclerView>
+
 </android.support.constraint.ConstraintLayout>

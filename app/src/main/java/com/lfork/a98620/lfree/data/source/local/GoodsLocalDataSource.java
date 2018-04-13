@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.data.source.local;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.GoodsDataSource;
 import com.lfork.a98620.lfree.data.source.UserDataSource;
@@ -50,6 +51,11 @@ public class GoodsLocalDataSource implements GoodsDataSource {
 
     @Override
     public void refreshData() {
+
+    }
+
+    @Override
+    public void getGoods(GeneralCallback<GoodsDetailInfo> callback, int goodsId) {
 
     }
 }

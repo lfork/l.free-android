@@ -26,22 +26,27 @@ public class GoodsItemViewModel extends BaseViewModel{
 
     private int id;
 
+    private int categoryId;
+
     public String price;
 
     public ObservableField<String> imagePath = new ObservableField<>();
 
-    GoodsItemViewModel(Context context, Goods g) {
+    GoodsItemViewModel(Context context, Goods g, int categoryId) {
+        this.categoryId = categoryId;
         this.context = context;
         name = g.getName();
         id = g.getId();
         price = g.getPrice() + "元";
-        imagePath.set(Config.ServerURL + "/22y" + g.getCoverImagePath() ); //
+        imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath() ); //
         publishDate = g.getPublishDate();
     }
 
 
     public void onClick(){
         Intent intent = new Intent(context, GoodsDetailActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("category_id", categoryId);
         context.startActivity(intent);
     }
 }

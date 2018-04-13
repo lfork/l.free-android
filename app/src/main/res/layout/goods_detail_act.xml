@@ -1,9 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context="com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="170dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/goods_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@{viewModel.name}" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#000" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+
+                <TextView
+                    android:id="@+id/origin_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@{viewModel.originPrice}" />
+
+
+                <TextView
+                    android:id="@+id/sell_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="50dp"
+                    android:layout_toEndOf="@id/origin_price"
+                    android:gravity="center"
+                    android:text="@{viewModel.price}" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#000" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/goods_detail_seller_include"
+                app:viewModel="@{viewModel}"
+                />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/label1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:text="商品简介" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/label1"
+                    android:background="@null"
+                    android:gravity="start"
+                    android:text="@{viewModel.description}"
+                    android:lines="4"
+                    android:scrollbars="horizontal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#000" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+
+                <TextView
+                    android:id="@+id/categories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="种类：书籍文具" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#000" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/college_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="校区:航空港校区" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#000" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/goods_detail_review_include" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>
+

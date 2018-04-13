@@ -105,8 +105,21 @@ public class UserDataRepository implements UserDataSource {
 
     @Override
     public void updateThisUser(GeneralCallback<String> callback, User user) {
-        callback.success("okok");
-        updateLocalUserInfo(user);
+
+        remoteDataSource.updateThisUser(new GeneralCallback<String>() {
+            @Override
+            public void success(String data) {
+                callback.success(data);
+                updateLocalUserInfo(user);
+            }
+
+            @Override
+            public void failed(String log) {
+                callback.failed(log);
+
+            }
+        }, user);
+
 
 
 //        localDataSource.updateThisUser(new GeneralCallback<String>() {

@@ -33,8 +33,10 @@ public class ChatWindowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initActionBar("张二蛋");
         setContentView(R.layout.chat_window_act);
+        Intent intent = getIntent();
+        String userName = intent.getIntExtra("seller_id", -1) + "";
+        initActionBar(userName);
         initMeg(); //初始化几条message数据
         initUI();
 

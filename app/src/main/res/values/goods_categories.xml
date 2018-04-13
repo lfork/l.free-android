@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>数码影音</item>
+        <item>鞋服配饰</item>
+        <item>家居日用</item>
+        <item>手机通讯</item>
+        <item>电脑办公</item>
+        <item>图书影像</item>
+        <item>其他</item>
+    </string-array>
+</resources>

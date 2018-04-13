@@ -35,7 +35,6 @@ public class UserInfoThisViewModel extends UserViewModel{
         } else {
             description.set(user.getUserDesc());
         }
-
         imageUrl.set(user.getUserImagePath());
         email.set(user.getUserEmail());
         phone.set(user.getUserPhone());
@@ -47,6 +46,9 @@ public class UserInfoThisViewModel extends UserViewModel{
         this.context = context;
     }
 
+    void updateUserPortrait(){
+
+    }
 
     /**
      * 下面的操作是给edit界面使用的
@@ -54,8 +56,9 @@ public class UserInfoThisViewModel extends UserViewModel{
     void updateUserInfo(){
         //先搞一下异步操作，如果搞完以后是更新成功的话就重置本地信息，如果不是的话就不重置用户信息
         User newUser = new User();
-        newUser.setId(user.getUserId());
+        newUser.setUserId(user.getUserId());
         newUser.setUserPhone(phone.get());
+        newUser.setUserName(user.getUserName());
         newUser.setUserEmail(email.get());
         newUser.setUserDesc(description.get());
 

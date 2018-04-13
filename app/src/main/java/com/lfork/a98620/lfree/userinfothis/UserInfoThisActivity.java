@@ -73,7 +73,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
         if (viewModel != null) {
             viewModel.refreshData();
         }
-
     }
 
     @Override

@@ -49,9 +49,13 @@ dependencies {
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support:cardview-v7:27.1.0'
     //Shape Image View
-    compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
+    //轮播图
+    implementation 'com.youth.banner:banner:1.4.10'
+
 
     //SwipeLayout
-    compile 'com.android.support:recyclerview-v7:27.0.0'
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
+    implementation 'com.android.support:recyclerview-v7:27.0.0'
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
 }
