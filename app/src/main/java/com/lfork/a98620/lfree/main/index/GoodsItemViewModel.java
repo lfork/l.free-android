@@ -2,10 +2,14 @@ package com.lfork.a98620.lfree.main.index;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.ObservableField;
 
 import com.lfork.a98620.lfree.common.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
+import com.lfork.a98620.lfree.util.Config;
+
+import java.io.ObjectStreamField;
 
 /**
  *
@@ -24,16 +28,15 @@ public class GoodsItemViewModel extends BaseViewModel{
 
     public String price;
 
-    public String imagePath;
+    public ObservableField<String> imagePath = new ObservableField<>();
 
-    public GoodsItemViewModel(Context context, Goods g) {
+    GoodsItemViewModel(Context context, Goods g) {
         this.context = context;
         name = g.getName();
         id = g.getId();
-        price = g.getPrice();
-        imagePath = g.getCoverImagePath();
+        price = g.getPrice() + "元";
+        imagePath.set(Config.ServerURL + "/22y" + g.getCoverImagePath() ); //
         publishDate = g.getPublishDate();
-        imagePath = g.getCoverImagePath();
     }
 
 

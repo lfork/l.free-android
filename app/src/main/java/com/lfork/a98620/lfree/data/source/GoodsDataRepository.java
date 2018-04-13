@@ -48,8 +48,8 @@ public class GoodsDataRepository implements GoodsDataSource {
 
 
     @Override
-    public void getGoodsList(GeneralCallback<List<Goods>> callback, int pageIndex, int categoryId) {
-        remoteDataSource.getGoodsList(callback, pageIndex,categoryId);
+    public void getGoodsList(GeneralCallback<List<Goods>> callback, String cursor, int categoryId) {
+        remoteDataSource.getGoodsList(callback, cursor,categoryId);
     }
 
     @Override

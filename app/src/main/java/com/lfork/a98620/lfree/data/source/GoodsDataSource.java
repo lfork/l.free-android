@@ -13,7 +13,7 @@ import java.util.List;
  **/
 
 public interface GoodsDataSource extends DataSource {
-    void getGoodsList(GeneralCallback<List<Goods>> callback, int pageIndex, int categoryId);
+    void getGoodsList(GeneralCallback<List<Goods>> callback, String cursor, int categoryId);
 
     void getCategories(GeneralCallback<List<Category>> callback);
 

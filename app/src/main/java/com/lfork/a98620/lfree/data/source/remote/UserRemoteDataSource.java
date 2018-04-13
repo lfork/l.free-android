@@ -47,7 +47,7 @@ public class UserRemoteDataSource implements UserDataSource {
     @Override
     public void login(final GeneralCallback<User> callback, User user) {
 
-        String url = Config.ServerURL +  "22y/user_login";
+        String url = Config.ServerURL +  "/22y/user_login";
 
         RequestBody requestbody = new FormBody.Builder()
                 .add("studentId", user.getUserName())
@@ -73,7 +73,7 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void register(GeneralCallback<String> callback, User user) {
-        String url = Config.ServerURL + "22y/user_regist";
+        String url = Config.ServerURL + "/22y/user_regist";
 
         RequestBody requestbody = new FormBody.Builder()
                 .add("studentId", user.getStudentId())

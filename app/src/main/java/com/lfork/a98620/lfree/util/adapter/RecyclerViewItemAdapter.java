@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.main;
+package com.lfork.a98620.lfree.util.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.BR;
-import com.lfork.a98620.lfree.R;
 
 import java.util.List;
 
@@ -72,5 +71,13 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
         public ViewDataBinding getBinding() {
             return this.binding;
         }
+    }
+
+    public int getLayoutId() {
+        return layoutId;
+    }
+
+    public void setLayoutId(int layoutId) {
+        this.layoutId = layoutId;
     }
 }

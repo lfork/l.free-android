@@ -53,6 +53,5 @@ dependencies {
 
     //SwipeLayout
     compile 'com.android.support:recyclerview-v7:27.0.0'
-    compile 'com.android.support:support-v4:27.+'
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
 }

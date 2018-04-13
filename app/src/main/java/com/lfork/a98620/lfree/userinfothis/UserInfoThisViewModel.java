@@ -39,7 +39,7 @@ public class UserInfoThisViewModel extends UserViewModel{
         imageUrl.set(user.getUserImagePath());
         email.set(user.getUserEmail());
         phone.set(user.getUserPhone());
-        studentNumber.set(user.getStudentId());
+        studentNumber.set(user.getUserId() + "");
     }
 
     UserInfoThisViewModel(AppCompatActivity context) {

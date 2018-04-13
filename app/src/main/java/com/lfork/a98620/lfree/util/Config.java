@@ -5,5 +5,5 @@ package com.lfork.a98620.lfree.util;
  */
 
 public class Config {
-    public static String ServerURL = "http://www.lfork.top/";
+    public static String ServerURL = "http://www.lfork.top";
 }

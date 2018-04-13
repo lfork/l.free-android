@@ -6,18 +6,25 @@
 
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context="com.lfork.a98620.lfree.main.chatlist.ChatListFragment">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/main_chat_recycler"
+        <View
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            />
+
+
+        <ListView
+            android:id="@+id/main_chat_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        </ListView>
 
-        </android.support.v7.widget.RecyclerView>
-
-    </FrameLayout>
+    </LinearLayout>
 </layout>

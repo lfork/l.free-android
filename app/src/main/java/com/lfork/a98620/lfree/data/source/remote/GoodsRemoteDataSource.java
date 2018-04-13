@@ -43,47 +43,47 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
     }
 
     @Override
-    public void getGoodsList(GeneralCallback<List<Goods>> callback, int pageIndex, int categoryId) {
-        String url = Config.ServerURL + "22y/cs_getPageCsList";
+    public void getGoodsList(GeneralCallback<List<Goods>> callback, String cursor, int categoryId) {
+        String url = Config.ServerURL + "/22y/goodsApp_getGoodsPageApp";
 
         RequestBody requestbody = new FormBody.Builder()
                 .add("csId", categoryId + "")
-                .add("pageNo", pageIndex + "")
+                .add("cursor", cursor + "")
                 .build();
 
-        ArrayList<Goods> list1 = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Goods category = new Goods();
-            category.setName("Java从入门到精通");
-            category.setCoverImagePath("https://img10.360buyimg.com/n1/jfs/t3775/118/1324998209/351033/2016778a/5823e5f9N2eee28eb.jpg");
-            category.setPublishDate("2018.4.7");
-            category.setPrice(String.valueOf(i * 100) + "元");
-            category.setUserId(i);
-            category.setId(i);
-            list1.add(category);
-        }
-        callback.success(list1);
+//        ArrayList<Goods> list1 = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            Goods category = new Goods();
+//            category.setName("Java从入门到精通");
+//            category.setCoverImagePath("https://img10.360buyimg.com/n1/jfs/t3775/118/1324998209/351033/2016778a/5823e5f9N2eee28eb.jpg");
+//            category.setPublishDate("2018.4.7");
+//            category.setPrice(String.valueOf(i * 100) + "元");
+//            category.setUserId(i);
+//            category.setId(i);
+//            list1.add(category);
+//        }
+//        callback.success(list1);
 
         String responseData = new Service().sendPostRequest(url, requestbody);
 
         Result<ArrayList<Goods>> result = JSONUtil.parseJson(responseData, new TypeToken<Result<ArrayList<Goods>>>() {
         });
 
-//        if (result != null) {
-//            ArrayList<Goods> list = result.getData();
-//            if (list != null)
-//                callback.success(list);
-//            else {
-//                callback.failed(result.getMessage());
-//            }
-//        } else {
-//            callback.failed("error");
-//        }
+        if (result != null) {
+            ArrayList<Goods> list = result.getData();
+            if (list != null && list.size() > 0)
+                callback.success(list);
+            else {
+                callback.failed(result.getMessage());
+            }
+        } else {
+            callback.failed("error：服务器异常、或者是没有网络连接");
+        }
     }
 
     @Override
     public void getCategories(GeneralCallback<List<Category>> callback) {
-        String url = Config.ServerURL + "22y/cs_getCsList";
+        String url = Config.ServerURL + "/22y/cs_getCsList";
 
         RequestBody requestbody = new FormBody.Builder()
                 .build();

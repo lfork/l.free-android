@@ -1,122 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.chatlist.ChatListItemViewModel" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/Login_BorderColor"
-        android:orientation="vertical"
-        tools:ignore="UseCompoundDrawables">
+        android:layout_height="59dp">
 
-        <com.daimajia.swipe.SwipeLayout
-            android:id="@+id/swipe"
+        <!--侧拉条-->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="59dp">
+            android:layout_height="60dp"
+            android:background="#FF5534"
+            android:gravity="center"
+            android:tag="Bottom3"
 
-            <!--侧拉条-->
+            android:weightSum="10">
+
+            <ImageView
+                android:id="@+id/trash"
+                android:layout_width="27dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/trash" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Delete Item?"
+                android:textColor="#fff"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="4"
+                android:background="@drawable/white"
+                android:text="Yes,Delete"
+                android:textColor="#FF5534" />
+        </LinearLayout>
+
+        <!---->
+        <!--聊天框-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:onClick="@{()->viewModel.onClick()}"
+            android:background="@drawable/item_selector">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="#FF5534"
-                android:gravity="center"
-                android:tag="Bottom3"
-                android:weightSum="10">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/trash"
-                    android:layout_width="27dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/trash" />
+                    android:id="@+id/contacts_portrait"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/ic_contacts_black_24dp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="Delete Item?"
-                    android:textColor="#fff"
-                    android:textSize="17sp" />
-
-                <Button
-                    android:id="@+id/delete"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="4"
-                    android:background="@drawable/white"
-                    android:text="Yes,Delete"
-                    android:textColor="#FF5534" />
-            </LinearLayout>
-
-
-            <!--聊天框-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="59dp"
-                android:onClick="@{()->viewModel.onClick()}"
-                android:background="@drawable/item_selector">
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="59dp">
 
-                    <ImageView
-                        android:id="@+id/contacts_portrait"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="6dp"
-                        android:background="@drawable/ic_contacts_black_24dp" />
+                    <TextView
+                        android:id="@+id/contacts_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:singleLine="true"
+                        android:text="聊天对象"
+                        android:textColor="#000"
+                        android:textSize="20sp" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="59dp">
+                    <TextView
+                        android:id="@+id/contacts_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@+id/contacts_name"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="19:32:45"
+                        android:textSize="16sp" />
 
-                        <TextView
-                            android:id="@+id/contacts_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:singleLine="true"
-                            android:text="聊天对象"
-                            android:textColor="#000"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/contacts_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="26dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignTop="@+id/contacts_name"
-                            android:layout_marginEnd="20dp"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="19:32:45"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/contacts_contact"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignStart="@+id/contacts_name"
-                            android:layout_below="@+id/contacts_name"
-                            android:maxEms="15"
-                            android:singleLine="true"
-                            android:text="最近聊天记录就放在这里看看长度有多长"
-                            android:textSize="14sp" />
-                    </RelativeLayout>
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/contacts_contact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/contacts_name"
+                        android:layout_below="@+id/contacts_name"
+                        android:maxEms="15"
+                        android:singleLine="true"
+                        android:text="最近聊天记录就放在这里看看长度有多长"
+                        android:textSize="14sp" />
+                </RelativeLayout>
             </LinearLayout>
-        </com.daimajia.swipe.SwipeLayout>
-    </LinearLayout>
+        </LinearLayout>
+    </com.daimajia.swipe.SwipeLayout>
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:background="@color/Login_BorderColor"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:ignore="UseCompoundDrawables">-->
+    <!--</LinearLayout>-->
 
 </layout>
 

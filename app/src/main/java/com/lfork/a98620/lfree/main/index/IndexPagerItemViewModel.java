@@ -5,6 +5,9 @@ import android.databinding.ViewDataBinding;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.format.DateFormat;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.lfork.a98620.lfree.common.BaseViewModel;
 import com.lfork.a98620.lfree.R;
@@ -13,9 +16,10 @@ import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
 import com.lfork.a98620.lfree.databinding.MainIndexViewpagerItemBinding;
-import com.lfork.a98620.lfree.main.RecyclerViewItemAdapter;
+import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,7 +36,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
     private List<Goods> goodsList;
     private List<GoodsItemViewModel> models = new ArrayList<>();
     private FragmentActivity context;
-    private RecyclerViewItemAdapter adapter;
+    private GoodsRecyclerViewItemAdapter adapter;
     private boolean isInitialized = false;
     public final ObservableBoolean dataIsLoading = new ObservableBoolean(true);
 
@@ -51,7 +55,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
         RecyclerView recyclerView = binding.mainIndexRecycle;
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new RecyclerViewItemAdapter<>(models, R.layout.goods_recycle_item);
+        adapter = new GoodsRecyclerViewItemAdapter<>(models, R.layout.goods_recycle_item);
         recyclerView.setAdapter(adapter);
     }
 
@@ -79,6 +83,16 @@ public class IndexPagerItemViewModel extends BaseViewModel {
                 e.printStackTrace();
             }
 
+            String cursor ;
+
+            if (goodsList != null && goodsList.size() > 0){
+                cursor = goodsList.get(goodsList.size() - 1).getPublishDate();
+            } else {
+                cursor =   DateFormat.format("yyyy-MM-dd HH:mm:ss",new Date()).toString();
+            }
+
+            Log.d(TAG, "initData: ");
+
             repository.getGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
                 @Override
                 public void success(List<Goods> data) {
@@ -86,37 +100,19 @@ public class IndexPagerItemViewModel extends BaseViewModel {
                     for (Goods g : goodsList) {
                         models.add(new GoodsItemViewModel(context, g));
                     }
-
                     context.runOnUiThread(() -> {
                         refreshUI();
                     });
                 }
                 @Override
                 public void failed(String log) {
-
+                    context.runOnUiThread(() -> {
+                        refreshUI();
+                        Toast.makeText(context, log, Toast.LENGTH_LONG).show();
+                    });
                 }
-            }, 1, category.getId());
+            }, cursor, category.getId());
         }).start();
-
-
-
-//        goodsList = new ArrayList<>();
-//        for (int i =0; i < 20; i++){
-//            Goods goods = new Goods();
-//            goods.setDescription("aaaaaaa");
-//            goods.setName("goods" + i);
-//            goods.setId(i);
-//            goods.setPrice(String.valueOf(i * 100));
-//            goods.setCoverImagePath("???");
-//            goodsList.add(goods);
-////            Log.d(TAG, "initGoodsList: test1" + i );
-//        }
-////        Log.d(TAG, "initGoodsList: test1" );
-//
-
-
-
-
     }
 
     private void refreshGoodsList() {
