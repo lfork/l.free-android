@@ -12,7 +12,7 @@ public class User extends DataSupport {
 
     private int userId;     //用户的ID
 
-    private String studentId;
+    private String studentId;  //userId == studentId
 
     private String userName;    //用户姓名
 

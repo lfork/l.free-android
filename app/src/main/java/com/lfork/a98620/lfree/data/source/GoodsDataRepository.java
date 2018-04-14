@@ -1,6 +1,5 @@
 package com.lfork.a98620.lfree.data.source;
 
-import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
@@ -26,6 +25,8 @@ public class GoodsDataRepository implements GoodsDataSource {
     private GoodsLocalDataSource localDataSource;
 
     private HashMap<Integer, List<Goods>> goodsMap = new HashMap<>();
+
+    private List<Category> categories;
 
     private boolean mCachedDataIsDirty = true;
 
@@ -61,6 +62,7 @@ public class GoodsDataRepository implements GoodsDataSource {
                     localData = data;
                     goodsMap.put(categoryId, localData);
                 } else {
+                    localData.clear();
                     localData.addAll(data);
                 }
                 callback.success(localData);
@@ -76,7 +78,19 @@ public class GoodsDataRepository implements GoodsDataSource {
 
     @Override
     public void getCategories(GeneralCallback<List<Category>> callback) {
-        remoteDataSource.getCategories(callback);
+        remoteDataSource.getCategories(new GeneralCallback<List<Category>>() {
+            @Override
+            public void success(List<Category> data) {
+                categories = data;
+                callback.success(data);
+            }
+
+            @Override
+            public void failed(String log) {
+                callback.failed(log);
+
+            }
+        });
     }
 
 
@@ -90,6 +104,10 @@ public class GoodsDataRepository implements GoodsDataSource {
         remoteDataSource.getGoods(callback, goodsId);
     }
 
+    @Override
+    public void uploadGoods(GeneralCallback<String> callback, Goods g) {
+        remoteDataSource.uploadGoods(callback, g);
+    }
 
     public Goods getGoods(int categoryId,int goodsId){
         List<Goods> localData = goodsMap.get(categoryId);
@@ -101,5 +119,9 @@ public class GoodsDataRepository implements GoodsDataSource {
         }
 
         return null;
+    }
+
+    public List<Category> getCategories(){
+        return categories;
     }
 }

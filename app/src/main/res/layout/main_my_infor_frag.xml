@@ -40,7 +40,7 @@
                         app:siBorderColor="@color/white"
                         app:siBorderWidth="1dp"
                         app:siRadius="5dp"
-                        app:setImageNoCache="@{viewModel.imageUrl}"/>
+                        app:setImageWithDiskCache="@{viewModel.imageUrl}"/>
 
                     <TextView
                         android:id="@+id/name"
@@ -49,7 +49,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@id/head"
-                        android:text="@{viewModel.username}"
+                        android:text="@={viewModel.username}"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
@@ -63,7 +63,7 @@
                         android:layout_toEndOf="@+id/head"
 
                         android:paddingRight="20dp"
-                        android:text="@{viewModel.description}"
+                        android:text="@={viewModel.description}"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </RelativeLayout>

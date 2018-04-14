@@ -3,7 +3,6 @@ package com.lfork.a98620.lfree.data.source.remote;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
-import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.UserDataSource;
 import com.lfork.a98620.lfree.data.source.remote.httpservice.Result;
@@ -12,11 +11,8 @@ import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.JSONUtil;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.FormBody;
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -124,19 +120,12 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void updateThisUser(GeneralCallback<String> callback, User user) {
-        RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), new File(""));
 
-//        Log.d(TAG, "fileUploadTest: " + file.length());
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-//                .addPart(Headers.of("Content-Disposition"
-//                        , "form-data; name=\"image\"; filename=\"enen.png\"")
-//                        , RequestBody.create(MEDIA_TYPE_PNG, file))
-//                .addFormDataPart("image", "image.png", fileBody)
                 .addFormDataPart("studentId", user.getUserId() + "")
                 .addFormDataPart("userEmail", user.getUserEmail())
-//                .addFormDataPart("userDesc", user.getUserDesc())
                 .addFormDataPart("userPhone", user.getUserPhone())
                 .addFormDataPart("userName", user.getUserName())
                 .build();
@@ -154,5 +143,50 @@ public class UserRemoteDataSource implements UserDataSource {
         } else {
             callback.failed("error 服务器异常");
         }
+    }
+
+    @Override
+    public void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath) {
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), new File(localFilePath));
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", "image.png", fileBody)
+                .addFormDataPart("studentId", studentId)
+                .build();
+        String responseData = new Service().sendPostRequest("http://www.lfork.top/22y/user_imageUpload", requestBody);
+        Result<String> result = JSONUtil.parseJson(responseData, new TypeToken<Result<String>>() {
+        });
+
+        if (result != null) {
+            if (result.getCode() == 1) {
+                callback.success(result.getData());
+            } else {
+                callback.failed(result.getMessage());
+            }
+        } else {
+            callback.failed("error 服务器异常");
+        }
+    }
+
+
+    @Override
+    public void getUserInfo(GeneralCallback<User> callback, int userId) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("studentId", userId+"")
+                .build();
+        String responseData = new Service().sendPostRequest("http://www.lfork.top/22y/user_info", requestBody);
+        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {
+        });
+
+        if (result != null) {
+            if (result.getCode() == 1) {
+                callback.success(result.getData());
+            } else {
+                callback.failed(result.getMessage());
+            }
+        } else {
+            callback.failed("error 服务器异常");
+        }
+
     }
 }

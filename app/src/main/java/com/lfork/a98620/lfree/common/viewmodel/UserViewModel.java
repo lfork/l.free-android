@@ -9,7 +9,7 @@ import com.lfork.a98620.lfree.common.BaseViewModel;
  * Created by 98620 on 2018/4/9.
  */
 
-public class UserViewModel extends BaseViewModel {
+public abstract class UserViewModel extends BaseViewModel {
 
     public final ObservableField<String> username = new ObservableField<>();
 

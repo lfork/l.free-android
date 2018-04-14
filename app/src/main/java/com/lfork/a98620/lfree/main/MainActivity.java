@@ -1,17 +1,16 @@
 package com.lfork.a98620.lfree.main;
 
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.source.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.MainActBinding;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
@@ -33,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.main_act);
         binding.setViewModel(this);
         initFragments();
+        UserDataRepository.getInstance(); //初始化user数据
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        ((MyInforFragment)fragments.get(3)).refreshData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GoodsDataRepository.destroyInstance();
+        UserDataRepository.destroyInstance();
     }
 
     public void onClick(View imageView, int index){
@@ -64,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        Log.d(TAG, "onClick: why there is no any response " + index );
+        Log.d(TAG, "onButton1Clicked: why there is no any response " + index );
         replaceFragment(fragments.get(index));
 
     }

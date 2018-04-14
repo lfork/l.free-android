@@ -30,13 +30,17 @@ public class ChatWindowActivity extends AppCompatActivity {
 
     private static final String TAG = "ChatWindowActivity";
 
+    private String username;
+
+    private int userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_window_act);
         Intent intent = getIntent();
-        String userName = intent.getIntExtra("seller_id", -1) + "";
-        initActionBar(userName);
+        userId = intent.getIntExtra("user_id", -1);
+        initActionBar(userId + "");
         initMeg(); //初始化几条message数据
         initUI();
 
@@ -82,7 +86,7 @@ public class ChatWindowActivity extends AppCompatActivity {
 
 
     private void initMeg() {
-        Log.d(TAG, "onClick: 测试1");
+        Log.d(TAG, "onButton1Clicked: 测试1");
         Message apple = new Message("Hey~, guy", Message.SendType);
         messageList.add(apple);
         Message banana = new Message("Hello, who is that?", Message.ReceiveType);
@@ -111,7 +115,9 @@ public class ChatWindowActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.menu1:
+
                 Intent intent = new Intent(ChatWindowActivity.this, UserInfoActivity.class);
+                intent.putExtra("user_id",userId);
                 startActivityForResult(intent, 4);
             default:
                 break;

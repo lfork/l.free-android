@@ -1,43 +1,25 @@
 package com.lfork.a98620.lfree.goodsdetail;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.ObservableField;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
-import com.lfork.a98620.lfree.common.BaseViewModel;
-import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.common.viewmodel.GoodsViewModel;
+import com.lfork.a98620.lfree.data.DataSource;
+import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
+import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
+
+import java.util.Arrays;
 
 /**
  * Created by 98620 on 2018/4/13.
  */
 
-public class GoodsDetailViewModel extends BaseViewModel {
-
-
-    public ObservableField<String> name = new ObservableField<>();
-
-    public ObservableField<String> publishDate = new ObservableField<>();
-
-    public ObservableField<String> price = new ObservableField<>();
-
-    public ObservableField<String> originPrice = new ObservableField<>();
-
-    public ObservableField<String> description = new ObservableField<>();
-
-    public ObservableField<String> type = new ObservableField<>();
-
-    public ObservableField<String> image1 = new ObservableField<>();
-
-    public ObservableField<String> image2 = new ObservableField<>();
-
-    public ObservableField<String> image3 = new ObservableField<>();
-
-    public ObservableField<String> image4 = new ObservableField<>();
-
-    public ObservableField<String> image5 = new ObservableField<>();
+public class GoodsDetailViewModel extends GoodsViewModel {
 
     public ObservableField<String> sellerImage = new ObservableField<>();
 
@@ -47,38 +29,64 @@ public class GoodsDetailViewModel extends BaseViewModel {
 
     private int userId;
 
-    private int categoryId;
+    private GoodsDetailActBinding binding;
+
+    private GoodsDetailInfo g;
 
     private GoodsDataRepository repository;
 
-    public GoodsDetailViewModel(Context context, int goodsId, int categoryId) {
+    private AppCompatActivity context;
 
+    GoodsDetailViewModel(AppCompatActivity context, int goodsId, GoodsDetailActBinding binding) {
         super(context);
-        this.categoryId = categoryId;
+        this.binding = binding;
         this.id = goodsId;
-        initData();
+        this.context = context;
+        refreshData();
     }
 
-    private void initData() {
+    private void refreshData() {
         repository = GoodsDataRepository.getInstance();
 
-        Goods g = repository.getGoods(categoryId, id);
+        new Thread(() -> {
+            repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
+                @Override
+                public void success(GoodsDetailInfo data) {
+                    g = data;
+                    context.runOnUiThread(() -> {
+                        setData();
+                    });
+                }
 
+                @Override
+                public void failed(String log) {
+                    context.runOnUiThread(() -> {
+                        Toast.makeText(context, "加载失败", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }, id);
+        }).start();
+    }
+
+    private void setData() {
         if (g == null) return;
-
         name.set(g.getName());
         price.set("现价：" + g.getPrice());
         originPrice.set("原价：" + g.getOriginPrice());
         description.set(g.getDescription());
-        sellerName.set(g.getUserId() + "");
+        sellerName.set(g.getUsername());
         publishDate.set(g.getPublishDate());
         sellerImage.set(g.getCoverImagePath());
+        sellerImage.set(g.getUserPortraitPath());
+        images.addAll(Arrays.asList( g.getImages()));
+        binding.banner.update(images);
+        userId = g.getUserId();
     }
 
     public void startPrivateChat() {
-        Intent intent = new Intent(getContext(), ChatWindowActivity.class);
-        intent.putExtra("seller_id", userId);
-        getContext().startActivity(intent);
+        Intent intent = new Intent(context, ChatWindowActivity.class);
+        intent.putExtra("user_id", userId);
+        context.startActivity(intent);
     }
 
     public void publishReview() {
@@ -87,9 +95,9 @@ public class GoodsDetailViewModel extends BaseViewModel {
 
     public void openSellerInfo() {
 
-        Intent intent = new Intent(getContext(), UserInfoActivity.class);
-        intent.putExtra("seller_id", userId);
-        getContext().startActivity(intent);
+        Intent intent = new Intent(context, UserInfoActivity.class);
+        intent.putExtra("user_id", userId);
+        context.startActivity(intent);
 
     }
 

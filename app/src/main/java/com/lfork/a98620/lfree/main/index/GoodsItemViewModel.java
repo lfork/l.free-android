@@ -18,8 +18,6 @@ import java.io.ObjectStreamField;
 
 public class GoodsItemViewModel extends BaseViewModel{
 
-    private Context context;
-
     public String name;
 
     public String publishDate;

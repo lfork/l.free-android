@@ -4,11 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -16,29 +14,21 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.databinding.UserInfoThisActBinding;
-import com.lfork.a98620.lfree.util.ImageTool;
 import com.lfork.a98620.lfree.util.ProviderHelper;
-import com.lfork.a98620.lfree.util.mvvmadapter.Image;
+import com.lfork.a98620.lfree.util.customview.PopupDialog;
+import com.lfork.a98620.lfree.util.customview.PopupDialogOnclickListener;
+import com.lfork.a98620.lfree.util.image.ImageTool;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
@@ -60,11 +50,10 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
     private static final int REQUESTCODE_CAM = 2;//相机
     private static final int REQUESTCODE_CUT = 3;//图片裁剪
 
-    PopupWindow avatorPop;
+    private PopupWindow avatorPop; //自定义view
 
     private File portraitFile;
 
-    protected int mScreenWidth;
 
     //刷新一下数据
     @Override
@@ -85,12 +74,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
         initActionBar();
     }
 
-
-    public void portraitOnClick(ImageView view) {
-        showMyDialog();
-    }
-
-
     public void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
@@ -100,6 +83,14 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
         actionBar.setDisplayShowHomeEnabled(false);
 
     }
+
+
+    public void portraitOnClick(ImageView view) {
+
+        showMyDialog();
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -160,7 +151,7 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
                 break;
             case REQUESTCODE_CUT:
                 if (data != null) {
-                    setPicToView(data);
+                    viewModel.updateUserPortrait(ProviderHelper.getFilePathOnKitKat(getApplicationContext(),data.getData()));
                 }
                 break;
         }
@@ -168,55 +159,34 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void showMyDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.user_info_this_pop_show_dialog, null);
-        RelativeLayout layout_choose = view.findViewById(R.id.layout_choose);
-        RelativeLayout layout_photo = view.findViewById(R.id.layout_photo);
-        RelativeLayout layout_close = view.findViewById(R.id.layout_close);
-        layout_photo.setOnClickListener(arg0 -> {
-            int checkCallPhonePermission = ActivityCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.CAMERA);
-            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(UserInfoThisActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
-            } else {
-                openCamera();
-                avatorPop.dismiss();
-            }
-        });
-
-        layout_choose.setOnClickListener(arg0 -> {
-            if (ContextCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                //6.0及以上的系统在使用危险权限的时候必须进行运行时权限处理
-                ActivityCompat.requestPermissions(UserInfoThisActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            } else {
-                openAlbum();
-                avatorPop.dismiss();
-            }
-        });
-
-        layout_close.setOnClickListener(v -> avatorPop.dismiss());
-        DisplayMetrics metric = new DisplayMetrics();
-        //getWindowManager().getDefaultDisplay().getMetrics(metric);
-        mScreenWidth = metric.widthPixels;
-        avatorPop = new PopupWindow(view, mScreenWidth, 200);
-        avatorPop.setTouchInterceptor(new View.OnTouchListener() {
+        new PopupDialog(this, new PopupDialogOnclickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    avatorPop.dismiss();
-                    return true;
+            public void onFirstButtonClicked(PopupDialog dialog) {
+                int checkCallPhonePermission = ActivityCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.CAMERA);
+                if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(UserInfoThisActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
+                } else {
+                    openCamera();
                 }
-                return false;
             }
-        });
+            @Override
+            public void onSecondButtonClicked(PopupDialog dialog) {
+                if (ContextCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    //6.0及以上的系统在使用危险权限的时候必须进行运行时权限处理
+                    ActivityCompat.requestPermissions(UserInfoThisActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    openAlbum();
 
-        avatorPop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        avatorPop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        avatorPop.setTouchable(true);
-        avatorPop.setFocusable(true);
-        avatorPop.setOutsideTouchable(true);
-        avatorPop.setBackgroundDrawable(new BitmapDrawable());
-        // 动画效果 从底部弹起
-        avatorPop.setAnimationStyle(R.style.AppTheme);
-        avatorPop.showAtLocation(binding.all, Gravity.BOTTOM, 0, 0);
+                }
+            }
+
+            @Override
+            public void onCanceledClicked(PopupDialog dialog) {
+
+            }
+        },binding.all).show();
+
+
     }
 
     /**
@@ -257,41 +227,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
         startActivityForResult(intent, REQUESTCODE_CAM);
     }
 
-    private void setPicToView(Intent data) {
-        Uri uri = data.getData();
-        if (uri != null) {
-            Image.setImage(binding.head, ProviderHelper.getFilePathOnKitKat(getApplicationContext(), uri));
-//            ContactsRepository repository = ContactsRepository.getInstance(this);
-//            viewModel.setIsUpdating(true);
-//            repository.updateUserPortrait(new DataSource.GeneralCallback<String>() {
-//                @Override
-//                public void success(String data1) {
-//
-//                    mRepository.refreshUsers();
-//                    mRepository.getUsers(new DataSource.GeneralCallback<List<Contacts>>() {
-//                        @Override
-//                        public void success(List<Contacts> data) {
-//                            viewModel.setIsUpdating(false);
-//                            Toast.makeText(getApplicationContext(), data1, Toast.LENGTH_LONG).show();
-//                        }
-//
-//                        @Override
-//                        public void failed(String log) {
-//                            viewModel.setIsUpdating(false);
-//
-//                        }
-//                    });
-//                }
-//
-//                @Override
-//                public void failed(String log) {
-//                    Toast.makeText(getApplicationContext(), log, Toast.LENGTH_LONG).show();
-//                    viewModel.setIsUpdating(false);
-//
-//                }
-//            }, uri.getPath());
-        }
-    }
 
     /**
      * 打开系统图片裁剪功能

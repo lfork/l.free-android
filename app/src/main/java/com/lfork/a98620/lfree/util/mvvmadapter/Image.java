@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.util.mvvmadapter;
 
 import android.databinding.BindingAdapter;
+import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -14,22 +15,30 @@ import com.lfork.a98620.lfree.util.GlideOptions;
 
 public class Image {
     @BindingAdapter({"setImageNoCache"})
-    public static void setImage(ImageView view, String imageUrl) {
+    public static void setImageNoCache(ImageView view, String imageUrl) {
         GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).placeholder(R.drawable.login_logo).skipMemoryCache(true);
         Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
     }
 
     @BindingAdapter({"setImageWithDiskCache"})
-    public static void setImage2(ImageView view, String imageUrl) {
+    public static void setImageWithDiskCache(ImageView view, String imageUrl) {
         GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).placeholder(R.drawable.login_logo).skipMemoryCache(false);
         Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
     }
 
     @BindingAdapter({"setImage"})
-    public static void setImage3(ImageView view, String imageUrl) {
+    public static void setImage(ImageView view, String imageUrl) {
         Glide.with(view.getContext()).load(imageUrl).into(view);
     }
 
+    public static void setImageNoCache(ImageView view, Uri uri) {
+        GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
+        Glide.with(view.getContext()).load(uri).apply(options).into(view);
+    }
+
+    public static void setImage(ImageView view, Uri uri) {
+        Glide.with(view.getContext()).load(uri).into(view);
+    }
 
 
 }

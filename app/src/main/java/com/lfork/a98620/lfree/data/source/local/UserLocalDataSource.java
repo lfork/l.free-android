@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.data.source.local;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.UserDataSource;
 import com.lfork.a98620.lfree.data.source.remote.httpservice.Result;
@@ -71,7 +72,7 @@ public class UserLocalDataSource implements UserDataSource {
     @Override
     public boolean saveThisUser(User user) {
         try {
-            DataSupport.deleteAll(User.class);
+//            DataSupport.deleteAll(User.class);
             return user.save();
         } catch (Exception e) {
             return false;
@@ -81,6 +82,16 @@ public class UserLocalDataSource implements UserDataSource {
     @Override
     public void updateThisUser(GeneralCallback<String> callback, User user) {
         user.update(user.getId());
+
+    }
+
+    @Override
+    public void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath) {
+
+    }
+
+    @Override
+    public void getUserInfo(GeneralCallback<User> callback, int userId) {
 
     }
 }

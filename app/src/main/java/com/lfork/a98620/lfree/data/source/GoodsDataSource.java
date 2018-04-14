@@ -4,9 +4,7 @@ import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
-import com.lfork.a98620.lfree.data.entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,5 +19,7 @@ public interface GoodsDataSource extends DataSource {
     void refreshData();
 
     void getGoods(GeneralCallback<GoodsDetailInfo> callback, int goodsId);
+
+    void uploadGoods(GeneralCallback<String> callback, Goods g);
 
 }

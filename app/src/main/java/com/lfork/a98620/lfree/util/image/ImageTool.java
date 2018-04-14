@@ -1,8 +1,7 @@
-package com.lfork.a98620.lfree.util;
+package com.lfork.a98620.lfree.util.image;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;

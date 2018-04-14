@@ -27,5 +27,8 @@ public interface UserDataSource extends DataSource {
 
     void updateThisUser(GeneralCallback<String> callback, User user);
 
+    void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath);
+
+    void getUserInfo(GeneralCallback<User> callback, int userId);
 
 }

@@ -27,7 +27,7 @@ public class GoodsDetailActivity extends AppCompatActivity {
         int goodsId = intent.getIntExtra("id", 0);
         int categoryId = intent.getIntExtra("category_id", 0);
         binding = DataBindingUtil.setContentView(this, R.layout.goods_detail_act);
-        binding.setViewModel(new GoodsDetailViewModel(this, goodsId, categoryId));
+        binding.setViewModel(new GoodsDetailViewModel(this, goodsId, binding));
         initBanner();
         initActionBar("宝贝详情");
     }

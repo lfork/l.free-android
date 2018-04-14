@@ -4,239 +4,296 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.lfork.a98620.lfree.goodsupload.GoodsUploadActivity">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.goodsupload.GoodsUploadViewModel"/>
+        <import type="android.view.View"/>
+
+    </data>
+
 
 <ScrollView
     android:layout_width="match_parent"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="选择图片上传"/>
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            >
 
-            <ImageView
-                android:src="@drawable/goods_upload_icon"
-                android:id="@+id/image1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="TODO" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="选择图片上传"/>
 
-            <ImageView
-                android:id="@+id/image2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="TODO" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
 
+                <ImageView
+                    android:src="@drawable/goods_upload_icon"
+                    android:id="@+id/image1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:onClick="@{()->viewModel.selectImages(0)}"
+                    android:layout_weight="1"
+                    android:contentDescription="TODO"
+                    android:visibility="@{viewModel.imageVisible[0] ? View.VISIBLE : View.INVISIBLE}"/>
 
-            <ImageView
-                android:id="@+id/image3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="TODO" />
-
-
-            <ImageView
-                android:id="@+id/image4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="TODO" />
+                <ImageView
+                    android:id="@+id/image2"
+                    android:src="@drawable/goods_upload_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.selectImages(1)}"
+                    android:visibility="@{viewModel.imageVisible[1] ? View.VISIBLE : View.INVISIBLE}"/>
 
 
-            <ImageView
-                android:id="@+id/image5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="TODO" />
+                <ImageView
+                    android:id="@+id/image3"
+                    android:src="@drawable/goods_upload_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.selectImages(2)}"
+                    android:visibility="@{viewModel.imageVisible[2] ? View.VISIBLE : View.INVISIBLE}"/>
+
+
+                <ImageView
+                    android:id="@+id/image4"
+                    android:layout_width="0dp"
+                    android:src="@drawable/goods_upload_icon"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.selectImages(3)}"
+                    android:visibility="@{viewModel.imageVisible[3] ? View.VISIBLE : View.INVISIBLE}"/>
+
+
+                <ImageView
+                    android:id="@+id/image5"
+                    android:layout_width="0dp"
+                    android:src="@drawable/goods_upload_icon"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.selectImages(4)}"
+                    android:visibility="@{viewModel.imageVisible[4] ? View.VISIBLE : View.INVISIBLE}"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@={viewModel.name}"
+                    android:hint="商品名"
+                    android:background="@null"
+                    android:inputType="text" />
+
+                <View
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:focusableInTouchMode="true"
+                android:layout_height="120dp">
+
+
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:lines="4"
+                    android:gravity="start"
+                    android:text="@={viewModel.description}"
+                    android:hint="商品描述"
+                    android:inputType="text" />
+
+                <View
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/origin_price"
+                    android:layout_centerVertical="true"
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="原价:"/>
+
+                <EditText
+                    android:layout_toEndOf="@id/origin_price"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:text="@={viewModel.originPrice}"
+                    android:inputType="number" />
+
+                <View
+                    android:layout_centerInParent="true"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#000"/>
+
+
+                <TextView
+                    android:layout_toStartOf="@id/sell_price_edit"
+                    android:id="@+id/sell_price"
+                    android:layout_centerVertical="true"
+                    android:layout_width="80dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="卖价:"/>
+
+                <EditText
+                    android:id="@+id/sell_price_edit"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:text="@={viewModel.price}"
+                    android:inputType="text" />
+
+                <View
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+
+                <TextView
+                    android:id="@+id/categories"
+                    android:layout_centerVertical="true"
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="分类:"/>
+
+
+
+                <View
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000"
+                    android:id="@+id/view" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_toEndOf="@id/categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:entries="@array/categories"
+                    android:layout_marginStart="16dp" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/college_location"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/view"
+                    android:gravity="center"
+                    android:text="校区:" />
+
+                <EditText
+                    android:layout_toEndOf="@id/college_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:inputType="text" />
+
+                <View
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000"/>
+
+            </RelativeLayout>
+
+
 
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000"/>
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}">
 
-            <TextView
-                android:id="@+id/goods_name"
-                android:layout_centerVertical="true"
-                android:layout_width="80dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:text="商品名:"/>
-
-            <EditText
-                android:layout_toEndOf="@id/goods_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:inputType="text" />
-
-            <View
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="120dp">
-
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:lines="4"
-                android:gravity="start"
-                android:hint="商品描述"
-                android:inputType="text" />
-
-            <View
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-            <TextView
-                android:id="@+id/origin_price"
-                android:layout_centerVertical="true"
-                android:layout_width="50dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:text="原价:"/>
-
-            <EditText
-                android:layout_toEndOf="@id/origin_price"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:inputType="number" />
-
-            <View
-                android:layout_centerInParent="true"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="#000"/>
-
-
-            <TextView
-                android:layout_toStartOf="@id/sell_price_edit"
-                android:id="@+id/sell_price"
-                android:layout_centerVertical="true"
-                android:layout_width="80dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:text="现价:"/>
-
-            <EditText
-                android:id="@+id/sell_price_edit"
-                android:layout_alignParentEnd="true"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:inputType="text" />
-
-            <View
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000"/>
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-
-            <TextView
-                android:id="@+id/categories"
-                android:layout_centerVertical="true"
-                android:layout_width="50dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:text="分类:"/>
-
-
-
-            <View
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000"/>
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_toEndOf="@id/categories"
+            <ProgressBar
+                android:id="@+id/login_progress"
+                style="?android:attr/progressBarStyleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:entries="@array/categories"
-                android:layout_marginStart="16dp" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
+                android:layout_marginBottom="8dp" />
 
             <TextView
-                android:id="@+id/college_location"
-                android:layout_centerVertical="true"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_progress"
+                android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:layout_height="match_parent"
-                android:text="校区:"/>
-
-            <EditText
-                android:layout_toEndOf="@id/college_location"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:inputType="text" />
-
-            <View
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000"/>
-
+                android:text="正在上传"
+                android:textColor="@color/black" />
         </RelativeLayout>
+    </FrameLayout>
 
 
-
-
-    </LinearLayout>
 
 </ScrollView>
+
+
 
 </layout>

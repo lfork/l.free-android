@@ -15,13 +15,18 @@ import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
 public class ChatListItemViewModel extends BaseViewModel {
     private static final String TAG = "ChatListItemViewModel";
 
+    private String userName;
+
+    private int userId;
+
     ChatListItemViewModel(Context context) {
         super(context);
     }
 
     public void onClick(){
-        Log.d(TAG, "onClick: ???" );
-        Intent intent = new Intent(getContext(), ChatWindowActivity.class);
-        getContext().startActivity(intent);
+        Log.d(TAG, "onButton1Clicked: ???" );
+        Intent intent = new Intent(context, ChatWindowActivity.class);
+        intent.putExtra("user_id", userId);
+        context.startActivity(intent);
     }
 }

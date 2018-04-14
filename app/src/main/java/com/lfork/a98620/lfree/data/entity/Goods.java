@@ -34,9 +34,12 @@ public class Goods implements Serializable{
     private String userPortraitPath;
 
     @SerializedName("gMakeDate")
-    private String publishDate;
+    private String
+            publishDate;
 
     private int userId;
+
+    private int categoryId;
 
 
     public String getName() {
@@ -117,5 +120,13 @@ public class Goods implements Serializable{
 
     public void setOriginPrice(String originPrice) {
         this.originPrice = originPrice;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

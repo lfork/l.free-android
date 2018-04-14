@@ -38,7 +38,7 @@
                         android:layout_gravity="center"
                         android:src="@drawable/login_logo"
                         android:layout_centerInParent="true"
-                        app:setImageNoCache="@{viewModel.imageUrl}"
+                        app:setImageWithDiskCache="@{viewModel.imageUrl}"
                         app:siBorderColor="@color/white"
                         app:siBorderWidth="1dp"
                         app:siRadius="5dp" />

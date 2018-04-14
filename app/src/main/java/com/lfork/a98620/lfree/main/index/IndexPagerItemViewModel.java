@@ -1,22 +1,21 @@
 package com.lfork.a98620.lfree.main.index;
 
-import android.databinding.ObservableBoolean;
 import android.databinding.ViewDataBinding;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.lfork.a98620.lfree.common.BaseViewModel;
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.common.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
 import com.lfork.a98620.lfree.databinding.MainIndexViewpagerItemBinding;
-import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +37,6 @@ public class IndexPagerItemViewModel extends BaseViewModel {
     private FragmentActivity context;
     private GoodsRecyclerViewItemAdapter adapter;
     private boolean isInitialized = false;
-    public final ObservableBoolean dataIsLoading = new ObservableBoolean(true);
 
 
     IndexPagerItemViewModel(Category category, ViewDataBinding binding, FragmentActivity context) {
@@ -57,6 +55,14 @@ public class IndexPagerItemViewModel extends BaseViewModel {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new GoodsRecyclerViewItemAdapter<>(models, R.layout.goods_recycle_item);
         recyclerView.setAdapter(adapter);
+
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshGoodsList();
+                binding.swipeRefresh.setRefreshing(false);
+            }
+        });  //刷新监听
     }
 
     private void refreshUI(){
@@ -71,8 +77,16 @@ public class IndexPagerItemViewModel extends BaseViewModel {
         if (isInitialized){
             return;
         }
-
         isInitialized = true;
+        refreshGoodsList();
+
+    }
+
+    private void loadMoreData(){
+
+    }
+
+    private void refreshGoodsList() {
         GoodsDataRepository repository = GoodsDataRepository.getInstance();
         new Thread(() -> {
 
@@ -97,6 +111,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
                 @Override
                 public void success(List<Goods> data) {
                     goodsList = data;
+                    models.clear();
                     for (Goods g : goodsList) {
                         models.add(new GoodsItemViewModel(context, g, category.getId()));
                     }
@@ -113,10 +128,6 @@ public class IndexPagerItemViewModel extends BaseViewModel {
                 }
             }, cursor, category.getId());
         }).start();
-    }
-
-    private void refreshGoodsList() {
-
     }
 
 }

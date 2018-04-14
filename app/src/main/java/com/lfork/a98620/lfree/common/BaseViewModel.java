@@ -2,13 +2,17 @@ package com.lfork.a98620.lfree.common;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
+import android.databinding.ObservableBoolean;
 
 /**
  * Created by 98620 on 2018/3/19.
  */
 
-public class BaseViewModel extends BaseObservable{
-    private Context context;
+public abstract class BaseViewModel extends BaseObservable{
+
+    public final ObservableBoolean dataIsLoading = new ObservableBoolean(true);
+
+    public Context context;
 
     public BaseViewModel() {
     }
@@ -17,11 +21,5 @@ public class BaseViewModel extends BaseObservable{
         this.context = context;
     }
 
-    public Context getContext() {
-        return context;
-    }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
 }

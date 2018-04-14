@@ -5,7 +5,7 @@
 
     <variable
         name="viewModel"
-        type="com.lfork.a98620.lfree.userinfothis.UserInfoThisViewModel" />
+        type="com.lfork.a98620.lfree.userinfo.UserInfoViewModel" />
 </data>
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,17 +44,6 @@
                     app:siBorderWidth="1dp"
                     app:siRadius="5dp" />
 
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/head"
-                    android:id="@+id/edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:text="点击上传我的头像"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
             </RelativeLayout
                 >
 

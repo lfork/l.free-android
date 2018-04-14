@@ -24,7 +24,9 @@
             <com.youth.banner.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="170dp" />
+                android:layout_height="170dp"
+                app:banner_default_image="@drawable/goods_upload_icon"
+                />
 
             <View
                 android:layout_width="match_parent"

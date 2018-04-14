@@ -58,4 +58,7 @@ dependencies {
     //SwipeLayout
     implementation 'com.android.support:recyclerview-v7:27.0.0'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+
+    //图片选择框架
+    compile 'com.zhihu.android:matisse:0.4.3'
 }
