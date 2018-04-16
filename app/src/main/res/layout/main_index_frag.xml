@@ -44,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
                     android:layout_toLeftOf="@+id/search_btn"
                     android:focusable="false"
                     android:hint="Java从入门到精通"
@@ -64,11 +65,11 @@
 
 
         <RelativeLayout
-            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}">
+            android:layout_marginTop="20dp"
+            android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <ProgressBar
                 android:id="@+id/login_progress"

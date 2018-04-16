@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true">
+
+    <View
+        android:id="@+id/view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/viewColor" />
+
 
     <LinearLayout
         android:id="@+id/review_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_layout">
+
+
         <EditText
             android:id="@+id/review_content"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp" />
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1" />
 
         <Button
-            android:text="发布评论"
             android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:layout_height="40dp" />
+            android:layout_marginRight="10dp"
+            android:background="@color/Login_Button"
+            android:text="发布评论"
+            android:textColor="@color/white" />
+
 
     </LinearLayout>
 
 
-
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/review_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/review_layout"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp">
 
     </android.support.v7.widget.RecyclerView>
 

@@ -49,6 +49,7 @@ dependencies {
     //Material Design 扩展库
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support:cardview-v7:27.1.0'
+    compile 'com.nineoldandroids:library:2.4.0'
     //Shape Image View
     implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 

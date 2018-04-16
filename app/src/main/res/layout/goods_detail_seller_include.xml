@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout>
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel"/>
+            type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel" />
 
 
     </data>
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="70dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
 
-    <ImageView
-        android:layout_marginStart="10dp"
-        android:id="@+id/portrait"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:onClick="@{()->viewModel.openSellerInfo()}"
-        app:setImageWithDiskCache="@{viewModel.sellerImage}"
-        android:layout_centerVertical="true"/>
+        <ImageView
+            android:id="@+id/portrait"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:onClick="@{()->viewModel.openSellerInfo()}"
+            app:setImageWithDiskCache="@{viewModel.sellerImage}" />
 
-    <TextView
-        android:text="@{viewModel.sellerName}"
-        android:id="@+id/user_name"
-       android:layout_toEndOf="@id/portrait"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@id/portrait"
+            android:text="@{viewModel.sellerName}" />
 
-    <Button
-        android:text="私聊"
-        android:onClick="@{()->viewModel.startPrivateChat()}"
-        android:layout_alignParentEnd="true"
-        android:layout_width="60dp"
-        android:layout_centerVertical="true"
-        android:layout_height="60dp"
-        />
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:background="@color/Login_Button"
+            android:onClick="@{()->viewModel.startPrivateChat()}"
+            android:text="私聊"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
 
 
-
-</RelativeLayout>
+    </RelativeLayout>
 </layout>

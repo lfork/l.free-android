@@ -6,10 +6,12 @@
     tools:context="com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel"/>
-        <import type="android.view.View"/>
+            type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <ScrollView
@@ -25,32 +27,33 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                app:banner_default_image="@drawable/goods_upload_icon"
-                />
+                app:banner_default_image="@drawable/goods_upload_icon" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000" />
+                android:layout_height="10dp"
+                android:background="@color/viewColor" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="50dp">
 
                 <TextView
                     android:id="@+id/goods_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
                     android:gravity="center"
-                    android:text="@{viewModel.name}" />
+                    android:text="@{viewModel.name}"
+                    android:textSize="20sp" />
 
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
-                    android:background="#000" />
+                    android:background="@color/viewColor" />
 
             </RelativeLayout>
 
@@ -58,14 +61,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 
-
                 <TextView
                     android:id="@+id/origin_price"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
                     android:gravity="center"
-                    android:text="@{viewModel.originPrice}" />
+                    android:text="@{viewModel.originPrice}"
+                    android:textColor="@color/Login_Button" />
 
 
                 <TextView
@@ -73,23 +77,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="100dp"
                     android:layout_toEndOf="@id/origin_price"
                     android:gravity="center"
-                    android:text="@{viewModel.price}" />
+                    android:text="@{viewModel.price}"
+                    android:textColor="@color/Home_Goods_Money" />
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="#000" />
 
             </RelativeLayout>
 
-            <include layout="@layout/goods_detail_seller_include"
-                app:viewModel="@{viewModel}"
-                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/viewColor" />
+
+            <include
+                layout="@layout/goods_detail_seller_include"
+                app:viewModel="@{viewModel}" />
 
 
             <RelativeLayout
@@ -101,25 +105,29 @@
                     android:id="@+id/label1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
                     android:background="@null"
-                    android:text="商品简介" />
+                    android:text="商品简介:"
+                    android:textSize="17sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/label1"
+                    android:layout_marginLeft="25dp"
                     android:background="@null"
                     android:gravity="start"
-                    android:text="@{viewModel.description}"
                     android:lines="4"
-                    android:scrollbars="horizontal" />
+                    android:scrollbars="horizontal"
+                    android:text="@{viewModel.description}"
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
-                    android:background="#000" />
+                    android:background="@color/viewColor" />
 
             </RelativeLayout>
 
@@ -134,6 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
                     android:gravity="center"
                     android:text="种类：书籍文具" />
 
@@ -142,7 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
-                    android:background="#000" />
+                    android:background="@color/viewColor" />
 
 
             </RelativeLayout>
@@ -157,14 +166,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
                     android:gravity="center"
-                    android:text="校区:航空港校区" />
+                    android:text="校区：航空港校区" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
-                    android:background="#000" />
+                    android:background="@color/viewColor" />
 
             </RelativeLayout>
 
