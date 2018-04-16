@@ -13,8 +13,6 @@ import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 
-import java.util.Arrays;
-
 /**
  * Created by 98620 on 2018/4/13.
  */
@@ -78,8 +76,14 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         publishDate.set(g.getPublishDate());
         sellerImage.set(g.getCoverImagePath());
         sellerImage.set(g.getUserPortraitPath());
-        images.addAll(Arrays.asList( g.getImages()));
-        binding.banner.update(images);
+
+        if (g.getImages() != null) {
+            String[] imagesStr = g.getImages();
+            for (String image : imagesStr){
+                images.add("http://www.lfork.top/image" + image);
+            }
+        }
+        binding.banner.update(images);      //刷新轮播图
         userId = g.getUserId();
     }
 

@@ -35,7 +35,7 @@ public class GlideEngine implements ImageEngine {
     }
     
     private void setImage(ImageView imageView, Uri uri){
-        Image.setImageNoCache(imageView, uri);
+        Image.setImageWithDiskCache(imageView, uri);
     }
 
 

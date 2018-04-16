@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.lfork.a98620.lfree.mygoods.MyGoodsActivity">
 
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="你当前还没有发布任何宝贝"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_goods_recycle"
         android:layout_width="match_parent"

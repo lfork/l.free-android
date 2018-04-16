@@ -119,6 +119,9 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 4:
+                if (data == null) {
+                    return;
+                }
                 String log = data.getStringExtra("data_return");
                 if (resultCode == RESULT_OK) {
                     Toast.makeText(this, log, Toast.LENGTH_LONG).show();

@@ -145,6 +145,10 @@ public class GoodsUploadActivity extends AppCompatActivity {
         if (imageViewIndex == -1) {
             return;
         }
+
+        if (mSelected == null) {
+            mSelected = new ArrayList<>();
+        }
         mSelected.add(imageUri);
         Image.setImage(imageViews.get(imageViewIndex), imageUri);
         imageViewIndex = -1;

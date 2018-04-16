@@ -1,5 +1,7 @@
 package com.lfork.a98620.lfree.data.source.remote;
 
+import android.util.Log;
+
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
@@ -139,13 +141,16 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
                 .addFormDataPart("gName", g.getName())
                 .addFormDataPart("gBuyPrice", g.getOriginPrice())
                 .addFormDataPart("gSellPrice", g.getPrice())
-                .addFormDataPart("coverImage", System.currentTimeMillis()+"image.png", files[0])
                 .addFormDataPart("gDesc", g.getDescription())
-                .build();
+                .addFormDataPart("coverImage", System.currentTimeMillis() + "image.png", files[0])
 
-        for(int i = 1; i > files.length; i++){
-            builder.addFormDataPart("images", "image.png", files[i]);
-            builder.addFormDataPart("desc" + i, "这个拿来干啥？？");
+        ;
+
+        for (int i = 1; i < files.length; i++) {
+            builder.addFormDataPart("images", System.currentTimeMillis() +"image.png", files[i])
+                    .addFormDataPart("desc", "这个拿来干啥？？");
+
+            Log.d(TAG, "uploadGoods: 子文件编号:" + i);
         }
 
         RequestBody requestBody = builder.build();
@@ -157,7 +162,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
 
         if (result != null) {
             if (result.getCode() == 1) {
-                callback.success(result.getData());
+                callback.success(result.getMessage());
             } else {
                 callback.failed(result.getMessage());
             }

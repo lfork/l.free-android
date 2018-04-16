@@ -43,12 +43,13 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/img_setting1"
                         android:gravity="center"
-                        android:text="setting1"
+                        android:text="消息推送"
                         android:textSize="16sp" />
 
                     <android.support.v7.widget.SwitchCompat
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="24dp" />
@@ -85,7 +86,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/img_setting2"
                         android:gravity="center"
-                        android:text="setting2"
+                        android:text="清除缓存(当前缓存 32.6MB)"
                         android:textSize="16sp" />
 
                     <android.support.v7.widget.SwitchCompat
@@ -125,7 +126,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/img_setting3"
                         android:gravity="center"
-                        android:text="setting3"
+                        android:text="显示我的真实联系方式"
                         android:textSize="16sp" />
 
                     <android.support.v7.widget.SwitchCompat

@@ -28,6 +28,7 @@
                     android:id="@+id/search_back"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:background="@drawable/back"
                     android:layout_gravity="center"
                     />
 
@@ -37,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:iconifiedByDefault="false"
-                    android:queryHint="联系人搜索" />
+                    android:queryHint="高等数学同济版" />
 
             </LinearLayout>
 
@@ -46,13 +47,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<FrameLayout-->
-        <!--android:id="@+id/contentFrame"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="56dp">-->
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp">
 
-    <!--</FrameLayout>-->
+    </FrameLayout>
 
 
 

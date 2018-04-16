@@ -2,9 +2,9 @@ package com.lfork.a98620.lfree.goodsdetail;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,9 +12,6 @@ import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.common.GlideImageLoader;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
 import com.youth.banner.Banner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GoodsDetailActivity extends AppCompatActivity {
 
@@ -28,21 +25,15 @@ public class GoodsDetailActivity extends AppCompatActivity {
         int categoryId = intent.getIntExtra("category_id", 0);
         binding = DataBindingUtil.setContentView(this, R.layout.goods_detail_act);
         binding.setViewModel(new GoodsDetailViewModel(this, goodsId, binding));
-        initBanner();
         initActionBar("宝贝详情");
+        initBanner();
     }
 
     private void initBanner(){
         Banner banner = findViewById(R.id.banner);
-        List<String> images = new ArrayList<>();
-        images.add("http://www.lfork.top/Test/1.png");
-        images.add("http://www.lfork.top/Test/1.png");
-        images.add("http://www.lfork.top/Test/1.png");
-        images.add("http://www.lfork.top/Test/1.png");
-        images.add("http://www.lfork.top/Test/1.png");
-        banner.setImages(images).setImageLoader(new GlideImageLoader()).start();
-
+        banner.setImageLoader(new GlideImageLoader()).start();
     }
+
 
     public void initActionBar(String title){
         ActionBar actionBar = getSupportActionBar();

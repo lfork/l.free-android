@@ -8,6 +8,7 @@ import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.source.UserDataRepository;
+import com.lfork.a98620.lfree.util.StringUtil;
 import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.image.ImageTool;
 
@@ -38,6 +39,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
         setImageVisibility();
         imagePathList = new ArrayList<>();
         repository = GoodsDataRepository.getInstance();
+        dataIsLoading.set(false);
 
     }
 
@@ -101,6 +103,27 @@ public class GoodsUploadViewModel extends GoodsViewModel {
             ToastUtil.showShort(context, "请上传图片");
             return;
         }
+        if (StringUtil.isNull(name.get()) ){
+            ToastUtil.showShort(context, "名称不能为空");
+            return;
+        }
+
+        if (StringUtil.isNull(description.get()) ){
+            ToastUtil.showShort(context, "描述不能为空");
+            return;
+        }
+
+        if (StringUtil.isNull(description.get()) ){
+            ToastUtil.showShort(context, "描述不能为空");
+            return;
+        }
+
+        if (StringUtil.isNull(price.get()) ){
+            ToastUtil.showShort(context, "价格不能为空");
+            return;
+        }
+
+
 
         dataIsLoading.set(true);
         Goods g = new Goods();
@@ -112,11 +135,13 @@ public class GoodsUploadViewModel extends GoodsViewModel {
         g.setPrice(price.get());
         g.setCategoryId(1);
 
-        if (imagePathList.size() > 1) {
-            String[] images = new String[imagePathList.size() - 1];
 
-            for (int i = 0, j = 1; j < imagePathList.size(); i++, j++) {
-                images[i] = imagePathList.get(i + 1);
+
+        if (imagePathList.size() >= 1) {
+            String[] images = new String[imagePathList.size()];
+
+            for (int i = 0; i < imagePathList.size(); i++) {
+                images[i] = imagePathList.get(i);
             }
             g.setImagesPath(images);
         }
