@@ -14,7 +14,8 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/viewColor">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -28,41 +29,34 @@
                 app:layout_scrollFlags="scroll">
                 <!--android:focusableInTouchMode="true" 这个可以禁用 search view自动获取焦点-->
 
-
-                <Button
-                    android:id="@+id/search_btn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/main_ic_search_grey_24dp"
-                    android:onClick="@{()->viewModel.openSearch()}" />
-
-                <EditText
-                    android:id="@+id/editText"
+                <FrameLayout
+                    android:id="@+id/top_frame"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toLeftOf="@+id/search_btn"
-                    android:focusable="false"
-                    android:hint="Java从入门到精通"
-                    android:onClick="@{()->viewModel.openSearch()}" />
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/Login_ForeColor"
+                    android:elevation="6dp">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="20dp"
+                        android:background="@drawable/main_shape_search_rectangle"
+                        android:drawableLeft="@drawable/main_ic_search_grey_24dp"
+                        android:focusable="false"
+                        android:hint="Java从入门到精通"
+                        android:onClick="@{()->viewModel.openSearch()}" />
+
+                </FrameLayout>
 
                 <com.youth.banner.Banner
                     android:id="@+id/announcement_banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_below="@+id/editText">
-
-                </com.youth.banner.Banner>
+                    android:layout_below="@id/top_frame"></com.youth.banner.Banner>
 
             </RelativeLayout>
-
-
         </android.support.design.widget.AppBarLayout>
-
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -94,16 +88,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
             android:orientation="vertical"
             android:visibility="@{viewModel.dataIsLoading?View.GONE:View.VISIBLE}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:background="#efefef"
-                android:elevation="3dp"
+                android:background="@color/white"
                 app:tabIndicatorColor="@color/Login_ForeColor"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/Login_ForeColor"
@@ -114,7 +109,8 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/main_index_frag_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/viewColor">
 
             </android.support.v4.view.ViewPager>
 

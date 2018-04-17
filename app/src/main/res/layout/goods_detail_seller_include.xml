@@ -35,7 +35,10 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toEndOf="@id/portrait"
-            android:text="@{viewModel.sellerName}" />
+            android:text="@{viewModel.sellerName}"
+            android:textColor="@color/Login_Button"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
             android:layout_width="80dp"

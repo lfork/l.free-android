@@ -35,6 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
                 android:onClick="@{(view)->viewModel.onClick(view,0)}"
                 android:orientation="horizontal">
 
@@ -54,6 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
                 android:onClick="@{(view)->viewModel.onClick(view,1)}"
                 android:orientation="horizontal">
 
@@ -87,6 +89,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
                 android:onClick="@{(view)->viewModel.onClick(view,2)}"
                 android:orientation="horizontal">
 
@@ -118,6 +121,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
                 android:onClick="@{(view)->viewModel.onClick(view,3)}"
                 android:orientation="horizontal">
 

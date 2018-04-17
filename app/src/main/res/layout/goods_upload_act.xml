@@ -207,6 +207,7 @@
                             android:src="@drawable/close"
                             android:visibility="@{viewModel.imageVisible[3] ? View.VISIBLE : View.INVISIBLE}" />
                     </FrameLayout>
+
                     <FrameLayout
                         android:id="@+id/frame6"
                         android:layout_width="100dp"
@@ -299,7 +300,8 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:text="原价:"
-                        android:textColor="@color/Login_Button" />
+                        android:textColor="@color/Login_Button"
+                        android:textSize="15sp" />
 
                     <EditText
                         android:layout_width="50dp"
@@ -325,7 +327,8 @@
                         android:layout_toEndOf="@id/line1"
                         android:gravity="center"
                         android:text="卖价:"
-                        android:textColor="@color/Home_Goods_Money" />
+                        android:textColor="@color/Home_Goods_Money"
+                        android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/sell_price_edit"
