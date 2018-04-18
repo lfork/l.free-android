@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 形状 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/Login_EditColor" />
+    <!-- 边框 -->
+    <stroke
+        android:width="1dip"
+        android:color="@color/white" />
+    <!-- 内填充颜色 -->
+    <padding
+        android:left="10dp"
+        android:right="10dp" />
+    <!-- 圆角 -->
+    <corners android:radius="6dp" />
+</shape>
+
