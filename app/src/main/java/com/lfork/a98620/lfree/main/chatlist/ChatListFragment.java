@@ -38,7 +38,6 @@ public class ChatListFragment extends Fragment {
             rootView = inflater.inflate(R.layout.main_chat_list_frag, container, false);
             listView = rootView.findViewById(R.id.main_chat_list);
             initGoodsList();
-
         }
         // 缓存的rootView需要判断是否已经被加过parent，
         // 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。

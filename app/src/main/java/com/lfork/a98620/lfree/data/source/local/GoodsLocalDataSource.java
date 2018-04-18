@@ -5,6 +5,8 @@ import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.source.GoodsDataSource;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 
 /**
@@ -41,7 +43,13 @@ public class GoodsLocalDataSource implements GoodsDataSource {
 
     @Override
     public void getCategories(GeneralCallback<List<Category>> callback) {
+        List<Category> categories = DataSupport.findAll(Category.class);
 
+        if (categories != null) {
+            callback.success(categories);
+        } else {
+            callback.failed("网络连接失败");
+        }
     }
 
     @Override

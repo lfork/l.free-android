@@ -1,7 +1,5 @@
 package com.lfork.a98620.lfree.data.source.remote;
 
-import android.util.Log;
-
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
@@ -142,15 +140,15 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
                 .addFormDataPart("gBuyPrice", g.getOriginPrice())
                 .addFormDataPart("gSellPrice", g.getPrice())
                 .addFormDataPart("gDesc", g.getDescription())
-                .addFormDataPart("coverImage", System.currentTimeMillis() + "image.png", files[0])
-
-        ;
+                .addFormDataPart("coverImage", System.currentTimeMillis() + "image.png", files[0]);
 
         for (int i = 1; i < files.length; i++) {
-            builder.addFormDataPart("images", System.currentTimeMillis() +"image.png", files[i])
+            builder.addFormDataPart("images", System.currentTimeMillis() + "image.png", files[i])
                     .addFormDataPart("desc", "这个拿来干啥？？");
+        }
 
-            Log.d(TAG, "uploadGoods: 子文件编号:" + i);
+        if (files.length == 1) {
+            builder.addFormDataPart("desc", "只传了一张图片，没有描述");
         }
 
         RequestBody requestBody = builder.build();

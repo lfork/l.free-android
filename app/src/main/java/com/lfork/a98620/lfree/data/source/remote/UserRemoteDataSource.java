@@ -98,8 +98,6 @@ public class UserRemoteDataSource implements UserDataSource {
         } else {
             callback.failed("error 服务器异常");
         }
-
-
     }
 
     @Override
@@ -120,8 +118,6 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void updateThisUser(GeneralCallback<String> callback, User user) {
-
-
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("studentId", user.getUserId() + "")

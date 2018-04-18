@@ -1,10 +1,14 @@
 package com.lfork.a98620.lfree.data.source;
 
+import android.util.Log;
+
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.source.local.GoodsLocalDataSource;
 import com.lfork.a98620.lfree.data.source.remote.GoodsRemoteDataSource;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.HashMap;
 import java.util.List;
@@ -83,14 +87,36 @@ public class GoodsDataRepository implements GoodsDataSource {
             public void success(List<Category> data) {
                 categories = data;
                 callback.success(data);
+                //做本地储存
+                DataSupport.deleteAll(Category.class);
+                DataSupport.saveAllAsync(categories).listen(success -> Log.d(TAG, "onFinish: 商品分类储存成功"));
             }
 
             @Override
             public void failed(String log) {
-                callback.failed(log);
+//                callback.failed(log);
+                //获取本地储存的数据
+                getLocalCategoryData(callback, log);
+            }
+        });
+    }
+
+
+    private void getLocalCategoryData(GeneralCallback<List<Category>> callback, String log0){
+        localDataSource.getCategories(new GeneralCallback<List<Category>>() {
+            @Override
+            public void success(List<Category> data) {
+                categories = data;
+                callback.success(data);
+            }
+
+            @Override
+            public void failed(String log) {
+                callback.failed(log0);
 
             }
         });
+
     }
 
 

@@ -78,7 +78,8 @@ public class GoodsUploadViewModel extends GoodsViewModel {
         }
     }
 
-    public void deleteImage() {
+    public void deleteImage(int index) {
+        imagePathList.remove(index);
         imageCount--;
     }
 
@@ -122,8 +123,6 @@ public class GoodsUploadViewModel extends GoodsViewModel {
             ToastUtil.showShort(context, "价格不能为空");
             return;
         }
-
-
 
         dataIsLoading.set(true);
         Goods g = new Goods();

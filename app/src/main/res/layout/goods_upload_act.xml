@@ -106,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="20dp"
-                            android:text="已选择(1/5)"
+                            android:text="已选择(0/5)"
                             android:textColor="@color/Login_ForeColor" />
                     </FrameLayout>
 
@@ -115,7 +115,8 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_toRightOf="@id/frame1">
+                        android:layout_toRightOf="@id/frame1"
+                      >
 
                         <ImageView
                             android:id="@+id/image1"
@@ -163,7 +164,8 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_below="@id/frame1"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        >
 
                         <ImageView
                             android:id="@+id/image3"
@@ -302,9 +304,10 @@
                         android:textColor="@color/Login_Button" />
 
                     <EditText
-                        android:layout_width="50dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@id/origin_price"
+                        android:layout_toStartOf="@id/line1"
                         android:background="@null"
                         android:inputType="number"
                         android:text="@={viewModel.originPrice}" />
@@ -426,6 +429,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:background="@color/halfTransparent"
                 android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}">
 
                 <ProgressBar
@@ -443,8 +447,8 @@
                     android:layout_below="@id/login_progress"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="正在上传"
-                    android:textColor="@color/black" />
+                    android:text="正在上传..."
+                    android:textColor="@color/white" />
             </RelativeLayout>
         </FrameLayout>
 

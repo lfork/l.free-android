@@ -2,16 +2,19 @@ package com.lfork.a98620.lfree.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.Serializable;
 
 /**
  * Created by 98620 on 2018/4/7.
  */
 
-public class Category implements Serializable {
+public class Category extends DataSupport implements Serializable {
 
-    @SerializedName("csId")
     private int id;
+
+    private int csId;
 
     @SerializedName("csName")
     private String name;
@@ -30,5 +33,13 @@ public class Category implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getCsId() {
+        return csId;
+    }
+
+    public void setCsId(int csId) {
+        this.csId = csId;
     }
 }

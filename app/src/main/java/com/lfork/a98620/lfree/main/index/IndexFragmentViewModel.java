@@ -1,12 +1,9 @@
 package com.lfork.a98620.lfree.main.index;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableBoolean;
 import android.databinding.ViewDataBinding;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
@@ -15,9 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lfork.a98620.lfree.BR;
@@ -65,7 +59,6 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
                 public void success(List<Category> data) {
                     context.runOnUiThread(() -> {
                         categories = (ArrayList<Category>) data;
-
                         initViewPager();
                         initTabLayout();
                         dataIsLoading.set(false);

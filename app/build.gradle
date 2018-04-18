@@ -46,21 +46,26 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.0'
     //数据库
     implementation 'org.litepal.android:core:1.6.1'
-    //Material Design 扩展库
-    implementation 'com.android.support:design:27.1.0'
-    implementation 'com.android.support:cardview-v7:27.1.0'
+
     compile 'com.nineoldandroids:library:2.4.0'
-    //Shape Image View
-    implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
-
-    //轮播图
-    implementation 'com.youth.banner:banner:1.4.10'
-
-
-    //SwipeLayout
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
-    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
 
     //图片选择框架
     compile 'com.zhihu.android:matisse:0.4.3'
+
+    /**
+     * layout相关引用
+     */
+
+    //流式布局
+    implementation 'com.google.android:flexbox:0.3.2'
+    //轮播图
+    implementation 'com.youth.banner:banner:1.4.10'
+    //Material Design 扩展库
+    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.0'
+    //Shape Image View
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    //SwipeLayout
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    implementation 'com.android.support:recyclerview-v7:27.0.0'
 }
