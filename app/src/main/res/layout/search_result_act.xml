@@ -7,17 +7,14 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <!--android:theme="@style/AppTheme.AppBarOverlay"-->
         <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-
-          >
+            android:layout_height="?attr/actionBarSize">
             <!--android:background="?attr/colorPrimary"-->
 
             <LinearLayout
@@ -28,15 +25,14 @@
                     android:id="@+id/search_back"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/back"
                     android:layout_gravity="center"
-                    />
+                    android:background="@drawable/back" />
 
                 <SearchView
                     android:id="@+id/toolbar_search"
-                    android:gravity="start"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
+                    android:gravity="start"
                     android:iconifiedByDefault="false"
                     android:queryHint="高等数学同济版" />
 
@@ -54,8 +50,6 @@
         android:layout_marginTop="56dp">
 
     </FrameLayout>
-
-
 
 
 </android.support.design.widget.CoordinatorLayout>

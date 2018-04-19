@@ -29,25 +29,37 @@
                 app:layout_scrollFlags="scroll">
                 <!--android:focusableInTouchMode="true" 这个可以禁用 search view自动获取焦点-->
 
-                <FrameLayout
+                <RelativeLayout
                     android:id="@+id/top_frame"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/Login_ForeColor"
                     android:elevation="6dp">
 
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="6dp"
+                        android:src="@drawable/main_icon" />
+
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:layout_margin="20dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_toEndOf="@id/icon"
                         android:background="@drawable/main_shape_search_rectangle"
                         android:drawableLeft="@drawable/main_ic_search_grey_24dp"
                         android:focusable="false"
                         android:hint="Java从入门到精通"
-                        android:onClick="@{()->viewModel.openSearch()}" />
+                        android:onClick="@{()->viewModel.openSearch()}"
+                        android:padding="8dp" />
 
-                </FrameLayout>
+                </RelativeLayout>
 
                 <com.youth.banner.Banner
                     android:id="@+id/announcement_banner"
@@ -113,7 +125,6 @@
                 android:background="@color/viewColor">
 
             </android.support.v4.view.ViewPager>
-
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>

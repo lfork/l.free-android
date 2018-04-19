@@ -46,7 +46,6 @@
                     android:layout_marginLeft="25dp"
                     android:gravity="center"
                     android:text="@{viewModel.name}"
-                    android:textColor="@color/Login_Button"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -133,7 +132,7 @@
                     android:scrollbars="horizontal"
                     android:text="@{viewModel.description}"
                     android:textColor="@color/Login_Button"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="match_parent"

@@ -75,7 +75,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="59dp">
+                        android:layout_height="60dp">
 
                         <TextView
                             android:id="@+id/contacts_name"
@@ -83,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="6dp"
                             android:singleLine="true"
                             android:text="聊天对象"
                             android:textColor="#000"

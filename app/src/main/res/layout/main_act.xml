@@ -28,30 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#fafafa"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:elevation="3dp">
+
 
             <RelativeLayout
-                android:id="@+id/publish_btn"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:onClick="@{(view)->viewModel.onClick(view,0)}"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:padding="3dp"
-                    android:src="@drawable/main_publish" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
@@ -61,8 +42,8 @@
 
                 <ImageView
                     android:id="@+id/goods_btn"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_above="@+id/goods_text"
                     android:layout_centerHorizontal="true"
                     android:checked="true"
@@ -83,9 +64,27 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/publish_btn"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="@{(view)->viewModel.onClick(view,0)}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="3dp"
+                    android:src="@drawable/main_publish" />
+
+
+            </RelativeLayout>
 
             <RelativeLayout
-
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
@@ -95,8 +94,8 @@
 
                 <ImageView
                     android:id="@+id/chat_btn"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_above="@+id/chat_text"
                     android:layout_centerHorizontal="true"
 
@@ -127,8 +126,8 @@
 
                 <ImageView
                     android:id="@+id/my_btn"
-                    android:layout_width="35dp"
-                    android:layout_height="34dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_above="@+id/my_text"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/main_my_btn_selector" />

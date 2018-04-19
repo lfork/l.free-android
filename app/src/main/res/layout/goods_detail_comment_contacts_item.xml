@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/comment_head"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/login_logo" />
+
+    <Button
+        android:id="@+id/comment_talk"
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/comment_name"
+        android:layout_marginEnd="10dp"
+        android:background="@color/Login_Button"
+        android:text="点击聊天"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/comment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/comment_head"
+        android:layout_toEndOf="@id/comment_head"
+        android:singleLine="true"
+        android:text="用户名"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/comment_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/comment_name"
+        android:layout_below="@id/comment_name"
+        android:layout_marginTop="3dp"
+        android:singleLine="true"
+        android:text="发表时间：2018年4月19日19:53:10"
+        android:textColor="#afafaf"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/comment_name"
+        android:layout_below="@+id/comment_time"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:text="评评论内内容评论内评评论内内容评论内容评论内容评论内容评论内容评论内"
+        android:textSize="12sp" />
+</RelativeLayout>

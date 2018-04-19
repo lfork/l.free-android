@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <!--侧拉条-->
+        <LinearLayout
+            android:layout_width="110dp"
+            android:layout_height="120dp"
+            android:background="#FF5534">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Delete"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <!--主体-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/item_selector">
+
+            <ImageView
+                android:id="@+id/goods_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/login_logo" />
+
+            <TextView
+                android:id="@+id/goods_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/goods_image"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/goods_image"
+                android:text="标题测试文案啊啊啊"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/goods_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/goods_name"
+                android:layout_below="@+id/goods_name"
+                android:layout_marginTop="9dp"
+                android:text="发布时间：2018年4月19日19:11:44" />
+
+            <TextView
+                android:id="@+id/goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/goods_image"
+                android:layout_alignStart="@+id/goods_time"
+                android:text="出售价格：50元"
+                android:textColor="@color/Home_Goods_Money"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </com.daimajia.swipe.SwipeLayout>
+</android.support.constraint.ConstraintLayout>
