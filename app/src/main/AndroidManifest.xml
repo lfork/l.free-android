@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lfork.a98620.lfree">
 
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -20,17 +19,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".main.MainActivity"
-            android:theme="@style/AppThemeNoActionBar">
-
-        </activity>
+            android:theme="@style/AppThemeNoActionBar"></activity>
         <activity android:name=".chatwindow.ChatWindowActivity" />
         <activity android:name=".goodsdetail.GoodsDetailActivity" />
         <activity android:name=".goodsupload.GoodsUploadActivity" />
         <activity
             android:name=".login.LoginActivity"
-            android:theme="@style/LoginTheme">
-
-        </activity>
+            android:theme="@style/LoginTheme"></activity>
         <activity android:name=".mygoods.MyGoodsActivity" />
         <activity
             android:name=".searchresult.SearchResultActivity"
@@ -47,12 +42,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".register.RegisterActivity">
-
-        </activity>
-        <activity android:name=".userinfothis.UserInfoThisEditActivity">
-
-        </activity>
+        <activity android:name=".register.RegisterActivity"></activity>
+        <activity android:name=".userinfothis.UserInfoThisEditActivity"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -63,6 +54,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
     </application>
 
 </manifest>

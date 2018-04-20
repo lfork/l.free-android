@@ -17,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.lfork.a98620.lfree.R;
@@ -64,6 +66,14 @@ public class GoodsUploadActivity extends AppCompatActivity {
             imageViews.add(binding.image4);
             imageViews.add(binding.image5);
         }
+
+        binding.editDescription.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
     }
 
 
@@ -108,7 +118,7 @@ public class GoodsUploadActivity extends AppCompatActivity {
             case REQUEST_CODE_CHOOSE:
                 if (resultCode == RESULT_OK) {
                     if (mSelected != null) {
-                        mSelected.addAll( Matisse.obtainResult(data));
+                        mSelected.addAll(Matisse.obtainResult(data));
                     } else {
                         mSelected = Matisse.obtainResult(data);
                     }
@@ -145,7 +155,6 @@ public class GoodsUploadActivity extends AppCompatActivity {
         if (imageViewIndex == -1) {
             return;
         }
-
         if (mSelected == null) {
             mSelected = new ArrayList<>();
         }

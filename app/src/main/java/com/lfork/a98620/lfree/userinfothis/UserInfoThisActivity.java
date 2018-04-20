@@ -23,15 +23,13 @@ import android.widget.Toast;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.databinding.UserInfoThisActBinding;
-import com.lfork.a98620.lfree.util.ProviderHelper;
+import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.customview.PopupDialog;
 import com.lfork.a98620.lfree.util.customview.PopupDialogOnclickListener;
-import com.lfork.a98620.lfree.util.image.ImageTool;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
-
-import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 
 public class UserInfoThisActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,7 +39,7 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
 
     UserInfoThisViewModel viewModel;
 
-    private Uri imageUri;
+    private Uri cameraImageUri, cropImageUri;
 
     /**
      * 定义三种状态
@@ -51,8 +49,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
     private static final int REQUESTCODE_CUT = 3;//图片裁剪
 
     private PopupWindow avatorPop; //自定义view
-
-    private File portraitFile;
 
 
     //刷新一下数据
@@ -89,7 +85,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
 
         showMyDialog();
     }
-
 
 
     @Override
@@ -130,32 +125,31 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
                 }
                 break;
             case REQUESTCODE_CAM:
-                if (portraitFile.length() < 1){
+                if (cameraImageUri == null) {
                     return;
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    startPhotoZoom(ProviderHelper.getImageContentUri(getApplicationContext(), portraitFile.getPath()));     //小结， 最有用的是file路径。  我们需要把其他的uri转化为file路径，也要会把file路径转化成uri
-                } else {
-                    startPhotoZoom(imageUri);
-                }
+//                Uri uri = data.getData();   //这里肯定是空的， 因为处理结果已经放到 cameraImageUri里面去了
+                startPhotoZoom(cameraImageUri);
                 break;
             case REQUESTCODE_PIC:
-                if (data== null || data.getData() == null){
+                if (data == null || data.getData() == null) {
                     return;
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    File uriFile = new File(ImageTool.getPath(UserInfoThisActivity.this, data.getData()));
-                    startPhotoZoom(ProviderHelper.getImageContentUri(getApplicationContext(), uriFile.getPath()));
-                } else {
-                    startPhotoZoom(data.getData());
-
-                }
-
+                startPhotoZoom(data.getData()); //照片选择的结果也是标准的content uri了，所以直接传参进去就可以了
                 break;
-            case REQUESTCODE_CUT:
+            case UCrop.REQUEST_CROP:
                 if (data != null) {
-                    viewModel.updateUserPortrait(ProviderHelper.getFilePathOnKitKat(getApplicationContext(),data.getData()));
+                    final Uri resultUri = UCrop.getOutput(data);  //返回的是file类型的uri
+                    if (resultUri != null) {
+                        viewModel.updateUserPortrait(resultUri.getPath());
+                    } else {
+                        ToastUtil.showShort(this, "图片剪裁失败");
+                    }
                 }
+                break;
+
+            case UCrop.RESULT_ERROR:
+                ToastUtil.showShort(this, "剪切失败");
                 break;
         }
 
@@ -172,6 +166,7 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
                     openCamera();
                 }
             }
+
             @Override
             public void onSecondButtonClicked(PopupDialog dialog) {
                 if (ContextCompat.checkSelfPermission(UserInfoThisActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -187,7 +182,7 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
             public void onCanceledClicked(PopupDialog dialog) {
 
             }
-        },binding.all).show();
+        }, binding.all).show();
 
 
     }
@@ -205,8 +200,18 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
      * 调用相机
      */
     private void openCamera() {
+        cameraImageUri = initImageUri("portrait.jpg");
+
+        //启动相机程序
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        //将url关联到相机拍摄的图片上面
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
+        startActivityForResult(intent, REQUESTCODE_CAM);
+    }
+
+    private Uri initImageUri(String name) {
         //创建file对象用于储存拍摄的照片
-        portraitFile = new File(getExternalCacheDir(), "output_image.jpg");
+        File portraitFile = new File(getExternalCacheDir(), name);
 
         try {
             if (portraitFile.exists()) {
@@ -218,38 +223,40 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
         }
 
         if (Build.VERSION.SDK_INT >= 24) {
-            imageUri = FileProvider.getUriForFile(UserInfoThisActivity.this, "com.lfork.a98620.lfree.fileprovider", portraitFile);
+            return FileProvider.getUriForFile(UserInfoThisActivity.this, "com.lfork.a98620.lfree.fileprovider", portraitFile);
         } else {
-            imageUri = Uri.fromFile(portraitFile);
+            return Uri.fromFile(portraitFile);
         }
 
-        //启动相机程序
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        //将url关联到相机拍摄的图片上面
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(intent, REQUESTCODE_CAM);
     }
 
 
     /**
-     * 打开系统图片裁剪功能
+     * 打开UCrop图片裁剪功能
      *
-     * @param uri
+     * @param uri 这里需要content类型的uri
      */
     private void startPhotoZoom(Uri uri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.putExtra("crop", true);
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
-        intent.putExtra("scale", true); //黑边
-        intent.putExtra("scaleUpIfNeeded", true); //黑边
-        intent.putExtra("return-data", false);        //设置为true的话将会返回一个bitmap 设置为false的话就会返回路径
-        intent.putExtra("noFaceDetection", true);
-        startActivityForResult(intent, REQUESTCODE_CUT);
+        cropImageUri = Uri.fromFile(new File(getExternalCacheDir(), "crop_portrait.jpg")); //在某些场景还是得用fromFile
+        UCrop.of(uri, cropImageUri)     //源uri 为content类型的, 目标uri为file类型
+                .withAspectRatio(1, 1)
+                .withMaxResultSize(1080, 1920)
+                .start(this);
+
+//
+//        Intent intent = new Intent("com.android.camera.action.CROP");
+//        intent.setDataAndType(uri, "image/*");
+//        intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        intent.putExtra("crop", true);
+//        intent.putExtra("aspectX", 1);
+//        intent.putExtra("aspectY", 1);
+//        intent.putExtra("outputX", 300);
+//        intent.putExtra("outputY", 300);
+//        intent.putExtra("scale", true); //黑边
+//        intent.putExtra("scaleUpIfNeeded", true); //黑边
+//        intent.putExtra("return-data", false);        //设置为true的话将会返回一个bitmap 设置为false的话就会返回路径
+//        intent.putExtra("noFaceDetection", true);
+//        startActivityForResult(intent, REQUESTCODE_CUT);
     }
 
     @Override

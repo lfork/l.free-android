@@ -271,14 +271,16 @@
 
 
                     <EditText
+                        android:id="@+id/edit_description"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+                        android:singleLine="false"
                         android:gravity="start"
                         android:hint="商品描述"
-                        android:inputType="text"
-                        android:lines="4"
-                        android:paddingLeft="25dp"
+                        android:scrollbars="vertical"
+                        android:inputType="textMultiLine"
+                        android:paddingStart="25dp"
                         android:paddingTop="10dp"
                         android:text="@={viewModel.description}" />
 
@@ -340,7 +342,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_toEndOf="@id/sell_price"
                         android:background="@null"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:text="@={viewModel.price}" />
 
                     <View

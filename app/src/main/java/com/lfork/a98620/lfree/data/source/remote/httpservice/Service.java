@@ -41,7 +41,7 @@ public class Service {
                 .newBuilder()
                 .addNetworkInterceptor(logInterceptor)
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)//设置读取超时时间
-                .writeTimeout(WRITE_TIMEOUT,TimeUnit.SECONDS)//设置写的超时时间  
+                .writeTimeout(WRITE_TIMEOUT,TimeUnit.SECONDS)//设置写的超时时间
                 .connectTimeout(CONNECT_TIMEOUT,TimeUnit.SECONDS)//设置连接超时时间
                 .build();
 
