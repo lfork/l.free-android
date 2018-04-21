@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.goodsupload;
 
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableField;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -31,6 +32,8 @@ import top.zibin.luban.Luban;
 public class GoodsUploadViewModel extends GoodsViewModel {
     private static final String TAG = "GoodsUploadViewModel";
 
+    public final ObservableField<String> tips = new ObservableField<>("已选择(0/5)");
+
     private GoodsUploadActivity activity;
 
     private List<String> imagePathList;
@@ -55,8 +58,10 @@ public class GoodsUploadViewModel extends GoodsViewModel {
 
     private void setImageVisibility() {
 
+        Log.d(TAG, "setImageVisibility1: "+ "image count" + imageCount);
         if (imageCount == 0) {
-            imageVisible.add(true);//默认第一个可见
+            imageVisible.clear();
+            imageVisible.add(false);//默认第一个可见
             imageVisible.add(false);
             imageVisible.add(false);
             imageVisible.add(false);
@@ -67,46 +72,59 @@ public class GoodsUploadViewModel extends GoodsViewModel {
 
         int i = 0;
         for (; i < imageCount; i++) {
-            if (i + 1 == MAX_COUNT) {
+            if (i == MAX_COUNT) {
                 return;
             }
-            imageVisible.set(i + 1, true);
+            imageVisible.set(i, true);
         }
 
-        for (; i < MAX_COUNT - 1; i++)
-            imageVisible.set(i + 1, false);
+        Log.d(TAG, "setImageVisibility: " + i + "image count" + imageCount);
+
+        for (; i < MAX_COUNT ; i++)
+            imageVisible.set(i, false);
 
     }
 
-    public void selectImages(int index) {
+    /**
+     * 静态的图片配合动态的数据  每次添加图片后
+     *
+     * @param index
+     */
+    public void deleteImage(int index) {
+        activity.deleteImage(index);
+    }
+
+    /**
+     * 这里就是根据选择的图片数量来设置imageView
+     *
+     */
+    public void selectImages() {
 
         if (imageCount == MAX_COUNT) {
             return;
         }
-        if (imageCount == index) {
-            activity.showMyDialog(MAX_COUNT - index, index);
-        }
-    }
-
-    public void deleteImage(int index) {
-        imagePathList.remove(index);
-        imageCount--;
+        activity.showMyDialog(MAX_COUNT - imageCount);
     }
 
     public void setImages(List<Uri> mSelected) {
-        imageCount = mSelected.size();
 
+
+        imageCount = mSelected.size();
+        imagePathList.clear();
         for (int i = 0; i < mSelected.size(); i++) {
             imagePathList.add(UriHelper.getPath(activity, mSelected.get(i)));
         }
+        tips.set("已选择(" + imageCount + "/5)");
         setImageVisibility();
     }
 
     public void setImage(String path) {
+
+        notifyChange();
         imagePathList.add(path);
         imageCount++;
+        tips.set("已选择(" + imageCount + "/5)");
         setImageVisibility();
-
     }
 
     public void uploadGoods() {

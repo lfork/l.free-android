@@ -42,58 +42,10 @@
                     android:padding="10dp">
 
 
-                    <!--<ImageView-->
-                    <!--android:id="@+id/image1"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:contentDescription="TODO"-->
-                    <!--android:onClick="@{()->viewModel.selectImages(0)}"-->
-                    <!--android:src="@drawable/goods_upload_icon"-->
-                    <!--android:visibility="@{viewModel.imageVisible[0] ? View.VISIBLE : View.INVISIBLE}" />-->
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/image2"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:onClick="@{()->viewModel.selectImages(1)}"-->
-                    <!--android:src="@drawable/goods_upload_icon"-->
-                    <!--android:visibility="@{viewModel.imageVisible[1] ? View.VISIBLE : View.INVISIBLE}" />-->
-
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/image3"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:onClick="@{()->viewModel.selectImages(2)}"-->
-                    <!--android:src="@drawable/goods_upload_icon"-->
-                    <!--android:visibility="@{viewModel.imageVisible[2] ? View.VISIBLE : View.INVISIBLE}" />-->
-
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/image4"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:onClick="@{()->viewModel.selectImages(3)}"-->
-                    <!--android:src="@drawable/goods_upload_icon"-->
-                    <!--android:visibility="@{viewModel.imageVisible[3] ? View.VISIBLE : View.INVISIBLE}" />-->
-
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/image5"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:onClick="@{()->viewModel.selectImages(4)}"-->
-                    <!--android:src="@drawable/goods_upload_icon"-->
-                    <!--android:visibility="@{viewModel.imageVisible[4] ? View.VISIBLE : View.INVISIBLE}" />-->
-
                     <FrameLayout
                         android:id="@+id/frame1"
                         android:layout_width="wrap_content"
+                        android:onClick="@{()->viewModel.selectImages()}"
                         android:layout_height="wrap_content">
 
                         <ImageView
@@ -106,7 +58,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="20dp"
-                            android:text="已选择(0/5)"
+                            android:text="@={viewModel.tips}"
                             android:textColor="@color/Login_ForeColor" />
                     </FrameLayout>
 
@@ -116,6 +68,7 @@
                         android:layout_height="100dp"
                         android:layout_marginLeft="30dp"
                         android:layout_toRightOf="@id/frame1"
+                        android:visibility="@{viewModel.imageVisible[0] ? View.VISIBLE : View.GONE}"
                       >
 
                         <ImageView
@@ -123,16 +76,17 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:contentDescription="TODO"
-                            android:onClick="@{()->viewModel.selectImages(0)}"
+
                             android:src="@drawable/goods_upload_icon"
-                            android:visibility="@{viewModel.imageVisible[0] ? View.VISIBLE : View.INVISIBLE}" />
+                            />
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="right"
+                            android:onClick="@{()->viewModel.deleteImage(0)}"
                             android:src="@drawable/close"
-                            android:visibility="@{viewModel.imageVisible[0] ? View.VISIBLE : View.INVISIBLE}" />
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -140,23 +94,25 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_toRightOf="@id/frame2">
+                        android:layout_toRightOf="@id/frame2"
+                        android:visibility="@{viewModel.imageVisible[1] ? View.VISIBLE : View.GONE}"
+                        >
 
                         <ImageView
                             android:id="@+id/image2"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:contentDescription="TODO"
-                            android:onClick="@{()->viewModel.selectImages(1)}"
                             android:src="@drawable/goods_upload_icon"
-                            android:visibility="@{viewModel.imageVisible[1] ? View.VISIBLE : View.INVISIBLE}" />
+                            />
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="right"
+                            android:onClick="@{()->viewModel.deleteImage(1)}"
                             android:src="@drawable/close"
-                            android:visibility="@{viewModel.imageVisible[1] ? View.VISIBLE : View.INVISIBLE}" />
+                           />
                     </FrameLayout>
 
                     <FrameLayout
@@ -165,6 +121,7 @@
                         android:layout_height="100dp"
                         android:layout_below="@id/frame1"
                         android:layout_marginTop="20dp"
+                        android:visibility="@{viewModel.imageVisible[2] ? View.VISIBLE : View.GONE}"
                         >
 
                         <ImageView
@@ -172,16 +129,16 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:contentDescription="TODO"
-                            android:onClick="@{()->viewModel.selectImages(2)}"
                             android:src="@drawable/goods_upload_icon"
-                            android:visibility="@{viewModel.imageVisible[2] ? View.VISIBLE : View.INVISIBLE}" />
+                            />
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="right"
+                            android:onClick="@{()->viewModel.deleteImage(2)}"
                             android:src="@drawable/close"
-                            android:visibility="@{viewModel.imageVisible[2] ? View.VISIBLE : View.INVISIBLE}" />
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -191,6 +148,7 @@
                         android:layout_below="@id/frame2"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="20dp"
+                        android:visibility="@{viewModel.imageVisible[3] ? View.VISIBLE : View.GONE}"
                         android:layout_toRightOf="@id/frame4">
 
                         <ImageView
@@ -198,16 +156,16 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:contentDescription="TODO"
-                            android:onClick="@{()->viewModel.selectImages(3)}"
                             android:src="@drawable/goods_upload_icon"
-                            android:visibility="@{viewModel.imageVisible[3] ? View.VISIBLE : View.INVISIBLE}" />
+                            />
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="right"
+                            android:onClick="@{()->viewModel.deleteImage(3)}"
                             android:src="@drawable/close"
-                            android:visibility="@{viewModel.imageVisible[3] ? View.VISIBLE : View.INVISIBLE}" />
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -217,23 +175,24 @@
                         android:layout_below="@id/frame3"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="20dp"
-                        android:layout_toRightOf="@id/frame5">
+                        android:layout_toRightOf="@id/frame5"
+                        android:visibility="@{viewModel.imageVisible[4] ? View.VISIBLE : View.GONE}">
 
                         <ImageView
                             android:id="@+id/image5"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:contentDescription="TODO"
-                            android:onClick="@{()->viewModel.selectImages(4)}"
                             android:src="@drawable/goods_upload_icon"
-                            android:visibility="@{viewModel.imageVisible[4] ? View.VISIBLE : View.INVISIBLE}" />
+                             />
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="right"
+                            android:onClick="@{()->viewModel.deleteImage(4)}"
                             android:src="@drawable/close"
-                            android:visibility="@{viewModel.imageVisible[4] ? View.VISIBLE : View.INVISIBLE}" />
+                             />
                     </FrameLayout>
                 </RelativeLayout>
 
@@ -422,6 +381,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="30dp"
+                        android:onClick="@{()->viewModel.uploadGoods()}"
                         android:background="@color/Login_Button"
                         android:text="提交"
                         android:textColor="#fff"
@@ -438,7 +398,7 @@
                 android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}">
 
                 <ProgressBar
-                    android:id="@+id/login_progress"
+                    android:id="@+id/progress"
                     style="?android:attr/progressBarStyleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -449,7 +409,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/login_progress"
+                    android:layout_below="@id/progress"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:text="正在上传..."

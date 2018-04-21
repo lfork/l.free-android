@@ -45,6 +45,8 @@ public class GoodsUploadActivity extends AppCompatActivity {
 
     private GoodsUploadActBinding binding;
 
+    private static final String TAG = "GoodsUploadActivity";
+
     private List<ImageView> imageViews = new ArrayList<>();
     private File portraitFile;
     private Uri imageUri;
@@ -152,28 +154,37 @@ public class GoodsUploadActivity extends AppCompatActivity {
     }
 
     public void setImage(){
-        if (imageViewIndex == -1) {
-            return;
-        }
         if (mSelected == null) {
             mSelected = new ArrayList<>();
         }
         mSelected.add(imageUri);
-        Image.setImage(imageViews.get(imageViewIndex), imageUri);
-        imageViewIndex = -1;
+        Image.setImage(imageViews.get(mSelected.size() - 1), imageUri);
         viewModel.setImage(portraitFile.getPath());
     }
 
+    /**
+     * 刷新imageView
+     */
     public void setImages() {
-        for (int i = imageViewIndex; i < mSelected.size(); i++) {
+        for (int i = 0; i < mSelected.size(); i++) {
             Image.setImage(imageViews.get(i), mSelected.get(i));
         }
         viewModel.setImages(mSelected);
+    }
+
+    public void deleteImage(int index){
+        //mSelected -1
+        Log.d(TAG, "deleteImage: " + index);
+        mSelected.remove(index);
+
+
+        //重新设置image
+        //更新viewModel里面的image的路径
+        setImages();
 
     }
 
-    public void showMyDialog(int count, int index) {
-        imageViewIndex = index;
+    public void showMyDialog(int count) {
         new PopupDialog(this, new PopupDialogOnclickListener() {
             @Override
             public void onFirstButtonClicked(PopupDialog dialog) {

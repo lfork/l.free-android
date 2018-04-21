@@ -42,7 +42,7 @@ public class Image {
 
 
     public static void setImageWithDiskCache(ImageView view, Uri uri) {
-        GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).placeholder(R.drawable.login_logo).skipMemoryCache(false);
+        GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).skipMemoryCache(false);
         Glide.with(view.getContext()).load(uri).apply(options).into(view);
     }
 
