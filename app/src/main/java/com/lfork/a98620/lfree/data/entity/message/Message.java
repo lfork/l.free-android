@@ -19,6 +19,25 @@ public class Message {
 
     private MessageType type;
 
+    private int chatType;
+    public final static int SendType = 0, ReceiveType = 1;
+
+    public Message(String content, int chatType){
+        this.content = content;
+        this.chatType = chatType;
+    }
+
+    public Message() {
+    }
+
+
+    public int getChatType(){
+        return chatType;
+    }
+
+    public void setChatType(int chatType) {
+        this.chatType = chatType;
+    }
 
     public MessageType getType() {
         return type;

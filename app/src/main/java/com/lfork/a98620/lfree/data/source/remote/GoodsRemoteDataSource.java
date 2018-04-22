@@ -28,7 +28,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
     private static GoodsRemoteDataSource INSTANCE;
 //    private ArrayList<ResponseGetUser.UserInfo> mCachedUserList = new ArrayList<>();
 
-    private static final String TAG = "UserRemoteDataSource";
+    private static final String TAG = "IMRemoteDataSource";
 
     private GoodsRemoteDataSource() {
     }
@@ -63,7 +63,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         if (result != null) {
             ArrayList<Goods> list = result.getData();
             if (list != null && list.size() > 0)
-                callback.success(list);
+                callback.succeed(list);
             else {
                 callback.failed(result.getMessage());
             }
@@ -85,7 +85,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         if (result != null) {
             List<Category> list = result.getData();
             if (list != null)
-                callback.success(list);
+                callback.succeed(list);
             else {
                 callback.failed(result.getMessage());
             }
@@ -112,7 +112,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
 
         if (result != null) {
             if (result.getCode() == 1)
-                callback.success(result.getData());
+                callback.succeed(result.getData());
             else {
                 callback.failed(result.getMessage());
             }
@@ -160,7 +160,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
 
         if (result != null) {
             if (result.getCode() == 1) {
-                callback.success(result.getMessage());
+                callback.succeed(result.getMessage());
             } else {
                 callback.failed(result.getMessage());
             }

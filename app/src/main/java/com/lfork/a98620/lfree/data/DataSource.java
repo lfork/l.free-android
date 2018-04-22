@@ -6,7 +6,7 @@ package com.lfork.a98620.lfree.data;
 
 public interface DataSource {
     interface GeneralCallback<T>{
-        void success(T data);
+        void succeed(T data);
         void failed(String log);
     }
 }

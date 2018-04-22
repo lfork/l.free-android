@@ -32,7 +32,7 @@ public class UserInfoViewModel extends UserViewModel {
         new Thread(() -> {
             repository.getUserInfo(new DataSource.GeneralCallback<User>() {
                 @Override
-                public void success(User data) {
+                public void succeed(User data) {
                     setData(data);
                 }
 

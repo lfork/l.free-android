@@ -1,21 +1,9 @@
 package com.lfork.a98620.lfree.data.source.local;
 
-import android.util.Log;
-
-import com.google.gson.reflect.TypeToken;
-import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.UserDataSource;
-import com.lfork.a98620.lfree.data.source.remote.httpservice.Result;
-import com.lfork.a98620.lfree.data.source.remote.httpservice.Service;
-import com.lfork.a98620.lfree.util.JSONUtil;
 
 import org.litepal.crud.DataSupport;
-
-import java.util.List;
-
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 
 /**
  * Created by 98620 on 2018/3/23.
@@ -26,7 +14,7 @@ public class UserLocalDataSource implements UserDataSource {
     private static UserLocalDataSource INSTANCE;
 //    private ArrayList<ResponseGetUser.UserInfo> mCachedUserList = new ArrayList<>();
 
-    private static final String TAG = "UserRemoteDataSource";
+    private static final String TAG = "IMRemoteDataSource";
 
     private UserLocalDataSource() {
     }
@@ -61,9 +49,11 @@ public class UserLocalDataSource implements UserDataSource {
 
     @Override
     public void getThisUser(GeneralCallback<User> callback) {
-        List<User> userList = DataSupport.findAll(User.class);
-        if (userList.size() > 0) {
-            callback.success(userList.get(0));
+//        User user = (User)DataSupport.where("isLogin =  ?", "1").find(User.class);
+        User user  = DataSupport.findFirst(User.class);
+
+        if (user != null) {
+            callback.succeed(user);
         } else {
             callback.failed("没有用户");
         }
@@ -72,7 +62,7 @@ public class UserLocalDataSource implements UserDataSource {
     @Override
     public boolean saveThisUser(User user) {
         try {
-//            DataSupport.deleteAll(User.class);
+            DataSupport.deleteAll(User.class);
             return user.save();
         } catch (Exception e) {
             return false;

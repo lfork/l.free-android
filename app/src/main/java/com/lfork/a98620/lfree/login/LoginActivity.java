@@ -74,8 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         if (!isNull(user.getUserName()) || !isNull(user.getUserPassword())) {
             new Thread(() -> mRepository.login(new DataSource.GeneralCallback<User>() {
                 @Override
-                public void success(User data) {
-                    Log.d(TAG, "success: " + data);
+                public void succeed(User data) {
+                    Log.d(TAG, "succeed: " + data);
                     showDealResult("登录成功" + data.toString());
                     saveLoginStatus(1);
                     closeLoginDialog();
@@ -104,12 +104,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showDealResult(final String result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            }
-        });
+        runOnUiThread(() -> Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show());
     }
 
     private void showLoginDialog() {

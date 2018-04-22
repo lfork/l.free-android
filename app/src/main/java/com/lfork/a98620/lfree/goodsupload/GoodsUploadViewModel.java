@@ -195,7 +195,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
 
                         repository.uploadGoods(new DataSource.GeneralCallback<String>() {
                             @Override
-                            public void success(String data) {
+                            public void succeed(String data) {
                                 dataIsLoading.set(false);
                                 activity.runOnUiThread(() -> {
                                             ToastUtil.showShort(activity, data);

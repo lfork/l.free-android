@@ -60,7 +60,7 @@ public class GoodsDataRepository implements GoodsDataSource {
     public void getGoodsList(GeneralCallback<List<Goods>> callback, String cursor, int categoryId) {
         remoteDataSource.getGoodsList(new GeneralCallback<List<Goods>>() {
             @Override
-            public void success(List<Goods> data) {
+            public void succeed(List<Goods> data) {
                 List<Goods> localData = goodsMap.get(categoryId);
                 if (localData == null){
                     localData = data;
@@ -69,7 +69,7 @@ public class GoodsDataRepository implements GoodsDataSource {
                     localData.clear();
                     localData.addAll(data);
                 }
-                callback.success(localData);
+                callback.succeed(localData);
             }
 
             @Override
@@ -84,9 +84,9 @@ public class GoodsDataRepository implements GoodsDataSource {
     public void getCategories(GeneralCallback<List<Category>> callback) {
         remoteDataSource.getCategories(new GeneralCallback<List<Category>>() {
             @Override
-            public void success(List<Category> data) {
+            public void succeed(List<Category> data) {
                 categories = data;
-                callback.success(data);
+                callback.succeed(data);
                 //做本地储存
                 DataSupport.deleteAll(Category.class);
                 DataSupport.saveAllAsync(categories).listen(success -> Log.d(TAG, "onFinish: 商品分类储存成功"));
@@ -105,9 +105,9 @@ public class GoodsDataRepository implements GoodsDataSource {
     private void getLocalCategoryData(GeneralCallback<List<Category>> callback, String log0){
         localDataSource.getCategories(new GeneralCallback<List<Category>>() {
             @Override
-            public void success(List<Category> data) {
+            public void succeed(List<Category> data) {
                 categories = data;
-                callback.success(data);
+                callback.succeed(data);
             }
 
             @Override

@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                     UserDataRepository repository = UserDataRepository.getInstance();
                     repository.register(new DataSource.GeneralCallback<String>() {
                         @Override
-                        public void success(String data) {
+                        public void succeed(String data) {
                             showDealResult("注册成功, 请牢记你的账号:" + data);
                             finish();
                         }

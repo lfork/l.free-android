@@ -36,7 +36,7 @@ public class MyInforFragment extends Fragment {
 
         if (rootView == null) {
             MainMyInforFragBinding binding = DataBindingUtil.inflate(inflater, R.layout.main_my_infor_frag, container, false);
-            viewModel = new MyInforFragmentViewModel(binding, (MainActivity) getActivity(), getLayoutInflater());
+            viewModel = new MyInforFragmentViewModel((MainActivity) getActivity());
             binding.setViewModel(viewModel);
             rootView = binding.getRoot();
         }

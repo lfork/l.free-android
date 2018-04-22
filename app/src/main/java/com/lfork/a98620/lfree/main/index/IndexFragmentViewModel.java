@@ -56,7 +56,7 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
         new Thread(() -> {
             repository.getCategories(new DataSource.GeneralCallback<List<Category>>() {
                 @Override
-                public void success(List<Category> data) {
+                public void succeed(List<Category> data) {
                     context.runOnUiThread(() -> {
                         categories = (ArrayList<Category>) data;
                         initViewPager();

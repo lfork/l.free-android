@@ -112,7 +112,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
                 }
                 repository.getGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
                     @Override
-                    public void success(List<Goods> data) {
+                    public void succeed(List<Goods> data) {
                         goodsList = data;
                         models.clear();
                         for (Goods g : goodsList) {

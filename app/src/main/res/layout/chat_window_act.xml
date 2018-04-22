@@ -1,55 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
+    <data>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="?attr/colorPrimary"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.chatwindow.ChatWindowViewModel" />
 
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        <import type="android.view.View" />
+    </data>
 
 
-    <RelativeLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp">-->
+
+        <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <!--android:focusable="true"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
+
+        <!--</android.support.v7.widget.Toolbar>-->
+        <!--</android.support.design.widget.AppBarLayout>-->
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/message_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </android.support.v7.widget.RecyclerView>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_above="@+id/send_window"
             android:background="#dfdfdf" />
 
         <LinearLayout
             android:id="@+id/send_window"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="#f8f8fa">
 
             <EditText
                 android:id="@+id/edit_window"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_weight="4"
                 android:hint="@string/type_something_here"
                 android:inputType="none"
                 android:labelFor="@+id/edit_window"
-                android:maxLines="3" />
+                android:maxLines="3"
+                android:text="@={viewModel.newMessage}" />
 
             <Button
                 android:id="@+id/btn_send"
@@ -57,21 +72,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#8dc33b"
+                android:onClick="@{()->viewModel.sendMessage()}"
                 android:text="@string/send"
                 android:textColor="@color/white" />
-
         </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/message_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/send_window">
-
-        </android.support.v7.widget.RecyclerView>
-
-    </RelativeLayout>
-
-
-</android.support.design.widget.CoordinatorLayout>
-
+    </LinearLayout>
+</layout>

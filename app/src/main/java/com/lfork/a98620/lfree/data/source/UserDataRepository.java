@@ -22,6 +22,8 @@ public class UserDataRepository implements UserDataSource {
 
     private User mUser;
 
+    private int userId;
+
     private UserDataRepository(UserRemoteDataSource remoteDataSource, UserLocalDataSource localDataSource) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
@@ -46,7 +48,7 @@ public class UserDataRepository implements UserDataSource {
     private void initUser() {
         new Thread(() -> getThisUser(new GeneralCallback<User>() {
             @Override
-            public void success(User data) {
+            public void succeed(User data) {
                 mUser = data;
             }
             @Override
@@ -63,11 +65,13 @@ public class UserDataRepository implements UserDataSource {
     public void login(final GeneralCallback<User> callback, User user) {
         remoteDataSource.login(new GeneralCallback<User>() {
             @Override
-            public void success(User data) {
+            public void succeed(User data) {
                 Log.d(TAG, "onQuit: " + UserDataRepository.getInstance().hashCode());
+                data.setLogin(true);
                 saveThisUser(data);
                 mUser = data;
-                callback.success(data);
+                setUserId(mUser.getUserId());
+                callback.succeed(data);
             }
 
             @Override
@@ -90,14 +94,14 @@ public class UserDataRepository implements UserDataSource {
     @Override
     public void getThisUser(GeneralCallback<User> callback) {
         if (mUser != null){
-            callback.success(mUser);
+            callback.succeed(mUser);
             return;
         }
         localDataSource.getThisUser(new GeneralCallback<User>() {
             @Override
-            public void success(User data) {
+            public void succeed(User data) {
                 mUser = data;
-                callback.success(data);
+                callback.succeed(data);
             }
 
             @Override
@@ -117,8 +121,8 @@ public class UserDataRepository implements UserDataSource {
     public void updateThisUser(GeneralCallback<String> callback, User user) {
         remoteDataSource.updateThisUser(new GeneralCallback<String>() {
             @Override
-            public void success(String data) {
-                callback.success(data);
+            public void succeed(String data) {
+                callback.succeed(data);
                 updateLocalUserInfo(user);
             }
 
@@ -149,5 +153,13 @@ public class UserDataRepository implements UserDataSource {
         mUser.setUserEmail(newUser.getUserEmail());
         mUser.setUserDesc(newUser.getUserDesc());
         saveThisUser(mUser);
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

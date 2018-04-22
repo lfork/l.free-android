@@ -1,7 +1,16 @@
 package com.lfork.a98620.lfree.main;
 
+import android.annotation.TargetApi;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +21,7 @@ import android.view.View;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.source.UserDataRepository;
+import com.lfork.a98620.lfree.data.source.remote.imservice.MessageService;
 import com.lfork.a98620.lfree.databinding.MainActBinding;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
 import com.lfork.a98620.lfree.main.goodsupload.GoodsUploadFragment;
@@ -23,32 +33,83 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-
     private List<Fragment> fragments;
     MainActBinding binding;
+    private MessageService.MessageBinder messageBinder;
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Log.d(TAG, "onServiceConnected: MessageSevice启动成功");
+            messageBinder = (MessageService.MessageBinder) iBinder;
+            messageBinder.buildConnection();
+
+//            messageBinder.startDownload();
+//            messageBinder.getProgress();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.main_act);
         binding.setViewModel(this);
+
+        int userId = UserDataRepository.getInstance().getUserId();
+
+        if (userId != 0) {  //存
+            SharedPreferences.Editor editor = getSharedPreferences("data_main", MODE_PRIVATE).edit();
+            editor.putInt("user_id", UserDataRepository.getInstance().getUserId());
+            editor.apply();
+        } else {        //取
+            SharedPreferences sharedPreferences = getSharedPreferences("data_main", MODE_PRIVATE);
+            userId = sharedPreferences.getInt("user_id", 0);
+            if (userId != 0) {//存
+                UserDataRepository.getInstance().setUserId(userId);
+            }
+        }
+
         initFragments();
         UserDataRepository.getInstance(); //初始化user数据
+        startService();
+        bindService();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = "chat";
+            String channelName = "聊天消息";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            createNotificationChannel(channelId, channelName, importance);
+
+            channelId = "subscribe";
+            channelName = "订阅消息";
+            importance = NotificationManager.IMPORTANCE_DEFAULT;
+            createNotificationChannel(channelId, channelName, importance);
+        }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        ((MyInforFragment)fragments.get(3)).refreshData();
+        ((MyInforFragment) fragments.get(3)).refreshData();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "onDestroy: 退出后没有释放资源？？");
         GoodsDataRepository.destroyInstance();
         UserDataRepository.destroyInstance();
+        unBindService();
+        stopService();
     }
 
-    public void onClick(View imageView, int index){
+    public void onClick(View imageView, int index) {
 
         //通过设置按钮背景(配合样式选择器)
         binding.goodsBtn.setSelected(false);
@@ -60,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         binding.chatText.setTextColor(getResources().getColor(R.color.Home_act_text));
         binding.myText.setTextColor(getResources().getColor(R.color.Home_act_text));
 
-        switch (index){
+        switch (index) {
             case 0:
                 break;
             case 1:
@@ -77,8 +138,41 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        Log.d(TAG, "onButton1Clicked: why there is no any response " + index );
+        Log.d(TAG, "onButton1Clicked: why there is no any response " + index);
         replaceFragment(fragments.get(index));
+
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private void createNotificationChannel(String channelId, String channelName, int importance) {
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(
+                NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(channel);
+    }
+
+    private void startService() {
+        Intent startIntent = new Intent(this, MessageService.class);
+        startService(startIntent); //launch service
+    }
+
+    private void bindService() {
+        Intent bindIntent = new Intent(this, MessageService.class);
+        bindService(bindIntent, connection, BIND_AUTO_CREATE);// bind service
+    }
+
+    private void unBindService() {
+
+        messageBinder.closeConnection();
+        unbindService(connection);
+        Log.d(TAG, "unBindService: Message服务已断开" );
+    }
+
+    private void stopService() {
+        Intent stopIntent = new Intent(this, MessageService.class);
+        stopService(stopIntent);
+
 
     }
 

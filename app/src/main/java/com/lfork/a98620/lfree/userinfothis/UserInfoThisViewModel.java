@@ -1,11 +1,8 @@
 package com.lfork.a98620.lfree.userinfothis;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -54,7 +51,7 @@ public class UserInfoThisViewModel extends UserViewModel {
         new Thread(() -> {
             repository.updateUserPortrait(new DataSource.GeneralCallback<String>() {
                 @Override
-                public void success(String data1) {
+                public void succeed(String data1) {
                     user.setUserImagePath(data1);
                     repository.saveThisUser(user);
                     imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
@@ -92,7 +89,7 @@ public class UserInfoThisViewModel extends UserViewModel {
         new Thread(() -> {
             repository.updateThisUser(new DataSource.GeneralCallback<String>() {
                 @Override
-                public void success(String data) {
+                public void succeed(String data) {
                     context.runOnUiThread(() -> {
                         isUpdating.set(false);
                         //跳转到详细信息的界面

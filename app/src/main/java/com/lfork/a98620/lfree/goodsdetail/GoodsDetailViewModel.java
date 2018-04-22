@@ -49,7 +49,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         new Thread(() -> {
             repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
                 @Override
-                public void success(GoodsDetailInfo data) {
+                public void succeed(GoodsDetailInfo data) {
                     g = data;
                     context.runOnUiThread(() -> {
                         setData();

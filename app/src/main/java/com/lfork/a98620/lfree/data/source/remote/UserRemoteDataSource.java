@@ -26,7 +26,7 @@ public class UserRemoteDataSource implements UserDataSource {
     private static UserRemoteDataSource INSTANCE;
 //    private ArrayList<ResponseGetUser.UserInfo> mCachedUserList = new ArrayList<>();
 
-    private static final String TAG = "UserRemoteDataSource";
+    private static final String TAG = "IMRemoteDataSource";
 
     private UserRemoteDataSource() {
     }
@@ -62,7 +62,7 @@ public class UserRemoteDataSource implements UserDataSource {
         if (result != null) {
             User u = result.getData();
             if (u != null)
-                callback.success(u);
+                callback.succeed(u);
             else {
                 callback.failed(result.getMessage());
             }
@@ -91,7 +91,7 @@ public class UserRemoteDataSource implements UserDataSource {
         if (result != null) {
             Log.d(TAG, "register: ");
             if (result.getCode() == 1) {
-                callback.success(result.getMessage());
+                callback.succeed(result.getMessage());
             } else {
                 callback.failed(result.getMessage());
             }
@@ -132,7 +132,7 @@ public class UserRemoteDataSource implements UserDataSource {
 
         if (result != null) {
             if (result.getCode() == 1) {
-                callback.success(result.getMessage());
+                callback.succeed(result.getMessage());
             } else {
                 callback.failed(result.getMessage());
             }
@@ -155,7 +155,7 @@ public class UserRemoteDataSource implements UserDataSource {
 
         if (result != null) {
             if (result.getCode() == 1) {
-                callback.success(result.getData());
+                callback.succeed(result.getData());
             } else {
                 callback.failed(result.getMessage());
             }
@@ -176,7 +176,7 @@ public class UserRemoteDataSource implements UserDataSource {
 
         if (result != null) {
             if (result.getCode() == 1) {
-                callback.success(result.getData());
+                callback.succeed(result.getData());
             } else {
                 callback.failed(result.getMessage());
             }

@@ -1,13 +1,8 @@
 package com.lfork.a98620.lfree.main.index;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +16,7 @@ import com.youth.banner.Banner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexFragment extends Fragment {
+public class IndexFragment extends Fragment implements IndexFragmentNavigator {
 
     private View rootView;// 缓存Fragment view@Override
 
@@ -54,6 +49,16 @@ public class IndexFragment extends Fragment {
         images.add("http://www.lfork.top/Test/4.png");
         banner.setImages(images).setImageLoader(new GlideImageLoader()).start();
     }
+
+    private void initTabLayout(){
+
+    }
+
+    private void initViewPager() {
+
+    }
+
+
     private static final String TAG = "A";
 
 
@@ -76,4 +81,9 @@ public class IndexFragment extends Fragment {
 
     }
 
+    @Override
+    public void onCategoriesLoaded() {
+        initTabLayout();
+        initViewPager();
+    }
 }

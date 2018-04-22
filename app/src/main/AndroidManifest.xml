@@ -19,13 +19,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".main.MainActivity"
-            android:theme="@style/AppThemeNoActionBar"></activity>
+            android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".chatwindow.ChatWindowActivity" />
         <activity android:name=".goodsdetail.GoodsDetailActivity" />
         <activity android:name=".goodsupload.GoodsUploadActivity" />
         <activity
             android:name=".login.LoginActivity"
-            android:theme="@style/LoginTheme"></activity>
+            android:theme="@style/LoginTheme" />
         <activity android:name=".mygoods.MyGoodsActivity" />
         <activity
             android:name=".searchresult.SearchResultActivity"
@@ -42,8 +42,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".register.RegisterActivity"></activity>
-        <activity android:name=".userinfothis.UserInfoThisEditActivity"></activity>
+        <activity android:name=".register.RegisterActivity" />
+        <activity android:name=".userinfothis.UserInfoThisEditActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -58,8 +58,12 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
+        <service
+            android:name=".data.source.remote.imservice.MessageService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
