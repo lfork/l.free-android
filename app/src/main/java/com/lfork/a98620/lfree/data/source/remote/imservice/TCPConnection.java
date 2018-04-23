@@ -1,10 +1,12 @@
 package com.lfork.a98620.lfree.data.source.remote.imservice;
 
+import android.util.Log;
+
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.data.entity.IMUser;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.source.remote.httpservice.Result;
 import com.lfork.a98620.lfree.data.source.remote.imservice.request.Request;
+import com.lfork.a98620.lfree.data.source.remote.imservice.request.Result;
 import com.lfork.a98620.lfree.data.source.remote.imservice.request.UserRequestType;
 import com.lfork.a98620.lfree.util.JSONUtil;
 
@@ -21,6 +23,8 @@ import static com.lfork.a98620.lfree.util.data.Print.print;
 
 
 public class TCPConnection {
+
+    private static final String TAG = "TCPConnection";
 
     private String URL;//连接信息：服务器地址
 
@@ -87,6 +91,7 @@ public class TCPConnection {
                     print("连接成功");
                     return true;
                 default:
+                    Log.d(TAG, "rebindClientInfo: " + result);
                     print("连接失败");
                     return false;
 
@@ -158,7 +163,8 @@ public class TCPConnection {
     public boolean closeConnection() {
         try {
             setRunning(false);
-            socket.close();
+            if (socket != null)
+                socket.close();
             print("连接已关闭");
             return true;
         } catch (IOException e) {
@@ -183,49 +189,63 @@ public class TCPConnection {
 
     }
 
-    private synchronized String receiveOfKeepAlive() {
+    private String receiveOfKeepAlive() {
         try {
-            int waitTimes = 2;
-            while (!in.ready() && waitTimes >= 0) {      //普通操作应该在5秒内完成。 保连操作应该在2秒内完成
-                Thread.sleep(600);  //适当休眠 节约资源
-                waitTimes--;
-            }
-            if (waitTimes < 0) {
-                setConnected(false);
-                return null;
-            }
-            StringBuilder result = new StringBuilder();
-            while (in.ready()) {
-                result.append(in.readLine());
+
+            synchronized (in) {
+                int waitTimes = 2;
+                while (!in.ready() && waitTimes >= 0) {      //普通操作应该在5秒内完成。 保连操作应该在2秒内完成
+                    Thread.sleep(600);  //适当休眠 节约资源
+                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？18");
+                    waitTimes--;
+                }
+                if (waitTimes < 0) {
+                    setConnected(false);
+                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？19");
+                    return null;
+                }
+                StringBuilder result = new StringBuilder();
+                while (in.ready()) {
+                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？20");
+                    result.append(in.readLine());
+                }
+                return result.toString();
             }
 //            print("TCPConnection.receiveOfKeepAlive 服务器的反馈结果:" + result);
-            return result.toString();
+
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public synchronized String receive() {
-        try {
-            int waitTimes = 7;
-            while (!in.ready() && waitTimes >= 0) {      //普通操作应该在5秒内完成。 保连操作应该在2秒内完成
-                Thread.sleep(600);  //适当休眠 节约资源
-                waitTimes--;
-            }
-            if (waitTimes < 0) {
-                setConnected(false);
+    public String receive() {
+
+        synchronized (in) {
+            try {
+                int waitTimes = 7;
+                while (!in.ready() && waitTimes >= 0) {      //普通操作应该在5秒内完成。 保连操作应该在2秒内完成
+                    Thread.sleep(600);  //适当休眠 节约资源
+                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？16");
+                    waitTimes--;
+                }
+                if (waitTimes < 0) {
+                    setConnected(false);
+                    return null;
+                }
+                StringBuilder result = new StringBuilder();
+                int readtimes = 1;
+                while (in.ready() && readtimes > 0) {       //只是一个缓解之策
+                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？17" + result);
+                    result.append(in.readLine());       //在这里阻塞了？？？？？
+                    readtimes--;
+                }
+                print("TCPConnection.receive 服务器的反馈结果:" + result);
+                return result.toString();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
                 return null;
             }
-            StringBuilder result = new StringBuilder();
-            while (in.ready()) {
-                result.append(in.readLine());
-            }
-            print("TCPConnection.receive 服务器的反馈结果:" + result);
-            return result.toString();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 

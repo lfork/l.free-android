@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "onServiceConnected: MessageSevice启动成功");
             messageBinder = (MessageService.MessageBinder) iBinder;
             messageBinder.buildConnection();
+            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？6");
 
 //            messageBinder.startDownload();
 //            messageBinder.getProgress();
@@ -160,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
     private void bindService() {
         Intent bindIntent = new Intent(this, MessageService.class);
         bindService(bindIntent, connection, BIND_AUTO_CREATE);// bind service
+        Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？7");
     }
 
     private void unBindService() {

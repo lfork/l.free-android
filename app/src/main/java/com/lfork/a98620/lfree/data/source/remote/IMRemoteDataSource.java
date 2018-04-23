@@ -1,5 +1,7 @@
 package com.lfork.a98620.lfree.data.source.remote;
 
+import android.util.Log;
+
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.data.entity.IMUser;
 import com.lfork.a98620.lfree.data.entity.User;
@@ -15,6 +17,8 @@ import com.lfork.a98620.lfree.util.JSONUtil;
 import java.util.List;
 
 public class IMRemoteDataSource implements IMDataSource {
+
+    private static final String TAG = "IMRemoteDataSource";
     private TCPConnection mConnection;
 
     private static IMRemoteDataSource INSTANCE;
@@ -52,17 +56,23 @@ public class IMRemoteDataSource implements IMDataSource {
 
         mConnection.setUser(u);
 
+        Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？9");
+
         if (!mConnection.send(request.getRequest())) {
             listener.failed("与服务器的连接已断开");
+            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？10");
             return;
         }
         //这里还需要添加一个超时检测， 因为网络连接有问题的话 服务器是不会发送回执给客户端的
         //超时检测线程  -》 错了，应该在TCPConnection里面设置这个，
 
+        Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？11");
         String strResult = mConnection.receive();
         Result<User> result = JSONUtil.parseJson(strResult, new TypeToken<Result<User>>() {
         });
+        Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？12");
         if (result != null) {
+            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？13" + request.toString());
             switch (result.getCode()) {
                 case -1:
                     listener.failed("未知错误 -1");
@@ -71,6 +81,7 @@ public class IMRemoteDataSource implements IMDataSource {
                     listener.failed("密码错误");
                     break;
                 case 1:
+                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？14");
                     listener.succeed(result.getData());
                     break;
                 case 2:
@@ -82,6 +93,7 @@ public class IMRemoteDataSource implements IMDataSource {
 
             }
         } else {
+            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？15");
             listener.failed("连接失败");
         }
 
@@ -127,6 +139,11 @@ public class IMRemoteDataSource implements IMDataSource {
 
     @Override
     public void addChatUser(User user, GeneralCallback<String> callback) {
+
+    }
+
+    @Override
+    public void addChatUser(User user, boolean isExisted, GeneralCallback<String> callback) {
 
     }
 

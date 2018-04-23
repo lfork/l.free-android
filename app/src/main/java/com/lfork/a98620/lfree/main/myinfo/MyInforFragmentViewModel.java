@@ -25,6 +25,8 @@ public class MyInforFragmentViewModel extends UserViewModel {
 
     private MainActivity context;
 
+    private User user;
+
     MyInforFragmentViewModel(MainActivity context) {
         super(context);
         this.context = context;
@@ -33,7 +35,7 @@ public class MyInforFragmentViewModel extends UserViewModel {
 
     void refreshData() {
         UserDataRepository repository = UserDataRepository.getInstance();
-        User user = repository.getThisUser();
+        user = repository.getThisUser();
         if (user == null)
             new Thread(() -> repository.getThisUser(new DataSource.GeneralCallback<User>() {
                 @Override
@@ -67,7 +69,11 @@ public class MyInforFragmentViewModel extends UserViewModel {
         Intent intent = new Intent(context, LoginActivity.class);
         intent.putExtra("status", LoginActivity.LOGOUT);
         context.startActivity(intent);
-        Log.d(TAG, "onQuit: " + UserDataRepository.getInstance().hashCode());
+
+        new Thread(() -> {
+            user.setLogin(false);
+            user.save();
+        }).start();
         context.finish();
         // 资源释放。。。
 

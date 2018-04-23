@@ -107,7 +107,6 @@ public class UserDataRepository implements UserDataSource {
             @Override
             public void failed(String log) {
                 callback.failed(log);
-
             }
         });
     }

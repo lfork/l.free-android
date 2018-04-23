@@ -6,6 +6,7 @@ import com.lfork.a98620.lfree.data.source.remote.IMRemoteDataSource;
 import com.lfork.a98620.lfree.data.source.remote.imservice.MessageService;
 import com.lfork.a98620.lfree.data.source.remote.imservice.request.LoginListener;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -50,7 +51,7 @@ public class IMDataRepository implements IMDataSource {
         INSTANCE = null;
     }
 
-    public void setServiceBinder(MessageService.MessageBinder binder){
+    public void setServiceBinder(MessageService.MessageBinder binder) {
         this.binder = binder;
 
     }
@@ -61,22 +62,20 @@ public class IMDataRepository implements IMDataSource {
 
     @Override
     public void login(User user, LoginListener listener) {
-        new Thread(() -> {
-            mRemoteDataSource.login(user, new LoginListener() {
-                @Override
-                public void succeed(User user) {
-                    //如果是Android的话 这里记得要返回UI线程  使用Handler或者是Handler的封装
-                    mCachedUser = user;
-                    listener.succeed(user);
-                }
+        mRemoteDataSource.login(user, new LoginListener() {
+            @Override
+            public void succeed(User user) {
+                //如果是Android的话 这里记得要返回UI线程  使用Handler或者是Handler的封装
+                mCachedUser = user;
+                listener.succeed(user);
+            }
 
-                @Override
-                public void failed(String log) {
-                    //如果是Android的话 这里记得要返回UI线程  使用Handler或者是Handler的封装
-                    listener.failed(log);
-                }
-            });
-        }).start();
+            @Override
+            public void failed(String log) {
+                //如果是Android的话 这里记得要返回UI线程  使用Handler或者是Handler的封装
+                listener.failed(log);
+            }
+        });
 
     }
 
@@ -88,14 +87,11 @@ public class IMDataRepository implements IMDataSource {
     }
 
     @Override
-    public void getChatUserList(GeneralCallback<List<User>> callback) {
-
-        if ( mCachedUserList != null) {
+    public synchronized void getChatUserList(GeneralCallback<List<User>> callback) {
+        if (mCachedUserList != null) {
             callback.succeed(mCachedUserList);
             return;
         }
-
-
         mLocalDataSource.getChatUserList(new GeneralCallback<List<User>>() {
             @Override
             public void succeed(List<User> data) {
@@ -111,12 +107,35 @@ public class IMDataRepository implements IMDataSource {
     }
 
     @Override
-    public void addChatUser(User user, GeneralCallback<String> callback) {
+    public synchronized void addChatUser(User user, GeneralCallback<String> callback) {
 
+    }
+
+    @Override
+    public synchronized void addChatUser(User user, boolean isExisted, GeneralCallback<String> callback) {
+        if (isExisted) {
+            if (mCachedUserList != null) {
+                for (User u : mCachedUserList) {
+                    if (user.getUserId() == u.getUserId()) {
+                        mCachedUserList.remove(u);
+                        addChatUserInLocal(u, callback);
+                        return;
+                    }
+                }
+            }
+        }
+        addChatUserInLocal(user, callback);
+    }
+
+    private synchronized void addChatUserInLocal(User user,  GeneralCallback<String> callback){
         mLocalDataSource.addChatUser(user, new GeneralCallback<String>() {
             @Override
             public void succeed(String data) {
-                mCachedUserList.add(user);
+
+                if (mCachedUserList == null) {
+                    mCachedUserList = new LinkedList<>();
+                }
+                mCachedUserList.add(0, user);
                 callback.succeed(data);
             }
 
@@ -130,13 +149,13 @@ public class IMDataRepository implements IMDataSource {
     }
 
     @Override
-    public void removeChatUser(int userId, GeneralCallback<List<User>> callback) {
+    public synchronized void removeChatUser(int userId, GeneralCallback<List<User>> callback) {
         mLocalDataSource.removeChatUser(userId, new GeneralCallback<List<User>>() {
             @Override
             public void succeed(List<User> data) {
-                for (int i = 0; i < mCachedUserList.size(); i++){
+                for (int i = 0; i < mCachedUserList.size(); i++) {
                     User u = mCachedUserList.get(i);
-                    if (u.getUserId() == userId){
+                    if (u.getUserId() == userId) {
                         mCachedUserList.remove(i);
                         break;
                     }
@@ -151,6 +170,21 @@ public class IMDataRepository implements IMDataSource {
         });
 
     }
+
+    public synchronized boolean isUserExisted(int userId) {
+        if (mCachedUserList != null) {
+            for (User u : mCachedUserList) {
+                if (userId == u.getUserId()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+//    public void getUserIndex(GeneralCallback<Integer> callback) {
+//
+//    }
 
 //    @Override
 //    public void getChatUserInfo(int userId, GeneralCallback<String> callback) {

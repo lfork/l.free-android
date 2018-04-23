@@ -44,18 +44,22 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     @Override
     protected void onResume() {
         super.onResume();
+        if (messageBinder != null) {
+            messageBinder.setListener(viewModel);
+        }
         viewModel.start();
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.chat_window_act);
-        viewModel = new ChatWindowViewModel(this);
-        binding.setViewModel(viewModel);
-
         Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
+
+        viewModel = new ChatWindowViewModel(this);
+        binding.setViewModel(viewModel);
         new Thread(() -> {
             messageBinder = IMDataRepository.getInstance().getBinder();
             messageBinder.setListener(viewModel);
@@ -152,7 +156,6 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
                 finish();
                 break;
             case R.id.menu1:
-
                 Intent intent = new Intent(ChatWindowActivity.this, UserInfoActivity.class);
                 intent.putExtra("user_id", userId);
                 startActivityForResult(intent, 4);
@@ -178,9 +181,9 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
             }
         }).start();
 //        adapter.notifyItemInserted(messageList.size() - 1); //当有新消息时，刷新RecyclerView
-
-
     }
+
+
 
     @Override
     public void showToast(String content) {

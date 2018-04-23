@@ -4,7 +4,7 @@
 
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.index.GoodsItemViewModel" />
+            type="com.lfork.a98620.lfree.main.chatlist.ChatListFragmentViewModel" />
 
     </data>
 
@@ -30,7 +30,9 @@
         <ListView
             android:id="@+id/main_chat_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent">
+
+        </ListView>
 
     </LinearLayout>
 </layout>

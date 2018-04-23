@@ -19,6 +19,8 @@ public interface IMDataSource extends DataSource {
 
 	void addChatUser(User user, GeneralCallback<String> callback);
 
+	void addChatUser(User user, boolean isExisted,  GeneralCallback<String> callback);
+
 	void removeChatUser(int userId, GeneralCallback<List<User>> callback);
 
 //	void getChatUserInfo(int userId, GeneralCallback<String> callback);

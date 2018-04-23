@@ -93,6 +93,7 @@ public class MessageService extends Service {
          */
         public void buildConnection() {
             Log.d(TAG, "buildConnection: 正在建立TCP UDP连接");
+            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？5");
             new Thread(() -> {
                 //这里会获取一些连接的索引 dataRepository。。  用来及时地进行交互
 
@@ -101,14 +102,17 @@ public class MessageService extends Service {
                 //进行登录操作
                 repository = IMDataRepository.getInstance();
 
+                Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？4");
                 repository.login(user, new LoginListener() {
                     @Override
                     public void succeed(User user) {
+                        Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？3");
                         buildUDPConnection();
                     }
 
                     @Override
                     public void failed(String log) {
+                        Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？8" + log);
 
                     }
                 });
@@ -116,9 +120,11 @@ public class MessageService extends Service {
         }
 
         private void buildUDPConnection() {
+            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？1");
             messageDataRepository = MessageDataRepository.getInstance(user.getId());
             messageDataRepository.setMessageListener(listener);
             repository.setServiceBinder(this);
+            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？2");
 
         }
 

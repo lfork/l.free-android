@@ -10,7 +10,10 @@ import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
+import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.source.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.UserInfoActBinding;
+import com.lfork.a98620.lfree.util.ToastUtil;
 
 public class UserInfoActivity extends AppCompatActivity {
     private int userId;
@@ -42,9 +45,22 @@ public class UserInfoActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.menu1:
-                Intent intent = new Intent(this, ChatWindowActivity.class);
-                intent.putExtra("user_id", userId);
-                startActivity(intent);
+
+                UserDataRepository userDataRepository = UserDataRepository.getInstance();
+                User u = userDataRepository.getThisUser();
+                if (u != null) {
+                    if (u.getUserId() == userId){
+                        ToastUtil.showShort(this, "不能和自己聊天");
+                        break;
+                    }
+                    Intent intent = new Intent(this, ChatWindowActivity.class);
+                    intent.putExtra("user_id", userId);
+                    this.startActivity(intent);
+                } else {
+                    ToastUtil.showShort(this, "IM模块正在初始化...");
+                }
+                break;
+                
             default:
                 break;
         }

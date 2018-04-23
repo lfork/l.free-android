@@ -2,11 +2,12 @@ package com.lfork.a98620.lfree.main.chatlist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.common.BaseViewModel;
-import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
+import com.lfork.a98620.lfree.data.entity.User;
 
 /**
  * Created by 98620 on 2018/4/9.
@@ -15,12 +16,21 @@ import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
 public class ChatListItemViewModel extends BaseViewModel {
     private static final String TAG = "ChatListItemViewModel";
 
-    private String userName;
+    public final ObservableField<String> username = new ObservableField<>();
+
+    public final ObservableField<String> newMessage = new ObservableField<>();
+
+    public final ObservableField<String> newMessageTime = new ObservableField<>("没有消息");
+
+    public final ObservableField<String> imageUrl = new ObservableField<>();
 
     private int userId;
 
-    ChatListItemViewModel(Context context) {
+    ChatListItemViewModel(Context context, User user) {
         super(context);
+        username.set(user.getUserName());
+        imageUrl.set(user.getUserImagePath());
+        userId = user.getUserId();
     }
 
     public void onClick(){
@@ -29,4 +39,5 @@ public class ChatListItemViewModel extends BaseViewModel {
         intent.putExtra("user_id", userId);
         context.startActivity(intent);
     }
+
 }

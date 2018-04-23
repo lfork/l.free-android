@@ -266,7 +266,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
                     openCamera();
-                    avatorPop.dismiss();
                 } else {
                     // Permission Denied
                     Toast.makeText(UserInfoThisActivity.this, "很遗憾你把相机权限禁用了", Toast.LENGTH_SHORT)
@@ -276,7 +275,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openAlbum();
-                    avatorPop.dismiss();
                 } else {
                     Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
                 }

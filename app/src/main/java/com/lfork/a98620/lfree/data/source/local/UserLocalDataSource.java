@@ -1,9 +1,13 @@
 package com.lfork.a98620.lfree.data.source.local;
 
+import android.util.Log;
+
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.UserDataSource;
 
 import org.litepal.crud.DataSupport;
+
+import java.util.List;
 
 /**
  * Created by 98620 on 2018/3/23.
@@ -49,8 +53,10 @@ public class UserLocalDataSource implements UserDataSource {
 
     @Override
     public void getThisUser(GeneralCallback<User> callback) {
-//        User user = (User)DataSupport.where("isLogin =  ?", "1").find(User.class);
-        User user  = DataSupport.findFirst(User.class);
+        List<User> userList = DataSupport.where("isLogin=?", "1").find(User.class);
+        User user = null;
+        if (userList != null && userList.size() > 0)
+            user = userList.get(0);
 
         if (user != null) {
             callback.succeed(user);
@@ -62,8 +68,12 @@ public class UserLocalDataSource implements UserDataSource {
     @Override
     public boolean saveThisUser(User user) {
         try {
-            DataSupport.deleteAll(User.class);
-            return user.save();
+            DataSupport.deleteAll(User.class, "islogin=0 and userid=? ",user.getUserId()+"");
+            //lie
+//            user.setId(0);
+            boolean result = user.save();
+            Log.d(TAG, "saveThisUser: 用户信息本地更新成功" + result);
+            return result;
         } catch (Exception e) {
             return false;
         }

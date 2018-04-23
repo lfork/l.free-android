@@ -65,7 +65,10 @@ public class MessageRemoteDataSource implements MessageDataSource {
     }
 
     public static void destroyInstance() {
-        INSTANCE.mConnection.closeConnection();
+        if (INSTANCE != null && INSTANCE.mConnection != null){
+            INSTANCE.mConnection.closeConnection();
+        }
+
         INSTANCE = null;
     }
 

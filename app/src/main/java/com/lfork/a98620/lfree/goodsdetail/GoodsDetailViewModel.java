@@ -9,9 +9,12 @@ import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.common.viewmodel.GoodsViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
+import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
+import com.lfork.a98620.lfree.data.source.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
+import com.lfork.a98620.lfree.util.ToastUtil;
 
 /**
  * Created by 98620 on 2018/4/13.
@@ -88,9 +91,22 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     }
 
     public void startPrivateChat() {
-        Intent intent = new Intent(context, ChatWindowActivity.class);
-        intent.putExtra("user_id", userId);
-        context.startActivity(intent);
+
+        UserDataRepository userDataRepository = UserDataRepository.getInstance();
+        User u = userDataRepository.getThisUser();
+        if (u != null) {
+             if (u.getUserId() == userId){
+                 ToastUtil.showShort(context, "不能和自己聊天");
+                 return;
+             }
+
+            Intent intent = new Intent(context, ChatWindowActivity.class);
+            intent.putExtra("user_id", userId);
+            context.startActivity(intent);
+        } else {
+            ToastUtil.showShort(context, "IM模块正在初始化...");
+        }
+
     }
 
     public void publishReview() {

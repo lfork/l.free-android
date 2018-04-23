@@ -30,7 +30,11 @@ public class User extends DataSupport {
 
     private String userMakeDate;        //用户修改或者注册时间
 
+    private long timestamp;
+
     private boolean isLogin;
+
+    private boolean isChatUser;
 
     public User() {
     }
@@ -51,7 +55,7 @@ public class User extends DataSupport {
     }
 
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
@@ -160,6 +164,22 @@ public class User extends DataSupport {
 
     public void setLogin(boolean login) {
         isLogin = login;
+    }
+
+    public boolean isChatUser() {
+        return isChatUser;
+    }
+
+    public void setChatUser(boolean chatUser) {
+        isChatUser = chatUser;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override

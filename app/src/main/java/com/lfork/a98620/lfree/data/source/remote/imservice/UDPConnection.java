@@ -89,7 +89,6 @@ public class UDPConnection extends Thread {
     private void keepAlive() {
         new Thread(() -> {
             while (isRunning()) {
-
                 if (Config.isConnected()) {
                     Message msg = new Message();
                     msg.setType(MessageType.CONNECTION_INFO);
