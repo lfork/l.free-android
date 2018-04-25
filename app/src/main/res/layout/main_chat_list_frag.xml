@@ -1,12 +1,11 @@
 <layout>
-
     <data>
-
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.chatlist.ChatListFragmentViewModel" />
-
+        <import type="android.view.View"/>
     </data>
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -26,13 +25,19 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
 
-
         <ListView
+            android:visibility="@{viewModel.dataIsEmpty ? View.GONE:View.VISIBLE}"
             android:id="@+id/main_chat_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         </ListView>
+
+        <TextView
+            android:visibility="@{viewModel.dataIsEmpty ? View.VISIBLE : View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="聊天记录为空，赶快去寻找卖家进行交流吧~~"
+            />
 
     </LinearLayout>
 </layout>

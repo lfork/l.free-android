@@ -10,13 +10,15 @@ import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
+import com.lfork.a98620.lfree.common.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.UserInfoActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
-public class UserInfoActivity extends AppCompatActivity {
+public class UserInfoActivity extends AppCompatActivity implements ViewModelNavigator{
     private int userId;
+    private String username="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,7 @@ public class UserInfoActivity extends AppCompatActivity {
         userId = intent.getIntExtra("user_id", 0);
         UserInfoActBinding binding = DataBindingUtil.setContentView(this, R.layout.user_info_act);
         UserInfoViewModel viewModel = new UserInfoViewModel(this, userId);
+        viewModel.setNavigator(this);
         binding.setViewModel(viewModel);
         initActionBar("卖家信息");
     }
@@ -54,6 +57,7 @@ public class UserInfoActivity extends AppCompatActivity {
                         break;
                     }
                     Intent intent = new Intent(this, ChatWindowActivity.class);
+                    intent.putExtra("username", username);
                     intent.putExtra("user_id", userId);
                     this.startActivity(intent);
                 } else {
@@ -73,5 +77,19 @@ public class UserInfoActivity extends AppCompatActivity {
         MenuItem item = menu.getItem(0);
         item.setTitle("私聊");
         return true;
+    }
+
+    @Override
+    public void setParam1(String param) {
+        if (param == null) {
+            username = userId +"";
+        } else {
+            username = param;
+        }
+    }
+
+    @Override
+    public void setParam2(String param) {
+
     }
 }

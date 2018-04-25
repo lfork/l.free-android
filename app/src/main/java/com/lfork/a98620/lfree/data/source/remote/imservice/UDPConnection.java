@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.lfork.a98620.lfree.util.data.Print.print;
+
 /**
  * 负责的功能：
  * 提供UDP消息的发送接口
@@ -103,7 +105,7 @@ public class UDPConnection extends Thread {
                         e.printStackTrace();
                     }
                     // 300秒就保活一次
-//                    print("UDPConnection.keepAlive():保活消息已发送(30秒一次)");
+                    print("UDPConnection.keepAlive():保活消息已发送(30秒一次)");
                     try {
                         Thread.sleep(1000 * 30);
                     } catch (InterruptedException e) {
@@ -222,6 +224,7 @@ public class UDPConnection extends Thread {
         if (socket != null) {
             socket.close();
         }
+        print("UDP 连接以关闭");
         setRunning(false);
     }
 

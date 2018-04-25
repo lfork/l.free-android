@@ -37,6 +37,7 @@ public class ChatListItemViewModel extends BaseViewModel {
         Log.d(TAG, "onButton1Clicked: ???" );
         Intent intent = new Intent(context, ChatWindowActivity.class);
         intent.putExtra("user_id", userId);
+        intent.putExtra("username", username.get());
         context.startActivity(intent);
     }
 

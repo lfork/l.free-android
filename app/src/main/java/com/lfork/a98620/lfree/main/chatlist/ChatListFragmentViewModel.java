@@ -48,15 +48,16 @@ public class ChatListFragmentViewModel extends BaseViewModel {
                     for (User u : data) {
                         ChatListItemViewModel item = new ChatListItemViewModel(context, u);
                         items.add(item);
-                    }
 
+                        dataIsEmpty.set(false);
+                    }
+                    dataIsLoading.set(false);
                     navigator.notifyMessagesChanged();
 
-                    context.runOnUiThread(() -> {
-//                        ToastUtil.showShort(context, "联系人列表加载成功");
-                        dataIsLoading.set(false);
-                        dataIsEmpty.set(false);
-                    });
+//                    context.runOnUiThread(() -> {
+////                        ToastUtil.showShort(context, "联系人列表加载成功");
+//
+//                    });
                 }
 
                 @Override

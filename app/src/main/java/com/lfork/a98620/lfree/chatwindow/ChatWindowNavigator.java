@@ -9,6 +9,7 @@ import com.lfork.a98620.lfree.data.entity.message.Message;
 public interface ChatWindowNavigator {
     void sendMessage(Message message, DataSource.GeneralCallback<Message> callback);
 
+
     void showToast(String content);
 
     void notifyMessagesChanged();

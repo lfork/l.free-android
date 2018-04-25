@@ -58,6 +58,7 @@ public class UserInfoViewModel extends UserViewModel {
         email.set(user.getUserEmail());
         phone.set(user.getUserPhone());
         studentNumber.set(user.getUserId() + "");
+        getNavigator().setParam1(username.get());
     }
 
 }

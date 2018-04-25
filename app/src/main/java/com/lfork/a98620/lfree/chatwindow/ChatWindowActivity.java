@@ -23,7 +23,6 @@ import com.lfork.a98620.lfree.util.ToastUtil;
 
 public class ChatWindowActivity extends AppCompatActivity implements ChatWindowNavigator, MessageListener{
 
-
 //    private EditText editText;
     private RecyclerView recyclerView;
 
@@ -48,7 +47,6 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
             messageBinder.setListener(viewModel);
         }
         viewModel.start();
-
     }
 
     @Override
@@ -57,6 +55,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         binding = DataBindingUtil.setContentView(this, R.layout.chat_window_act);
         Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
+        String username = intent.getStringExtra("username");
 
         viewModel = new ChatWindowViewModel(this);
         binding.setViewModel(viewModel);
@@ -65,9 +64,9 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
             messageBinder.setListener(viewModel);
 
         }).start();
-        initActionBar(userId + "");
+        initActionBar(username);
         thisUserId = UserDataRepository.getInstance().getUserId();
-        viewModel.setUserInfo("ee", userId, thisUserId);
+        viewModel.setUserInfo(username , userId, thisUserId);
         viewModel.setNavigator(this);
 //        initMeg(); //初始化几条message数据
         initUI();
@@ -156,7 +155,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
                 finish();
                 break;
             case R.id.menu1:
-                Intent intent = new Intent(ChatWindowActivity.this, UserInfoActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UserInfoActivity.class);
                 intent.putExtra("user_id", userId);
                 startActivityForResult(intent, 4);
             default:

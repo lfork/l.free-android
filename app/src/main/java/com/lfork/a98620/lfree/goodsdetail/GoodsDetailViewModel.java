@@ -101,6 +101,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
              }
 
             Intent intent = new Intent(context, ChatWindowActivity.class);
+            intent.putExtra("username", sellerName.get());
             intent.putExtra("user_id", userId);
             context.startActivity(intent);
         } else {

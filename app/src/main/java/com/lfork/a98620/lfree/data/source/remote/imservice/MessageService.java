@@ -22,6 +22,10 @@ import com.lfork.a98620.lfree.data.source.MessageDataRepository;
 import com.lfork.a98620.lfree.data.source.UserDataRepository;
 import com.lfork.a98620.lfree.data.source.remote.imservice.request.LoginListener;
 
+import java.util.List;
+
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+
 public class MessageService extends Service {
     private static final String TAG = "MessageService";
 
@@ -72,9 +76,8 @@ public class MessageService extends Service {
                     viewListener.onReceived(message);
                 } else
                     //3、如果不能显示就进行通知
-                    sendChatMsg(null, message.getContent());
-                }
-
+                    sendChatMsg(message.getSenderID(), message.getContent());
+            }
 
 
         };
@@ -137,14 +140,13 @@ public class MessageService extends Service {
 
         public void sendMessage(Message message, DataSource.GeneralCallback<Message> callback) {
             messageDataRepository.saveAndSendMessage(message, callback);
-
         }
 
         public void setListener(MessageListener listener) {
             this.viewListener = listener;
         }
 
-        public void cancelListener(){
+        public void cancelListener() {
             viewListener = null;
         }
     }
@@ -189,12 +191,62 @@ public class MessageService extends Service {
         return builder.build();
     }
 
+    public void sendChatMsg(int senderID, String message) {
+        UserDataRepository repository = UserDataRepository.getInstance();
+        repository.getUserInfo(new DataSource.GeneralCallback<User>() {
+            @Override
+            public void succeed(User data) {
+                showChatNotification(message, data.getUserName(), senderID);
+                addUser(data);
+            }
 
-    public void sendChatMsg(View view, String message) {
+            @Override
+            public void failed(String log) {
+            }
+        }, senderID);
+
+    }
+
+
+    private void addUser(User data) {
+
+        repository.getChatUserList(new DataSource.GeneralCallback<List<User>>() {
+            @Override
+            public void succeed(List<User> data1) {
+                repository.addChatUser(data, repository.isUserExisted(data.getUserId()), new DataSource.GeneralCallback<String>() {
+                    @Override
+                    public void succeed(String data) {
+                        Log.d(TAG, "succeed: " + "添加成功");
+                    }
+
+                    @Override
+                    public void failed(String log) {
+                        Log.d(TAG, "failed: " + log);
+
+                    }
+                });
+            }
+
+            @Override
+            public void failed(String log) {
+
+            }
+        });
+
+
+    }
+
+    public void showChatNotification(String message, String senderName, int senderID) {
+        Intent intent = new Intent(this, ChatWindowActivity.class);
+        intent.putExtra("user_id", senderID);
+        intent.putExtra("username", senderName);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, FLAG_UPDATE_CURRENT);
+
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification notification = new NotificationCompat.Builder(this, "chat")
                 .setContentTitle("收到一条聊天消息")
-                .setContentText(message)
+                .setContentText(senderName + ":" + message)
+                .setContentIntent(pi)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.main_icon)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.main_icon))
@@ -203,7 +255,7 @@ public class MessageService extends Service {
         manager.notify(1, notification);
     }
 
-    public void sendSubscribeMsg(View view) {
+    public void showSubscribeNotification(View view) {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification notification = new NotificationCompat.Builder(this, "subscribe")
                 .setContentTitle("收到一条订阅消息")
