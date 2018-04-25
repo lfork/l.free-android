@@ -115,6 +115,7 @@ public class UDPConnection extends Thread {
                 } else {
                     //缩短休眠时间，以便重连之后能马上激活服务端的udp服务
 //                    System.out.println("UDPConnection.keepAlive()://缩短休眠时间，以便重连之后能马上激活服务端的udp服务");
+                    print("UDPConnection.keepAlive():保活消息未发送  当前连接无效");
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -224,7 +225,7 @@ public class UDPConnection extends Thread {
         if (socket != null) {
             socket.close();
         }
-        print("UDP 连接以关闭");
+        print("UDP 连接已关闭");
         setRunning(false);
     }
 

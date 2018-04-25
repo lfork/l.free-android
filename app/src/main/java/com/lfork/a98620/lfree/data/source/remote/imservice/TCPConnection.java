@@ -128,7 +128,7 @@ public class TCPConnection {
             while (isRunning()) {
                 if (isConnected()) {
                     try {
-                        Thread.sleep(aMinute / 2);    //30秒发一次
+                        Thread.sleep(aMinute / 3);    //20秒发一次 ，弱网环境下的保持连接
                         // 这里对内容的封装 和服务端对内容的解析需要一一对应
                         // 这里就需要封装一个任务 发给服务器
                         send("keepAlive");
