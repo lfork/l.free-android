@@ -132,7 +132,6 @@ public class MessageService extends Service {
         }
 
         public void closeConnection() {
-
             MessageDataRepository.destroyInstance();
             IMDataRepository.destroyInstance();
             Log.d(TAG, "closeConnection: Message TCP/UDP相关资源已释放");

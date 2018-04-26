@@ -191,7 +191,7 @@ public class GoodsUploadActivity extends AppCompatActivity {
             public void onFirstButtonClicked(PopupDialog dialog) {
                 int checkCallPhonePermission = ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) + ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                    ToastUtil.showShort(getApplicationContext(), "请允许程序访问您的SD卡，以便上传图片^v^");
+                    ToastUtil.showLong(getApplicationContext(), "请允许程序访问您的SD卡，以便上传图片^v^");
                     ActivityCompat.requestPermissions(GoodsUploadActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
                 } else {
                     openCamera();

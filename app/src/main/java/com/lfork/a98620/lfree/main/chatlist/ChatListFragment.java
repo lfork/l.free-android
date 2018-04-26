@@ -35,6 +35,7 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator{
     @Override
     public void onResume() {
         super.onResume();
+        notifyUsersChanged();
         viewModel.start();
     }
 
@@ -66,7 +67,7 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator{
 
 
     @Override
-    public void notifyMessagesChanged() {
+    public void notifyUsersChanged() {
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             ((ListViewAdapter)listView.getAdapter()).notifyDataSetChanged();
         });

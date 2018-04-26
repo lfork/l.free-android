@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.data.entity;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
 /**
@@ -10,6 +11,7 @@ import org.litepal.crud.DataSupport;
 public class User extends DataSupport {
     private int id; //储存在本地数据库里面的id
 
+    @Column(unique = true, defaultValue = "unknown")
     private int userId;     //用户的ID
 
     private String studentId;  //userId == studentId

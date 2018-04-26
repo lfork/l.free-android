@@ -20,6 +20,14 @@ import com.lfork.a98620.lfree.util.ToastUtil;
  * Created by 98620 on 2018/4/13.
  */
 
+/**
+ *   数据加载模型
+ *
+ *   正常的加载模型：
+ *
+ *   异常情况的模型加载：
+ */
+
 public class GoodsDetailViewModel extends GoodsViewModel {
 
     public ObservableField<String> sellerImage = new ObservableField<>();

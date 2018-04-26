@@ -52,7 +52,7 @@ public class ChatListFragmentViewModel extends BaseViewModel {
                         dataIsEmpty.set(false);
                     }
                     dataIsLoading.set(false);
-                    navigator.notifyMessagesChanged();
+                    navigator.notifyUsersChanged();
 
 //                    context.runOnUiThread(() -> {
 ////                        ToastUtil.showShort(context, "联系人列表加载成功");

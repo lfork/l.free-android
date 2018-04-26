@@ -21,9 +21,9 @@ import com.lfork.a98620.lfree.databinding.ChatWindowActBinding;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
-public class ChatWindowActivity extends AppCompatActivity implements ChatWindowNavigator, MessageListener{
+public class ChatWindowActivity extends AppCompatActivity implements ChatWindowNavigator, MessageListener {
 
-//    private EditText editText;
+    //    private EditText editText;
     private RecyclerView recyclerView;
 
     private static final String TAG = "ChatWindowActivity";
@@ -45,8 +45,9 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         super.onResume();
         if (messageBinder != null) {
             messageBinder.setListener(viewModel);
+            viewModel.start();
         }
-        viewModel.start();
+
     }
 
     @Override
@@ -61,12 +62,20 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         binding.setViewModel(viewModel);
         new Thread(() -> {
             messageBinder = IMDataRepository.getInstance().getBinder();
-            messageBinder.setListener(viewModel);
+            if (messageBinder != null) {
+                messageBinder.setListener(viewModel);
+            } else {
+                runOnUiThread(() -> {
+                    ToastUtil.showShort(getApplicationContext(), "IM服务器异常,聊天功能开启失败");
+                    finish();
+
+                });
+            }
 
         }).start();
         initActionBar(username);
         thisUserId = UserDataRepository.getInstance().getUserId();
-        viewModel.setUserInfo(username , userId, thisUserId);
+        viewModel.setUserInfo(username, userId, thisUserId);
         viewModel.setNavigator(this);
 //        initMeg(); //初始化几条message数据
         initUI();
@@ -76,7 +85,8 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     @Override
     protected void onPause() {
         super.onPause();
-        messageBinder.cancelListener();
+        if (messageBinder != null)
+            messageBinder.cancelListener();
     }
 
     private void initUI() {
@@ -137,7 +147,6 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     //加载几条信息到List上面去
 
 
-
     public void initActionBar(String title) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
@@ -181,7 +190,6 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         }).start();
 //        adapter.notifyItemInserted(messageList.size() - 1); //当有新消息时，刷新RecyclerView
     }
-
 
 
     @Override
