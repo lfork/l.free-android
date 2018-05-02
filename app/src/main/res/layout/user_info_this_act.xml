@@ -28,8 +28,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@color/Home_act_text">
+                    android:layout_height="222dp"
+                    android:background="@drawable/background">
 
                     <com.github.siyamed.shapeimageview.RoundedImageView
                         android:id="@+id/head"

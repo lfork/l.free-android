@@ -22,7 +22,7 @@
             android:id="@+id/review_content"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:hint="请给买家留言获取更多信息" />
@@ -39,11 +39,30 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/view_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_below="@id/review_layout"
+        android:background="@color/viewColor" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_layout1"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/ic_comment_message"
+        android:text="评论区"
+        android:textSize="20sp" />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/review_layout"
-        android:paddingLeft="10dp"
+        android:layout_below="@id/text_view"
+        android:paddingLeft="20dp"
         android:paddingTop="10dp">
 
     </android.support.v7.widget.RecyclerView>

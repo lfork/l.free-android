@@ -2,76 +2,79 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#88000000" >
+    android:background="#88000000">
 
     <LinearLayout
-        android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
+        android:background="#fff"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/layout_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clickable="true" >
+            android:clickable="true">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_margin="10dp"
-                android:drawablePadding="20dp"
+                android:layout_margin="16dp"
+                android:drawableLeft="@drawable/ic_camera"
+                android:drawablePadding="10dp"
                 android:gravity="center"
-                android:text="拍照" />
+                android:text="拍照"
+                android:textSize="18sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000" >
-        </View>
+            android:background="@color/viewColor"></View>
 
         <RelativeLayout
             android:id="@+id/layout_choose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clickable="true" >
+            android:clickable="true">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_margin="10dp"
-                android:drawablePadding="20dp"
+                android:layout_margin="16dp"
+                android:drawableLeft="@drawable/ic_photo"
+                android:drawablePadding="10dp"
                 android:gravity="center"
-                android:text="从相册选择" />
+                android:text="从相册选择"
+                android:textSize="18sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000" >
-        </View>
+            android:background="@color/viewColor"></View>
 
         <RelativeLayout
             android:id="@+id/layout_close"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clickable="true" >
+            android:clickable="true">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_margin="10dp"
-                android:drawablePadding="20dp"
+                android:layout_margin="16dp"
+                android:drawablePadding="10dp"
                 android:gravity="center"
                 android:text="取消"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content" />
+                android:textSize="18sp" />
         </RelativeLayout>
     </LinearLayout>
 

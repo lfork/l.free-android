@@ -44,6 +44,8 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="25dp"
+                    android:drawableLeft="@drawable/ic_goods_name"
+                    android:drawablePadding="10dp"
                     android:gravity="center"
                     android:text="@{viewModel.name}"
                     android:textSize="20sp"
@@ -117,6 +119,8 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
+                    android:drawableLeft="@drawable/ic_goods_details"
+                    android:drawablePadding="10dp"
                     android:text="商品简介:"
                     android:textSize="17sp" />
 
@@ -154,6 +158,8 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="25dp"
+                    android:drawableLeft="@drawable/ic_goods_kinds"
+                    android:drawablePadding="10dp"
                     android:gravity="center"
                     android:text="种类：书籍文具" />
 
@@ -178,6 +184,8 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="25dp"
+                    android:drawableLeft="@drawable/ic_goods_location"
+                    android:drawablePadding="10dp"
                     android:gravity="center"
                     android:text="校区：航空港校区" />
 
