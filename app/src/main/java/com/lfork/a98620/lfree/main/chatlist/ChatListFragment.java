@@ -22,6 +22,7 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
     private ChatListFragmentViewModel viewModel;
     private View rootView;// 缓存Fragment view@Override
     private ListView listView;
+    private ListViewAdapter<ChatListItemViewModel> adapter;
 
     @Override
     public void onDestroy() {
@@ -61,8 +62,7 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
 
     private void setupListView() {
         listView = binding.mainChatList;
-        ListViewAdapter<ChatListItemViewModel> adapter
-                = new ListViewAdapter<>(getContext(), R.layout.main_chat_list_contacts_item, viewModel.items, BR.viewModel); //BR 里面的entity 是经过处理的entity
+        adapter = new ListViewAdapter<>(getContext(), R.layout.main_chat_list_contacts_item, viewModel.items, BR.viewModel); //BR 里面的entity 是经过处理的entity
         listView.setAdapter(adapter);
     }
 
@@ -76,8 +76,8 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
 
     @Override
     public void notifyUsersChanged() {
-        ListViewAdapter adapter = (ListViewAdapter) listView.getAdapter();
-        adapter.notifyDataSetChanged();
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
 //

@@ -7,6 +7,7 @@ import com.lfork.a98620.lfree.data.source.remote.imservice.MessageService;
 import com.lfork.a98620.lfree.data.source.remote.imservice.request.LoginListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +94,16 @@ public class IMDataRepository implements IMDataSource {
     @Override
     public synchronized void getChatUserList(GeneralCallback<List<User>> callback) {
         if (mCachedUsers != null) {
-            callback.succeed(new ArrayList<>(mCachedUsers.values()));
+            ArrayList<User> users = new ArrayList<>(mCachedUsers.values());
+            Collections.sort(users, (o1, o2) -> {
+                if (o1.getTimestamp()> o2.getTimestamp() ){
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+
+            callback.succeed(users);
             return;
         }
         mLocalDataSource.getChatUserList(new GeneralCallback<List<User>>() {
@@ -190,7 +200,7 @@ public class IMDataRepository implements IMDataSource {
         }
         mCachedUsers.clear();
         for (User user : users) {
-            mCachedUsers.put(user.getId() + "", user);
+            mCachedUsers.put(user.getUserId() + "", user);
         }
         mCachedUsersIsDirty = false;
     }

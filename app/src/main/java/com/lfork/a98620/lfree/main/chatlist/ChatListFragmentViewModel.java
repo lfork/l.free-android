@@ -77,7 +77,6 @@ public class ChatListFragmentViewModel extends BaseViewModel {
     }
 
     private void notifyDataChanged(ArrayList<ChatListItemViewModel> viewModels ){
-
         context.runOnUiThread(() -> {
             items.clear();
             items.addAll(viewModels);
