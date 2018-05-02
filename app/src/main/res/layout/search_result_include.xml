@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/item_selector">
+
+        <ImageView
+            android:id="@+id/goods_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/login_logo" />
+
+        <TextView
+            android:id="@+id/goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/goods_image"
+            android:layout_toEndOf="@+id/goods_image"
+            android:text="标题测试文案啊啊啊"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/goods_describe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/goods_name"
+            android:layout_below="@+id/goods_name"
+            android:layout_marginRight="9dp"
+            android:maxLines="2"
+            android:layout_marginTop="3dp"
+            android:text="这是描述描述描述这是描述描述描述这是描述描述描述这是描述描述描述这是描述描述描述"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/goods_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/goods_name"
+            android:layout_below="@+id/goods_describe"
+            android:layout_marginTop="6dp"
+            android:text="发布时间：2018年4月19日19:11:44"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/goods_describe"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="3dp"
+            android:text="价格：50元"
+            android:textColor="@color/Home_Goods_Money"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
