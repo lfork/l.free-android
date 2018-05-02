@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.chatwindow;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.common.BaseViewModel;
@@ -99,7 +100,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
     public void sendMessage() {
 
         String message_sent = newMessage.get();
-        if (!message_sent.equals("")) {
+        if (!TextUtils.isEmpty(message_sent)) {
 
             Message m;
             m = new Message(message_sent, Message.SendType);

@@ -10,6 +10,7 @@ import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.source.IMDataRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,28 +39,21 @@ public class ChatListFragmentViewModel extends BaseViewModel {
         repository = IMDataRepository.getInstance();
     }
 
-
     private void loadUsers() {
         new Thread(() -> {
             repository.getChatUserList(new DataSource.GeneralCallback<List<User>>() {
                 @Override
                 public void succeed(List<User> data) {
-                    items.clear();
+                    //这里要在ui线程里面执行数据的更新操作
+                    ArrayList<ChatListItemViewModel> items = new ArrayList<>();
                     for (User u : data) {
                         ChatListItemViewModel item = new ChatListItemViewModel(context, u);
                         items.add(item);
-
                         dataIsEmpty.set(false);
                     }
                     dataIsLoading.set(false);
-                    navigator.notifyUsersChanged();
-
-//                    context.runOnUiThread(() -> {
-////                        ToastUtil.showShort(context, "联系人列表加载成功");
-//
-//                    });
+                    notifyDataChanged(items);
                 }
-
                 @Override
                 public void failed(String log) {
                     context.runOnUiThread(() -> {
@@ -68,8 +62,6 @@ public class ChatListFragmentViewModel extends BaseViewModel {
                 }
             });
         }).start();
-
-
     }
 
     public void start() {
@@ -78,6 +70,23 @@ public class ChatListFragmentViewModel extends BaseViewModel {
 
     public void setNavigator(ChatListFragNavigator navigator) {
         this.navigator = navigator;
+    }
+
+    public void unbindNavigator() {
+       this.navigator = null;
+    }
+
+    private void notifyDataChanged(ArrayList<ChatListItemViewModel> viewModels ){
+
+        context.runOnUiThread(() -> {
+            items.clear();
+            items.addAll(viewModels);
+            if (navigator != null) {
+                navigator.notifyUsersChanged();
+            }
+
+        });
+
     }
 
     //    private void initIMList() {

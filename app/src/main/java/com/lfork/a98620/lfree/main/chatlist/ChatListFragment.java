@@ -14,9 +14,7 @@ import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.databinding.MainChatListFragBinding;
 import com.lfork.a98620.lfree.util.adapter.ListViewAdapter;
 
-import java.util.Objects;
-
-public class ChatListFragment extends Fragment implements ChatListFragNavigator{
+public class ChatListFragment extends Fragment implements ChatListFragNavigator {
 
     private static final String TAG = "ChatListFragment";
 
@@ -35,8 +33,9 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator{
     @Override
     public void onResume() {
         super.onResume();
-        notifyUsersChanged();
+        viewModel.setNavigator(this);
         viewModel.start();
+
     }
 
     @Override
@@ -44,34 +43,41 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator{
                              Bundle savedInstanceState) {
         if (rootView == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.main_chat_list_frag, container, false);
-            viewModel = new ChatListFragmentViewModel (getActivity());
+            viewModel = new ChatListFragmentViewModel(getActivity());
             binding.setViewModel(viewModel);
             setupListView();
             rootView = binding.getRoot();
-            viewModel.setNavigator(this);
-        }
-        // 缓存的rootView需要判断是否已经被加过parent，
-        // 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-        ViewGroup parent = (ViewGroup) rootView.getParent();
-        if (parent != null) {
-            parent.removeView(rootView);
+
+        } else {
+            // 缓存的rootView需要判断是否已经被加过parent，
+            // 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
+                parent.removeView(rootView);
+            }
         }
         return rootView;
     }
 
-    private void setupListView(){
-        listView =binding.mainChatList;
-        ListViewAdapter<ChatListItemViewModel> adapter = new ListViewAdapter<>(getContext(), R.layout.main_chat_list_contacts_item, viewModel.items, BR.viewModel); //BR 里面的entity 是经过处理的entity
+    private void setupListView() {
+        listView = binding.mainChatList;
+        ListViewAdapter<ChatListItemViewModel> adapter
+                = new ListViewAdapter<>(getContext(), R.layout.main_chat_list_contacts_item, viewModel.items, BR.viewModel); //BR 里面的entity 是经过处理的entity
         listView.setAdapter(adapter);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (viewModel != null) {
+            viewModel.unbindNavigator();
+        }
+    }
 
     @Override
     public void notifyUsersChanged() {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            ((ListViewAdapter)listView.getAdapter()).notifyDataSetChanged();
-        });
-
+        ListViewAdapter adapter = (ListViewAdapter) listView.getAdapter();
+        adapter.notifyDataSetChanged();
     }
 
 //

@@ -32,4 +32,8 @@ public abstract class BaseViewModel extends BaseObservable{
     public void setNavigator(ViewModelNavigator navigator) {
         this.navigator = navigator;
     }
+
+    public void unbindNavigator() {
+        this.navigator = null;
+    }
 }

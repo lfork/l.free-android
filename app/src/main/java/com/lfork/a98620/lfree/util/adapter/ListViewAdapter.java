@@ -3,7 +3,6 @@ package com.lfork.a98620.lfree.util.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,5 +58,9 @@ public class ListViewAdapter<T> extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+//
+//    public void refreshData(){
+//
+//    }
 
 }
