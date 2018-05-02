@@ -1,0 +1,25 @@
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.main.community.CommunityFragmentViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.lfork.a98620.lfree.main.community.CommunityFragment">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@{viewModel.text}"
+            android:textSize="50sp"/>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</layout>

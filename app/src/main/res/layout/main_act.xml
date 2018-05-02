@@ -65,6 +65,37 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="@{(view)->viewModel.onClick(view,4)}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/community_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_above="@+id/community_text"
+                    android:layout_centerHorizontal="true"
+
+                    android:src="@drawable/main_talk_btn_selector" />
+
+                <TextView
+                    android:id="@+id/community_text"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="社区"
+                    android:textColor="@color/Home_act_text"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/publish_btn"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
@@ -83,6 +114,8 @@
 
 
             </RelativeLayout>
+
+
 
             <RelativeLayout
                 android:layout_width="0dp"

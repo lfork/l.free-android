@@ -24,6 +24,7 @@ import com.lfork.a98620.lfree.data.source.UserDataRepository;
 import com.lfork.a98620.lfree.data.source.remote.imservice.MessageService;
 import com.lfork.a98620.lfree.databinding.MainActBinding;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
+import com.lfork.a98620.lfree.main.community.CommunityFragment;
 import com.lfork.a98620.lfree.main.goodsupload.GoodsUploadFragment;
 import com.lfork.a98620.lfree.main.index.IndexFragment;
 import com.lfork.a98620.lfree.main.myinfo.MyInforFragment;
@@ -116,11 +117,14 @@ public class MainActivity extends AppCompatActivity {
         binding.goodsBtn.setSelected(false);
         binding.chatBtn.setSelected(false);
         binding.myBtn.setSelected(false);
+        binding.communityBtn.setSelected(false);
+
 
         //设置文本颜色
         binding.goodsText.setTextColor(getResources().getColor(R.color.Home_act_text));
         binding.chatText.setTextColor(getResources().getColor(R.color.Home_act_text));
         binding.myText.setTextColor(getResources().getColor(R.color.Home_act_text));
+        binding.communityText.setTextColor(getResources().getColor(R.color.Home_act_text));
 
         switch (index) {
             case 0:
@@ -137,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
                 binding.myText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
                 binding.myBtn.setSelected(true);
                 break;
+            case 4:
+                binding.communityText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
+                binding.communityBtn.setSelected(true);
+                break;
+
         }
 
         Log.d(TAG, "onButton1Clicked: why there is no any response " + index);
@@ -184,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new IndexFragment());
         fragments.add(new ChatListFragment());
         fragments.add(new MyInforFragment());
+        fragments.add(new CommunityFragment());
         replaceFragment(fragments.get(1));
         binding.goodsBtn.setSelected(true);
         binding.goodsText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
