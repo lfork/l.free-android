@@ -26,7 +26,7 @@ import com.lfork.a98620.lfree.databinding.GoodsUploadActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.customview.PopupDialog;
 import com.lfork.a98620.lfree.util.customview.PopupDialogOnclickListener;
-import com.lfork.a98620.lfree.util.image.GlideEngine;
+import com.lfork.a98620.lfree.base.image.GlideEngine;
 import com.lfork.a98620.lfree.util.mvvmadapter.Image;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;

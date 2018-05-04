@@ -3,10 +3,10 @@ package com.lfork.a98620.lfree.main.myinfo;
 import android.content.Intent;
 import android.util.Log;
 
-import com.lfork.a98620.lfree.common.viewmodel.UserViewModel;
+import com.lfork.a98620.lfree.base.viewmodel.UserViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.source.UserDataRepository;
+import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.login.LoginActivity;
 import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.mygoods.MyGoodsActivity;

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.common.GlideImageLoader;
+import com.lfork.a98620.lfree.base.image.GlideImageLoader;
 import com.lfork.a98620.lfree.databinding.MainIndexFragBinding;
 import com.youth.banner.Banner;
 

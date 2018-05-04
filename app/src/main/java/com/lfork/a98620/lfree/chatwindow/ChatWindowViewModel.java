@@ -6,16 +6,16 @@ import android.databinding.ObservableField;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.lfork.a98620.lfree.common.BaseViewModel;
+import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.entity.message.Message;
-import com.lfork.a98620.lfree.data.entity.message.MessageContentType;
-import com.lfork.a98620.lfree.data.entity.message.MessageType;
-import com.lfork.a98620.lfree.data.source.IMDataRepository;
-import com.lfork.a98620.lfree.data.source.MessageDataRepository;
-import com.lfork.a98620.lfree.data.source.UserDataRepository;
-import com.lfork.a98620.lfree.data.source.remote.imservice.MessageListener;
+import com.lfork.a98620.lfree.imservice.message.Message;
+import com.lfork.a98620.lfree.imservice.message.MessageContentType;
+import com.lfork.a98620.lfree.imservice.message.MessageType;
+import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
+import com.lfork.a98620.lfree.data.imdata.MessageDataRepository;
+import com.lfork.a98620.lfree.data.user.UserDataRepository;
+import com.lfork.a98620.lfree.imservice.MessageListener;
 
 import java.util.List;
 

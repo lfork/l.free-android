@@ -18,7 +18,7 @@ import com.lfork.a98620.lfree.BR;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
-import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
+import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.databinding.MainIndexFragBinding;
 import com.lfork.a98620.lfree.searchresult.SearchResultActivity;
 

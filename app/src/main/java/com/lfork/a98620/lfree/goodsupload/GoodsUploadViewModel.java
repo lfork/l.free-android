@@ -6,11 +6,11 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.lfork.a98620.lfree.common.viewmodel.GoodsViewModel;
+import com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Goods;
-import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
-import com.lfork.a98620.lfree.data.source.UserDataRepository;
+import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
+import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.util.StringUtil;
 import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.file.UriHelper;

@@ -6,7 +6,7 @@ import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
-import com.lfork.a98620.lfree.common.BaseViewModel;
+import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.User;
 
 /**

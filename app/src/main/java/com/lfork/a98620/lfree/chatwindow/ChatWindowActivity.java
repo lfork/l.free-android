@@ -12,11 +12,11 @@ import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.message.Message;
-import com.lfork.a98620.lfree.data.source.IMDataRepository;
-import com.lfork.a98620.lfree.data.source.UserDataRepository;
-import com.lfork.a98620.lfree.data.source.remote.imservice.MessageListener;
-import com.lfork.a98620.lfree.data.source.remote.imservice.MessageService;
+import com.lfork.a98620.lfree.imservice.message.Message;
+import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
+import com.lfork.a98620.lfree.data.user.UserDataRepository;
+import com.lfork.a98620.lfree.imservice.MessageListener;
+import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.databinding.ChatWindowActBinding;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;

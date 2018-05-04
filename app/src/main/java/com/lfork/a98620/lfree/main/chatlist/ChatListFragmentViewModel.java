@@ -5,10 +5,10 @@ import android.databinding.ObservableBoolean;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
-import com.lfork.a98620.lfree.common.BaseViewModel;
+import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.source.IMDataRepository;
+import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
 
 import java.util.ArrayList;
 import java.util.List;

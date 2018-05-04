@@ -6,10 +6,10 @@ import android.databinding.ObservableBoolean;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.lfork.a98620.lfree.common.viewmodel.UserViewModel;
+import com.lfork.a98620.lfree.base.viewmodel.UserViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.source.UserDataRepository;
+import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.StringUtil;
 
