@@ -11,7 +11,7 @@ import org.litepal.crud.DataSupport;
 public class User extends DataSupport {
     private int id; //储存在本地数据库里面的id
 
-    @Column(unique = true, defaultValue = "unknown")
+    @Column(unique = true, defaultValue = "unknown") //啊啊啊
     private int userId;     //用户的ID
 
     private String studentId;  //userId == studentId
