@@ -2,7 +2,7 @@ package com.lfork.a98620.lfree.main.community;
 
 import android.databinding.ObservableField;
 
-import com.lfork.a98620.lfree.common.BaseViewModel;
+import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.main.MainActivity;
 
 /**
