@@ -1,7 +1,7 @@
 package com.lfork.a98620.lfree.chatwindow;
 
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.message.Message;
+import com.lfork.a98620.lfree.imservice.message.Message;
 
 /**
  * Created by 98620 on 2018/4/22.

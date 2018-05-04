@@ -10,9 +10,9 @@ import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
-import com.lfork.a98620.lfree.common.viewmodel.ViewModelNavigator;
+import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.source.UserDataRepository;
+import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.UserInfoActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 

@@ -6,12 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
-import com.lfork.a98620.lfree.common.viewmodel.GoodsViewModel;
+import com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
-import com.lfork.a98620.lfree.data.source.UserDataRepository;
+import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
+import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;

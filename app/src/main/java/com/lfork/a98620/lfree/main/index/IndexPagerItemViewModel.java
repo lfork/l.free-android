@@ -8,11 +8,11 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.format.DateFormat;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.common.BaseViewModel;
+import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
-import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
+import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.databinding.MainIndexViewpagerItemBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 

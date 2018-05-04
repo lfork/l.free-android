@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.entity.message.Message;
+import com.lfork.a98620.lfree.imservice.message.Message;
 
 import java.util.List;
 

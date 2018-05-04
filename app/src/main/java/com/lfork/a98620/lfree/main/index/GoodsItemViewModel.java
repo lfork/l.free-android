@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.ObservableField;
 
-import com.lfork.a98620.lfree.common.BaseViewModel;
+import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
 import com.lfork.a98620.lfree.util.Config;
-
-import java.io.ObjectStreamField;
 
 /**
  *

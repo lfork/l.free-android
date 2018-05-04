@@ -19,9 +19,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.source.GoodsDataRepository;
-import com.lfork.a98620.lfree.data.source.UserDataRepository;
-import com.lfork.a98620.lfree.data.source.remote.imservice.MessageService;
+import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
+import com.lfork.a98620.lfree.data.user.UserDataRepository;
+import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.databinding.MainActBinding;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
 import com.lfork.a98620.lfree.main.goodsupload.GoodsUploadFragment;
