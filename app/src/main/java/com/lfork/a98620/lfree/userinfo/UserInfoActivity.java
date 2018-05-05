@@ -22,12 +22,17 @@ public class UserInfoActivity extends AppCompatActivity implements ViewModelNavi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", 0);
+
+
         UserInfoActBinding binding = DataBindingUtil.setContentView(this, R.layout.user_info_act);
         UserInfoViewModel viewModel = new UserInfoViewModel(this, userId);
+
         viewModel.setNavigator(this);
         binding.setViewModel(viewModel);
+
         initActionBar("卖家信息");
     }
 

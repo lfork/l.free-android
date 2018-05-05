@@ -170,8 +170,10 @@ public class UserRemoteDataSource implements UserDataSource {
         RequestBody requestBody = new FormBody.Builder()
                 .add("studentId", userId+"")
                 .build();
+
         String responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/user_info", requestBody);
-        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {
+
+        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() { //GSON
         });
 
         if (result != null) {

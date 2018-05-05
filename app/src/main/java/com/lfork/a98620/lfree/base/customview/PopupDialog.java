@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.util.customview;
+package com.lfork.a98620.lfree.base.customview;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
