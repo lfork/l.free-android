@@ -24,8 +24,8 @@ import android.widget.Toast;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.databinding.UserInfoThisActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
-import com.lfork.a98620.lfree.util.customview.PopupDialog;
-import com.lfork.a98620.lfree.util.customview.PopupDialogOnclickListener;
+import com.lfork.a98620.lfree.base.customview.PopupDialog;
+import com.lfork.a98620.lfree.base.customview.PopupDialogOnclickListener;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;

@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.main.index;
 
+import android.databinding.ObservableBoolean;
 import android.databinding.ViewDataBinding;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,8 +25,10 @@ import java.util.List;
  * Created by 98620 on 2018/3/31.
  */
 
-public class IndexPagerItemViewModel extends BaseViewModel {
+public class IndexPagerItemViewModel extends BaseViewModel implements DataRefreshListener{
     private static final String TAG = "IndexPagerItemViewModel";
+
+    public ObservableBoolean isLoadingMoreData = new ObservableBoolean(false);
 
     private Category category;
     //    MainIndexVBinding binding;
@@ -36,6 +39,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
     private GoodsRecyclerViewItemAdapter adapter;
     private boolean isInitialized = false;
     private GoodsDataRepository repository;
+    private String cursor;
 
     private final static int INITIALIZE = 0;
     private final static int LOAD_MORE = 1;
@@ -58,7 +62,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new GoodsRecyclerViewItemAdapter<>(models, R.layout.goods_recycle_item);
         recyclerView.setAdapter(adapter);
-
+        adapter.setListener(this);
         binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -90,7 +94,8 @@ public class IndexPagerItemViewModel extends BaseViewModel {
 
     //上拉加载更多
     private void loadMoreData() {
-        getGoodsList(LOAD_MORE, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
+        String cursor = goodsList.get(goodsList.size() - 1).getPublishDate();
+        getGoodsList(LOAD_MORE, cursor);
 
     }
 
@@ -104,20 +109,37 @@ public class IndexPagerItemViewModel extends BaseViewModel {
     private void getGoodsList(int requestType, String... cursor) {
         if (cursor != null)
             new Thread(() -> {
-                //强行等一秒，这样可以优化加载效果。缓冲一下
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+
+                if (requestType != LOAD_MORE) {
+                    //强行等0.5秒，这样可以优化加载效果。缓冲一下
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 repository.getGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
                     @Override
                     public void succeed(List<Goods> data) {
+
+                        switch (requestType) {
+                            case INITIALIZE:
+                                models.clear();
+                                break;
+                            case REFRESH:
+                                models.clear();
+                                break;
+                            case LOAD_MORE:
+                                break;
+                            default:
+                                break;
+                        }
                         goodsList = data;
-                        models.clear();
+
                         for (Goods g : goodsList) {
                             models.add(new GoodsItemViewModel(context, g, category.getCsId()));
                         }
+
                         context.runOnUiThread(() -> {
                             switch (requestType) {
                                 case INITIALIZE:
@@ -128,6 +150,7 @@ public class IndexPagerItemViewModel extends BaseViewModel {
                                     break;
                                 case LOAD_MORE:
                                     refreshUI("数据加载成功");
+                                    endRefresh();
                                     break;
                                 default:
                                     break;
@@ -146,4 +169,19 @@ public class IndexPagerItemViewModel extends BaseViewModel {
 
     }
 
+
+
+    @Override
+    public void startRefreshing() {
+
+        if (!isLoadingMoreData.get()) {
+            isLoadingMoreData.set(true);
+            loadMoreData();
+        }
+    }
+
+    @Override
+    public void endRefresh() {
+        isLoadingMoreData.set(false);
+    }
 }

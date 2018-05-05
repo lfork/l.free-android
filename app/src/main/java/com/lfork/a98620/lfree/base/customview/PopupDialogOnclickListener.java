@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.util.customview;
+package com.lfork.a98620.lfree.base.customview;
 
 /**
  * Created by 98620 on 2018/4/14.

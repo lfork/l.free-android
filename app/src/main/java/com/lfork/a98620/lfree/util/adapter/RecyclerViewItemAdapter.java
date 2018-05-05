@@ -38,8 +38,8 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewItemAdapter.ViewHolder holder, int i) {
-        holder.getBinding().setVariable(BR.viewModel, items.get(i));
+    public void onBindViewHolder(@NonNull RecyclerViewItemAdapter.ViewHolder holder, int position) {
+        holder.getBinding().setVariable(BR.viewModel, items.get(position));
         holder.getBinding().executePendingBindings();   //当数据改变时，binding会在下一帧去改变数据，如果我们需要立即改变，就去调用executePendingBindings方法。
     }
 
@@ -48,6 +48,9 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
     public int getItemCount() {
         return items.size();
     }
+
+
+
 
     public List<T> getItems() {
         return items;
