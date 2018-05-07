@@ -120,6 +120,7 @@ public class IndexFragmentViewModel implements TabLayout.OnTabSelectedListener {
     public void openSearch(){
         Log.d(TAG, "openSearch: ");
         Intent intent = new Intent(context, SearchResultActivity.class);
+        intent.putExtra("recommend_keyword", "Java从入门到精通");
         context.startActivity(intent);
     }
 

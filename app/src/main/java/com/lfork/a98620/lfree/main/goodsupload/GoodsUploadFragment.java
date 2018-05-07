@@ -17,7 +17,6 @@ public class GoodsUploadFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_goods_upload_frag, container, false);
-
         Button upload = view.findViewById(R.id.btn_upload);
         upload.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), GoodsUploadActivity.class);

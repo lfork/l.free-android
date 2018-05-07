@@ -1,71 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusableInTouchMode="true">
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel" />
+    </data>
 
-    <View
-        android:id="@+id/view_layout"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/viewColor" />
-
-
-    <LinearLayout
-        android:id="@+id/review_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_layout">
-
-
-        <EditText
-            android:id="@+id/review_content"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:hint="请给买家留言获取更多信息" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:background="@color/Login_Button"
-            android:text="发布评论"
-            android:textColor="@color/white" />
-
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view_layout1"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:layout_below="@id/review_layout"
-        android:background="@color/viewColor" />
-
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view_layout1"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
-        android:drawableLeft="@drawable/ic_comment_message"
-        android:text="评论区"
-        android:textSize="20sp" />
-
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/text_view"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp">
+        android:focusableInTouchMode="true">
 
-    </android.support.v7.widget.RecyclerView>
+        <View
+            android:id="@+id/view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/viewColor" />
 
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/review_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_layout">
+
+
+            <EditText
+                android:id="@+id/review_content"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:hint="请给买家留言获取更多信息" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@color/Login_Button"
+                android:text="发布评论"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_below="@id/review_layout"
+            android:background="@color/viewColor" />
+
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_layout1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/ic_comment_message"
+            android:text="评论区"
+            android:textSize="20sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/review_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/text_view"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+</layout>

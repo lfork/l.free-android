@@ -85,6 +85,11 @@ public class UserInfoActivity extends AppCompatActivity implements ViewModelNavi
     }
 
     @Override
+    public void notifyDataChanged() {
+
+    }
+
+    @Override
     public void setParam1(String param) {
         if (param == null) {
             username = userId +"";

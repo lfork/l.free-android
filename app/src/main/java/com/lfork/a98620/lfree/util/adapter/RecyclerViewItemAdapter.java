@@ -49,9 +49,6 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
         return items.size();
     }
 
-
-
-
     public List<T> getItems() {
         return items;
     }

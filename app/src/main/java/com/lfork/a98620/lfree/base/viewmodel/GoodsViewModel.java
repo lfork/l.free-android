@@ -12,13 +12,30 @@ import com.lfork.a98620.lfree.base.BaseViewModel;
 
 public abstract class GoodsViewModel extends BaseViewModel {
 
+    private int id;
+
+    private int categoryId;
+
+    public GoodsViewModel(Context context, int id, int categoryId) {
+        super(context);
+        this.id = id;
+        this.categoryId = categoryId;
+    }
+
+    public GoodsViewModel(Context context, int id) {
+        super(context);
+        this.id = id;
+    }
+
     public GoodsViewModel() {
-        super();
     }
 
     public GoodsViewModel(Context context) {
         super(context);
     }
+
+
+    public ObservableField<String> imagePath = new ObservableField<>(); //封面图片
 
     public ObservableField<String> name = new ObservableField<>();
 
@@ -33,4 +50,23 @@ public abstract class GoodsViewModel extends BaseViewModel {
     public ObservableField<String> type = new ObservableField<>();
 
     public ObservableArrayList<String> images = new ObservableArrayList<>();
+
+
+    public void onClick(){};
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 }

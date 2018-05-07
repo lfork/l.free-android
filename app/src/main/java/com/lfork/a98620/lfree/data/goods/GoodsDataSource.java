@@ -14,6 +14,8 @@ import java.util.List;
 public interface GoodsDataSource extends DataSource {
     void getGoodsList(GeneralCallback<List<Goods>> callback, String cursor, int categoryId);
 
+    void getUserGoodsList(GeneralCallback<List<Goods>> callback, String cursor, String userId);
+
     void getCategories(GeneralCallback<List<Category>> callback);
 
     void refreshData();
@@ -21,5 +23,7 @@ public interface GoodsDataSource extends DataSource {
     void getGoods(GeneralCallback<GoodsDetailInfo> callback, int goodsId);
 
     void uploadGoods(GeneralCallback<String> callback, Goods g);
+
+    void goodsSearch(GeneralCallback<List<Goods>> callback,  String keyword);
 
 }

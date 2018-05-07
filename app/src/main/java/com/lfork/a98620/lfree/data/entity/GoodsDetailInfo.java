@@ -2,6 +2,8 @@ package com.lfork.a98620.lfree.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by 98620 on 2018/4/13.
  */
@@ -16,6 +18,8 @@ public class GoodsDetailInfo extends Goods {
     private String userImage;
 
     private String[] images;
+
+    private ArrayList<String> reviews;
 
     @Override
     public String getDescription() {
@@ -49,5 +53,13 @@ public class GoodsDetailInfo extends Goods {
 
     public void setImages(String[] images) {
         this.images = images;
+    }
+
+    public ArrayList<String> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(ArrayList<String> reviews) {
+        this.reviews = reviews;
     }
 }

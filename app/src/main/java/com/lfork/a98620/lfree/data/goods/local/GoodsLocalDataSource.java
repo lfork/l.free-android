@@ -42,6 +42,11 @@ public class GoodsLocalDataSource implements GoodsDataSource {
     }
 
     @Override
+    public void getUserGoodsList(GeneralCallback<List<Goods>> callback, String cursor, String userId) {
+
+    }
+
+    @Override
     public void getCategories(GeneralCallback<List<Category>> callback) {
         List<Category> categories = DataSupport.findAll(Category.class);
 
@@ -64,6 +69,11 @@ public class GoodsLocalDataSource implements GoodsDataSource {
 
     @Override
     public void uploadGoods(GeneralCallback<String> callback, Goods g) {
+
+    }
+
+    @Override
+    public void goodsSearch(GeneralCallback<List<Goods>> callback, String keyword) {
 
     }
 }

@@ -109,7 +109,6 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
     private void getGoodsList(int requestType, String... cursor) {
         if (cursor != null)
             new Thread(() -> {
-
                 if (requestType != LOAD_MORE) {
                     //强行等0.5秒，这样可以优化加载效果。缓冲一下
                     try {
@@ -121,7 +120,6 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
                 repository.getGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
                     @Override
                     public void succeed(List<Goods> data) {
-
                         switch (requestType) {
                             case INITIALIZE:
                                 models.clear();
@@ -183,5 +181,15 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
     @Override
     public void endRefresh() {
         isLoadingMoreData.set(false);
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

@@ -2,11 +2,11 @@ package com.lfork.a98620.lfree.data.goods.remote;
 
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.base.network.httpservice.HttpService;
+import com.lfork.a98620.lfree.base.network.httpservice.Result;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.goods.GoodsDataSource;
-import com.lfork.a98620.lfree.base.network.httpservice.Result;
 import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.JSONUtil;
 
@@ -53,6 +53,34 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         RequestBody requestbody = new FormBody.Builder()
                 .add("csId", categoryId + "")
                 .add("cursor", cursor + "")
+                .build();
+
+        String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
+
+        Result<ArrayList<Goods>> result = JSONUtil.parseJson(responseData, new TypeToken<Result<ArrayList<Goods>>>() {
+        });
+
+        if (result != null) {
+            ArrayList<Goods> list = result.getData();
+            if (list != null && list.size() > 0)
+                callback.succeed(list);
+            else {
+                callback.failed(result.getMessage());
+            }
+        } else {
+            callback.failed("error：服务器异常、或者是没有网络连接");
+        }
+    }
+
+    @Override
+    public void getUserGoodsList(GeneralCallback<List<Goods>> callback, String cursor, String userId) {
+        String url = Config.ServerURL + "/22y/user_getUserGoodsByUid";
+
+       // http://www.lfork.top/22y/user_getUserGoodsByUid?studentId=2015215064&cursor=2018-04-08%2008:03:07
+
+        RequestBody requestbody = new FormBody.Builder()
+                .add("studentId", userId)
+                .add("cursor", cursor)
                 .build();
 
         String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
@@ -167,5 +195,28 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         } else {
             callback.failed("error 服务器异常");
         }
+    }
+
+    @Override
+    public void goodsSearch(GeneralCallback<List<Goods>> callback, String keyword) {
+        String url = Config.ServerURL + "/22y/goodsSerach_getGoodsByName";
+        RequestBody requestbody = new FormBody.Builder()
+                .add("goodsLikeName", keyword)
+                .build();
+        String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
+        Result<List<Goods>> result = JSONUtil.parseJson(responseData, new TypeToken<Result<List<Goods>>>() {
+        });
+
+        if (result != null) {
+            if (result.getCode() == 1)
+                callback.succeed(result.getData());
+            else {
+                callback.failed(result.getMessage());
+            }
+        } else {
+            callback.failed("error:1 服务器异常");
+        }
+
+        //http://www.lfork.top/22y/goodsSerach_getGoodsByName?=Java
     }
 }

@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.main.index;
+package com.lfork.a98620.lfree.mygoods;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,21 +9,17 @@ import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
 import com.lfork.a98620.lfree.util.Config;
 
 /**
- *
- * Created by 98620 on 2018/3/31.
+ * Created by 98620 on 2018/5/5.
  */
+public class MyGoodsItemViewModel extends GoodsViewModel{
 
-public class GoodsItemViewModel extends GoodsViewModel{
-
-    GoodsItemViewModel(Context context, Goods g, int categoryId) {
-        super(context, g.getId(), categoryId);
-        this.context = context;
+    MyGoodsItemViewModel(Context context, Goods g) {
+        super(context, g.getId());
         name.set(g.getName());
         price.set(g.getPrice() + "元");
-        imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath() );
+        imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath() ); //
         publishDate.set(g.getPublishDate());
     }
-
 
     public void onClick(){
         Intent intent = new Intent(context, GoodsDetailActivity.class);
@@ -32,13 +28,4 @@ public class GoodsItemViewModel extends GoodsViewModel{
         context.startActivity(intent);
     }
 
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void destroy() {
-
-    }
 }

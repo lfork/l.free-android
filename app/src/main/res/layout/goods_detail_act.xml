@@ -6,7 +6,6 @@
     tools:context="com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel" />
@@ -197,7 +196,7 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/goods_detail_review_include" />
+            <include layout="@layout/goods_detail_review_include" android:id="@+id/review_content" app:viewModel="@{viewModel}" />
 
         </LinearLayout>
 

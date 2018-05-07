@@ -8,6 +8,7 @@ import android.util.Log;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.util.Config;
 
 /**
  * Created by 98620 on 2018/4/9.
@@ -29,7 +30,7 @@ public class ChatListItemViewModel extends BaseViewModel {
     ChatListItemViewModel(Context context, User user) {
         super(context);
         username.set(user.getUserName());
-        imageUrl.set(user.getUserImagePath());
+        imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
         userId = user.getUserId();
     }
 
@@ -41,4 +42,13 @@ public class ChatListItemViewModel extends BaseViewModel {
         context.startActivity(intent);
     }
 
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 }

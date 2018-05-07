@@ -226,4 +226,13 @@ public class GoodsUploadViewModel extends GoodsViewModel {
     }
 
 
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 }

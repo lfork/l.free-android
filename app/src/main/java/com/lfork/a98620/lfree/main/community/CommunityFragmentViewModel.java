@@ -25,6 +25,11 @@ public class CommunityFragmentViewModel extends BaseViewModel {
         loadData();
     }
 
+    @Override
+    public void destroy() {
+
+    }
+
     private void loadData() {
     }
 

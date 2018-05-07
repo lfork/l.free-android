@@ -64,13 +64,20 @@ public class ChatListFragmentViewModel extends BaseViewModel {
         }).start();
     }
 
+    @Override
     public void start() {
         loadUsers();
+    }
+
+    @Override
+    public void destroy() {
+
     }
 
     public void setNavigator(ChatListFragNavigator navigator) {
         this.navigator = navigator;
     }
+
 
     public void unbindNavigator() {
        this.navigator = null;

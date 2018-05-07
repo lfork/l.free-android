@@ -61,4 +61,13 @@ public class UserInfoViewModel extends UserViewModel {
         getNavigator().setParam1(username.get());
     }
 
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 }

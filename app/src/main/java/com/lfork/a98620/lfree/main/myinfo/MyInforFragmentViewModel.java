@@ -96,4 +96,14 @@ public class MyInforFragmentViewModel extends UserViewModel {
         Intent intent = new Intent(context, MyGoodsActivity.class);
         context.startActivity(intent);
     }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 }

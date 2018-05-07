@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
-    private UserDataRepository mRepository = UserDataRepository.getInstance();
 
     private User user = new User();
 
@@ -72,24 +71,26 @@ public class LoginActivity extends AppCompatActivity {
         user.setUserPassword(password.get());
         //合法检测
         if (!isNull(user.getUserName()) || !isNull(user.getUserPassword())) {
-            new Thread(() -> mRepository.login(new DataSource.GeneralCallback<User>() {
-                @Override
-                public void succeed(User data) {
-                    Log.d(TAG, "succeed: " + data);
-                    showDealResult("登录成功" + data.toString());
-                    saveLoginStatus(1);
-                    closeLoginDialog();
-                    startMainActivity();
-                }
 
-                @Override
-                public void failed(String log) {
-                    Log.d(TAG, "failed: " + log);
-                    closeLoginDialog();
-                    showDealResult("登录失败" + log);
-                }
-            }, user)).start();
+            new Thread(() -> {
+                UserDataRepository.getInstance().login(new DataSource.GeneralCallback<User>() {
+                    @Override
+                    public void succeed(User data) {
+                        Log.d(TAG, "succeed: " + data);
+                        showDealResult("登录成功" + data.toString());
+                        saveLoginStatus(1);
+                        closeLoginDialog();
+                        startMainActivity();
+                    }
 
+                    @Override
+                    public void failed(String log) {
+                        Log.d(TAG, "failed: " + log);
+                        closeLoginDialog();
+                        showDealResult("登录失败" + log);
+                    }
+                }, user);
+            }).start();
         } else {
             showDealResult("输入的信息不能为空");
             closeLoginDialog();

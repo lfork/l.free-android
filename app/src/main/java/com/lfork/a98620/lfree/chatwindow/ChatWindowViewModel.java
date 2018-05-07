@@ -63,6 +63,11 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     }
 
+    @Override
+    public void destroy() {
+
+    }
+
     public void setNavigator(ChatWindowNavigator navigator) {
         this.navigator = navigator;
     }

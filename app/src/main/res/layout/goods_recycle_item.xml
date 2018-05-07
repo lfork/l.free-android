@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.index.GoodsItemViewModel" />
+            type="com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel" />
     </data>
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -75,12 +75,7 @@
                     android:textColor="@color/Home_Goods_Money"
                     android:textSize="16sp" />
 
-
             </RelativeLayout>
-
-
         </FrameLayout>
-
-
     </android.support.v7.widget.CardView>
 </layout>

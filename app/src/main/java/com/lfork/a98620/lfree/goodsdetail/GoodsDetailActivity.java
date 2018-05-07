@@ -5,17 +5,29 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.image.GlideImageLoader;
+import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
+import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 import com.youth.banner.Banner;
 
-public class GoodsDetailActivity extends AppCompatActivity {
+public class GoodsDetailActivity extends AppCompatActivity implements ViewModelNavigator {
 
     private GoodsDetailActBinding binding;
+
+    private GoodsDetailViewModel viewModel;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        viewModel.start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +36,10 @@ public class GoodsDetailActivity extends AppCompatActivity {
         int goodsId = intent.getIntExtra("id", 0);
         int categoryId = intent.getIntExtra("category_id", 0);
         binding = DataBindingUtil.setContentView(this, R.layout.goods_detail_act);
-        binding.setViewModel(new GoodsDetailViewModel(this, goodsId, binding));
+        viewModel = new GoodsDetailViewModel(this, goodsId, binding);
+        viewModel.setNavigator(this);
+        binding.setViewModel(viewModel);
+        setupRecyclerView();
         initActionBar("宝贝详情");
         initBanner();
     }
@@ -43,6 +58,14 @@ public class GoodsDetailActivity extends AppCompatActivity {
         // 有小箭头，并且图标可以点击
         actionBar.setDisplayShowHomeEnabled(false);
 
+    }
+
+    private void setupRecyclerView(){
+        RecyclerView recyclerView =   binding.reviewContent.reviewRecycle;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        RecyclerViewItemAdapter<String> adapter = new RecyclerViewItemAdapter<>(viewModel.reviewItems, R.layout.goods_detail_comment_contacts_item);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -65,5 +88,20 @@ public class GoodsDetailActivity extends AppCompatActivity {
         MenuItem item = menu.getItem(0);
         item.setTitle("");
         return true;
+    }
+
+    @Override
+    public void notifyDataChanged() {
+        binding.reviewContent.reviewRecycle.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void setParam1(String param) {
+
+    }
+
+    @Override
+    public void setParam2(String param) {
+
     }
 }

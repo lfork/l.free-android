@@ -81,6 +81,11 @@ public class GoodsDataRepository implements GoodsDataSource {
     }
 
     @Override
+    public void getUserGoodsList(GeneralCallback<List<Goods>> callback, String cursor, String userId) {
+        remoteDataSource.getUserGoodsList(callback, cursor, userId);
+    }
+
+    @Override
     public void getCategories(GeneralCallback<List<Category>> callback) {
         remoteDataSource.getCategories(new GeneralCallback<List<Category>>() {
             @Override
@@ -133,6 +138,11 @@ public class GoodsDataRepository implements GoodsDataSource {
     @Override
     public void uploadGoods(GeneralCallback<String> callback, Goods g) {
         remoteDataSource.uploadGoods(callback, g);
+    }
+
+    @Override
+    public void goodsSearch(GeneralCallback<List<Goods>> callback, String keyword) {
+        remoteDataSource.goodsSearch(callback, keyword);
     }
 
     public Goods getGoods(int categoryId,int goodsId){

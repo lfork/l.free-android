@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.lfork.a98620.lfree.mygoods.MyGoodsActivity">
+<layout>
 
-    <TextView
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.mygoods.MyGoodsViewModel"
+            />
+        <import type="android.view.View"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="你当前还没有发布任何宝贝" />
+        tools:context="com.lfork.a98620.lfree.mygoods.MyGoodsActivity">
 
-    <include layout="@layout/my_goods_contacts_item" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="你当前还没有发布任何宝贝"
+            android:visibility="@{viewModel.dataIsEmpty ? View.VISIBLE : View.GONE}"
+            />
 
-    <ListView
-        android:id="@+id/my_goods_recycle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:visibility="@{viewModel.dataIsEmpty ? View.GONE:View.VISIBLE}"
+            android:id="@+id/my_goods_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </ListView>
+        </android.support.v7.widget.RecyclerView>
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

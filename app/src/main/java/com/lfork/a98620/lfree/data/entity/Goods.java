@@ -34,8 +34,7 @@ public class Goods implements Serializable{
     private String userPortraitPath;
 
     @SerializedName("gMakeDate")
-    private String
-            publishDate;
+    private String publishDate;
 
     private int userId;
 

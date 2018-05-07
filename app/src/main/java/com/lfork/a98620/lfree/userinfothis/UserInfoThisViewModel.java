@@ -116,4 +116,14 @@ public class UserInfoThisViewModel extends UserViewModel {
         context.setResult(result, intent);
         context.finish();
     }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 }
