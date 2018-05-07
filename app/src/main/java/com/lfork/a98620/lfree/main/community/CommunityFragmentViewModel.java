@@ -1,23 +1,19 @@
 package com.lfork.a98620.lfree.main.community;
 
+import android.app.Activity;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
-import com.lfork.a98620.lfree.main.MainActivity;
 
-/**
- * Created by 98620 on 2018/4/5.
- */
+import java.util.List;
 
 public class CommunityFragmentViewModel extends BaseViewModel {
-
-    private MainActivity context;
-    public final ObservableField<String> text = new ObservableField<>();
+    private Activity context;
 
 
-    CommunityFragmentViewModel(MainActivity context) {
+    CommunityFragmentViewModel(Activity context) {
         super(context);
-        text.set("社区模块");
         this.context = context;
     }
 
@@ -25,12 +21,6 @@ public class CommunityFragmentViewModel extends BaseViewModel {
         loadData();
     }
 
-    @Override
-    public void destroy() {
-
-    }
-
     private void loadData() {
     }
-
 }

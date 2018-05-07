@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
         <variable
@@ -11,12 +12,10 @@
         android:layout_height="match_parent"
         tools:context="com.lfork.a98620.lfree.main.community.CommunityFragment">
 
-        <TextView
-            android:gravity="center"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/community_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{viewModel.text}"
-            android:textSize="50sp"/>
+            android:layout_height="match_parent"/>
 
 
     </android.support.design.widget.CoordinatorLayout>
