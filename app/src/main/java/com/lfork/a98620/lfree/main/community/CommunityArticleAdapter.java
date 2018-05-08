@@ -16,11 +16,9 @@ import java.util.List;
 public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArticleAdapter.ViewHolder> {
 
     private List<CommunityArticle> articleList;
-    private static Activity activity;
 
-    public CommunityArticleAdapter(Activity activity, List<CommunityArticle> articleList) {
+    public CommunityArticleAdapter(List<CommunityArticle> articleList) {
         this.articleList = articleList;
-        this.activity = activity;
     }
 
     @NonNull
