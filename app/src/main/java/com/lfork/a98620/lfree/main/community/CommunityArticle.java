@@ -1,12 +1,14 @@
 package com.lfork.a98620.lfree.main.community;
 
+import com.lfork.a98620.lfree.base.BaseViewModel;
+
 import java.util.List;
 
-public class CommunityArticle {
-    private String article;
-    private int articleId;
-    private String articleTime;
-    private List<String> imageUriList;
+public class CommunityArticle extends BaseViewModel {
+    public String article;
+    public int articleId;
+    public String articleTime;
+    public List<String> imageUriList;
 
     public String getArticle() {
         return article;

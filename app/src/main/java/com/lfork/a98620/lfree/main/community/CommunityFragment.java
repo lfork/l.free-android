@@ -37,7 +37,7 @@ public class CommunityFragment extends Fragment {
     private Activity activity;
     private CommunityFragmentViewModel viewModel;
 
-    private List<CommunityFragmentItemViewModel>  communityFragmentItemViewModelList = new ArrayList<>();
+    private List<CommunityArticle>  communityArticleList = new ArrayList<>();
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -73,8 +73,7 @@ public class CommunityFragment extends Fragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                communityFragmentItemViewModelList.clear();
-                communityFragmentItemViewModelList.add(new CommunityFragmentItemViewModel("加载失败", 0, null, null));
+                communityArticleList.clear();
                 Log.d(TAG, "连接失败: 请求数据失败");
                 sendMessage();
             }
@@ -85,13 +84,12 @@ public class CommunityFragment extends Fragment {
                 Log.d(TAG, "onResponse: 请求数据成功");
                 Log.d(TAG, "onResponse: json数据" + jsonData);
                 try {
-                    communityFragmentItemViewModelList = new Gson().fromJson(jsonData,
+                    communityArticleList = new Gson().fromJson(jsonData,
                             new TypeToken<List<CommunityArticle>>(){}.getType());
                     sendMessage();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    communityFragmentItemViewModelList.clear();
-                    communityFragmentItemViewModelList.add(new CommunityFragmentItemViewModel("加载失败", 0, null, null));
+                    communityArticleList.clear();
                     Log.d(TAG, "服务器异常: 请求数据失败");
                     sendMessage();
                 }
@@ -102,7 +100,7 @@ public class CommunityFragment extends Fragment {
     public void setRecyclerView() {
         Log.d(TAG, "setRecyclerView: 设置RecyclerView");
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.community_recycler_view);
-        CommunityArticleAdapter adapter = new CommunityArticleAdapter(activity, communityFragmentItemViewModelList);
+        CommunityArticleAdapter adapter = new CommunityArticleAdapter(activity, communityArticleList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);

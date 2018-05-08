@@ -8,16 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.android.databinding.library.baseAdapters.BR;
+import com.lfork.a98620.lfree.BR;
+import com.lfork.a98620.lfree.R;
 
 import java.util.List;
 
 public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArticleAdapter.ViewHolder> {
 
-    private List<CommunityFragmentItemViewModel> articleList;
+    private List<CommunityArticle> articleList;
     private static Activity activity;
 
-    public CommunityArticleAdapter(Activity activity, List<CommunityFragmentItemViewModel> articleList) {
+    public CommunityArticleAdapter(Activity activity, List<CommunityArticle> articleList) {
         this.articleList = articleList;
         this.activity = activity;
     }
@@ -48,12 +49,12 @@ public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArtic
         }
 
         static ViewHolder create(LayoutInflater inflater, ViewGroup parent, int type) {
-            ViewDataBinding binding = DataBindingUtil.inflate(inflater, type, parent, false);
+            ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.main_community_frag_recycler_view_item, parent, false);
             return new ViewHolder(binding);
         }
 
-        public void bindTo(CommunityFragmentItemViewModel communityFragmentItemViewModel) {
-            binding.setVariable(BR.viewModel, communityFragmentItemViewModel);
+        public void bindTo(CommunityArticle communityArticle) {
+            binding.setVariable(BR.viewModel, communityArticle);
             binding.executePendingBindings();
         }
     }
