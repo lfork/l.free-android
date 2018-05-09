@@ -36,6 +36,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/community_recycler_view"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -43,8 +44,8 @@
                 android:id="@+id/prompt"
                 android:textSize="20sp"
                 android:textAlignment="center"
-                android:text="加载失败，请重试"
-                android:visibility="gone"
+                android:text="加载中..."
+                android:visibility="visible"
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

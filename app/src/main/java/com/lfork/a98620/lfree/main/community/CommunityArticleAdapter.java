@@ -15,10 +15,10 @@ import java.util.List;
 
 public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArticleAdapter.ViewHolder> {
 
-    private List<CommunityArticle> articleList;
+    private List<CommunityFragmentItemViewModel> itemViewModelList;
 
-    public CommunityArticleAdapter(List<CommunityArticle> articleList) {
-        this.articleList = articleList;
+    public CommunityArticleAdapter(List<CommunityFragmentItemViewModel> itemViewModelList) {
+        this.itemViewModelList = itemViewModelList;
     }
 
     @NonNull
@@ -29,12 +29,12 @@ public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArtic
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bindTo(articleList.get(position));
+        holder.bindTo(itemViewModelList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return articleList.size();
+        return itemViewModelList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,8 +51,8 @@ public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArtic
             return new ViewHolder(binding);
         }
 
-        public void bindTo(CommunityArticle communityArticle) {
-            binding.setVariable(BR.viewModel, communityArticle);
+        public void bindTo(CommunityFragmentItemViewModel itemViewModel) {
+            binding.setVariable(BR.viewModel, itemViewModel);
             binding.executePendingBindings();
         }
     }

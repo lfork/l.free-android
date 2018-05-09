@@ -18,29 +18,35 @@ import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class CommunityFragmentViewModel extends BaseViewModel {
     private Activity context;
-    private List<CommunityArticle> articleList;
+    private List<CommunityFragmentItemViewModel> itemViewModelList;
 
     CommunityFragmentViewModel(Activity context) {
         this.context = context;
     }
 
-    public void start(CommunityCallback callback){
-        loadData(callback);
-    }
-
-    private void loadData(CommunityCallback callback) {
-        CommunityRemoteDataSource.getINSTANCE().getArticleList(new DataSource.GeneralCallback() {
+    public void loadData(CommunityCallback callback, boolean isRefresh) {
+        new Thread(new Runnable() {
             @Override
-            public void succeed(Object data) {
-                articleList = (List<CommunityArticle>) data;
-                callback.callback(articleList);
-            }
+            public void run() {
 
-            @Override
-            public void failed(String log) {
-                Log.d(TAG, "failed: " + log);
-                callback.callback(null);
+                CommunityRemoteDataSource.getINSTANCE().getArticleList(new DataSource.GeneralCallback() {
+                    @Override
+                    public void succeed(Object data) {
+                        itemViewModelList = (List<CommunityFragmentItemViewModel>) data;
+                        if (isRefresh) {
+                            callback.callback(itemViewModelList, 3);
+                        } else {
+                            callback.callback(itemViewModelList, 1);
+                        }
+                    }
+
+                    @Override
+                    public void failed(String log) {
+                        Log.d(TAG, "failed: " + log);
+                        callback.callback(null, 3);
+                    }
+                });
             }
-        });
+        }).start();
     }
 }

@@ -43,17 +43,34 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     private View rootView;
     private MainCommunityFragBinding binding;
     private CommunityFragmentViewModel viewModel;
-    private RecyclerView recyclerView;
-    private CommunityArticleAdapter adapter;
-
-    private SwipeRefreshLayout swipeRefreshLayout;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        viewModel = new CommunityFragmentViewModel((MainActivity) getActivity());
-        startLoadData();
-    }
+    private List<CommunityFragmentItemViewModel> itemViewModelList = new ArrayList<>();
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    //加载数据成功
+                    binding.prompt.setVisibility(View.GONE);
+                    binding.communityRecyclerView.setVisibility(View.VISIBLE);
+                    setRecyclerView();
+                    break;
+                case 2:
+                    //加载数据失败
+                    binding.communityRecyclerView.setVisibility(View.GONE);
+                    binding.prompt.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    //刷新数据成功
+                    binding.prompt.setVisibility(View.GONE);
+                    binding.communityRecyclerView.setVisibility(View.VISIBLE);
+                    setRecyclerView();
+                    binding.swipeRefresh.setRefreshing(false);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -63,13 +80,14 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
         if (rootView == null) {
             rootView = binding.getRoot();
         }
+        viewModel = new CommunityFragmentViewModel((MainActivity) getActivity());
+        viewModel.loadData(CommunityFragment.this, false);
 
-        swipeRefreshLayout = binding.swipeRefresh;
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.black));
-        swipeRefreshLayout.setOnClickListener(new View.OnClickListener() {
+        binding.swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.black));
+        binding.swipeRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startLoadData();
+                viewModel.loadData(CommunityFragment.this, true);
             }
         });
 
@@ -82,42 +100,25 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
         return rootView;
     }
 
-    public void setRecyclerView(List<CommunityArticle> communityArticleList) {
+    public void setRecyclerView() {
         Log.d(TAG, "setRecyclerView: 设置RecyclerView");
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.community_recycler_view);
-        adapter = new CommunityArticleAdapter(communityArticleList);
+        CommunityArticleAdapter adapter = new CommunityArticleAdapter(itemViewModelList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
-        UserDataRepository.getInstance().getUserInfo(new DataSource.GeneralCallback<User>() {
-            @Override
-            public void succeed(User data) {
-            }
-
-            @Override
-            public void failed(String log) {
-            }
-        }, 23);
+        binding.communityRecyclerView.setLayoutManager(linearLayoutManager);
+        binding.communityRecyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void callback(List list) {
+    public void callback(List list, int type) {
+        itemViewModelList = list;
         if (list != null) {
-            setRecyclerView(list);
-            binding.prompt.setVisibility(View.GONE);
-            binding.communityRecyclerView.setVisibility(View.VISIBLE);
-        } else {
-            binding.communityRecyclerView.setVisibility(View.GONE);
-            binding.prompt.setVisibility(View.VISIBLE);
+            sendMessage(type);
         }
     }
 
-    private void startLoadData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                viewModel.start(CommunityFragment.this);
-            }
-        }).start();
+    private void sendMessage(int type) {
+        Message message = new Message();
+        message.what = type;
+        handler.sendMessage(message);
     }
 }

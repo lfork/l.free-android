@@ -8,7 +8,9 @@ import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.main.community.CommunityArticle;
 import com.lfork.a98620.lfree.main.community.CommunityComment;
+import com.lfork.a98620.lfree.main.community.CommunityFragmentItemViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.FormBody;
@@ -34,24 +36,30 @@ public class CommunityRemoteDataSource implements CommunityDataSource {
         try {
             Response response = new OkHttpClient().newCall(request).execute();
             List<CommunityArticle> articleList = new Gson().fromJson(response.body().string(), new TypeToken<List<CommunityArticle>>(){}.getType());
-            CommunityArticle article;
+            List<CommunityFragmentItemViewModel> itemViewModelList = new ArrayList<>();
             int userId;
             Gson gson = new Gson();
             String responseData;
             RequestBody requestBody;
             for (int i = 0;i < articleList.size();i++) {
-                article = articleList.get(i);
+                CommunityArticle article = articleList.get(i);
+                CommunityFragmentItemViewModel itemViewModel = new CommunityFragmentItemViewModel();
+                itemViewModel.setArticle(article.getArticle());
+                itemViewModel.setArticleId(article.getArticleId());
+                itemViewModel.setArticleTime(article.getArticleTime());
+                itemViewModel.setImageUriList(article.getImageUriList());
+                itemViewModel.setPublisherId(article.getPublisherId());
                 userId = article.getPublisherId();
                 requestBody = new FormBody.Builder()
                         .add("studentId", userId+"")
                         .build();
                 responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/user_info", requestBody);
                 User user = gson.fromJson(responseData, User.class);
-                article.setHeadImgUri(user.getUserImagePath());
-                article.setHeadName(user.getUserName());
-                articleList.set(i, article);
+                itemViewModel.setHeadImgUri(user.getUserImagePath());
+                itemViewModel.setHeadName(user.getUserName());
+                itemViewModelList.add(itemViewModel);
             }
-            callback.succeed(articleList);
+            callback.succeed(itemViewModelList);
         } catch (Exception e) {
             callback.failed(e.getMessage());
         }
