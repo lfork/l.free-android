@@ -31,6 +31,7 @@
                 android:scaleType="centerCrop"
                 app:setImageWithDiskCache="@{viewModel.imagePath}" />
 
+
             <RelativeLayout
                 android:id="@+id/linearOfNewsItem1"
                 android:layout_width="match_parent"

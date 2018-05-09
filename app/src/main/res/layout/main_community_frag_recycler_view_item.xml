@@ -3,9 +3,10 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.community.CommunityArticle"/>
+            type="com.lfork.a98620.lfree.main.community.CommunityFragmentItemViewModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -13,26 +14,27 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_margin="5dp">
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp">
             <ImageView
-                android:contentDescription="head_img"
                 android:id="@+id/item_img"
-                android:src="@drawable/user_default_0"
+                app:setImageNoCache="@{viewModel.headImgUri}"
                 android:layout_margin="5dp"
-                android:layout_width="40dp"
-                android:layout_height="10dp" />
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp" />
             <TextView
                 android:id="@+id/item_name"
-                android:text="myth"
+                android:text="@{viewModel.headName}"
                 android:textSize="24sp"
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="10dp" />
+                android:layout_weight="3"
+                android:layout_height="40dp" />
             <TextView
-                android:text="@{viewModel.articleTime}"
+                android:text="@{viewModel.articleTime.substring(5, 16)}"
                 android:textSize="12sp"
                 android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -40,6 +42,7 @@
         <TextView
             android:id="@+id/item_article"
             android:textSize="20sp"
+            android:layout_marginStart="10dp"
             android:text="@{viewModel.article}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
