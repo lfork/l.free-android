@@ -5,6 +5,7 @@ import android.util.Log;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
+import com.lfork.a98620.lfree.data.entity.Review;
 import com.lfork.a98620.lfree.data.goods.local.GoodsLocalDataSource;
 import com.lfork.a98620.lfree.data.goods.remote.GoodsRemoteDataSource;
 
@@ -143,6 +144,12 @@ public class GoodsDataRepository implements GoodsDataSource {
     @Override
     public void goodsSearch(GeneralCallback<List<Goods>> callback, String keyword) {
         remoteDataSource.goodsSearch(callback, keyword);
+    }
+
+    @Override
+    public void addReview(GeneralCallback<Review> callback, Review review) {
+        remoteDataSource.addReview(callback,  review);
+
     }
 
     public Goods getGoods(int categoryId,int goodsId){

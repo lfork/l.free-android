@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel;
@@ -11,6 +12,7 @@ import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
+import com.lfork.a98620.lfree.data.entity.Review;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
@@ -41,6 +43,8 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     public final ObservableArrayList<String> reviewItems = new ObservableArrayList<>();
 
+    public final ObservableField<String> review = new ObservableField<>("");
+
     private int id;
 
     private int userId;
@@ -51,7 +55,6 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     private GoodsDetailInfo g;
 
-    private GoodsDataRepository repository;
 
     private AppCompatActivity context;
 
@@ -70,10 +73,9 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
 
     private void getNormalData() {
-        repository = GoodsDataRepository.getInstance();
 
         new Thread(() -> {
-            repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
+            GoodsDataRepository.getInstance().getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
                 @Override
                 public void succeed(GoodsDetailInfo data) {
                     g = data;
@@ -193,7 +195,37 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     }
 
-    public void publishReview() {
+    public void addReview() {
+        navigator.setParam1("");
+        if (TextUtils.isEmpty(review.get())){
+            return;
+        }
+
+        Review r =  new Review(review.get());
+        r.setGoodsId(id+"");
+        r.setUserId(UserDataRepository.getInstance().getThisUser().getUserId()+"");
+        new Thread(() -> GoodsDataRepository.getInstance().addReview(new DataSource.GeneralCallback<Review>() {
+            @Override
+            public void succeed(Review data) {
+                context.runOnUiThread(() -> {
+
+                    reviewItems.add(data.getContent());
+                    review.set("");
+                    navigator.notifyDataChanged();
+                    ToastUtil.showShort(context, "评论成功");
+                });
+
+            }
+
+            @Override
+            public void failed(String log) {
+                context.runOnUiThread(() -> {
+                    ToastUtil.showShort(context, log);
+                });
+
+            }
+        }, r )).start();
+
 
     }
 

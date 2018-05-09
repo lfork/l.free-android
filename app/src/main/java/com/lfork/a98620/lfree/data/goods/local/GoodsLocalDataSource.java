@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.data.goods.local;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
+import com.lfork.a98620.lfree.data.entity.Review;
 import com.lfork.a98620.lfree.data.goods.GoodsDataSource;
 
 import org.litepal.crud.DataSupport;
@@ -74,6 +75,11 @@ public class GoodsLocalDataSource implements GoodsDataSource {
 
     @Override
     public void goodsSearch(GeneralCallback<List<Goods>> callback, String keyword) {
+
+    }
+
+    @Override
+    public void addReview(GeneralCallback<Review> callback, Review review) {
 
     }
 }
