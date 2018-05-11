@@ -28,6 +28,15 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </android.support.design.widget.AppBarLayout>
+        <TextView
+            android:id="@+id/prompt"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:text="加载中..."
+            android:visibility="visible"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
@@ -39,18 +48,6 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/prompt"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:text="加载中..."
-                android:visibility="visible"
-                android:layout_gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </android.support.design.widget.CoordinatorLayout>

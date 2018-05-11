@@ -12,7 +12,7 @@ public class CommunityFragmentItemViewModel extends BaseViewModel {
     private ObservableInt articleId = new ObservableInt();    //动态id
     private ObservableInt publisherId = new ObservableInt();  //发布人id
     private ObservableField<String> articleTime = new ObservableField<>();  //动态发布时间
-    private ObservableField<List<String>> imageUriList = new ObservableField<>();   //动态包含的图片URI链接
+    private ObservableField<List<CommunityFragmentImgItemViewModel>> imageUriList = new ObservableField<>();   //动态包含的图片URI链接
 
     private ObservableField<String> headImgUri = new ObservableField<>();   //发布人头像URI链接
     private ObservableField<String> headName = new ObservableField<>(); //发布人name
@@ -53,11 +53,11 @@ public class CommunityFragmentItemViewModel extends BaseViewModel {
         this.headName.set(headName);
     }
 
-    public List<String> getImageUriList() {
+    public List<CommunityFragmentImgItemViewModel> getImageUriList() {
         return imageUriList.get();
     }
 
-    public void setImageUriList(List<String> imageUriList) {
+    public void setImageUriList(List<CommunityFragmentImgItemViewModel> imageUriList) {
         this.imageUriList.set(imageUriList);
     }
 

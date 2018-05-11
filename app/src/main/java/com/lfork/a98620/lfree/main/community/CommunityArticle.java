@@ -13,7 +13,7 @@ public class CommunityArticle extends BaseViewModel {
     private int articleId;
     private int publisherId;  //发布人id
     private String articleTime;
-    private List<String> imageUriList;
+    private List<CommunityFragmentImgItemViewModel> imageUriList;
 
     public String getArticle() {
         return article;
@@ -47,11 +47,11 @@ public class CommunityArticle extends BaseViewModel {
         this.articleTime = articleTime;
     }
 
-    public List<String> getImageUriList() {
+    public List<CommunityFragmentImgItemViewModel> getImageUriList() {
         return imageUriList;
     }
 
-    public void setImageUriList(List<String> imageUriList) {
+    public void setImageUriList(List<CommunityFragmentImgItemViewModel> imageUriList) {
         this.imageUriList = imageUriList;
     }
 }

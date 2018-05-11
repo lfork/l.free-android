@@ -44,6 +44,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     private MainCommunityFragBinding binding;
     private CommunityFragmentViewModel viewModel;
     private List<CommunityFragmentItemViewModel> itemViewModelList = new ArrayList<>();
+    private CommunityArticleAdapter adapter;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -63,7 +64,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
                     //刷新数据成功
                     binding.prompt.setVisibility(View.GONE);
                     binding.communityRecyclerView.setVisibility(View.VISIBLE);
-                    setRecyclerView();
+                    adapter.notifyDataSetChanged();
                     binding.swipeRefresh.setRefreshing(false);
                     break;
                 default:
@@ -102,7 +103,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
 
     public void setRecyclerView() {
         Log.d(TAG, "setRecyclerView: 设置RecyclerView");
-        CommunityArticleAdapter adapter = new CommunityArticleAdapter(itemViewModelList);
+        adapter = new CommunityArticleAdapter(itemViewModelList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
         binding.communityRecyclerView.setLayoutManager(linearLayoutManager);
         binding.communityRecyclerView.setAdapter(adapter);
