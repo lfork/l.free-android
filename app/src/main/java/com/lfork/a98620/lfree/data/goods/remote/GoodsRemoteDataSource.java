@@ -6,6 +6,7 @@ import com.lfork.a98620.lfree.base.network.httpservice.Result;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
+import com.lfork.a98620.lfree.data.entity.Review;
 import com.lfork.a98620.lfree.data.goods.GoodsDataSource;
 import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.JSONUtil;
@@ -218,5 +219,29 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         }
 
         //http://www.lfork.top/22y/goodsSerach_getGoodsByName?=Java
+    }
+
+
+    @Override
+    public void addReview(GeneralCallback<Review> callback, Review review) {
+        String url = Config.ServerURL + "/22y/review_reviewSave";
+        RequestBody requestbody = new FormBody.Builder()
+                .add("userId", review.getUserId())
+                .add("goodsId", review.getGoodsId())
+                .add("reviewContext", review.getContent())
+                .build();
+        String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
+        Result result = JSONUtil.parseJson(responseData, new TypeToken<Result>() {
+        });
+
+        if (result != null) {
+            if (result.getCode() == 1)
+                callback.succeed(review);
+            else {
+                callback.failed(result.getMessage());
+            }
+        } else {
+            callback.failed("error:1 服务器异常");
+        }
     }
 }

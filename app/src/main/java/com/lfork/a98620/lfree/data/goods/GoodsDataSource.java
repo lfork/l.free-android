@@ -4,6 +4,7 @@ import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
+import com.lfork.a98620.lfree.data.entity.Review;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface GoodsDataSource extends DataSource {
 
     void goodsSearch(GeneralCallback<List<Goods>> callback,  String keyword);
 
+
+    void addReview(GeneralCallback<Review> callback, Review review);
 }

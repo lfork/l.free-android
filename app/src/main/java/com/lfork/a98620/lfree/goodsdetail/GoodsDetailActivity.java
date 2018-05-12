@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.goodsdetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,15 +10,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.image.GlideImageLoader;
-import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
 import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 import com.youth.banner.Banner;
 
-public class GoodsDetailActivity extends AppCompatActivity implements ViewModelNavigator {
+public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetailNavigator {
 
     private GoodsDetailActBinding binding;
 
@@ -96,12 +98,29 @@ public class GoodsDetailActivity extends AppCompatActivity implements ViewModelN
     }
 
     @Override
-    public void setParam1(String param) {
+    public void notifyReviewChanged() {
 
+    }
+
+
+    /**
+     *  关闭软键盘
+     * @param param
+     */
+    @Override
+    public void setParam1(String param) {
+        View view = getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
     }
 
     @Override
     public void setParam2(String param) {
 
     }
+
 }
