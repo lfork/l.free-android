@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.main.community;
+package com.lfork.a98620.lfree.main.community.Comment;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

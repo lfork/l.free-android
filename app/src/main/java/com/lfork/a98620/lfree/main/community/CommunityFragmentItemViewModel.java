@@ -5,6 +5,7 @@ import android.databinding.ObservableInt;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityFragmentItemViewModel extends BaseViewModel {
@@ -59,6 +60,13 @@ public class CommunityFragmentItemViewModel extends BaseViewModel {
 
     public void setImageUriList(List<CommunityFragmentImgItemViewModel> imageUriList) {
         this.imageUriList.set(imageUriList);
+    }
+    public void setImageUriListFromStringList(List<String> imageUriList) {
+        List<CommunityFragmentImgItemViewModel> endList = new ArrayList<>();
+        for (String imageUri : imageUriList) {
+            endList.add(new CommunityFragmentImgItemViewModel(imageUri));
+        }
+        this.imageUriList.set(endList);
     }
 
     public int getPublisherId() {

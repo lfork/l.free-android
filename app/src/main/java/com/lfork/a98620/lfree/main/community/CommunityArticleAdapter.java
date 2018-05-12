@@ -33,7 +33,7 @@ public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArtic
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindTo(itemViewModelList.get(position));
-        holder.createImgListView(itemViewModelList.get(position).getImageUriList());
+        //holder.createImgListView(itemViewModelList.get(position).getImageUriList());
     }
 
     @Override

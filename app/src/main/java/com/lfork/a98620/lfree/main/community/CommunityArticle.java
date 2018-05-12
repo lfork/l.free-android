@@ -13,7 +13,25 @@ public class CommunityArticle extends BaseViewModel {
     private int articleId;
     private int publisherId;  //发布人id
     private String articleTime;
-    private List<CommunityFragmentImgItemViewModel> imageUriList;
+    private List<String> imageUriList;
+    private String headImgUri;
+    private String headName;
+
+    public String getHeadImgUri() {
+        return headImgUri;
+    }
+
+    public void setHeadImgUri(String headImgUri) {
+        this.headImgUri = headImgUri;
+    }
+
+    public String getHeadName() {
+        return headName;
+    }
+
+    public void setHeadName(String headName) {
+        this.headName = headName;
+    }
 
     public String getArticle() {
         return article;
@@ -47,11 +65,11 @@ public class CommunityArticle extends BaseViewModel {
         this.articleTime = articleTime;
     }
 
-    public List<CommunityFragmentImgItemViewModel> getImageUriList() {
+    public List<String> getImageUriList() {
         return imageUriList;
     }
 
-    public void setImageUriList(List<CommunityFragmentImgItemViewModel> imageUriList) {
+    public void setImageUriList(List<String> imageUriList) {
         this.imageUriList = imageUriList;
     }
 }

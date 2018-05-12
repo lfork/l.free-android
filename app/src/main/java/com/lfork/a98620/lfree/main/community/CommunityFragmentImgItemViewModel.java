@@ -12,4 +12,8 @@ public class CommunityFragmentImgItemViewModel extends BaseViewModel {
     public void setImgUri(String imgUri) {
         this.imgUri = imgUri;
     }
+
+    public CommunityFragmentImgItemViewModel(String imgUri) {
+        this.imgUri = imgUri;
+    }
 }
