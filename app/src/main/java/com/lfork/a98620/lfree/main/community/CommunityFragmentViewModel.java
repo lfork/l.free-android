@@ -43,7 +43,7 @@ public class CommunityFragmentViewModel extends BaseViewModel {
                     @Override
                     public void failed(String log) {
                         Log.d(TAG, "failed: " + log);
-                        callback.callback(null, 3);
+                        callback.callback(null, 2);
                     }
                 });
             }

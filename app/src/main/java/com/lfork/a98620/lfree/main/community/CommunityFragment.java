@@ -43,7 +43,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     private View rootView;
     private MainCommunityFragBinding binding;
     private CommunityFragmentViewModel viewModel;
-    private List<CommunityFragmentItemViewModel> itemViewModelList = new ArrayList<>();
+    private List<CommunityFragmentItemViewModel> viewModelList = new ArrayList<>();
     private CommunityArticleAdapter adapter;
     private Handler handler = new Handler() {
         @Override
@@ -51,14 +51,17 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
             switch (msg.what) {
                 case 1:
                     //加载数据成功
+                    setRecyclerView();
                     binding.prompt.setVisibility(View.GONE);
                     binding.communityRecyclerView.setVisibility(View.VISIBLE);
-                    setRecyclerView();
+                    Log.d(TAG, "handleMessage: 加载数据成功");
                     break;
                 case 2:
                     //加载数据失败
                     binding.communityRecyclerView.setVisibility(View.GONE);
+                    binding.prompt.setText("加载失败");
                     binding.prompt.setVisibility(View.VISIBLE);
+                    Log.d(TAG, "handleMessage: 加载数据失败");
                     break;
                 case 3:
                     //刷新数据成功
@@ -66,6 +69,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
                     binding.communityRecyclerView.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
                     binding.swipeRefresh.setRefreshing(false);
+                    Log.d(TAG, "handleMessage: 刷新数据成功");
                     break;
                 default:
                     break;
@@ -83,12 +87,14 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
         }
         viewModel = new CommunityFragmentViewModel((MainActivity) getActivity());
         viewModel.loadData(CommunityFragment.this, false);
+        Log.d(TAG, "onCreateView: 开始加载数据");
 
         binding.swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.black));
         binding.swipeRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewModel.loadData(CommunityFragment.this, true);
+                Log.d(TAG, "onClick: 开始刷新数据");
             }
         });
 
@@ -103,7 +109,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
 
     public void setRecyclerView() {
         Log.d(TAG, "setRecyclerView: 设置RecyclerView");
-        adapter = new CommunityArticleAdapter(itemViewModelList);
+        adapter = new CommunityArticleAdapter(viewModelList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
         binding.communityRecyclerView.setLayoutManager(linearLayoutManager);
         binding.communityRecyclerView.setAdapter(adapter);
@@ -111,10 +117,8 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
 
     @Override
     public void callback(List list, int type) {
-        itemViewModelList = list;
-        if (list != null) {
-            sendMessage(type);
-        }
+        viewModelList = list;
+        sendMessage(type);
     }
 
     private void sendMessage(int type) {
