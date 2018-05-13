@@ -26,6 +26,7 @@ public class GoodsItemViewModel extends GoodsViewModel{
 
 
     public void onClick(){
+
         Intent intent = new Intent(context, GoodsDetailActivity.class);
         intent.putExtra("id", getId());
         intent.putExtra("category_id", getCategoryId());

@@ -1,39 +1,24 @@
 package com.lfork.a98620.lfree.main.community;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.MainCommunityFragBinding;
 import com.lfork.a98620.lfree.main.MainActivity;
+import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import static com.yalantis.ucrop.UCropFragment.TAG;
 
@@ -43,7 +28,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     private View rootView;
     private MainCommunityFragBinding binding;
     private CommunityFragmentViewModel viewModel;
-    private List<CommunityFragmentItemViewModel> viewModelList = new ArrayList<>();
+    private List<CommunityFragmentItemViewModel> viewModelList;
     private CommunityArticleAdapter adapter;
     private Handler handler = new Handler() {
         @Override
@@ -54,14 +39,14 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
                     setRecyclerView();
                     binding.prompt.setVisibility(View.GONE);
                     binding.communityRecyclerView.setVisibility(View.VISIBLE);
-                    Log.d(TAG, "handleMessage: 加载数据成功");
+                    Log.d(TAG, "handleMessage: 加载动态数据成功");
                     break;
                 case 2:
                     //加载数据失败
                     binding.communityRecyclerView.setVisibility(View.GONE);
                     binding.prompt.setText("加载失败");
                     binding.prompt.setVisibility(View.VISIBLE);
-                    Log.d(TAG, "handleMessage: 加载数据失败");
+                    Log.d(TAG, "handleMessage: 加载动态数据失败");
                     break;
                 case 3:
                     //刷新数据成功
@@ -69,7 +54,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
                     binding.communityRecyclerView.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
                     binding.swipeRefresh.setRefreshing(false);
-                    Log.d(TAG, "handleMessage: 刷新数据成功");
+                    Log.d(TAG, "handleMessage: 刷新动态数据成功");
                     break;
                 default:
                     break;
@@ -98,7 +83,6 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
             }
         });
 
-
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
             parent.removeView(rootView);
@@ -118,6 +102,9 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     @Override
     public void callback(List list, int type) {
         viewModelList = list;
+        for (int i = 0;i < list.size();i++) {
+            Log.d(TAG, "Fragment callback: " + list.get(i));
+        }
         sendMessage(type);
     }
 

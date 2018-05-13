@@ -53,9 +53,9 @@ public class CommunityRemoteDataSource implements CommunityDataSource {
                         Log.d(TAG, "CommunityRemoteDataSource  onResponse: 加载到数据如下: "+jsonData);
                         List<CommunityArticle> articleList = new ArrayList<>();
                         if (jsonData == null) {
-                            articleList = new Gson().fromJson(jsonData, new TypeToken<List<CommunityArticle>>(){}.getType());
-                        } else  {
                             callback.failed(null);
+                        } else  {
+                            articleList = new Gson().fromJson(jsonData, new TypeToken<List<CommunityArticle>>(){}.getType());
                         }
                         List<CommunityFragmentItemViewModel> itemViewModelList = new ArrayList<>();
                         for (int i = 0;i < articleList.size();i++) {

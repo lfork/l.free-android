@@ -60,9 +60,6 @@ public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArtic
             binding.executePendingBindings();
         }
         public void createImgListView( List<CommunityFragmentImgItemViewModel> articleImgList) {
-            ListView listView = (ListView) binding.getRoot().findViewById(R.id.img_list);
-            ArticleImgAdapter adapter = new ArticleImgAdapter(binding.getRoot().getContext(), R.layout.main_community_frag_article_img_item, articleImgList);
-            listView.setAdapter(adapter);
         }
     }
 }

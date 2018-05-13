@@ -1,9 +1,12 @@
 package com.lfork.a98620.lfree.main.community;
 
+import android.content.Intent;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.view.View;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
+import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,5 +78,10 @@ public class CommunityFragmentItemViewModel extends BaseViewModel {
 
     public void setPublisherId(int publisherId) {
         this.publisherId.set(publisherId);
+    }
+    public void toUserInfoActivity(View view) {
+        Intent intent = new Intent(view.getContext(), UserInfoActivity.class);
+        intent.putExtra("user_id", publisherId.get());
+        view.getContext().startActivity(intent);
     }
 }

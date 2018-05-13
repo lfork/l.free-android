@@ -65,9 +65,9 @@
         <service
             android:name=".imservice.MessageService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
-        <activity android:name=".main.community.Comment.CommentActivity"></activity>
+        <activity android:name=".main.community.Comment.CommentActivity" />
     </application>
 
 </manifest>
