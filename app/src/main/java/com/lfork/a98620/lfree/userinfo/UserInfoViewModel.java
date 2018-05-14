@@ -21,6 +21,7 @@ public class UserInfoViewModel extends UserViewModel {
 
     private int userId;
 
+
     UserInfoViewModel(Context context, int userId) {
         super(context);
         this.userId = userId;
@@ -59,6 +60,10 @@ public class UserInfoViewModel extends UserViewModel {
         phone.set(user.getUserPhone());
         studentNumber.set(user.getUserId() + "");
         getNavigator().setParam1(username.get());
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     @Override

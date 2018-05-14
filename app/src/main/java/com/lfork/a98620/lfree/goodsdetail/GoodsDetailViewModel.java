@@ -230,11 +230,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     }
 
     public void openSellerInfo() {
-
-        Intent intent = new Intent(context, UserInfoActivity.class);
-        intent.putExtra("user_id", userId);
-        context.startActivity(intent);
-
+        UserInfoActivity.activityStart(context, userId);
     }
 
     public void openImageDetail() {

@@ -13,12 +13,12 @@ import java.util.List;
 public class UDPMessageMaid extends Thread {
 
     private static final String TAG = "UDPMessageMaid";
+
     private int clientId;
 
     private boolean running;
 
     private MessageRemoteDataSource dataSource;
-
 
     private List<Message> messageReceiveQueue;   //待处理的消息
 
