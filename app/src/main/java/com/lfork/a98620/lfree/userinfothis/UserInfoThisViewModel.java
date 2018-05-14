@@ -12,6 +12,7 @@ import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.StringUtil;
+import com.lfork.a98620.lfree.util.ToastUtil;
 
 /**
  * 两个activity使用同一个类型的viewModel，但是里面的方法确不是通用的
@@ -34,16 +35,20 @@ public class UserInfoThisViewModel extends UserViewModel {
     void refreshData() {
         repository = UserDataRepository.getInstance();
         user = repository.getThisUser();
-        username.set(user.getUserName());
-        if (StringUtil.isNull(user.getUserDesc())) {
-            description.set("该用户还没有自我介绍....");
+        if (user != null) {
+            username.set(user.getUserName());
+            if (StringUtil.isNull(user.getUserDesc())) {
+                description.set("该用户还没有自我介绍....");
+            } else {
+                description.set(user.getUserDesc());
+            }
+            imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
+            email.set(user.getUserEmail());
+            phone.set(user.getUserPhone());
+            studentNumber.set(user.getUserId() + "");
         } else {
-            description.set(user.getUserDesc());
+            ToastUtil.showShort(context, "可能没有网络");
         }
-        imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
-        email.set(user.getUserEmail());
-        phone.set(user.getUserPhone());
-        studentNumber.set(user.getUserId() + "");
     }
 
     void updateUserPortrait(String localFilePath) {
