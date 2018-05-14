@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.community.CommunityFragmentImgItemViewModel"/>
+            type="com.lfork.a98620.lfree.main.community.articlecontent.ArticleContentActivityViewModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

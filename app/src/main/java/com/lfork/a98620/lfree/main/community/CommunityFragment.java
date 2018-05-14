@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.main.community;
 
 import android.content.Intent;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.databinding.MainCommunityFragBinding;
 import com.lfork.a98620.lfree.main.MainActivity;
+import com.lfork.a98620.lfree.main.community.articlecontent.ArticleContentActivity;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 
 import java.util.List;
@@ -43,9 +45,11 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
                     break;
                 case 2:
                     //加载数据失败
+                    binding.swipeRefresh.setRefreshing(false);
                     binding.communityRecyclerView.setVisibility(View.GONE);
                     binding.prompt.setText("加载失败");
                     binding.prompt.setVisibility(View.VISIBLE);
+                    binding.swipeRefresh.setRefreshing(false);
                     Log.d(TAG, "handleMessage: 加载动态数据失败");
                     break;
                 case 3:
@@ -102,9 +106,6 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     @Override
     public void callback(List list, int type) {
         viewModelList = list;
-        for (int i = 0;i < list.size();i++) {
-            Log.d(TAG, "Fragment callback: " + list.get(i));
-        }
         sendMessage(type);
     }
 
@@ -112,5 +113,30 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
         Message message = new Message();
         message.what = type;
         handler.sendMessage(message);
+    }
+
+    @BindingAdapter("android:toUserInfoActivity")
+    public static void toUserInfoActivity(View view, int userId) {
+        Log.d(TAG, "toUserInfoActivity: 开始");
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), UserInfoActivity.class);
+                intent.putExtra("user_id", userId);
+                view.getContext().startActivity(intent);
+            }
+        });
+    }
+    @BindingAdapter("android:toArticleContentActivity")
+    public static void toArticleContentActivity(View view, int articleId) {
+        Log.d(TAG, "toUserInfoActivity: 开始");
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ArticleContentActivity.class);
+                intent.putExtra("articleId", articleId);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 }

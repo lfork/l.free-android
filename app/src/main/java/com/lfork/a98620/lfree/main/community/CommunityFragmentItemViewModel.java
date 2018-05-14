@@ -12,76 +12,67 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityFragmentItemViewModel extends BaseViewModel {
-    private ObservableField<String> article = new ObservableField<>();  //动态文字内容
-    private ObservableInt articleId = new ObservableInt();    //动态id
-    private ObservableInt publisherId = new ObservableInt();  //发布人id
-    private ObservableField<String> articleTime = new ObservableField<>();  //动态发布时间
-    private ObservableField<List<CommunityFragmentImgItemViewModel>> imageUriList = new ObservableField<>();   //动态包含的图片URI链接
-
-    private ObservableField<String> headImgUri = new ObservableField<>();   //发布人头像URI链接
-    private ObservableField<String> headName = new ObservableField<>(); //发布人name
-
-    public String getArticle() {
-        return article.get();
-    }
-    public void setArticle(String article) {
-        this.article.set(article);
-    }
-
-    public int getArticleId() {
-        return articleId.get();
-    }
-    public void setArticleId(int articleId) {
-        this.articleId.set(articleId);
-    }
-
-    public String getArticleTime() {
-        return articleTime.get();
-    }
-    public void setArticleTime(String articleTime) {
-        this.articleTime.set(articleTime);
-    }
+    private String article;
+    private int articleId;
+    private int publisherId;  //发布人id
+    private String articleTime;
+    private List<String> imageUriList;
+    private String headImgUri;
+    private String headName;
 
     public String getHeadImgUri() {
-        return headImgUri.get();
+        return headImgUri;
     }
+
     public void setHeadImgUri(String headImgUri) {
-        this.headImgUri.set(headImgUri);
+        this.headImgUri = headImgUri;
     }
 
     public String getHeadName() {
-        return headName.get();
+        return headName;
     }
 
     public void setHeadName(String headName) {
-        this.headName.set(headName);
+        this.headName = headName;
     }
 
-    public List<CommunityFragmentImgItemViewModel> getImageUriList() {
-        return imageUriList.get();
+    public String getArticle() {
+        return article;
     }
 
-    public void setImageUriList(List<CommunityFragmentImgItemViewModel> imageUriList) {
-        this.imageUriList.set(imageUriList);
+    public void setArticle(String article) {
+        this.article = article;
     }
-    public void setImageUriListFromStringList(List<String> imageUriList) {
-        List<CommunityFragmentImgItemViewModel> endList = new ArrayList<>();
-        for (String imageUri : imageUriList) {
-            endList.add(new CommunityFragmentImgItemViewModel(imageUri));
-        }
-        this.imageUriList.set(endList);
+
+    public int getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
     }
 
     public int getPublisherId() {
-        return publisherId.get();
+        return publisherId;
     }
 
     public void setPublisherId(int publisherId) {
-        this.publisherId.set(publisherId);
+        this.publisherId = publisherId;
     }
-    public void toUserInfoActivity(View view) {
-        Intent intent = new Intent(view.getContext(), UserInfoActivity.class);
-        intent.putExtra("user_id", publisherId.get());
-        view.getContext().startActivity(intent);
+
+    public String getArticleTime() {
+        return articleTime;
+    }
+
+    public void setArticleTime(String articleTime) {
+        this.articleTime = articleTime;
+    }
+
+    public List<String> getImageUriList() {
+        return imageUriList;
+    }
+
+    public void setImageUriList(List<String> imageUriList) {
+        this.imageUriList = imageUriList;
     }
 }

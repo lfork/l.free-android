@@ -34,8 +34,10 @@ public class CommunityFragmentViewModel extends BaseViewModel {
                     public void succeed(Object data) {
                         itemViewModelList = (List<CommunityFragmentItemViewModel>) data;
                         if (isRefresh) {
+                            Log.d(TAG, "succeed: 刷新成功，马上回调");
                             callback.callback(itemViewModelList, 3);
                         } else {
+                            Log.d(TAG, "succeed: 加载成功，马上回调");
                             callback.callback(itemViewModelList, 1);
                         }
                     }
@@ -43,6 +45,7 @@ public class CommunityFragmentViewModel extends BaseViewModel {
                     @Override
                     public void failed(String log) {
                         Log.d(TAG, "failed: " + log);
+                        Log.d(TAG, "succeed: 加载失败，马上回调");
                         callback.callback(null, 2);
                     }
                 });

@@ -33,7 +33,6 @@ public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArtic
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindTo(itemViewModelList.get(position));
-        //holder.createImgListView(itemViewModelList.get(position).getImageUriList());
     }
 
     @Override
@@ -58,8 +57,6 @@ public class CommunityArticleAdapter extends RecyclerView.Adapter<CommunityArtic
         public void bindTo(CommunityFragmentItemViewModel itemViewModel) {
             binding.setVariable(BR.viewModel, itemViewModel);
             binding.executePendingBindings();
-        }
-        public void createImgListView( List<CommunityFragmentImgItemViewModel> articleImgList) {
         }
     }
 }

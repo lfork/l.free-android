@@ -67,7 +67,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".main.community.Comment.CommentActivity" />
+        <activity android:name=".main.community.articlecontent.ArticleContentActivity" />
     </application>
 
 </manifest>
