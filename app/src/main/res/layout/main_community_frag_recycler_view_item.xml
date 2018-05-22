@@ -7,6 +7,7 @@
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/article"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -17,15 +18,13 @@
             android:layout_height="40dp"
             android:layout_marginStart="10dp">
             <ImageView
-                android:id="@+id/item_img"
                 android:layout_margin="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="40dp"
                 android:toUserInfoActivity="@{viewModel.publisherId}"
                 app:setImageWithDiskCache="@{viewModel.headImgUri}" />
-            <TextView
-                android:id="@+id/item_name"
+            <com.lfork.a98620.lfree.main.community.articlecontent.CommentView
                 android:text="@{viewModel.headName}"
                 android:toUserInfoActivity="@{viewModel.publisherId}"
                 android:textSize="24sp"
@@ -42,7 +41,6 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/item_article"
             android:textSize="20sp"
             android:layout_marginStart="10dp"
             android:text="@{viewModel.article}"

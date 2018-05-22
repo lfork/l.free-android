@@ -8,10 +8,11 @@ import android.view.View;
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommunityFragmentItemViewModel extends BaseViewModel {
+public class CommunityFragmentItemViewModel extends BaseViewModel implements Serializable {
     private String article;
     private int articleId;
     private int publisherId;  //发布人id

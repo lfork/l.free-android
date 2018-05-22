@@ -1,9 +1,14 @@
 package com.lfork.a98620.lfree.main.community;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -15,11 +20,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.databinding.MainCommunityFragBinding;
 import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.main.community.articlecontent.ArticleContentActivity;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 import static com.yalantis.ucrop.UCropFragment.TAG;
@@ -104,8 +114,8 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     }
 
     @Override
-    public void callback(List list, int type) {
-        viewModelList = list;
+    public void callback(Object data, int type) {
+        viewModelList = (List<CommunityFragmentItemViewModel>) data;
         sendMessage(type);
     }
 
@@ -117,7 +127,6 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
 
     @BindingAdapter("android:toUserInfoActivity")
     public static void toUserInfoActivity(View view, int userId) {
-        Log.d(TAG, "toUserInfoActivity: 开始");
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +138,6 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     }
     @BindingAdapter("android:toArticleContentActivity")
     public static void toArticleContentActivity(View view, int articleId) {
-        Log.d(TAG, "toUserInfoActivity: 开始");
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.data.community.CommunityDataSource;
+import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.main.community.CommunityComment;
 import com.lfork.a98620.lfree.main.community.CommunityFragmentItemViewModel;
 
@@ -53,6 +54,7 @@ public class CommunityRemoteDataSource implements CommunityDataSource {
                         } else  {
                             itemViewModelList = new Gson().fromJson(jsonData, new TypeToken<List<CommunityFragmentItemViewModel>>(){}.getType());
                         }
+                        CommunityLocalDataSource.setItemViewModelList(itemViewModelList);
                         callback.succeed(itemViewModelList);
                     } catch (Exception e) {
                         e.printStackTrace();
