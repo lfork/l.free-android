@@ -76,9 +76,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
     @Override
     public void getUserGoodsList(GeneralCallback<List<Goods>> callback, String cursor, String userId) {
         String url = Config.ServerURL + "/22y/user_getUserGoodsByUid";
-
        // http://www.lfork.top/22y/user_getUserGoodsByUid?studentId=2015215064&cursor=2018-04-08%2008:03:07
-
         RequestBody requestbody = new FormBody.Builder()
                 .add("studentId", userId)
                 .add("cursor", cursor)

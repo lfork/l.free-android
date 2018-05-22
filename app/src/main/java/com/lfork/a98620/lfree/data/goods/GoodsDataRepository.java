@@ -8,6 +8,7 @@ import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.entity.Review;
 import com.lfork.a98620.lfree.data.goods.local.GoodsLocalDataSource;
 import com.lfork.a98620.lfree.data.goods.remote.GoodsRemoteDataSource;
+import com.lfork.a98620.lfree.main.community.CommunityFragmentItemViewModel;
 
 import org.litepal.crud.DataSupport;
 
@@ -30,6 +31,8 @@ public class GoodsDataRepository implements GoodsDataSource {
     private GoodsLocalDataSource localDataSource;
 
     private HashMap<Integer, List<Goods>> goodsMap = new HashMap<>();
+
+    private HashMap<Integer, CommunityFragmentItemViewModel> communities = new HashMap<>();
 
     private List<Category> categories;
 

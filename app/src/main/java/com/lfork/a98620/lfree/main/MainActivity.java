@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             messageBinder = (MessageService.MessageBinder) iBinder;
             messageBinder.buildConnection();
             Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？6");
-
 //            messageBinder.startDownload();
 //            messageBinder.getProgress();
         }
