@@ -1,12 +1,18 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/Login_ForeColor</item>
         <item name="colorPrimaryDark">@color/Login_ForeColor</item>
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">#fafafa</item>
+        <item name="android:navigationBarDividerColor" tools:targetApi="o_mr1" >  @color/Home_act_text</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1" >true</item>
     </style>
 
     <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">#fafafa</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1" >true</item>
+        <item name="android:navigationBarDividerColor" tools:targetApi="o_mr1" > @color/Home_act_text</item>
         <!-- Customize your theme here. -->
     </style>
 
