@@ -21,24 +21,30 @@ public class ArticleContentActivityViewModel extends BaseViewModel {
     }
 
     public void loadData(CommunityCallback callback, boolean isRefresh) {
-        if (articleId != -1) {
-            CommunityRemoteDataSource.getINSTANCE().getCommentList(new DataSource.GeneralCallback() {
-                @Override
-                public void succeed(Object data) {
-                    if (isRefresh) {
-                        callback.callback(data, 3);
-                    } else {
-                        callback.callback(data, 1);
-                    }
-                }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-                @Override
-                public void failed(String log) {
+                if (articleId != -1) {
+                    CommunityRemoteDataSource.getINSTANCE().getCommentList(new DataSource.GeneralCallback() {
+                        @Override
+                        public void succeed(Object data) {
+                            if (isRefresh) {
+                                callback.callback(data, 3);
+                            } else {
+                                callback.callback(data, 1);
+                            }
+                        }
+
+                        @Override
+                        public void failed(String log) {
+                            callback.callback(null, 2);
+                        }
+                    }, articleId);
+                } else {
                     callback.callback(null, 2);
                 }
-            }, articleId);
-        } else {
-            callback.callback(null, 2);
-        }
+            }
+        }).start();
     }
 }

@@ -70,8 +70,10 @@ public class CommunityRemoteDataSource implements CommunityDataSource {
         Request request = new Request.Builder().url("http://imyth.top:8080/community_server/getcommunitycomment?articleId=" + articleId).build();
         try {
             Response response = new OkHttpClient().newCall(request).execute();
-            callback.succeed(new Gson().fromJson(response.body().string(), new TypeToken<List<CommunityComment>>(){}.getType()));
-        } catch (Exception e) {
+            String jsonData = response.body().string();
+            Log.d(TAG, "getCommentList: " + jsonData);
+            callback.succeed(new Gson().fromJson(jsonData, new TypeToken<List<CommunityComment>>(){}.getType()));
+        } catch (NullPointerException | IOException e) {
             callback.failed(e.getMessage());
         }
     }

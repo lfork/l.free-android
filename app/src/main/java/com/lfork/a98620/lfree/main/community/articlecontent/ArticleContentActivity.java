@@ -30,20 +30,6 @@ import java.util.List;
 
 public class ArticleContentActivity extends AppCompatActivity implements CommunityCallback {
     private List<CommunityComment> commentList = null;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.article_content);
-            switch (msg.what) {
-                case 1:
-                    for (CommunityComment comment : commentList) {
-                        CommentView commentView = new CommentView(ArticleContentActivity.this);
-                        commentView.setText(comment.getComment());
-                        linearLayout.addView(commentView);
-                    }
-            }
-        }
-    };
     private static final String TAG = "ArticleContentActivity";
     private ViewDataBinding binding;
     private ArticleContentActivityViewModel viewModel;
@@ -65,5 +51,17 @@ public class ArticleContentActivity extends AppCompatActivity implements Communi
 
     @Override
     public void callback(Object data, int type) {
+        commentList = (List<CommunityComment>) data;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.article_content);
+                for (CommunityComment comment : commentList) {
+                    CommentView commentView = new CommentView(ArticleContentActivity.this);
+                    commentView.setText("      " + comment.getComment());
+                    linearLayout.addView(commentView);
+                }
+            }
+        });
     }
 }
