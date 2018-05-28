@@ -22,7 +22,7 @@
         <activity
             android:name=".main.MainActivity"
             android:theme="@style/AppThemeNoActionBar" />
-        <activity android:name=".chatwindow.ChatWindowActivity" />
+        <activity android:launchMode="singleTask" android:name=".chatwindow.ChatWindowActivity" />
         <activity android:name=".goodsdetail.GoodsDetailActivity" />
         <activity android:name=".goodsupload.GoodsUploadActivity" />
         <activity
@@ -65,10 +65,12 @@
         <service
             android:name=".imservice.MessageService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true" >
+
+        </service>
 
         <activity android:name=".main.community.CommentActivity" />
-        <activity android:name=".goodsdetail.ImageActivity"></activity>
+        <activity android:name=".goodsdetail.ImageActivity"/>
     </application>
 
 </manifest>

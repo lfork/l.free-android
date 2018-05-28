@@ -14,8 +14,6 @@ public class UDPMessageMaid extends Thread {
 
     private static final String TAG = "UDPMessageMaid";
 
-    private int clientId;
-
     private boolean running;
 
     private MessageRemoteDataSource dataSource;
@@ -59,7 +57,7 @@ public class UDPMessageMaid extends Thread {
      * @param message
      */
     private void dealMessage(Message message) {
-        dataSource.refreshView(message);
+        dataSource.pushMessage(message);
     }
 
     /**
@@ -70,13 +68,6 @@ public class UDPMessageMaid extends Thread {
         setRunning(false);
     }
 
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
 
     public boolean isRunning() {
         return running;

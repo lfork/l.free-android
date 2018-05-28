@@ -13,31 +13,21 @@ import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
-import com.lfork.a98620.lfree.imservice.MessageListener;
-import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.databinding.ChatWindowActBinding;
+import com.lfork.a98620.lfree.imservice.MessageService;
+import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
-public class ChatWindowActivity extends AppCompatActivity implements ChatWindowNavigator, MessageListener {
+public class ChatWindowActivity extends AppCompatActivity implements ChatWindowNavigator{
 
-    //    private EditText editText;
     private RecyclerView recyclerView;
-
-    private static final String TAG = "ChatWindowActivity";
-
-//    private String username;
 
     private int userId;
 
-    private int thisUserId;
-
     private MessageService.MessageBinder messageBinder;
-
-    private ChatWindowActBinding binding;
 
     private ChatWindowViewModel viewModel;
 
@@ -54,7 +44,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.chat_window_act);
+        ChatWindowActBinding binding = DataBindingUtil.setContentView(this, R.layout.chat_window_act);
         Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
         String username = intent.getStringExtra("username");
@@ -75,7 +65,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
 
         }).start();
         initActionBar(username);
-        thisUserId = UserDataRepository.getInstance().getUserId();
+        int thisUserId = UserDataRepository.getInstance().getUserId();
         viewModel.setUserInfo(username, userId, thisUserId);
         viewModel.setNavigator(this);
         initUI();
@@ -123,7 +113,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
                 finish();
                 break;
             case R.id.menu1:
-               UserInfoActivity.activityStart(getApplicationContext(), userId);
+                UserInfoActivity.activityStart(getApplicationContext(), userId);
             default:
                 break;
         }
@@ -140,11 +130,9 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
 
     public void sendMessage(Message message, DataSource.GeneralCallback<Message> callback) {
         recyclerView.scrollToPosition(viewModel.messages.size() - 1);//将recyclerView定位到最后一行
-        new Thread(() -> {
-            if (messageBinder != null) {
-                messageBinder.sendMessage(message, callback);
-            }
-        }).start();
+        if (messageBinder != null) {
+            messageBinder.sendMessage(message, callback);
+        }
 //        adapter.notifyItemInserted(messageList.size() - 1); //当有新消息时，刷新RecyclerView
     }
 
@@ -162,16 +150,11 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         });
     }
 
-    public static void activityStart(Context context, String username, int userId){
+    public static void activityStart(Context context, String username, int userId) {
         Intent intent = new Intent(context, ChatWindowActivity.class);
         intent.putExtra("username", username);
         intent.putExtra("user_id", userId);
         context.startActivity(intent);
     }
 
-    @Override
-    public void onReceived(Message message) {
-
-
-    }
 }

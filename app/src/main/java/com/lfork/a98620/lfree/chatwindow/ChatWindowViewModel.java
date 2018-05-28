@@ -173,10 +173,6 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     }
 
-    private void refreshMessages(Message message) {
-
-    }
-
 
     @Override
     public void onReceived(Message message) {

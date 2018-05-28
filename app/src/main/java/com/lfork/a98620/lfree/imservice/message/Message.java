@@ -3,7 +3,9 @@ package com.lfork.a98620.lfree.imservice.message;
 
 import com.lfork.a98620.lfree.util.JSONUtil;
 
-public class Message {
+import org.litepal.crud.DataSupport;
+
+public class Message extends DataSupport{
 
     private int senderID;  //System的ID 为 0 , 如果是group(messageType为Group)的话， 这里的SenderID就是groupID
 
