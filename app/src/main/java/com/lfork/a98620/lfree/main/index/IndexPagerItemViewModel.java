@@ -3,7 +3,6 @@ package com.lfork.a98620.lfree.main.index;
 import android.databinding.ObservableBoolean;
 import android.databinding.ViewDataBinding;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.format.DateFormat;
@@ -63,12 +62,7 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
         adapter = new GoodsRecyclerViewItemAdapter<>(models, R.layout.goods_recycle_item);
         recyclerView.setAdapter(adapter);
         adapter.setListener(this);
-        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshData();
-            }
-        });  //刷新监听
+        binding.swipeRefresh.setOnRefreshListener(this::refreshData);  //刷新监听
     }
 
     /**

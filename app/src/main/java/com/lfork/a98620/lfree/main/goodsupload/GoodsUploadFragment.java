@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.goodsupload.GoodsUploadActivity;
+import com.lfork.a98620.lfree.main.MainActivity;
 
 public class GoodsUploadFragment extends Fragment {
 
@@ -20,7 +21,11 @@ public class GoodsUploadFragment extends Fragment {
         Button upload = view.findViewById(R.id.btn_upload);
         upload.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), GoodsUploadActivity.class);
-            getActivity().startActivity(intent);
+            MainActivity activity = (MainActivity) getActivity();
+
+            if (activity != null) {
+                activity.startActivityForResult(intent, MainActivity.CODE_UPLOAD);
+            }
         });
 
         // Inflate the layout for this fragment
