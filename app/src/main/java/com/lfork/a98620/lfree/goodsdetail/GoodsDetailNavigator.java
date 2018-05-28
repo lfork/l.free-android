@@ -15,6 +15,12 @@ public interface GoodsDetailNavigator extends ViewModelNavigator{
     @Override
     void setParam1(String param);
 
+    void openUserInfo(int userId);
+
+    void openChatWindow(String s, int userId);
+
+    void openBigImages();
+
     @Override
     void setParam2(String param);
 }

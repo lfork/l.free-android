@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.chatwindow;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -159,6 +160,13 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
             recyclerView.getAdapter().notifyDataSetChanged();
             recyclerView.scrollToPosition(viewModel.messages.size() - 1);//将recyclerView定位到最后一行
         });
+    }
+
+    public static void activityStart(Context context, String username, int userId){
+        Intent intent = new Intent(context, ChatWindowActivity.class);
+        intent.putExtra("username", username);
+        intent.putExtra("user_id", userId);
+        context.startActivity(intent);
     }
 
     @Override

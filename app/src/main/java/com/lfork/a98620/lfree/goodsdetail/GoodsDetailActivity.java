@@ -15,7 +15,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.image.GlideImageLoader;
+import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
+import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 import com.youth.banner.Banner;
 
@@ -72,7 +74,6 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -116,6 +117,21 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
                 inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         }
+    }
+
+    @Override
+    public void openUserInfo(int userId) {
+        UserInfoActivity.activityStart(this, userId);
+    }
+
+    @Override
+    public void openChatWindow(String username, int userId) {
+        ChatWindowActivity.activityStart(this, username, userId);
+    }
+
+    @Override
+    public void openBigImages() {
+        ImageActivity.actionStart(this);
     }
 
     @Override
