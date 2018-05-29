@@ -33,22 +33,30 @@ public class UserInfoThisViewModel extends UserViewModel {
     }
 
     void refreshData() {
-        repository = UserDataRepository.getInstance();
-        user = repository.getThisUser();
-        if (user != null) {
-            username.set(user.getUserName());
-            if (StringUtil.isNull(user.getUserDesc())) {
-                description.set("该用户还没有自我介绍....");
-            } else {
-                description.set(user.getUserDesc());
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                repository = UserDataRepository.getInstance();
+                user = repository.getThisUser();
+                if (user != null) {
+                    username.set(user.getUserName());
+                    if (StringUtil.isNull(user.getUserDesc())) {
+                        description.set("该用户还没有自我介绍....");
+                    } else {
+                        description.set(user.getUserDesc());
+                    }
+                    imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
+                    email.set(user.getUserEmail());
+                    phone.set(user.getUserPhone());
+                    studentNumber.set(user.getUserId() + "");
+                } else {
+                    ToastUtil.showShort(context, "可能没有网络");
+                }
             }
-            imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
-            email.set(user.getUserEmail());
-            phone.set(user.getUserPhone());
-            studentNumber.set(user.getUserId() + "");
-        } else {
-            ToastUtil.showShort(context, "可能没有网络");
-        }
+        }).start();
+
     }
 
     void updateUserPortrait(String localFilePath) {

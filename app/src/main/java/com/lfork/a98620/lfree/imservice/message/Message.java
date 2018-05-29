@@ -12,6 +12,9 @@ public class Message extends DataSupport{
 
     private int receiverID;
 
+    /**
+     * messageId 实际上是message生成的时间 System.currentTimeMillis()
+     */
     @Column(unique = true, defaultValue = "unknown")
     private long messageID;
 

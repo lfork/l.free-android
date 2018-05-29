@@ -28,7 +28,7 @@ public class MessageLocalDataSource implements MessageDataSource {
 
     @Override
     public void getMessages(int id, MessageContentType type, GeneralCallback<List<Message>> callback) {
-        DataSupport.where("receiverid=? or senderid=?" ,id+"", id+"").order("id")
+        DataSupport.where("receiverid=? or senderid=?" ,id+"", id+"").order("messageID")  //messageId 实际上是message生成的时间 System.currentTimeMillis()
                 .findAsync(Message.class)
                 .listen(new FindMultiCallback() {
                     @Override
