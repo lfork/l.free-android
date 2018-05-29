@@ -18,8 +18,10 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="portrait"
             android:name=".main.MainActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity android:launchMode="singleTask" android:name=".chatwindow.ChatWindowActivity" />
