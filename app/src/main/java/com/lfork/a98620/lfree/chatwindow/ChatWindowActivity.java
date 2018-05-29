@@ -35,7 +35,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     protected void onResume() {
         super.onResume();
         if (messageBinder != null) {
-            messageBinder.setListener(viewModel);
+            messageBinder.setListener(viewModel, userId);
             viewModel.start();
         }
 
@@ -54,7 +54,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         new Thread(() -> {
             messageBinder = IMDataRepository.getInstance().getBinder();
             if (messageBinder != null) {
-                messageBinder.setListener(viewModel);
+                messageBinder.setListener(viewModel, userId);
             } else {
                 runOnUiThread(() -> {
                     ToastUtil.showShort(getApplicationContext(), "IM服务器异常,聊天功能开启失败");
@@ -149,6 +149,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
             recyclerView.scrollToPosition(viewModel.messages.size() - 1);//将recyclerView定位到最后一行
         });
     }
+
 
     public static void activityStart(Context context, String username, int userId) {
         Intent intent = new Intent(context, ChatWindowActivity.class);

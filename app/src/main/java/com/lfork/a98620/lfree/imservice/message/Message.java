@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.imservice.message;
 
 import com.lfork.a98620.lfree.util.JSONUtil;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
 public class Message extends DataSupport{
@@ -11,6 +12,7 @@ public class Message extends DataSupport{
 
     private int receiverID;
 
+    @Column(unique = true, defaultValue = "unknown")
     private long messageID;
 
     private String content;

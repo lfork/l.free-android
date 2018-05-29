@@ -181,14 +181,13 @@ public class MessageDataRepository<C> implements MessageDataSource, MessageListe
 //     */
     @Override
     public void onReceived(Message message) {
-
-        addReceivedMessage(message);
-        mCachedUserMessagesIsDirty = true;
-        listener.onReceived(message);
         mMessageLocalDataSource.saveAndSendMessage(message, new GeneralCallback<Message>() {
             @Override
             public void succeed(Message data) {
                 Log.d("MessageDataRepository", "succeed: 消息储存成功");
+                addReceivedMessage(message);
+                mCachedUserMessagesIsDirty = true;
+                listener.onReceived(message);
             }
 
             @Override

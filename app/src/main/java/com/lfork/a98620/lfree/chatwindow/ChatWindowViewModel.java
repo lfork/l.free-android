@@ -177,7 +177,9 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
     @Override
     public void onReceived(Message message) {
         message.setChatType(Message.ReceiveType);
-        messages.add(message);
-        navigator.notifyMessagesChanged();
+        if (message.getSenderID() == userId) {
+            messages.add(message);
+            navigator.notifyMessagesChanged();
+        }
     }
 }

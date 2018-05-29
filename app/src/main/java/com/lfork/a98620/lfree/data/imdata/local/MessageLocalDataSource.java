@@ -7,6 +7,7 @@ import com.lfork.a98620.lfree.imservice.message.MessageContentType;
 
 import org.litepal.crud.DataSupport;
 import org.litepal.crud.callback.FindMultiCallback;
+import org.litepal.crud.callback.SaveCallback;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class MessageLocalDataSource implements MessageDataSource {
 
     @Override
     public void getMessages(int id, MessageContentType type, GeneralCallback<List<Message>> callback) {
-        DataSupport.where("receiverid=? or senderid=?" ,id+"", id+"").order("id desc")
+        DataSupport.where("receiverid=? or senderid=?" ,id+"", id+"").order("id")
                 .findAsync(Message.class)
                 .listen(new FindMultiCallback() {
                     @Override
@@ -52,8 +53,16 @@ public class MessageLocalDataSource implements MessageDataSource {
 
     @Override
     public void saveAndSendMessage(Message msg, GeneralCallback<Message> callback) {
-
-        msg.saveAsync().listen(success -> callback.succeed(null));
+        msg.saveAsync().listen(new SaveCallback() {
+            @Override
+            public void onFinish(boolean success) {
+                if (success) {
+                    callback.succeed(null);
+                } else {
+                    callback.failed("消息重复");
+                }
+            }
+        });
 
     }
 

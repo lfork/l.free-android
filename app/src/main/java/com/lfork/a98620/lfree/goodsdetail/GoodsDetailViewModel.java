@@ -77,6 +77,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                     if (reviews.size() > 0) {
                         context.runOnUiThread(() -> {
                             setData();
+                            reviewItems.clear();
                             reviewItems.addAll(reviews);
                             navigator.notifyDataChanged();
                         });

@@ -56,16 +56,22 @@ public class MessageService extends Service {
 
         private MessageListener viewListener;
 
+        private int currentContactId;
+
+
         @Override
         public void onReceived(Message message) {
             //收到消息后 1、把消息储存到消息仓库
 
             if (viewListener != null) {
                 //2、如果能显示就进行显示
-                viewListener.onReceived(message);
-            } else
-                //3、如果不能显示就进行通知
-                sendChatMsg(message.getSenderID(), message.getContent());
+                if (message.getSenderID() == currentContactId) {
+                    viewListener.onReceived(message);
+                    return;
+                }
+            }
+            //3、如果不能显示就进行通知
+            sendChatMsg(message.getSenderID(), message.getContent());
         }
 
 
@@ -112,12 +118,14 @@ public class MessageService extends Service {
             messageDataRepository.saveAndSendMessage(message, callback);
         }
 
-        public void setListener(MessageListener listener) {
+        public void setListener(MessageListener listener, int userId) {
             this.viewListener = listener;
+            currentContactId = userId;
         }
 
         public void cancelListener() {
             viewListener = null;
+            currentContactId = 0;
         }
     }
 
