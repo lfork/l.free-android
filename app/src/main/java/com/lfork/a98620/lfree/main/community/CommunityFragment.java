@@ -40,7 +40,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     private View rootView;
     private MainCommunityFragBinding binding;
     private CommunityFragmentViewModel viewModel;
-    private List<CommunityFragmentItemViewModel> viewModelList;
+    private List<CommunityArticle> viewModelList;
     private CommunityArticleAdapter adapter;
     private Handler handler = new Handler() {
         @Override
@@ -115,7 +115,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
 
     @Override
     public void callback(Object data, int type) {
-        viewModelList = (List<CommunityFragmentItemViewModel>) data;
+        viewModelList = (List<CommunityArticle>) data;
         sendMessage(type);
     }
 

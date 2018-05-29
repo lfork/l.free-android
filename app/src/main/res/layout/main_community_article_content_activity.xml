@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.community.CommunityFragmentItemViewModel"/>
+            type="com.lfork.a98620.lfree.main.community.CommunityArticle"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -51,6 +51,22 @@
             android:text="评论: \n"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/review_edit"
+                android:textSize="20sp"
+                android:hint="点击评论"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content" />
+            <Button
+                android:text="发送"
+                android:onClick="commentTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 
 </layout>

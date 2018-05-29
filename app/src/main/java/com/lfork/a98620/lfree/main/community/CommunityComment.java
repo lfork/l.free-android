@@ -1,6 +1,8 @@
 package com.lfork.a98620.lfree.main.community;
 
-public class CommunityComment {
+import com.lfork.a98620.lfree.base.BaseViewModel;
+
+public class CommunityComment extends BaseViewModel {
     private int articleId;
     private String comment;
     private String commentTime;

@@ -1,24 +1,19 @@
 package com.lfork.a98620.lfree.data.community.local;
 
-import android.os.Handler;
-import android.os.Message;
-
 import com.lfork.a98620.lfree.data.community.CommunityDataSource;
-import com.lfork.a98620.lfree.main.community.CommunityComment;
-import com.lfork.a98620.lfree.main.community.CommunityFragmentItemViewModel;
-import com.lfork.a98620.lfree.main.community.articlecontent.CommentView;
+import com.lfork.a98620.lfree.main.community.CommunityArticle;
 
 import java.util.List;
 
 public class CommunityLocalDataSource implements CommunityDataSource {
 
-    private static List<CommunityFragmentItemViewModel> itemViewModelList = null;
+    private static List<CommunityArticle> itemViewModelList = null;
 
-    public static List<CommunityFragmentItemViewModel> getItemViewModelList() {
+    public static List<CommunityArticle> getItemViewModelList() {
         return itemViewModelList;
     }
 
-    public static void setItemViewModelList(List<CommunityFragmentItemViewModel> itemViewModelList) {
+    public static void setItemViewModelList(List<CommunityArticle> itemViewModelList) {
         CommunityLocalDataSource.itemViewModelList = itemViewModelList;
     }
 
@@ -28,9 +23,9 @@ public class CommunityLocalDataSource implements CommunityDataSource {
     @Override
     public void getCommentList(GeneralCallback callback, int articleId) {}
 
-    public static CommunityFragmentItemViewModel getLocalArticle(int articlId) {
-        CommunityFragmentItemViewModel itemViewModel = null;
-        for (CommunityFragmentItemViewModel item : itemViewModelList) {
+    public static CommunityArticle getLocalArticle(int articlId) {
+        CommunityArticle itemViewModel = null;
+        for (CommunityArticle item : itemViewModelList) {
             if (item.getArticleId() == articlId) {
                 itemViewModel = item;
                 break;

@@ -18,7 +18,7 @@ import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class CommunityFragmentViewModel extends BaseViewModel {
     private Activity context;
-    private List<CommunityFragmentItemViewModel> itemViewModelList;
+    private List<CommunityArticle> itemViewModelList;
 
     CommunityFragmentViewModel(Activity context) {
         this.context = context;
@@ -32,7 +32,7 @@ public class CommunityFragmentViewModel extends BaseViewModel {
                 CommunityRemoteDataSource.getINSTANCE().getArticleList(new DataSource.GeneralCallback() {
                     @Override
                     public void succeed(Object data) {
-                        itemViewModelList = (List<CommunityFragmentItemViewModel>) data;
+                        itemViewModelList = (List<CommunityArticle>) data;
                         if (isRefresh) {
                             Log.d(TAG, "succeed: 刷新成功，马上回调");
                             callback.callback(itemViewModelList, 3);

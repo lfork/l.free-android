@@ -6,10 +6,6 @@ import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.community.remote.CommunityRemoteDataSource;
 import com.lfork.a98620.lfree.main.community.CommunityCallback;
-import com.lfork.a98620.lfree.main.community.CommunityComment;
-import com.lfork.a98620.lfree.main.community.CommunityFragmentItemViewModel;
-
-import java.util.List;
 
 public class ArticleContentActivityViewModel extends BaseViewModel {
     private Activity context;

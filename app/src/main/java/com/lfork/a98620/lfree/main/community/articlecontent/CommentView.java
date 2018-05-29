@@ -35,8 +35,8 @@ public class CommentView extends AppCompatTextView {
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh)
-    {
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+
         super.onSizeChanged(w, h, oldw, oldh);
         if (mViewWidth == 0){
             mViewWidth = getMeasuredWidth();
@@ -57,8 +57,7 @@ public class CommentView extends AppCompatTextView {
     }
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mGradientMatrix != null){
             mTranslate += mViewWidth/5;

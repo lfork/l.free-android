@@ -1,18 +1,10 @@
 package com.lfork.a98620.lfree.main.community;
 
-import android.content.Intent;
-import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
-import android.view.View;
-
 import com.lfork.a98620.lfree.base.BaseViewModel;
-import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-public class CommunityFragmentItemViewModel extends BaseViewModel implements Serializable {
+public class CommunityArticle extends BaseViewModel {
     private String article;
     private int articleId;
     private int publisherId;  //发布人id
@@ -77,3 +69,4 @@ public class CommunityFragmentItemViewModel extends BaseViewModel implements Ser
         this.imageUriList = imageUriList;
     }
 }
+
