@@ -1,7 +1,11 @@
 package com.lfork.a98620.lfree.main.index;
 
+import android.content.Context;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableList;
 import android.databinding.ViewDataBinding;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,6 +20,7 @@ import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.databinding.MainIndexViewpagerItemBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,14 +32,21 @@ import java.util.List;
 public class IndexPagerItemViewModel extends BaseViewModel implements DataRefreshListener{
     private static final String TAG = "IndexPagerItemViewModel";
 
+    // This navigator is s wrapped in a WeakReference to avoid leaks because it has references to an
+    // activity. There's no straightforward way to clear it for each item in a list adapter.
+    @Nullable
+    private WeakReference<ViewPagerItemNavigator> mNavigator;
+
+    public final ObservableList<Goods> items = new ObservableArrayList<>();
+
     public ObservableBoolean isLoadingMoreData = new ObservableBoolean(false);
 
     private Category category;
     //    MainIndexVBinding binding;
     private MainIndexViewpagerItemBinding binding;
-    private List<Goods> goodsList;
+//    private List<Goods> goodsList;
     private List<GoodsItemViewModel> models = new ArrayList<>();
-    private FragmentActivity context;
+    private Context context;
     private GoodsRecyclerViewItemAdapter adapter;
     private boolean isInitialized = false;
     private GoodsDataRepository repository;
@@ -46,9 +58,18 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
 
 
     IndexPagerItemViewModel(Category category, ViewDataBinding binding, FragmentActivity context) {
+//        super(context);
+//        this.category = category;
+//        this.binding = (MainIndexViewpagerItemBinding) binding;
+//        this.context = context;
+//        repository = GoodsDataRepository.getInstance();
+//        initUI();
+    }
+
+    IndexPagerItemViewModel(Context context) {
         super(context);
-        this.category = category;
-        this.binding = (MainIndexViewpagerItemBinding) binding;
+//        this.category = category;
+//        this.binding = (MainIndexViewpagerItemBinding) binding;
         this.context = context;
         repository = GoodsDataRepository.getInstance();
         initUI();
@@ -63,6 +84,10 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
         recyclerView.setAdapter(adapter);
         adapter.setListener(this);
         binding.swipeRefresh.setOnRefreshListener(this::refreshData);  //刷新监听
+    }
+
+    private void setupRecyclerView(){
+
     }
 
     /**
@@ -88,7 +113,7 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
 
     //上拉加载更多
     private void loadMoreData() {
-        String cursor = goodsList.get(goodsList.size() - 1).getPublishDate();
+        String cursor = items.get(items.size() - 1).getPublishDate();
         getGoodsList(LOAD_MORE, cursor);
 
     }
@@ -126,35 +151,37 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
                             default:
                                 break;
                         }
-                        goodsList = data;
+//                        goodsList = data;
 
-                        for (Goods g : goodsList) {
+                        items.addAll(data);
+
+                        for (Goods g : items) {
                             models.add(new GoodsItemViewModel(context, g, category.getCsId()));
                         }
 
-                        context.runOnUiThread(() -> {
-                            switch (requestType) {
-                                case INITIALIZE:
-                                    refreshUI("数据初始化成功");
-                                    break;
-                                case REFRESH:
-                                    refreshUI("数据刷新成功");
-                                    break;
-                                case LOAD_MORE:
-                                    refreshUI("数据加载成功");
-                                    endRefresh();
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
+//                        context.runOnUiThread(() -> {
+//                            switch (requestType) {
+//                                case INITIALIZE:
+//                                    refreshUI("数据初始化成功");
+//                                    break;
+//                                case REFRESH:
+//                                    refreshUI("数据刷新成功");
+//                                    break;
+//                                case LOAD_MORE:
+//                                    refreshUI("数据加载成功");
+//                                    endRefresh();
+//                                    break;
+//                                default:
+//                                    break;
+//                            }
+//                        });
                     }
 
                     @Override
                     public void failed(String log) {
-                        context.runOnUiThread(() -> {
-                            refreshUI(log);
-                        });
+//                        context.runOnUiThread(() -> {
+//                            refreshUI(log);
+//                        });
                     }
                 }, cursor[0], category.getCsId());
             }).start();
@@ -177,13 +204,29 @@ public class IndexPagerItemViewModel extends BaseViewModel implements DataRefres
         isLoadingMoreData.set(false);
     }
 
+    /**
+     * 除了有自己获取数据的 start 还有 setData? {@link #setData()}
+     */
     @Override
     public void start() {
+
+    }
+
+    public void setData(){
 
     }
 
     @Override
     public void destroy() {
 
+    }
+
+    @Nullable
+    public WeakReference<ViewPagerItemNavigator> getmNavigator() {
+        return mNavigator;
+    }
+
+    public void setmNavigator(@Nullable WeakReference<ViewPagerItemNavigator> mNavigator) {
+        this.mNavigator = mNavigator;
     }
 }

@@ -57,6 +57,14 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
         this.items = items;
     }
 
+    public void addData(List<T> items) {
+        if (this.items == null) {
+            this.items = items;
+        } else{
+            this.items.addAll(items);
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding binding;
 

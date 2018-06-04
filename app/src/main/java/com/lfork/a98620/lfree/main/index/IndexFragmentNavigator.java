@@ -16,12 +16,16 @@
 
 package com.lfork.a98620.lfree.main.index;
 
+import com.lfork.a98620.lfree.data.entity.Category;
+
+import java.util.List;
+
 /**
  * Defines the navigation actions that can be called from the Details screen.
  * 现在先不忙优化，先把im写完先
  */
 public interface IndexFragmentNavigator {
 
-    void onCategoriesLoaded();
+    void onCategoriesLoaded(List<Category> categories);
 
 }
