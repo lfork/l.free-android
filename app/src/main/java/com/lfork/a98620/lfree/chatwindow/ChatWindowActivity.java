@@ -113,7 +113,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
                 finish();
                 break;
             case R.id.menu1:
-                UserInfoActivity.activityStart(getApplicationContext(), userId);
+                UserInfoActivity.activityStart(ChatWindowActivity.this, userId);
             default:
                 break;
         }
