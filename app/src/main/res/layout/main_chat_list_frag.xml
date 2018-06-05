@@ -32,6 +32,8 @@
             android:layout_height="match_parent">
         </ListView>
 
+
+
         <TextView
             android:visibility="@{viewModel.dataIsEmpty ? View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"

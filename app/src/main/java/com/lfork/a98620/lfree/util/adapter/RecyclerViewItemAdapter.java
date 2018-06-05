@@ -61,6 +61,7 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
         if (this.items == null) {
             this.items = items;
         } else{
+            this.items.clear();
             this.items.addAll(items);
         }
     }
@@ -68,7 +69,7 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding binding;
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
         }
 

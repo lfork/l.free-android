@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.index.IndexPagerItemViewModel" />
+            type="com.lfork.a98620.lfree.main.index.PagerItemViewModel" />
 
         <import type="android.view.View" />
     </data>

@@ -10,14 +10,14 @@ import java.util.List;
 /**
  * Created by 98620 on 2018/6/2.
  */
-public class GoodsTabsViewPagersBinding {
+public class PagersDataBinding {
     @SuppressWarnings("unchecked")
-    @BindingAdapter("items")
-    public static void setItems(ViewPager viewPager, List<Category> items) {
-        IndexViewPagerAdapter adapter = (IndexViewPagerAdapter) viewPager.getAdapter();
+    @BindingAdapter("tabs")
+    public static void setTabs(ViewPager viewPager, List<Category> items) {
+        PagerItemAdapter adapter = (PagerItemAdapter) viewPager.getAdapter();
         if (adapter != null)
         {
-            adapter.replaceData(items);
+            adapter.replaceData(items, viewPager);
         }
     }
 }

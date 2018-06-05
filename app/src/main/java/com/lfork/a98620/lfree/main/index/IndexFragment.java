@@ -1,8 +1,8 @@
 package com.lfork.a98620.lfree.main.index;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,6 +15,7 @@ import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.image.GlideImageLoader;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.databinding.MainIndexFragBinding;
+import com.lfork.a98620.lfree.searchresult.SearchResultActivity;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -37,10 +38,14 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator, T
 
         if (rootView == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.main_index_frag, container, false);
-            viewModel = new IndexFragmentViewModel(binding, getActivity(), getLayoutInflater());
+            viewModel = new IndexFragmentViewModel(getContext());
+
             binding.setViewModel(viewModel);
             rootView = binding.getRoot();
             setupBanner();
+            setupViewPager();
+            setupTabLayout();
+
         }
         // 缓存的rootView需要判断是否已经被加过parent，
         // 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
@@ -49,7 +54,6 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator, T
             parent.removeView(rootView);
         }
         return rootView;
-
     }
 
     private void setupBanner(){
@@ -61,49 +65,23 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator, T
         banner.setImages(images).setImageLoader(new GlideImageLoader()).start();
     }
 
-    private void setupTabLayout(List<Category> categories){
-        TabLayout tabLayout = binding.tabLayout;
-        if (categories != null && categories.size() > 0) {
-            for (Category category : categories) {
-                TabItem item = new TabItem(Objects.requireNonNull(getContext()));
-                item.setTag(category.getName());
-                tabLayout.addView(item);
-            }
-
-        } else {
-            Log.d(TAG, "addTabItem:  没有数据");
-        }
-        tabLayout.addOnTabSelectedListener(this);
-        tabLayout.setupWithViewPager(viewPager);
-
+    /**
+     * 这里设置了 viewPager以后 fragment需要持有viewPager的view的引用
+     */
+    private void setupViewPager() {
+        viewPager = binding.mainIndexFragViewpager;
+        PagerItemAdapter pagerAdapter = new PagerItemAdapter(new ArrayList<Category>(0));
+        viewPager.setAdapter(pagerAdapter);
+        Log.d(TAG, "设置viewPager" + pagerAdapter.getCount());
     }
 
     /**
-     * 这里设置了 viewPager以后 fragment需要持有viewPager的view的引用
-     * @param categories 商品种类列表
+     * 必须先设置viewPager 在设置TabLayout
      */
-    private void setupViewPager(List<Category> categories) {
-        viewPager = binding.mainIndexFragViewpager;
-        IndexViewPagerAdapter pagerAdapter = new IndexViewPagerAdapter(categories);
-        viewPager.setAdapter(pagerAdapter);
-
-//        List<View> pagerList = new ArrayList<>();
-//        pagerItemViewModelList = new ArrayList<>();
-//        if (categories != null && categories.size() > 0) {
-//            ViewDataBinding dataBinding;
-//            for (Category category : categories) {
-//                dataBinding = DataBindingUtil.inflate(inflater, R.layout.main_index_viewpager_item, viewPager, false);
-//                IndexPagerItemViewModel itemViewModel = new IndexPagerItemViewModel(category, dataBinding, context);
-//                dataBinding.setVariable(BR.viewModel, itemViewModel);
-//                pagerList.add(dataBinding.getRoot());
-//                pagerItemViewModelList.add(itemViewModel);
-//            }
-//            viewPager = binding.mainIndexFragViewpager;
-//            PagerAdapter pagerAdapter = new IndexViewPagerAdapter(pagerList, categories);
-//            viewPager.setAdapter(pagerAdapter);
-//        } else {
-//            Log.d(TAG, "addTabItem:  没有数据");
-//        }
+    private void setupTabLayout(){
+        TabLayout tabLayout = binding.tabLayout;
+        tabLayout.addOnTabSelectedListener(this);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 
@@ -111,43 +89,52 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator, T
 
 
     @Override
-    public void onCategoriesLoaded(List<Category> categories) {
-        setupViewPager(categories);
-        setupTabLayout(categories);
+    public void openSearchActivity() {
+        Log.d(TAG, "openSearch: ");
+        Intent intent = new Intent(getContext(), SearchResultActivity.class);
+        intent.putExtra("recommend_keyword", "Java从入门到精通");
+        Objects.requireNonNull(getContext()).startActivity(intent);
     }
-
 
     /**
      * 先加载前3个页面，当点击到指定页面的时候就加载指定的前后三个页面的数据
-     *
-     *
-     *
      * @param tab 被选中的标签
      */
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
-        PagerItemView pagerItemView = ((IndexViewPagerAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
-        pagerItemView.onResume();
-//        viewPager.getAdapter()  //获取指定页的viewModel 然后进行数据操作
-        //获取当前页面数据
-//        IndexPagerItemViewModel itemViewModel = pagerItemViewModelList.get(position);
-//        if (itemViewModel != null) {
-//            itemViewModel.initData();
-//        }
+        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
+        Log.d(TAG, "onTabSelected: " + pagerItemView + "  " + position);
+        if (pagerItemView != null) {    //如果TabLayout没有初始完完毕，这里可能会报空// 这里viewPager自身和tabLayout 不同步导致的
+            pagerItemView.setActivityContext(getActivity());
+            pagerItemView.onResume();
+        }
 
     }
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
         int position = tab.getPosition();
-        PagerItemView pagerItemView = ((IndexViewPagerAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
-//        pagerItemView.onDestroy();
+        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
+        pagerItemView.onDestroy();
     }
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    /**
+     * 因为对viewModel和view进行了缓存， 所以 这里就需要重新设置一下navigator
+     * 然后这里是不进行自动刷新数据的。所以onResume的时候就不调用OnStart
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (viewModel != null) {
+            viewModel.setNavigator(this);
+            viewModel.start();
+        }
     }
 
     @Override

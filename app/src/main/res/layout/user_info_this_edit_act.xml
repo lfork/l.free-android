@@ -5,6 +5,7 @@
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.userinfothis.UserInfoThisViewModel" />
+
     </data>
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"

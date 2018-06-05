@@ -1,0 +1,167 @@
+package com.lfork.a98620.lfree.main.index;
+
+import android.content.Context;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableList;
+import android.text.format.DateFormat;
+
+import com.lfork.a98620.lfree.base.BaseViewModel;
+import com.lfork.a98620.lfree.data.DataSource;
+import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 98620 on 2018/3/31.
+ */
+
+public class PagerItemViewModel extends BaseViewModel implements PagerDataRefreshListener {
+    private static final String TAG = "PagerItemViewModel";
+
+    public final ObservableList<Goods> items = new ObservableArrayList<>();
+
+    public ObservableBoolean isLoadingMoreData = new ObservableBoolean(false);
+
+    private PagerItemViewNavigator navigator;
+
+    private Category category;
+    private boolean isInitialized = false;
+    private GoodsDataRepository repository;
+    private String cursor;
+
+    private final static int INITIALIZE = 0;
+    private final static int LOAD_MORE = 1;
+    private final static int REFRESH = 2;
+
+    PagerItemViewModel(Context context, Category category) {
+        super(context);
+        this.category = category;
+        this.context = context;
+        repository = GoodsDataRepository.getInstance();
+    }
+//
+
+    /**
+     * 刷新ui
+     */
+    private void refreshUI(String log) {
+        navigator.refreshUI(log);
+        dataIsLoading.set(false);
+    }
+
+    /**
+     * 第一次加载数据，初始化数据 ，当选中这个tab时进行数据的初始化操作
+     */
+    private void initData() {
+        if (isInitialized) {
+            return;
+        }
+        isInitialized = true;
+        getGoodsList(INITIALIZE, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
+    }
+
+    //上拉加载更多
+    private void loadMoreData() {
+        String cursor = items.get(items.size() - 1).getPublishDate();
+        getGoodsList(LOAD_MORE, cursor);
+
+    }
+
+
+    //下拉刷新
+    public void refreshData() {
+        getGoodsList(REFRESH, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
+    }
+
+    private void getGoodsList(int requestType, String... cursor) {
+        if (cursor != null)
+            new Thread(() -> {
+                if (requestType != LOAD_MORE) {
+                    //强行等0.5秒，这样可以优化加载效果。缓冲一下
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                repository.getGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
+                    @Override
+                    public void succeed(List<Goods> data) {
+                        switch (requestType) {
+                            case INITIALIZE:
+                                items.clear();
+                                break;
+                            case REFRESH:
+                                items.clear();
+                                break;
+                            case LOAD_MORE:
+                                break;
+                            default:
+                                break;
+                        }
+
+                        items.addAll(data);
+
+                        switch (requestType) {
+                            case INITIALIZE:
+                                refreshUI("数据初始化成功");
+                                break;
+                            case REFRESH:
+                                refreshUI("数据刷新成功");
+                                break;
+                            case LOAD_MORE:
+                                refreshUI("数据加载成功");
+                                endRefresh();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void failed(String log) {
+                        refreshUI(log);
+                    }
+                }, cursor[0], category.getCsId());
+            }).start();
+
+    }
+
+
+    @Override
+    public void startRefreshing() {
+
+        if (!isLoadingMoreData.get()) {
+            isLoadingMoreData.set(true);
+            loadMoreData();
+        }
+    }
+
+    @Override
+    public void endRefresh() {
+        isLoadingMoreData.set(false);
+    }
+
+    /**
+     * 除了有自己获取数据的 start 还有 setData? {@link # s etData()}  setData是给被动viewModel使用的
+     * 开始获取数据
+     */
+    @Override
+    public void start() {
+        initData();
+    }
+
+
+    @Override
+    public void destroy() {
+        navigator = null;
+    }
+
+    public void setNavigator(PagerItemViewNavigator navigator) {
+        this.navigator = navigator;
+    }
+}
