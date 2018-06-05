@@ -1,9 +1,14 @@
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.chatlist.ChatListFragmentViewModel" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.lfork.a98620.lfree.R" />
     </data>
 
 
@@ -21,23 +26,27 @@
             android:gravity="left|center"
             android:paddingLeft="25dp"
             android:text="聊天记录"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <ListView
-            android:visibility="@{viewModel.dataIsEmpty ? View.GONE:View.VISIBLE}"
-            android:id="@+id/main_chat_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </ListView>
 
         <TextView
-            android:visibility="@{viewModel.dataIsEmpty ? View.VISIBLE : View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_talk_notalk"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:drawablePadding="30dp"
+            android:text="您还没有与卖家交流过，赶快去寻找卖家进行交流吧~~"
+            android:visibility="@{viewModel.dataIsEmpty ? View.VISIBLE : View.GONE}" />
+
+        <ListView
+            android:id="@+id/main_chat_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="聊天记录为空，赶快去寻找卖家进行交流吧~~"
-            />
+            android:visibility="@{viewModel.dataIsEmpty ? View.GONE:View.VISIBLE}"></ListView>
+
 
     </LinearLayout>
 </layout>
