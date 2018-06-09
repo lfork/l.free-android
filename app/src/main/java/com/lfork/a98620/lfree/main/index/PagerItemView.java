@@ -23,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by 98620 on 2018/6/4.
  */
-public class PagerItemView extends View  implements PagerDataRefreshListener, SwipeRefreshLayout.OnRefreshListener, GoodsItemNavigator, PagerItemViewNavigator {
+public class PagerItemView extends View implements PagerDataRefreshListener, SwipeRefreshLayout.OnRefreshListener, GoodsItemNavigator, PagerItemViewNavigator {
 
     private PagerItemViewModel viewModel;
 
@@ -42,7 +42,7 @@ public class PagerItemView extends View  implements PagerDataRefreshListener, Sw
     }
 
 
-    public void onCreate(ViewGroup parent, Category category){
+    public void onCreate(ViewGroup parent, Category category) {
         binding = DataBindingUtil.inflate(LayoutInflater
                 .from(parent.getContext()), R.layout.main_index_viewpager_item, parent, false);
         viewModel = new PagerItemViewModel(parent.getContext(), category);
@@ -53,8 +53,9 @@ public class PagerItemView extends View  implements PagerDataRefreshListener, Sw
 
     }
 
-    public void onResume(){
-        if (viewModel!= null) {
+    public void onResume() {
+        if (viewModel != null) {
+            viewModel.setNavigator(this);
             viewModel.start();
         }
     }
@@ -62,20 +63,20 @@ public class PagerItemView extends View  implements PagerDataRefreshListener, Sw
     /**
      * 因为 这里是需要缓存 的，所以在这里也不要随便onDestroy
      */
-    public void onDestroy(){
+    public void onDestroy() {
         activityContext = null;
+        viewModel.destroy();
     }
 
 
-
-    public View getView(){
+    public View getView() {
         if (binding != null) {
             return binding.getRoot();
         }
         return null;
     }
 
-    private void setupRecyclerView(){
+    private void setupRecyclerView() {
         RecyclerView recyclerView = binding.mainIndexRecycle;
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -86,7 +87,7 @@ public class PagerItemView extends View  implements PagerDataRefreshListener, Sw
         adapter.setListener(this);
     }
 
-    private void setupSwipeRefreshLayout(){
+    private void setupSwipeRefreshLayout() {
         binding.swipeRefresh.setOnRefreshListener(this); //刷新监听
     }
 
@@ -101,7 +102,7 @@ public class PagerItemView extends View  implements PagerDataRefreshListener, Sw
     }
 
     /**
-     *  SwipeRefreshLayout的OnRefresh 这里就需要调用viewModel的一些操作进行数据刷新了
+     * SwipeRefreshLayout的OnRefresh 这里就需要调用viewModel的一些操作进行数据刷新了
      */
     @Override
     public void onRefresh() {
@@ -130,6 +131,7 @@ public class PagerItemView extends View  implements PagerDataRefreshListener, Sw
             ToastUtil.showShort(getContext(), log);
             binding.swipeRefresh.setRefreshing(false);
         });
+
 
     }
 }

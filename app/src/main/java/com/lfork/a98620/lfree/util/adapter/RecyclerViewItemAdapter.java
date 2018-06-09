@@ -54,6 +54,7 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
     }
 
     public void setItems(List<T> items) {
+        notifyDataSetChanged();
         this.items = items;
     }
 
@@ -64,6 +65,7 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
             this.items.clear();
             this.items.addAll(items);
         }
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +84,7 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public int getLayoutId() {
+    protected int getLayoutId() {
         return layoutId;
     }
 

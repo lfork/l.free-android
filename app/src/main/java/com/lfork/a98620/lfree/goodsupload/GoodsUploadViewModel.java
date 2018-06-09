@@ -19,6 +19,7 @@ import com.lfork.a98620.lfree.util.file.UriHelper;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,6 +47,8 @@ public class GoodsUploadViewModel extends GoodsViewModel {
     private List<String> imagePathList;
 
     private GoodsDataRepository repository;
+
+    private int categoryId = 1;
 
     public final ObservableArrayList<Boolean> imageVisible = new ObservableArrayList<>();
 
@@ -95,7 +98,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
     /**
      * 静态的图片配合动态的数据  每次添加图片后
      *
-     * @param index
+     * @param index e
      */
     public void deleteImage(int index) {
         if (navigator != null)
@@ -168,7 +171,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
         g.setUserId(UserDataRepository.getInstance().getThisUser().getUserId());
         g.setOriginPrice(originPrice.get());
         g.setPrice(price.get());
-        g.setCategoryId(1);
+        g.setCategoryId(categoryId);
 
 
         List<File> newImages = new ArrayList<>();
@@ -182,7 +185,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
                         newImages.addAll(
                                 Luban.with(context)
                                         .load(list)
-                                        .setTargetDir(context.getExternalCacheDir().toString())
+                                        .setTargetDir(Objects.requireNonNull(context.getExternalCacheDir()).toString())
                                         .get());
                         for (File str : newImages) {
                             Log.d(TAG, "onSuccess: " + str.getPath());
@@ -234,5 +237,10 @@ public class GoodsUploadViewModel extends GoodsViewModel {
     @Override
     public void destroy() {
         navigator = null;
+    }
+
+    @Override
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

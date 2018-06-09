@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.goodsupload;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -8,7 +9,6 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -19,7 +19,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.lfork.a98620.lfree.R;
@@ -36,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploadNavigator{
 
@@ -53,10 +57,13 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
     private File portraitFile;
     private Uri imageUri;
 
+
+
     private int tempImageCount;
 
     private int imageViewIndex = -1;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +73,8 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
         binding.setViewModel(viewModel);
         initActionBar();
 
+        setupSpinner();
+
         if (imageViews.size() < 1) {
             imageViews.add(binding.image1);
             imageViews.add(binding.image2);
@@ -74,6 +83,9 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
             imageViews.add(binding.image5);
         }
 
+        /*
+          避免滑动冲突
+         */
         binding.editDescription.setOnTouchListener((view, motionEvent) -> {
             view.getParent().requestDisallowInterceptTouchEvent(true);
             return false;
@@ -81,11 +93,26 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
     }
 
 
+    private void setupSpinner(){
+        Spinner spinner = binding.spinner;
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "setupSpinner: " + position);
+                viewModel.setCategoryId(position + 1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 
 
     public void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
         actionBar.setTitle("宝贝上传");
         actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
         // 有小箭头，并且图标可以点击
@@ -274,16 +301,21 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
 
     @Override
     public void uploadSucceed() {
-        Looper.prepare();
-        ToastUtil.showLong(getApplicationContext(), "上传成功");
-        setResult(RESULT_OK, new Intent());
-        finish();
+
+        runOnUiThread(() -> {
+            ToastUtil.showLong(getApplicationContext(), "上传成功");
+            setResult(RESULT_OK, new Intent());
+            finish();
+        });
+
     }
 
     @Override
     public void uploadFailed(String log) {
-        Looper.prepare();
-        ToastUtil.showShort(getApplicationContext(), log);
+        runOnUiThread(() -> {
+            ToastUtil.showShort(getApplicationContext(), log);
+        });
+
     }
 
     @Override

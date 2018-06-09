@@ -3,9 +3,9 @@ package com.lfork.a98620.lfree.main.index;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableList;
 import android.text.format.DateFormat;
 
+import com.lfork.a98620.lfree.BR;
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
@@ -22,7 +22,7 @@ import java.util.List;
 public class PagerItemViewModel extends BaseViewModel implements PagerDataRefreshListener {
     private static final String TAG = "PagerItemViewModel";
 
-    public final ObservableList<Goods> items = new ObservableArrayList<>();
+    public final ObservableArrayList<Goods> items = new ObservableArrayList<>();
 
     public ObservableBoolean isLoadingMoreData = new ObservableBoolean(false);
 
@@ -49,8 +49,10 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
      * 刷新ui
      */
     private void refreshUI(String log) {
-        navigator.refreshUI(log);
         dataIsLoading.set(false);
+        if (navigator != null) {
+            navigator.refreshUI(log);
+        }
     }
 
     /**
@@ -105,6 +107,8 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
                         }
 
                         items.addAll(data);
+                        notifyPropertyChanged(BR.viewModel);
+                      //  notifyChange();
 
                         switch (requestType) {
                             case INITIALIZE:

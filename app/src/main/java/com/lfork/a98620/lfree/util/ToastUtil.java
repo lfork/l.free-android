@@ -11,14 +11,20 @@ import android.widget.Toast;
 public class ToastUtil {
     public static void showLong(Context context, String content){
         if (!Thread.currentThread().getName().equals("main")) {
-            Looper.prepare();
+            if (Looper.myLooper() == null)
+            {
+                Looper.prepare();
+            }
         }
         Toast.makeText(context, content, Toast.LENGTH_LONG).show();
     }
 
     public static void showShort(Context context, String content){
         if (!Thread.currentThread().getName().equals("main")) {     //不能在非主线程里面直接Toast   Can't create handler inside thread that has not called Looper.prepare()
-            Looper.prepare();
+            if (Looper.myLooper() == null)
+            {
+                Looper.prepare();
+            }
         }
         Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
     }

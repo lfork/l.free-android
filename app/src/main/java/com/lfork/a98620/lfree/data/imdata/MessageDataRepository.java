@@ -138,7 +138,7 @@ public class MessageDataRepository<C> implements MessageDataSource, MessageListe
     /**
      * 将消息进行缓存
      *
-     * @param msg
+     * @param msg e
      */
     private void saveMessageCache(Message msg) {
         new Thread(() -> {
@@ -153,8 +153,8 @@ public class MessageDataRepository<C> implements MessageDataSource, MessageListe
     }
 
 
-    public void addReceivedMessage(Message msg) {
-        msg.setChatType(Message.ReceiveType);
+    private void addReceivedMessage(Message msg) {
+
         new Thread(() -> {
             List<Message> messageList = mCachedUserMessages.get(msg.getSenderID() + "");
             if (messageList == null) {
@@ -181,6 +181,7 @@ public class MessageDataRepository<C> implements MessageDataSource, MessageListe
 //     */
     @Override
     public void onReceived(Message message) {
+        message.setChatType(Message.ReceiveType);
         mMessageLocalDataSource.saveAndSendMessage(message, new GeneralCallback<Message>() {
             @Override
             public void succeed(Message data) {
