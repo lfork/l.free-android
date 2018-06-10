@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-# Test  哈哈哈哈
-=======
-# Test Merge Test
->>>>>>> f0194ef9112c3b75c196a643ce61e07456f6695e
+
+# demo https://drive.google.com/open?id=17_JY0oioZzppt5SGjDcaow292dhzrqVt 
 L.Free-Android
 校内二手交易平台 ——Android端
 

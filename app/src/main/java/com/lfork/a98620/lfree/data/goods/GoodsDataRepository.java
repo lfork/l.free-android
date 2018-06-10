@@ -31,6 +31,7 @@ public class GoodsDataRepository implements GoodsDataSource {
 
     private HashMap<Integer, List<Goods>> goodsMap = new HashMap<>();
 
+
     private List<Category> categories;
 
     private boolean mCachedDataIsDirty = true;

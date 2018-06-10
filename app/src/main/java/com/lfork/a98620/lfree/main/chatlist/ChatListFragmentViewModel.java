@@ -9,6 +9,7 @@ import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
+import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,8 @@ public class ChatListFragmentViewModel extends BaseViewModel {
 
     ChatListFragmentViewModel(FragmentActivity context) {
         this.context = context;
-//        binding.searchBtn.clearFocus(); //取消searchView的焦点
-        repository = IMDataRepository.getInstance();
+        new Thread(() -> repository = IMDataRepository.getInstance()).start();
+
     }
 
     private void loadUsers() {
@@ -66,7 +67,11 @@ public class ChatListFragmentViewModel extends BaseViewModel {
 
     @Override
     public void start() {
-        loadUsers();
+        if (repository != null) {
+            loadUsers();
+        } else {
+            ToastUtil.showShort(context, "可能没有网络...");
+        }
     }
 
     @Override
@@ -94,23 +99,4 @@ public class ChatListFragmentViewModel extends BaseViewModel {
         });
 
     }
-
-    //    private void initIMList() {
-//        List<IM> contactsList = new ArrayList<>();
-//        for (int i = 0; i < 15; i++) {
-//            IM goods = new IM();
-//            goods.setName("goods" + i);
-//            goods.setId(i);
-//            goods.setPrice(String.valueOf(i * 100));
-//            goods.setCoverImagePath("???");
-//            contactsList.add(goods);
-//            Log.d(TAG, "initIMList: test1" + i);
-//        }
-//
-//        for (IM g : contactsList) {
-//            models.add(new ChatListItemViewModel(getContext()));
-//
-//        }
-//        Log.d(TAG, "initIMList: " + models.size());
-//    }
 }

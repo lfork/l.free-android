@@ -54,13 +54,24 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
     }
 
     public void setItems(List<T> items) {
+        notifyDataSetChanged();
         this.items = items;
+    }
+
+    public void addData(List<T> items) {
+        if (this.items == null) {
+            this.items = items;
+        } else{
+            this.items.clear();
+            this.items.addAll(items);
+        }
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding binding;
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
         }
 
@@ -73,7 +84,7 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public int getLayoutId() {
+    protected int getLayoutId() {
         return layoutId;
     }
 

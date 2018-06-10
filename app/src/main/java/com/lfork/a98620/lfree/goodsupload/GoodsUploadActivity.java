@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.goodsupload;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -17,16 +19,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.databinding.GoodsUploadActBinding;
-import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.base.customview.PopupDialog;
 import com.lfork.a98620.lfree.base.customview.PopupDialogOnclickListener;
 import com.lfork.a98620.lfree.base.image.GlideEngine;
+import com.lfork.a98620.lfree.databinding.GoodsUploadActBinding;
+import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.mvvmadapter.Image;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -35,8 +39,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class GoodsUploadActivity extends AppCompatActivity {
+public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploadNavigator{
 
     private static final int REQUEST_CODE_CHOOSE = 1; //相册 多张选择
 
@@ -52,15 +57,23 @@ public class GoodsUploadActivity extends AppCompatActivity {
     private File portraitFile;
     private Uri imageUri;
 
+
+
+    private int tempImageCount;
+
     private int imageViewIndex = -1;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.goods_upload_act);
-        viewModel = new GoodsUploadViewModel(this);
+        viewModel = new GoodsUploadViewModel(getApplicationContext());
+        viewModel.setNavigator(this);
         binding.setViewModel(viewModel);
         initActionBar();
+
+        setupSpinner();
 
         if (imageViews.size() < 1) {
             imageViews.add(binding.image1);
@@ -70,11 +83,28 @@ public class GoodsUploadActivity extends AppCompatActivity {
             imageViews.add(binding.image5);
         }
 
-        binding.editDescription.setOnTouchListener(new View.OnTouchListener() {
+        /*
+          避免滑动冲突
+         */
+        binding.editDescription.setOnTouchListener((view, motionEvent) -> {
+            view.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
+    }
+
+
+    private void setupSpinner(){
+        Spinner spinner = binding.spinner;
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "setupSpinner: " + position);
+                viewModel.setCategoryId(position + 1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -82,7 +112,7 @@ public class GoodsUploadActivity extends AppCompatActivity {
 
     public void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
         actionBar.setTitle("宝贝上传");
         actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
         // 有小箭头，并且图标可以点击
@@ -186,6 +216,7 @@ public class GoodsUploadActivity extends AppCompatActivity {
     }
 
     public void showMyDialog(int count) {
+        tempImageCount = count;
         new PopupDialog(this, new PopupDialogOnclickListener() {
             @Override
             public void onFirstButtonClicked(PopupDialog dialog) {
@@ -214,7 +245,32 @@ public class GoodsUploadActivity extends AppCompatActivity {
             }
         }, binding.getRoot()).show();
 
+    }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 222:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    openCamera();
+                } else {
+                    // Permission Denied
+                    Toast.makeText(this, "很遗憾你把相机权限禁用了", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    selectImages(tempImageCount);
+                } else {
+                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     private void openCamera() {
@@ -243,6 +299,30 @@ public class GoodsUploadActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUESTCODE_CAM);
     }
 
+    @Override
+    public void uploadSucceed() {
+
+        runOnUiThread(() -> {
+            ToastUtil.showLong(getApplicationContext(), "上传成功");
+            setResult(RESULT_OK, new Intent());
+            finish();
+        });
+
+    }
+
+    @Override
+    public void uploadFailed(String log) {
+        runOnUiThread(() -> {
+            ToastUtil.showShort(getApplicationContext(), log);
+        });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel.destroy();
+    }
 }
 
 

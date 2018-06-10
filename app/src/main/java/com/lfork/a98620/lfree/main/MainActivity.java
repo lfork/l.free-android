@@ -21,8 +21,8 @@ import android.view.View;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
-import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.databinding.MainActBinding;
+import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
 import com.lfork.a98620.lfree.main.community.CommunityFragment;
 import com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment;
@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    public final static int CODE_UPLOAD = 1;
     private static final String TAG = "MainActivity";
     private List<Fragment> fragments;
     MainActBinding binding;
@@ -45,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
             messageBinder = (MessageService.MessageBinder) iBinder;
             messageBinder.buildConnection();
             Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？6");
-
 //            messageBinder.startDownload();
 //            messageBinder.getProgress();
         }
@@ -197,7 +198,17 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(fragments.get(1));
         binding.goodsBtn.setSelected(true);
         binding.goodsText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CODE_UPLOAD) {
+            if ( resultCode == RESULT_OK) {
+                replaceFragment(fragments.get(1));
+            }
+        }
 
     }
 

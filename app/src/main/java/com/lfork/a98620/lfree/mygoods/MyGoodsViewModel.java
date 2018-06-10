@@ -2,6 +2,7 @@ package com.lfork.a98620.lfree.mygoods;
 
 import android.app.Activity;
 import android.databinding.ObservableArrayList;
+import android.os.Looper;
 import android.text.format.DateFormat;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
@@ -50,37 +51,42 @@ public class MyGoodsViewModel extends BaseViewModel {
                 e.printStackTrace();
             }
             User user = UserDataRepository.getInstance().getThisUser();
-            GoodsDataRepository.getInstance().getUserGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
-                @Override
-                public void succeed(List<Goods> goodsList) {
-                    ArrayList<MyGoodsItemViewModel> tempItems = new ArrayList<>();
-                    for (Goods g : goodsList) {
-                        tempItems.add(new MyGoodsItemViewModel(context, g));
-                    }
-                    dataIsLoading.set(false);
+            if (user != null) {
+                GoodsDataRepository.getInstance().getUserGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
+                    @Override
+                    public void succeed(List<Goods> goodsList) {
+                        ArrayList<MyGoodsItemViewModel> tempItems = new ArrayList<>();
+                        for (Goods g : goodsList) {
+                            tempItems.add(new MyGoodsItemViewModel(context, g));
+                        }
+                        dataIsLoading.set(false);
 
-                    if (tempItems.size() > 0)
-                        dataIsEmpty.set(false);
+                        if (tempItems.size() > 0)
+                            dataIsEmpty.set(false);
 //                    items.addAll(data);
-                    context.runOnUiThread(() -> {
-                        ToastUtil.showShort(context, "我的商品数据加载成功");
-                        items.clear();
-                        items.addAll(tempItems);
-                        notifyChange();
-                        navigator.notifyDataChanged();
-                    });
+                        context.runOnUiThread(() -> {
+                            ToastUtil.showShort(context, "我的商品数据加载成功");
+                            items.clear();
+                            items.addAll(tempItems);
+                            notifyChange();
+                            navigator.notifyDataChanged();
+                        });
 
-                }
+                    }
 
-                @Override
-                public void failed(String log) {
-                    dataIsLoading.set(false);
-                    context.runOnUiThread(() -> {
-                        ToastUtil.showShort(context, log);
-                    });
+                    @Override
+                    public void failed(String log) {
+                        dataIsLoading.set(false);
+                        context.runOnUiThread(() -> {
+                            ToastUtil.showShort(context, log);
+                        });
 
-                }
-            }, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString(), user.getUserId() + "");
+                    }
+                }, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString(), user.getUserId() + "");
+            } else {
+                Looper.prepare();//???
+                ToastUtil.showShort(context, "可能没有网络");
+            }
         }).start();
     }
 

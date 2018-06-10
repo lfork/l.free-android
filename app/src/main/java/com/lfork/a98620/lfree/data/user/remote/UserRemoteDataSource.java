@@ -167,24 +167,30 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void getUserInfo(GeneralCallback<User> callback, int userId) {
-        RequestBody requestBody = new FormBody.Builder()
-                .add("studentId", userId+"")
-                .build();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("studentId", userId+"")
+                        .build();
 
-        String responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/user_info", requestBody);
+                String responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/user_info", requestBody);
 
-        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() { //GSON
-        });
+                Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() { //GSON
+                });
 
-        if (result != null) {
-            if (result.getCode() == 1) {
-                callback.succeed(result.getData());
-            } else {
-                callback.failed(result.getMessage());
+                if (result != null) {
+                    if (result.getCode() == 1) {
+                        callback.succeed(result.getData());
+                    } else {
+                        callback.failed(result.getMessage());
+                    }
+                } else {
+                    callback.failed("error 服务器异常");
+                }
+
             }
-        } else {
-            callback.failed("error 服务器异常");
-        }
+        }).start();
 
     }
 }

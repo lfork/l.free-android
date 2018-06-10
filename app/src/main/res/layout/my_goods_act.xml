@@ -2,11 +2,12 @@
 <layout>
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.mygoods.MyGoodsViewModel"
-            />
-        <import type="android.view.View"/>
+            type="com.lfork.a98620.lfree.mygoods.MyGoodsViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,19 +16,35 @@
         android:layout_height="match_parent"
         tools:context="com.lfork.a98620.lfree.mygoods.MyGoodsActivity">
 
-        <TextView
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="你当前还没有发布任何宝贝"
-            android:visibility="@{viewModel.dataIsEmpty ? View.VISIBLE : View.GONE}"
-            />
+            android:visibility="@{viewModel.dataIsEmpty ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:id="@+id/box"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_mygoods_box"
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/box"
+                android:gravity="center"
+                android:text="您当前还没有发布任何宝贝" />
+        </RelativeLayout>
+
 
         <android.support.v7.widget.RecyclerView
-            android:visibility="@{viewModel.dataIsEmpty ? View.GONE:View.VISIBLE}"
             android:id="@+id/my_goods_recycle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.dataIsEmpty ? View.GONE:View.VISIBLE}">
 
         </android.support.v7.widget.RecyclerView>
 

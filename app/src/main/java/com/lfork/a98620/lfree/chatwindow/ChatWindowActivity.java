@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.chatwindow;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -12,31 +13,21 @@ import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
-import com.lfork.a98620.lfree.imservice.MessageListener;
-import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.databinding.ChatWindowActBinding;
+import com.lfork.a98620.lfree.imservice.MessageService;
+import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
-public class ChatWindowActivity extends AppCompatActivity implements ChatWindowNavigator, MessageListener {
+public class ChatWindowActivity extends AppCompatActivity implements ChatWindowNavigator{
 
-    //    private EditText editText;
     private RecyclerView recyclerView;
-
-    private static final String TAG = "ChatWindowActivity";
-
-//    private String username;
 
     private int userId;
 
-    private int thisUserId;
-
     private MessageService.MessageBinder messageBinder;
-
-    private ChatWindowActBinding binding;
 
     private ChatWindowViewModel viewModel;
 
@@ -44,7 +35,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     protected void onResume() {
         super.onResume();
         if (messageBinder != null) {
-            messageBinder.setListener(viewModel);
+            messageBinder.setListener(viewModel, userId);
             viewModel.start();
         }
 
@@ -53,7 +44,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.chat_window_act);
+        ChatWindowActBinding binding = DataBindingUtil.setContentView(this, R.layout.chat_window_act);
         Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
         String username = intent.getStringExtra("username");
@@ -63,7 +54,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         new Thread(() -> {
             messageBinder = IMDataRepository.getInstance().getBinder();
             if (messageBinder != null) {
-                messageBinder.setListener(viewModel);
+                messageBinder.setListener(viewModel, userId);
             } else {
                 runOnUiThread(() -> {
                     ToastUtil.showShort(getApplicationContext(), "IM服务器异常,聊天功能开启失败");
@@ -74,10 +65,9 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
 
         }).start();
         initActionBar(username);
-        thisUserId = UserDataRepository.getInstance().getUserId();
+        int thisUserId = UserDataRepository.getInstance().getUserId();
         viewModel.setUserInfo(username, userId, thisUserId);
         viewModel.setNavigator(this);
-//        initMeg(); //初始化几条message数据
         initUI();
 
     }
@@ -97,47 +87,6 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
 
         MessageListAdapter adapter = new MessageListAdapter(viewModel.messages);
         recyclerView.setAdapter(adapter);
-
-//        Button send = (Button) findViewById(R.id.btn_send);
-//        editText = (EditText) findViewById(R.id.edit_window);
-//        send.setOnClickListener(view -> {
-//            String message_sent = editText.getText().toString();
-//            if (!message_sent.equals("")) {
-//
-//                Message m;
-//
-////                    if ((int)(Math.random() * 10) % 2 == 0) {
-//                m = new Message(message_sent, Message.SendType);
-//
-//                m.setSenderID(thisUserId);
-//                m.setReceiverID(userId);
-//                m.setType(MessageType.NORMAL_MESSAGE);
-//                m.setContentType(MessageContentType.COMMUNICATION_USER);
-//                m.setMessageID(System.currentTimeMillis());
-////                    } else {
-////                        msg = new Message(message_sent, Message.ReceiveType);
-////                    }
-//                messageList.add(m);
-//                new Thread(() -> {
-//                    sendMessage(m, new DataSource.GeneralCallback<Message>() {
-//                        @Override
-//                        public void succeed(Message data) {
-//                            runOnUiThread(() -> ToastUtil.showShort(getApplicationContext(), "发送成功"));
-//                        }
-//
-//                        @Override
-//                        public void failed(String log) {
-//                            runOnUiThread(() -> ToastUtil.showShort(getApplicationContext(), log));
-//                        }
-//                    });
-//                }).start();
-//
-//                adapter.notifyItemInserted(messageList.size() - 1); //当有新消息时，刷新RecyclerView
-//                recyclerView.scrollToPosition(messageList.size() - 1);//将recyclerView定位到最后一行
-//                editText.setText("");//清空输入框的内容
-//            }
-//
-//        });
     }
 
     //初始化几条消息
@@ -164,9 +113,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
                 finish();
                 break;
             case R.id.menu1:
-                Intent intent = new Intent(getApplicationContext(), UserInfoActivity.class);
-                intent.putExtra("user_id", userId);
-                startActivityForResult(intent, 4);
+                UserInfoActivity.activityStart(ChatWindowActivity.this, userId);
             default:
                 break;
         }
@@ -183,11 +130,9 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
 
     public void sendMessage(Message message, DataSource.GeneralCallback<Message> callback) {
         recyclerView.scrollToPosition(viewModel.messages.size() - 1);//将recyclerView定位到最后一行
-        new Thread(() -> {
-            if (messageBinder != null) {
-                messageBinder.sendMessage(message, callback);
-            }
-        }).start();
+        if (messageBinder != null) {
+            messageBinder.sendMessage(message, callback);
+        }
 //        adapter.notifyItemInserted(messageList.size() - 1); //当有新消息时，刷新RecyclerView
     }
 
@@ -205,9 +150,12 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         });
     }
 
-    @Override
-    public void onReceived(Message message) {
 
-
+    public static void activityStart(Context context, String username, int userId) {
+        Intent intent = new Intent(context, ChatWindowActivity.class);
+        intent.putExtra("username", username);
+        intent.putExtra("user_id", userId);
+        context.startActivity(intent);
     }
+
 }

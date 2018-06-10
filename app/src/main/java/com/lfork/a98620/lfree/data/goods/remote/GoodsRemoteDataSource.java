@@ -1,5 +1,7 @@
 package com.lfork.a98620.lfree.data.goods.remote;
 
+import android.util.Log;
+
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.base.network.httpservice.HttpService;
 import com.lfork.a98620.lfree.base.network.httpservice.Result;
@@ -51,6 +53,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
     public void getGoodsList(GeneralCallback<List<Goods>> callback, String cursor, int categoryId) {
         String url = Config.ServerURL + "/22y/goodsApp_getGoodsPageApp";
 
+        Log.d(TAG, "getGoodsList: " + cursor);
         RequestBody requestbody = new FormBody.Builder()
                 .add("csId", categoryId + "")
                 .add("cursor", cursor + "")
@@ -76,9 +79,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
     @Override
     public void getUserGoodsList(GeneralCallback<List<Goods>> callback, String cursor, String userId) {
         String url = Config.ServerURL + "/22y/user_getUserGoodsByUid";
-
        // http://www.lfork.top/22y/user_getUserGoodsByUid?studentId=2015215064&cursor=2018-04-08%2008:03:07
-
         RequestBody requestbody = new FormBody.Builder()
                 .add("studentId", userId)
                 .add("cursor", cursor)
@@ -154,6 +155,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
     @Override
     public void uploadGoods(GeneralCallback<String> callback, Goods g) {
         String[] images = g.getImagesPath();
+        Log.d(TAG, "uploadGoods: " + g.getPublishDate());
 
         RequestBody[] files = new RequestBody[images.length];
 

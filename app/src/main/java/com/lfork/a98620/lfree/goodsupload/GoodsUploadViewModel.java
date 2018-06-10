@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.goodsupload;
 
+import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import com.lfork.a98620.lfree.util.file.UriHelper;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,19 +36,27 @@ public class GoodsUploadViewModel extends GoodsViewModel {
 
     public final ObservableField<String> tips = new ObservableField<>("已选择(0/5)");
 
-    private GoodsUploadActivity activity;
+    private Context activity;
+
+    private GoodsUploadNavigator navigator;
+
+    public void setNavigator(GoodsUploadNavigator navigator) {
+        this.navigator = navigator;
+    }
 
     private List<String> imagePathList;
 
     private GoodsDataRepository repository;
 
+    private int categoryId = 1;
+
     public final ObservableArrayList<Boolean> imageVisible = new ObservableArrayList<>();
 
-    int imageCount;
+    private int imageCount;
 
-    public final int MAX_COUNT = 5;
+    private final int MAX_COUNT = 5;
 
-    public GoodsUploadViewModel(GoodsUploadActivity context) {
+    GoodsUploadViewModel(Context context) {
         super(context);
         activity = context;
         setImageVisibility();
@@ -58,7 +68,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
 
     private void setImageVisibility() {
 
-        Log.d(TAG, "setImageVisibility1: "+ "image count" + imageCount);
+        Log.d(TAG, "setImageVisibility1: " + "image count" + imageCount);
         if (imageCount == 0) {
             imageVisible.clear();
             imageVisible.add(false);//默认第一个可见
@@ -80,7 +90,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
 
         Log.d(TAG, "setImageVisibility: " + i + "image count" + imageCount);
 
-        for (; i < MAX_COUNT ; i++)
+        for (; i < MAX_COUNT; i++)
             imageVisible.set(i, false);
 
     }
@@ -88,22 +98,23 @@ public class GoodsUploadViewModel extends GoodsViewModel {
     /**
      * 静态的图片配合动态的数据  每次添加图片后
      *
-     * @param index
+     * @param index e
      */
     public void deleteImage(int index) {
-        activity.deleteImage(index);
+        if (navigator != null)
+            navigator.deleteImage(index);
     }
 
     /**
      * 这里就是根据选择的图片数量来设置imageView
-     *
      */
     public void selectImages() {
 
         if (imageCount == MAX_COUNT) {
             return;
         }
-        activity.showMyDialog(MAX_COUNT - imageCount);
+        if (navigator != null)
+            navigator.showMyDialog(MAX_COUNT - imageCount);
     }
 
     public void setImages(List<Uri> mSelected) {
@@ -160,7 +171,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
         g.setUserId(UserDataRepository.getInstance().getThisUser().getUserId());
         g.setOriginPrice(originPrice.get());
         g.setPrice(price.get());
-        g.setCategoryId(1);
+        g.setCategoryId(categoryId);
 
 
         List<File> newImages = new ArrayList<>();
@@ -174,13 +185,12 @@ public class GoodsUploadViewModel extends GoodsViewModel {
                         newImages.addAll(
                                 Luban.with(context)
                                         .load(list)
-                                        .setTargetDir(context.getExternalCacheDir().toString())
+                                        .setTargetDir(Objects.requireNonNull(context.getExternalCacheDir()).toString())
                                         .get());
                         for (File str : newImages) {
                             Log.d(TAG, "onSuccess: " + str.getPath());
 
                         }
-                        Log.d(TAG, "apply: " + Thread.currentThread().getName());
 
                         if (imagePathList.size() >= 1) {
                             String[] imagesArray = new String[newImages.size()];
@@ -191,27 +201,20 @@ public class GoodsUploadViewModel extends GoodsViewModel {
                             g.setImagesPath(imagesArray);
                         }
 
-                        Log.d(TAG, "uploadGoods: " + Thread.currentThread().getName());
-
                         repository.uploadGoods(new DataSource.GeneralCallback<String>() {
                             @Override
                             public void succeed(String data) {
                                 dataIsLoading.set(false);
-                                activity.runOnUiThread(() -> {
-                                            ToastUtil.showShort(activity, data);
-                                        }
-                                );
 
+                                if (navigator != null)
+                                    navigator.uploadSucceed();
                             }
 
                             @Override
                             public void failed(String log) {
                                 dataIsLoading.set(false);
-                                activity.runOnUiThread(() -> {
-                                            ToastUtil.showShort(activity, log);
-                                        }
-                                );
-
+                                if (navigator != null)
+                                    navigator.uploadFailed(log);
 
                             }
                         }, g);
@@ -233,6 +236,11 @@ public class GoodsUploadViewModel extends GoodsViewModel {
 
     @Override
     public void destroy() {
+        navigator = null;
+    }
 
+    @Override
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

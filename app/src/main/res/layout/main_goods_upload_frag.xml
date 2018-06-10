@@ -10,7 +10,7 @@
         android:id="@+id/tips1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="商品上传提示界面。下面有一段介绍文字主要介绍一下app的业务流程\n1、请准备好你的出售物品\n2、将你的物品拍5张以内的照片\n3、准备一段物品的描述文字 \n4、ok后就点击下方的按钮来上传自己的的物品吧" />
+        android:text="请阅读以下上传流程：\n1、请准备好你需要出售的物品\n2、5张以内的实物照片\n3、准备一段物品的描述文字 \n4、点击下方的按钮来上传自己的的物品吧" />
 
     <Button
         android:layout_marginStart="30dp"

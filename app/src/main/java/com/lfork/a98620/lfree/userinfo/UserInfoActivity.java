@@ -1,35 +1,34 @@
 package com.lfork.a98620.lfree.userinfo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
+import com.lfork.a98620.lfree.base.BaseActivity;
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
+import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.UserInfoActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
-public class UserInfoActivity extends AppCompatActivity implements ViewModelNavigator{
-    private int userId;
-    private String username="";
+public class UserInfoActivity extends BaseActivity implements ViewModelNavigator{
+
+
+    private UserInfoViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Intent intent = getIntent();
-        userId = intent.getIntExtra("user_id", 0);
-
-
+        int userId = intent.getIntExtra("user_id", 0);
         UserInfoActBinding binding = DataBindingUtil.setContentView(this, R.layout.user_info_act);
-        UserInfoViewModel viewModel = new UserInfoViewModel(this, userId);
-
+        viewModel = new UserInfoViewModel(this, userId);
         viewModel.setNavigator(this);
         binding.setViewModel(viewModel);
 
@@ -53,17 +52,16 @@ public class UserInfoActivity extends AppCompatActivity implements ViewModelNavi
                 finish();
                 break;
             case R.id.menu1:
-
                 UserDataRepository userDataRepository = UserDataRepository.getInstance();
                 User u = userDataRepository.getThisUser();
                 if (u != null) {
-                    if (u.getUserId() == userId){
+                    if (u.getUserId() == viewModel.getUserId()){
                         ToastUtil.showShort(this, "不能和自己聊天");
                         break;
                     }
                     Intent intent = new Intent(this, ChatWindowActivity.class);
-                    intent.putExtra("username", username);
-                    intent.putExtra("user_id", userId);
+                    intent.putExtra("username", viewModel.username.get());
+                    intent.putExtra("user_id", viewModel.getUserId());
                     this.startActivity(intent);
                 } else {
                     ToastUtil.showShort(this, "IM模块正在初始化...");
@@ -84,6 +82,12 @@ public class UserInfoActivity extends AppCompatActivity implements ViewModelNavi
         return true;
     }
 
+    public static void activityStart(Context context, int userId){
+        Intent intent = new Intent(context, UserInfoActivity.class);
+        intent.putExtra("user_id", userId);
+        context.startActivity(intent);
+    }
+
     @Override
     public void notifyDataChanged() {
 
@@ -91,15 +95,12 @@ public class UserInfoActivity extends AppCompatActivity implements ViewModelNavi
 
     @Override
     public void setParam1(String param) {
-        if (param == null) {
-            username = userId +"";
-        } else {
-            username = param;
-        }
     }
 
     @Override
     public void setParam2(String param) {
 
     }
+
+
 }

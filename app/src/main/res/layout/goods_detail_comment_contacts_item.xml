@@ -12,12 +12,14 @@
 
         <ImageView
             android:id="@+id/comment_head"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_margin="10dp"
-            android:src="@drawable/login_logo" />
+            android:src="@drawable/login_logo"
+            android:layout_marginLeft="10dp"/>
 
         <Button
+            android:visibility="gone"
             android:id="@+id/comment_talk"
             android:layout_width="60dp"
             android:layout_height="20dp"
@@ -30,12 +32,23 @@
             android:textSize="10sp" />
 
         <TextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/comment_head"
+            android:layout_toEndOf="@+id/comment_head"
+            android:singleLine="true"
+            android:text="1#"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <TextView
             android:id="@+id/comment_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/comment_head"
-            android:layout_toEndOf="@id/comment_head"
+            android:layout_alignTop="@+id/comment_head"
+            android:layout_toEndOf="@+id/number"
             android:singleLine="true"
+            android:layout_marginLeft="10dp"
             android:text="用户名"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -44,9 +57,8 @@
             android:id="@+id/comment_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/comment_name"
+            android:layout_alignStart="@id/number"
             android:layout_below="@id/comment_name"
-            android:layout_marginTop="3dp"
             android:singleLine="true"
             android:text="发表时间：2018年4月19日19:53:10"
             android:textColor="#afafaf"
@@ -56,11 +68,16 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/comment_name"
+            android:layout_alignStart="@id/number"
             android:layout_below="@+id/comment_time"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
             android:text="@{viewModel}"
             android:textSize="12sp" />
+        <View
+            android:layout_below="@id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/viewColor" />
     </RelativeLayout>
 </layout>

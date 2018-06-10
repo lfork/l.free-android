@@ -3,12 +3,19 @@ package com.lfork.a98620.lfree.imservice.message;
 
 import com.lfork.a98620.lfree.util.JSONUtil;
 
-public class Message {
+import org.litepal.annotation.Column;
+import org.litepal.crud.DataSupport;
+
+public class Message extends DataSupport{
 
     private int senderID;  //System的ID 为 0 , 如果是group(messageType为Group)的话， 这里的SenderID就是groupID
 
     private int receiverID;
 
+    /**
+     * messageId 实际上是message生成的时间 System.currentTimeMillis()
+     */
+    @Column(unique = true, defaultValue = "unknown")
     private long messageID;
 
     private String content;

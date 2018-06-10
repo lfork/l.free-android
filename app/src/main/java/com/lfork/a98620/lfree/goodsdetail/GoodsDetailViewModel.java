@@ -1,6 +1,5 @@
 package com.lfork.a98620.lfree.goodsdetail;
 
-import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import android.widget.Toast;
 
 import com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel;
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
-import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.entity.Review;
@@ -17,7 +15,6 @@ import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
-import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
@@ -49,12 +46,11 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     private int userId;
 
-    private ViewModelNavigator navigator;
+    private GoodsDetailNavigator navigator;
 
     private GoodsDetailActBinding binding;
 
     private GoodsDetailInfo g;
-
 
     private AppCompatActivity context;
 
@@ -68,9 +64,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     @Override
     public void start() {
         getNormalData();
-
     }
-
 
     private void getNormalData() {
 
@@ -83,6 +77,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                     if (reviews.size() > 0) {
                         context.runOnUiThread(() -> {
                             setData();
+                            reviewItems.clear();
                             reviewItems.addAll(reviews);
                             navigator.notifyDataChanged();
                         });
@@ -102,58 +97,6 @@ public class GoodsDetailViewModel extends GoodsViewModel {
             }, id);
         }).start();
     }
-
-//    private void getReviews(){
-//        new Thread(() -> {
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            User user = UserDataRepository.getInstance().getThisUser();
-//            GoodsDataRepository.getInstance().goodsSearch(new DataSource.GeneralCallback<List<Review>>() {
-//                @Override
-//                public void succeed(List<Review> goodsList) {
-//                    ArrayList<Review> tempItems = new ArrayList<>();
-//                    for (Review g : goodsList) {
-//                        tempItems.add(new Review());
-//                    }
-//                    dataIsLoading.set(false);
-//
-//                    if (tempItems.size() > 0) {
-//                        dataIsEmpty.set(false);
-////                    items.addAll(data);
-//                        context.runOnUiThread(() -> {
-//                            ToastUtil.showShort(context, "搜索完成");
-//                            reviewItems.clear();
-//                            reviewItems.addAll(tempItems);
-//                            notifyChange();
-//                            navigator.notifyDataChanged();
-//                        });
-//                    } else{
-//                        context.runOnUiThread(() -> {
-//                            ToastUtil.showShort(context, "没有搜索到相关信息");
-//                            reviewItems.clear();
-//                            reviewItems.addAll(tempItems);
-//                            notifyChange();
-//                            navigator.notifyDataChanged();
-//                        });
-//                    }
-//
-//
-//                }
-//
-//                @Override
-//                public void failed(String log) {
-//                    dataIsLoading.set(false);
-//                    context.runOnUiThread(() -> {
-//                        ToastUtil.showShort(context, log);
-//                    });
-//
-//                }
-//            }, keyword);
-//        }).start();
-//    }
 
     private void setData() {
         if (g == null) return;
@@ -175,9 +118,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         userId = g.getUserId();
     }
 
-
     public void startPrivateChat() {
-
         UserDataRepository userDataRepository = UserDataRepository.getInstance();
         User u = userDataRepository.getThisUser();
         if (u != null) {
@@ -185,10 +126,9 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                  ToastUtil.showShort(context, "不能和自己聊天");
                  return;
              }
-            Intent intent = new Intent(context, ChatWindowActivity.class);
-            intent.putExtra("username", sellerName.get());
-            intent.putExtra("user_id", userId);
-            context.startActivity(intent);
+
+             navigator.openChatWindow(sellerName.get(), userId);
+
         } else {
             ToastUtil.showShort(context, "IM模块正在初始化...");
         }
@@ -208,7 +148,6 @@ public class GoodsDetailViewModel extends GoodsViewModel {
             @Override
             public void succeed(Review data) {
                 context.runOnUiThread(() -> {
-
                     reviewItems.add(data.getContent());
                     review.set("");
                     navigator.notifyDataChanged();
@@ -225,30 +164,26 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
             }
         }, r )).start();
-
-
     }
 
     public void openSellerInfo() {
-
-        Intent intent = new Intent(context, UserInfoActivity.class);
-        intent.putExtra("user_id", userId);
-        context.startActivity(intent);
-
+        if (navigator != null) {
+            navigator.openUserInfo(userId);
+        }
     }
 
-    public void openImageDetail() {
 
+    public void onClickImage(int index){
+        navigator.openBigImages();
     }
-
 
     @Override
     public void setNavigator(ViewModelNavigator navigator) {
-        this.navigator = navigator;
+        this.navigator = (GoodsDetailNavigator)navigator;
     }
 
     @Override
     public void destroy() {
-
+        navigator = null;
     }
 }

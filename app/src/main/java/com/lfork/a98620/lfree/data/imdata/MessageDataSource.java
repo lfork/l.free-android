@@ -1,9 +1,8 @@
 package com.lfork.a98620.lfree.data.imdata;
 
 
-import android.view.View;
-
 import com.lfork.a98620.lfree.data.DataSource;
+import com.lfork.a98620.lfree.imservice.MessageListener;
 import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.imservice.message.MessageContentType;
 
@@ -57,22 +56,10 @@ public interface MessageDataSource extends DataSource {
     /**
      * 将最新的一条消息推送到view界面 ，
      */
-    void setViewReference(View view);
-
-    void dealCommand();
-
-    void dealNotification();
+    void setMessageListener(MessageListener listener);
 
 
-    //    /**
-//     * 收到消息后
-//     * 1、程序在后台运行：进行Notification的通知
-//     * 2、程序在前台运行，非消息列表fragment。进行notification的通知
-//     * 3、程序在前台运行，消息列表。不进行notification的通知。直接在消息列表显示未读数量
-//     * 4、程序在消息窗口运行，当前联系人。直接进行消息的推送
-//     * 5、程序在消息窗口运行，非当前联系人。进行notification的通知
-//     */
-    //void pushMessage()
+
 
     /**
      * 前台把数据储存到消息仓库和消息队列， 然后再由信使从消息仓库拿走消息
@@ -84,13 +71,11 @@ public interface MessageDataSource extends DataSource {
 
 
     /**
-     *
+     * 删除消息记录
      * @param id  用户的id ， Group的ID， 或是系统的ID
      * @param type {@link MessageContentType}
      */
     void clearMessages(int id, MessageContentType type);
-
-    void addMessage(Message msg);
 
 
     //消息队列与消息仓库

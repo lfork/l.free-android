@@ -1,7 +1,5 @@
 package com.lfork.a98620.lfree.imservice;
 
-import android.util.Log;
-
 import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.imservice.message.MessageHelper;
 import com.lfork.a98620.lfree.imservice.message.MessageType;
@@ -105,7 +103,7 @@ public class UDPConnection extends Thread {
                         e.printStackTrace();
                     }
                     // 300秒就保活一次
-                    print("UDPConnection.keepAlive():保活消息已发送(30秒一次)");
+                   // print("UDPConnection.keepAlive():保活消息已发送(30秒一次)");
                     try {
                         Thread.sleep(1000 * 30);
                     } catch (InterruptedException e) {
@@ -115,7 +113,7 @@ public class UDPConnection extends Thread {
                 } else {
                     //缩短休眠时间，以便重连之后能马上激活服务端的udp服务
 //                    System.out.println("UDPConnection.keepAlive()://缩短休眠时间，以便重连之后能马上激活服务端的udp服务");
-                    print("UDPConnection.keepAlive():保活消息未发送  当前连接无效");
+                   // print("UDPConnection.keepAlive():保活消息未发送  当前连接无效");
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -163,12 +161,12 @@ public class UDPConnection extends Thread {
     }
 
     /**
-     * @param message
-     * @return
+     * @param message msg
+     * @return  e
      */
     public boolean sendNormalMessage(Message message) {
         String content = message.toString();
-        Log.d("发送的内容", "sendNormalMessage: " + content);
+        //Log.d("发送的内容", "sendNormalMessage: " + content);
         send(content);
         return getFeedBack(message.getMessageID() + "");
     }
@@ -177,7 +175,7 @@ public class UDPConnection extends Thread {
         Message feedBack = new Message();
         feedBack.setReceiverID(message.getSenderID());
         feedBack.setType(MessageType.FEEDBACK);
-        feedBack.setContent("Message接收成功,MessageID:" + message.getMessageID());
+        //feedBack.setContent("Message接收成功,MessageID:" + message.getMessageID());
         feedBack.setMessageID(message.getMessageID());
         send(feedBack.toString());
     }

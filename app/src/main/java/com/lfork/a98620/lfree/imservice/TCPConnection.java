@@ -103,14 +103,14 @@ public class TCPConnection {
 
     private void rebuildConnection() {
         try {
-            print("正在重连....");
+           // print("正在重连....");
             buildConnection();
             //意思就是，在这里还需要发送客户端的连接信息给服务端，因为服务端需要连接信息来建立udp连接
             //连接成功后，还要将客户端的其他信息发送到服务器
             if (rebindClientInfo())
                 print("重连成功");
         } catch (IOException e) {
-            print("重连失败，继续重连");
+           // print("重连失败，继续重连");
             e.printStackTrace();
         }
     }
@@ -136,10 +136,9 @@ public class TCPConnection {
                         if (feedBack != null) {
                             if (feedBack.equals("true")) {
 //                            System.out.println("检测结果：连接正常");
-                                continue;
                             }
                         }
-                        System.out.println("服务器连接失败，正在重连");
+                      //  System.out.println("服务器连接失败，正在重连");
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -196,17 +195,14 @@ public class TCPConnection {
                 int waitTimes = 2;
                 while (!in.ready() && waitTimes >= 0) {      //普通操作应该在5秒内完成。 保连操作应该在2秒内完成
                     Thread.sleep(600);  //适当休眠 节约资源
-                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？18");
                     waitTimes--;
                 }
                 if (waitTimes < 0) {
                     setConnected(false);
-                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？19");
                     return null;
                 }
                 StringBuilder result = new StringBuilder();
                 while (in.ready()) {
-                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？20");
                     result.append(in.readLine());
                 }
                 return result.toString();
@@ -226,7 +222,6 @@ public class TCPConnection {
                 int waitTimes = 7;
                 while (!in.ready() && waitTimes >= 0) {      //普通操作应该在5秒内完成。 保连操作应该在2秒内完成
                     Thread.sleep(600);  //适当休眠 节约资源
-                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？16");
                     waitTimes--;
                 }
                 if (waitTimes < 0) {
@@ -236,7 +231,6 @@ public class TCPConnection {
                 StringBuilder result = new StringBuilder();
                 int readtimes = 1;
                 while (in.ready() && readtimes > 0) {       //只是一个缓解之策
-                    Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？17" + result);
                     result.append(in.readLine());       //在这里阻塞了？？？？？
                     readtimes--;
                 }
