@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.data.community.CommunityDataSource;
 import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.main.community.CommunityArticle;
-import com.lfork.a98620.lfree.main.community.CommunityComment;
+import com.lfork.a98620.lfree.main.community.articlecontent.CommunityComment;
 
 import java.io.IOException;
 import java.util.ArrayList;

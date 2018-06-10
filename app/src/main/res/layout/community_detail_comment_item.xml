@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.main.community.articlecontent.CommunityComment"/>
+    </data>
+
+    <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/comment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/comment_head"
+            android:layout_toEndOf="@id/comment_head"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:toUserInfoActivity="@{viewModel.reviewerId}"
+            android:text="@{viewModel.reviewer}"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/comment_name"
+            android:layout_below="@id/comment_name"
+            android:layout_marginTop="3dp"
+            android:singleLine="true"
+            android:textColor="#afafaf"
+            android:text="@{viewModel.commentTime}"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/comment_name"
+            android:layout_below="@+id/comment_time"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.comment}"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</layout>

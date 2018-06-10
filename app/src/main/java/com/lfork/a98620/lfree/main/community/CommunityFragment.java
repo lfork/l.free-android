@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,45 +43,14 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     private CommunityFragmentViewModel viewModel;
     private List<CommunityArticle> viewModelList;
     private CommunityArticleAdapter adapter;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    //加载数据成功
-                    setRecyclerView();
-                    binding.prompt.setVisibility(View.GONE);
-                    binding.communityRecyclerView.setVisibility(View.VISIBLE);
-                    Log.d(TAG, "handleMessage: 加载动态数据成功");
-                    break;
-                case 2:
-                    //加载数据失败
-                    binding.swipeRefresh.setRefreshing(false);
-                    binding.communityRecyclerView.setVisibility(View.GONE);
-                    binding.prompt.setText("加载失败");
-                    binding.prompt.setVisibility(View.VISIBLE);
-                    binding.swipeRefresh.setRefreshing(false);
-                    Log.d(TAG, "handleMessage: 加载动态数据失败");
-                    break;
-                case 3:
-                    //刷新数据成功
-                    binding.prompt.setVisibility(View.GONE);
-                    binding.communityRecyclerView.setVisibility(View.VISIBLE);
-                    adapter.notifyDataSetChanged();
-                    binding.swipeRefresh.setRefreshing(false);
-                    Log.d(TAG, "handleMessage: 刷新动态数据成功");
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
+    private MyHandler myHandler;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.main_community_frag, container, false);
         binding.setViewModel(viewModel);
+        myHandler = new MyHandler(binding, this);
         if (rootView == null) {
             rootView = binding.getRoot();
         }
@@ -89,9 +59,9 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
         Log.d(TAG, "onCreateView: 开始加载数据");
 
         binding.swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.black));
-        binding.swipeRefresh.setOnClickListener(new View.OnClickListener() {
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
+            public void onRefresh() {
                 viewModel.loadData(CommunityFragment.this, true);
                 Log.d(TAG, "onClick: 开始刷新数据");
             }
@@ -122,29 +92,47 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     private void sendMessage(int type) {
         Message message = new Message();
         message.what = type;
-        handler.sendMessage(message);
+        myHandler.sendMessage(message);
     }
 
-    @BindingAdapter("android:toUserInfoActivity")
-    public static void toUserInfoActivity(View view, int userId) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), UserInfoActivity.class);
-                intent.putExtra("user_id", userId);
-                view.getContext().startActivity(intent);
+    static class MyHandler extends Handler {
+        private MainCommunityFragBinding binding;
+        private CommunityFragment fragment;
+        public MyHandler(MainCommunityFragBinding binding, CommunityFragment fragment) {
+            this.binding = binding;
+            this.fragment = fragment;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    //加载数据成功
+                    fragment.setRecyclerView();
+                    binding.prompt.setVisibility(View.GONE);
+                    binding.communityRecyclerView.setVisibility(View.VISIBLE);
+                    Log.d(TAG, "handleMessage: 加载动态数据成功");
+                    break;
+                case 2:
+                    //加载数据失败
+                    binding.swipeRefresh.setRefreshing(false);
+                    binding.communityRecyclerView.setVisibility(View.GONE);
+                    binding.prompt.setText("加载失败");
+                    binding.prompt.setVisibility(View.VISIBLE);
+                    binding.swipeRefresh.setRefreshing(false);
+                    Log.d(TAG, "handleMessage: 加载动态数据失败");
+                    break;
+                case 3:
+                    //刷新数据成功
+                    binding.prompt.setVisibility(View.GONE);
+                    binding.communityRecyclerView.setVisibility(View.VISIBLE);
+                    fragment.adapter.notifyDataSetChanged();
+                    binding.swipeRefresh.setRefreshing(false);
+                    Log.d(TAG, "handleMessage: 刷新动态数据成功");
+                    break;
+                default:
+                    break;
             }
-        });
-    }
-    @BindingAdapter("android:toArticleContentActivity")
-    public static void toArticleContentActivity(View view, int articleId) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ArticleContentActivity.class);
-                intent.putExtra("articleId", articleId);
-                view.getContext().startActivity(intent);
-            }
-        });
+        }
     }
 }

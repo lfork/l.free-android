@@ -25,7 +25,7 @@ import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.databinding.MainActBinding;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
 import com.lfork.a98620.lfree.main.community.CommunityFragment;
-import com.lfork.a98620.lfree.main.goodsupload.GoodsUploadFragment;
+import com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment;
 import com.lfork.a98620.lfree.main.index.IndexFragment;
 import com.lfork.a98620.lfree.main.myinfo.MyInforFragment;
 
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFragments() {
         fragments = new ArrayList<>();
-        fragments.add(new GoodsUploadFragment());
+        fragments.add(new PublishInfoFragment());
         fragments.add(new IndexFragment());
         fragments.add(new ChatListFragment());
         fragments.add(new MyInforFragment());
@@ -206,5 +206,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_frag, fragment);
         transaction.commit();
+    }
+
+    public void toCommunityFragmentFromPublishFragment() {
+        replaceFragment(fragments.get(4));
     }
 }

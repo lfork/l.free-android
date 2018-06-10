@@ -10,8 +10,6 @@ import android.graphics.Shader;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-import com.lfork.a98620.lfree.main.community.CommunityComment;
-
 public class CommentView extends AppCompatTextView {
     private int mViewWidth;
     private Paint mPaint;

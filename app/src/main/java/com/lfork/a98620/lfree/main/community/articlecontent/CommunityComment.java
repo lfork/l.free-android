@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.main.community;
+package com.lfork.a98620.lfree.main.community.articlecontent;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
 
@@ -7,6 +7,7 @@ public class CommunityComment extends BaseViewModel {
     private String comment;
     private String commentTime;
     private int reviewerId;
+    private String reviewer;
 
     public void setArticleId(int articleId) {
         this.articleId = articleId;
@@ -38,5 +39,13 @@ public class CommunityComment extends BaseViewModel {
 
     public int getReviewerId() {
         return reviewerId;
+    }
+
+    public String getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer;
     }
 }

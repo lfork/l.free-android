@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lfork.a98620.lfree.main.goodsupload.GoodsUploadFragment">
+    tools:context="com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -22,6 +22,19 @@
         android:textColor="@color/white"
         android:layout_centerInParent="true"
         android:text="上传我的物品"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="100dp"
+        android:id="@+id/btn_publish_article"
+        android:layout_below="@+id/btn_upload"
+        android:background="@color/Login_ForeColor"
+        android:textColor="@color/white"
+        android:layout_centerInParent="true"
+        android:text="发布社区动态"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
