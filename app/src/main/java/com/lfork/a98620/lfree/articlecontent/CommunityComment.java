@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.main.community.articlecontent;
+package com.lfork.a98620.lfree.articlecontent;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
 

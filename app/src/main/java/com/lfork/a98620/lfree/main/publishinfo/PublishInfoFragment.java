@@ -12,8 +12,7 @@ import android.widget.Button;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.goodsupload.GoodsUploadActivity;
 import com.lfork.a98620.lfree.main.MainActivity;
-import com.lfork.a98620.lfree.main.community.CommunityFragment;
-import com.lfork.a98620.lfree.main.community.PublishArticleActivity;
+import com.lfork.a98620.lfree.publisharticle.PublishArticleActivity;
 
 import static android.app.Activity.RESULT_OK;
 
