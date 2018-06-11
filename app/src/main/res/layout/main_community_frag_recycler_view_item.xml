@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.community.CommunityArticle"/>
+            type="com.lfork.a98620.lfree.main.community.CommunityArticle" />
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/article"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp">
-            <ImageView
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="40dp"
-                android:toUserInfoActivity="@{viewModel.publisherId}"
-                app:setImageWithDiskCache="@{viewModel.headImgUri}" />
-            <com.lfork.a98620.lfree.main.community.articlecontent.CommentView
-                android:text="@{viewModel.headName}"
-                android:toUserInfoActivity="@{viewModel.publisherId}"
-                android:textSize="24sp"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="40dp" />
-            <TextView
-                android:text="@{viewModel.articleTime.substring(5, 16)}"
-                android:textSize="12sp"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/community_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:toUserInfoActivity="@{viewModel.publisherId}"
+            app:setImageWithDiskCache="@{viewModel.headImgUri}" />
 
         <TextView
-            android:textSize="20sp"
-            android:layout_marginStart="10dp"
-            android:text="@{viewModel.article}"
-            android:toArticleContentActivity="@{viewModel.articleId}"
+            android:id="@+id/community_username"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/community_head"
+            android:maxLength="12"
+            android:text="@{viewModel.headName}"
+            android:textColor="@color/Login_ForeColor"
+            android:textSize="20sp"
+            android:toUserInfoActivity="@{viewModel.publisherId}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/community_username"
+            android:layout_marginRight="6dp"
+            android:gravity="right"
+            android:text="@{viewModel.articleTime.substring(5, 16)}"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/community_community"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/community_username"
+            android:layout_below="@id/community_username"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="4dp"
+            android:maxLines="3"
+            android:text="@{viewModel.article}"
+            android:textSize="16sp"
+            android:toArticleContentActivity="@{viewModel.articleId}" />
+
+    </RelativeLayout>
 </layout>

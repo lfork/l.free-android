@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.community.CommunityFragmentViewModel" />
@@ -17,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways|snap">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -24,30 +27,32 @@
                 android:gravity="left|center"
                 android:paddingLeft="25dp"
                 android:text="交流社区"
-                android:textStyle="bold"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </android.support.design.widget.AppBarLayout>
+
         <TextView
             android:id="@+id/prompt"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:text="加载中..."
-            android:visibility="visible"
-            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="加载中..."
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:visibility="visible" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/community_recycler_view"
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:visibility="gone" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </android.support.design.widget.CoordinatorLayout>
