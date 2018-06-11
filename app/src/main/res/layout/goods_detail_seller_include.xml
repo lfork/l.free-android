@@ -1,57 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel" />
-
-
     </data>
 
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp">
 
-        <ImageView
-            android:id="@+id/portrait"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
-            android:onClick="@{()->viewModel.openSellerInfo()}"
-            app:setImageWithDiskCache="@{viewModel.sellerImage}" />
-
-        <TextView
-            android:id="@+id/user_name"
+        <LinearLayout
+            android:layout_alignParentStart="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@id/portrait"
-            android:text="@{viewModel.sellerName}"
-            android:textColor="@color/Login_Button"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_toStartOf="@id/btn_chat">
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/portrait"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="30dp"
+                android:onClick="@{()->viewModel.openSellerInfo()}"
+                app:setImageWithDiskCache="@{viewModel.sellerImage}"
+                android:contentDescription="@string/todo" />
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:onClick="@{()->viewModel.openSellerInfo()}"
+                android:text="@{viewModel.sellerName}"
+                android:textColor="@color/Login_Button"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
         <Button
+            android:id="@+id/btn_chat"
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
             android:background="@color/Login_Button"
             android:onClick="@{()->viewModel.startPrivateChat()}"
             android:text="私聊"
             android:textColor="@color/white"
             android:textSize="17sp" />
-
 
     </RelativeLayout>
 </layout>
