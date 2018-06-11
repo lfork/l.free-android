@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.community.articlecontent.CommunityComment"/>
+            type="com.lfork.a98620.lfree.articlecontent.CommunityComment"/>
     </data>
 
     <RelativeLayout

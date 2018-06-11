@@ -4,20 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.community.CommunityArticle"/>
+            type="com.lfork.a98620.lfree.main.community.CommunityArticle" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/article_edit"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/send_window_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@={viewModel.article}"/>
-    </LinearLayout>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/main_talk_in" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="发布新动态:"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_below="@id/send_window_title">
+
+            <EditText
+                android:padding="8dp"
+                android:id="@+id/article_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请在此处输入你想要发布的文字.."
+                android:text="@={viewModel.article}" />
+        </ScrollView>
+    </RelativeLayout>
 </layout>

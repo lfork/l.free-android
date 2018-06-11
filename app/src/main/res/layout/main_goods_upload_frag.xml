@@ -5,37 +5,36 @@
     tools:context="com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_margin="30dp"
-        android:id="@+id/tips1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="请阅读以下上传流程：\n1、请准备好你需要出售的物品\n2、5张以内的实物照片\n3、准备一段物品的描述文字 \n4、点击下方的按钮来上传自己的的物品吧" />
+    <!--<TextView-->
+    <!--android:layout_margin="30dp"-->
+    <!--android:id="@+id/tips1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="请阅读以下上传流程：\n1、请准备好你需要出售的物品\n2、5张以内的实物照片\n3、准备一段物品的描述文字 \n4、点击下方的按钮来上传自己的的物品吧" />-->
 
     <Button
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="100dp"
         android:id="@+id/btn_upload"
-        android:layout_below="@+id/tips1"
-        android:background="@color/Login_ForeColor"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/ic_main_publish_new_goods"
+        android:text="创建\n新商品"
         android:textColor="@color/white"
-        android:layout_centerInParent="true"
-        android:text="上传我的物品"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="20sp" />
 
     <Button
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="100dp"
         android:id="@+id/btn_publish_article"
-        android:layout_below="@+id/btn_upload"
-        android:background="@color/Login_ForeColor"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/ic_main_publish_new_community"
+        android:text="发布\n新动态"
         android:textColor="@color/white"
-        android:layout_centerInParent="true"
-        android:text="发布社区动态"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

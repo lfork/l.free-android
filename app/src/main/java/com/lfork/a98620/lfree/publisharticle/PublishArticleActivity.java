@@ -1,9 +1,9 @@
-package com.lfork.a98620.lfree.main.community;
+package com.lfork.a98620.lfree.publisharticle;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +13,11 @@ import com.google.gson.Gson;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.databinding.ActivityPublishArticleBinding;
+import com.lfork.a98620.lfree.main.community.CommunityArticle;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.Calendar;
-import java.util.List;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.view.View;
 
-import com.lfork.a98620.lfree.main.community.articlecontent.ArticleContentActivity;
+import com.lfork.a98620.lfree.articlecontent.ArticleContentActivity;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 
 public class CommunityBindingAdapter {
