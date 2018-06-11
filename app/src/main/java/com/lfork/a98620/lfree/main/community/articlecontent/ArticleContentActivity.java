@@ -65,6 +65,7 @@ public class ArticleContentActivity extends AppCompatActivity implements Communi
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ArticleContentActivity.this);
                 recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(adapter);
+                recyclerView.setNestedScrollingEnabled(false);
             }
         });
     }
