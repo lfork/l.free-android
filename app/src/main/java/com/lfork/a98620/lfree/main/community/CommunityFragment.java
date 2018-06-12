@@ -1,14 +1,8 @@
 package com.lfork.a98620.lfree.main.community;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -21,16 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.databinding.MainCommunityFragBinding;
 import com.lfork.a98620.lfree.main.MainActivity;
-import com.lfork.a98620.lfree.main.community.articlecontent.ArticleContentActivity;
-import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 import static com.yalantis.ucrop.UCropFragment.TAG;
@@ -50,21 +36,26 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.main_community_frag, container, false);
         binding.setViewModel(viewModel);
+        binding.swipeRefresh.setSize(SwipeRefreshLayout.LARGE);
+        binding.swipeRefresh.setProgressBackgroundColorSchemeColor(Color.BLUE);
+        binding.swipeRefresh.setColorSchemeColors(Color.BLUE);
         myHandler = new MyHandler(binding, this);
         if (rootView == null) {
             rootView = binding.getRoot();
         }
         viewModel = new CommunityFragmentViewModel((MainActivity) getActivity());
-        viewModel.loadData(CommunityFragment.this, false);
+        viewModel.loadData(CommunityFragment.this);
         Log.d(TAG, "onCreateView: 开始加载数据");
 
         binding.swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.black));
-        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                viewModel.loadData(CommunityFragment.this, true);
-                Log.d(TAG, "onClick: 开始刷新数据");
-            }
+        binding.swipeRefresh.post(() -> {//第一次加载数据
+            binding.swipeRefresh.setRefreshing(true);
+            viewModel.loadData(CommunityFragment.this);
+        });
+        binding.swipeRefresh.setEnabled(true);
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            viewModel.loadData(CommunityFragment.this);
+            Log.d(TAG, "onClick: 开始刷新数据");
         });
 
         ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -76,17 +67,23 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     }
 
     public void setRecyclerView() {
-        Log.d(TAG, "setRecyclerView: 设置RecyclerView");
-        adapter = new CommunityArticleAdapter(viewModelList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
-        binding.communityRecyclerView.setLayoutManager(linearLayoutManager);
-        binding.communityRecyclerView.setAdapter(adapter);
+        if (adapter == null) {
+            Log.d(TAG, "setRecyclerView: 设置RecyclerView");
+            adapter = new CommunityArticleAdapter(viewModelList);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
+            binding.communityRecyclerView.setLayoutManager(linearLayoutManager);
+            binding.communityRecyclerView.setAdapter(adapter);
+        }
     }
 
     @Override
     public void callback(Object data, int type) {
-        viewModelList = (List<CommunityArticle>) data;
-        sendMessage(type);
+        if (data != null) {
+            viewModelList = (List<CommunityArticle>) data;
+            sendMessage(type);
+        } else {
+            sendMessage(2);//加载数据成功但数据为空
+        }
     }
 
     private void sendMessage(int type) {
@@ -98,7 +95,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
     static class MyHandler extends Handler {
         private MainCommunityFragBinding binding;
         private CommunityFragment fragment;
-        public MyHandler(MainCommunityFragBinding binding, CommunityFragment fragment) {
+        MyHandler(MainCommunityFragBinding binding, CommunityFragment fragment) {
             this.binding = binding;
             this.fragment = fragment;
         }
@@ -108,6 +105,9 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
             switch (msg.what) {
                 case 1:
                     //加载数据成功
+                    Log.d(TAG, "handleMessage: isRefreshing = " + binding.swipeRefresh.isRefreshing());
+                    binding.swipeRefresh.setRefreshing(false);
+                    Log.d(TAG, "handleMessage: setRefreshing = false");
                     fragment.setRecyclerView();
                     binding.prompt.setVisibility(View.GONE);
                     binding.communityRecyclerView.setVisibility(View.VISIBLE);
@@ -115,24 +115,23 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
                     break;
                 case 2:
                     //加载数据失败
+                    Log.d(TAG, "handleMessage: isRefreshing = " + binding.swipeRefresh.isRefreshing());
                     binding.swipeRefresh.setRefreshing(false);
-                    binding.communityRecyclerView.setVisibility(View.GONE);
+                    Log.d(TAG, "handleMessage: setRefreshing = false");
                     binding.prompt.setText("加载失败");
                     binding.prompt.setVisibility(View.VISIBLE);
-                    binding.swipeRefresh.setRefreshing(false);
                     Log.d(TAG, "handleMessage: 加载动态数据失败");
-                    break;
-                case 3:
-                    //刷新数据成功
-                    binding.prompt.setVisibility(View.GONE);
-                    binding.communityRecyclerView.setVisibility(View.VISIBLE);
-                    fragment.adapter.notifyDataSetChanged();
-                    binding.swipeRefresh.setRefreshing(false);
-                    Log.d(TAG, "handleMessage: 刷新动态数据成功");
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.swipeRefresh.setEnabled(true);
+        binding.swipeRefresh.setRefreshing(true);
     }
 }

@@ -67,7 +67,8 @@
             android:enabled="true"
             android:exported="true" >
          </service>
-        <activity android:name=".main.community.articlecontent.ArticleContentActivity" />
+        <activity android:name=".publisharticle.PublishArticleActivity"/>
+        <activity android:name=".articlecontent.ArticleContentActivity"/>
         <activity android:name=".goodsdetail.ImageActivity"/>
     </application>
 

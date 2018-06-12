@@ -29,12 +29,9 @@ public class PublishInfoFragment extends Fragment {
             startActivity(intent);
         });
         Button publishArticle = (Button) view.findViewById(R.id.btn_publish_article);
-        publishArticle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PublishArticleActivity.class);
-                startActivityForResult(intent, 1);
-            }
+        publishArticle.setOnClickListener((view1) -> {
+            Intent intent = new Intent(getContext(), PublishArticleActivity.class);
+            startActivityForResult(intent, 1);
         });
 
         // Inflate the layout for this fragment
@@ -48,7 +45,9 @@ public class PublishInfoFragment extends Fragment {
                 if (resultCode == RESULT_OK) {
                     Log.d(TAG, "onActivityResult: " + requestCode);
                     MainActivity activity = (MainActivity) getActivity();
-                    activity.toCommunityFragmentFromPublishFragment();
+                    if (activity != null) {
+                        activity.toCommunityFragmentFromPublishFragment();
+                    }
                 }
                 break;
             default:

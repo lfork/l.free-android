@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,7 @@ import com.lfork.a98620.lfree.main.community.CommunityArticle;
 
 import org.litepal.crud.DataSupport;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -33,13 +34,7 @@ public class PublishArticleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityPublishArticleBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_publish_article);
-        Calendar calendar = Calendar.getInstance();
-        String articleTime = calendar.get(Calendar.YEAR)
-                + "-" + calendar.get(Calendar.MONTH)
-                + "-" + calendar.get(Calendar.DAY_OF_MONTH)
-                + "-" + calendar.get(Calendar.HOUR_OF_DAY)
-                + "-" + calendar.get(Calendar.MINUTE)
-                + "-" + calendar.get(Calendar.SECOND);
+        String articleTime = DateFormat.format("yyyy-MM-dd-HH-mm-ss", new Date()).toString();
         User user = DataSupport.where("isLogin=?", "1").find(User.class).get(0);
         article.setArticleTime(articleTime);
         article.setPublisherId(user.getUserId());
@@ -61,49 +56,40 @@ public class PublishArticleActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu1:
                 if (!article.getArticle().trim().equals("")) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Gson gson = new Gson();
-                                Log.d(TAG, "onOptionsItemSelected: " +
-                                        article.getArticle() + article.getPublisherId() +
-                                        article.getArticleTime());
-                                String jsonData = gson.toJson(article);
-                                OkHttpClient client = new OkHttpClient();
-                                RequestBody requestBody = new FormBody.Builder()
-                                        .add("article", jsonData)
-                                        .build();
-                                Request request = new Request.Builder()
-                                        .url("http://imyth.top:8080/community_server/publisharticle")
-                                        .post(requestBody)
-                                        .build();
-                                Response response = client.newCall(request).execute();
-                                String responseData = response.body().string();
-                                if (responseData.equals("1")) {     //发布成功
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Log.d(TAG, "run: 成功");
-                                            Toast.makeText(PublishArticleActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent();
-                                            setResult(RESULT_OK, intent);
-                                            finish();
-                                        }
-                                    });
-                                } else {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Log.d(TAG, "run: 失败");
-                                            Toast.makeText(PublishArticleActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
-                                            finish();
-                                        }
-                                    });
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                    new Thread(() ->{
+                        try {
+                            Gson gson = new Gson();
+                            Log.d(TAG, "onOptionsItemSelected: " +
+                                    article.getArticle() + article.getPublisherId() +
+                                    article.getArticleTime());
+                            String jsonData = gson.toJson(article);
+                            OkHttpClient client = new OkHttpClient();
+                            RequestBody requestBody = new FormBody.Builder()
+                                    .add("article", jsonData)
+                                    .build();
+                            Request request = new Request.Builder()
+                                    .url("http://imyth.top:8080/community_server/publisharticle")
+                                    .post(requestBody)
+                                    .build();
+                            Response response = client.newCall(request).execute();
+                            String responseData = response.body().string();
+                            if (responseData.equals("1")) {     //发布成功
+                                runOnUiThread(() -> {
+                                    Log.d(TAG, "run: 成功");
+                                    Toast.makeText(PublishArticleActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent();
+                                    setResult(RESULT_OK, intent);
+                                    finish();
+                                });
+                            } else {
+                                runOnUiThread(() -> {
+                                    Log.d(TAG, "run: 失败");
+                                    Toast.makeText(PublishArticleActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                });
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }).start();
                 } else {

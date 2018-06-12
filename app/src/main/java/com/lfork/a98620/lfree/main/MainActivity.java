@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toCommunityFragmentFromPublishFragment() {
+        getSupportFragmentManager().beginTransaction().remove(fragments.get(4)).commit();
         replaceFragment(fragments.get(4));
     }
 }

@@ -24,32 +24,23 @@ public class CommunityFragmentViewModel extends BaseViewModel {
         this.context = context;
     }
 
-    public void loadData(CommunityCallback callback, boolean isRefresh) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+    public void loadData(CommunityCallback callback) {
+        new Thread(() -> {
+            CommunityRemoteDataSource.getINSTANCE().getArticleList(new DataSource.GeneralCallback() {
+                @Override
+                public void succeed(Object data) {
+                    itemViewModelList = (List<CommunityArticle>) data;
+                    Log.d(TAG, "succeed: 加载成功，马上回调");
+                    callback.callback(itemViewModelList, 1);
+                }
 
-                CommunityRemoteDataSource.getINSTANCE().getArticleList(new DataSource.GeneralCallback() {
-                    @Override
-                    public void succeed(Object data) {
-                        itemViewModelList = (List<CommunityArticle>) data;
-                        if (isRefresh) {
-                            Log.d(TAG, "succeed: 刷新成功，马上回调");
-                            callback.callback(itemViewModelList, 3);
-                        } else {
-                            Log.d(TAG, "succeed: 加载成功，马上回调");
-                            callback.callback(itemViewModelList, 1);
-                        }
-                    }
-
-                    @Override
-                    public void failed(String log) {
-                        Log.d(TAG, "failed: " + log);
-                        Log.d(TAG, "succeed: 加载失败，马上回调");
-                        callback.callback(null, 2);
-                    }
-                });
-            }
+                @Override
+                public void failed(String log) {
+                    Log.d(TAG, "failed: " + log);
+                    Log.d(TAG, "succeed: 加载失败，马上回调");
+                    callback.callback(null, 2);
+                }
+            });
         }).start();
     }
 }

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.community.CommunityArticle"/>
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <LinearLayout
         android:id="@+id/article"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="10dp">
+
             <ImageView
                 android:layout_margin="5dp"
                 android:layout_width="0dp"
@@ -24,13 +27,15 @@
                 android:layout_height="40dp"
                 android:toUserInfoActivity="@{viewModel.publisherId}"
                 app:setImageWithDiskCache="@{viewModel.headImgUri}" />
-            <com.lfork.a98620.lfree.main.community.articlecontent.CommentView
+
+            <com.lfork.a98620.lfree.articlecontent.LightTextView
                 android:text="@{viewModel.headName}"
                 android:toUserInfoActivity="@{viewModel.publisherId}"
                 android:textSize="24sp"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="40dp" />
+
             <TextView
                 android:text="@{viewModel.articleTime.substring(5, 16)}"
                 android:textSize="12sp"

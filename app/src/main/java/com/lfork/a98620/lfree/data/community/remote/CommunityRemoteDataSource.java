@@ -4,10 +4,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lfork.a98620.lfree.articlecontent.CommunityComment;
 import com.lfork.a98620.lfree.data.community.CommunityDataSource;
 import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.main.community.CommunityArticle;
-import com.lfork.a98620.lfree.main.community.articlecontent.CommunityComment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,11 +26,11 @@ public class CommunityRemoteDataSource implements CommunityDataSource {
     private static CommunityRemoteDataSource INSTANCE;
 
     public static CommunityRemoteDataSource getINSTANCE() {
-        if (INSTANCE == null) {
+        //if (INSTANCE == null) {
             return new CommunityRemoteDataSource();
-        } else {
-            return INSTANCE;
-        }
+        //} else {
+            //return INSTANCE;
+        //}
     }
     @Override
     public void getArticleList(GeneralCallback callback) {

@@ -10,14 +10,14 @@ import android.graphics.Shader;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-public class CommentView extends AppCompatTextView {
+public class LightTextView extends AppCompatTextView {
     private int mViewWidth;
     private Paint mPaint;
     private LinearGradient mLinearGradient;
     private Matrix mGradientMatrix;
     private int mTranslate;
 
-    public CommentView(Context context)
+    public LightTextView(Context context)
     {
         super(context);
     }
@@ -27,7 +27,7 @@ public class CommentView extends AppCompatTextView {
      * @param context
      * @param attrs
      */
-    public CommentView(Context context, AttributeSet attrs)
+    public LightTextView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
