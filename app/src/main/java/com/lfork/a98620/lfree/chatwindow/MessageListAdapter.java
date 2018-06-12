@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.chatwindow;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,15 +41,15 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
 
     //对于listView的点击事件， 只能设置item的点击事件， 不能设置item的子项的点击事件
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_window_msg_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Message message = mMessageList.get(position);
         if (message.getChatType() == Message.ReceiveType) {
 
@@ -70,58 +71,3 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
         return mMessageList.size();
     }
 }
-
-
-//我的这种想法为什么不可以呢？好奇怪？？？？？？？？？？？？？？？？？  先全部注释一下吧
-
-//class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
-//
-//    private List<Message> mMessageList;
-//
-//    class ViewHolder extends RecyclerView.ViewHolder {
-//        TextView msgView_sent, msgView_rec;
-//
-//        ViewHolder (View view) {
-//            super(view);
-//            if (mMessageList.get(mMessageList.size() - 1).getType() == Message.ReceiveType) {
-//                msgView_rec = view.findViewById(R.id.message_rec);
-//            } else {
-//                msgView_sent = view.findViewById(R.id.message_sent);
-//            }
-//        }
-//    }
-//
-//    MessageListAdapter(List<Message> messageList) {
-//        mMessageList = messageList;
-//    }
-//
-//    //对于listView的点击事件， 只能设置item的点击事件， 不能设置item的子项的点击事件
-//
-//    @Override
-//    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View view;
-//        if (mMessageList.get(mMessageList.size() - 1).getType() == Message.ReceiveType) {
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_rec, parent, false);
-//        } else {
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_sent, parent, false);
-//        }
-//        ViewHolder holder = new ViewHolder(view);
-//        return holder;
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(ViewHolder holder, int position) {
-//        Message message = mMessageList.get(position);
-//        if (message.getType() == Message.ReceiveType) {
-//            holder.msgView_rec.setText(message.getName());
-//        } else {
-//            holder.msgView_sent.setText(message.getName());
-//        }
-//
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return mMessageList.size();
-//    }
-//}

@@ -26,12 +26,20 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
     public ObservableBoolean isLoadingMoreData = new ObservableBoolean(false);
 
+    /**
+     * 数据是否滑动到最下面的标志
+     */
+    public ObservableBoolean isDown = new ObservableBoolean(false);
+
+    private String tempLog;
+
     private PagerItemViewNavigator navigator;
+
+    private boolean isRefreshed = true;
 
     private Category category;
     private boolean isInitialized = false;
     private GoodsDataRepository repository;
-    private String cursor;
 
     private final static int INITIALIZE = 0;
     private final static int LOAD_MORE = 1;
@@ -52,6 +60,9 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
         dataIsLoading.set(false);
         if (navigator != null) {
             navigator.refreshUI(log);
+            isRefreshed = true;
+        } else {
+            tempLog = log;
         }
     }
 
@@ -60,6 +71,11 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
      */
     private void initData() {
         if (isInitialized) {
+
+            //说明还没有完成刷新
+            if (!isRefreshed && !dataIsLoading.get()) {
+                refreshUI(tempLog);
+            }
             return;
         }
         isInitialized = true;
@@ -68,6 +84,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
     //上拉加载更多
     private void loadMoreData() {
+
         String cursor = items.get(items.size() - 1).getPublishDate();
         getGoodsList(LOAD_MORE, cursor);
 
@@ -76,6 +93,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
     //下拉刷新
     public void refreshData() {
+        isRefreshed = false;
         getGoodsList(REFRESH, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
     }
 
@@ -138,7 +156,6 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
     @Override
     public void startRefreshing() {
-
         if (!isLoadingMoreData.get()) {
             isLoadingMoreData.set(true);
             loadMoreData();
@@ -148,6 +165,11 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     @Override
     public void endRefresh() {
         isLoadingMoreData.set(false);
+    }
+
+    @Override
+    public void onDown() {
+        isDown.set(true);
     }
 
     /**

@@ -31,6 +31,7 @@
     <string name="send">Send</string>
     <string name="type_something_here">Type something here</string>
     <string name="todo">TODO</string>
+    <string name="searching">搜索中...</string>
 
 
 </resources>

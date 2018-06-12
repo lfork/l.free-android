@@ -8,4 +8,9 @@ public interface PagerDataRefreshListener {
 
     void endRefresh();
 
+    /**
+     * 数据滑动到最下面了
+     */
+    void onDown();
+
 }

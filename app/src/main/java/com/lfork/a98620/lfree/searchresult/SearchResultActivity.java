@@ -56,7 +56,7 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
         RecyclerView recyclerView = binding.searchRecycler;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<GoodsItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.items, R.layout.my_goods_contacts_item);
+        RecyclerViewItemAdapter<GoodsItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.items, R.layout.my_goods_recycle_item);
         recyclerView.setAdapter(adapter);
     }
 
