@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,11 +11,33 @@
         <import type="android.view.View" />
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.lfork.a98620.lfree.mygoods.MyGoodsActivity">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progress"
+                android:gravity="center"
+                android:text="@string/loading"
+                android:textColor="@color/black" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -28,8 +51,7 @@
                 android:layout_height="200dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/ic_mygoods_box"
-
-                />
+                android:contentDescription="@string/todo" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -38,7 +60,6 @@
                 android:gravity="center"
                 android:text="您当前还没有发布任何宝贝" />
         </RelativeLayout>
-
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/my_goods_recycle"

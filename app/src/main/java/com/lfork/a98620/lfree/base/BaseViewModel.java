@@ -14,7 +14,7 @@ public abstract class BaseViewModel extends BaseObservable{
 
     public final ObservableBoolean dataIsLoading = new ObservableBoolean(true);
 
-    public final ObservableBoolean dataIsEmpty = new ObservableBoolean(true);
+    public final ObservableBoolean dataIsEmpty = new ObservableBoolean(false);
 
     public Context context;
 

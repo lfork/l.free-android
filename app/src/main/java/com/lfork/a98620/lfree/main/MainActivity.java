@@ -210,7 +210,6 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(fragments.get(1));
             }
         }
-
     }
 
     private void replaceFragment(Fragment fragment) {

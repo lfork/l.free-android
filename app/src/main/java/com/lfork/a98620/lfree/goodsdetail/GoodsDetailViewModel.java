@@ -22,9 +22,6 @@ import java.util.ArrayList;
 
 /**
  * Created by 98620 on 2018/4/13.
- */
-
-/**
  *   数据加载模型
  *
  *   正常的加载模型：

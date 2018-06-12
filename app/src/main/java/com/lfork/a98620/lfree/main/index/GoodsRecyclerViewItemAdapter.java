@@ -50,6 +50,10 @@ class GoodsRecyclerViewItemAdapter<T> extends RecyclerViewItemAdapter {
         if (position + 1 == getItemCount()) {
             listener.startRefreshing();
         }
+
+        if (position > 10) {
+            listener.onDown();
+        }
     }
 
     //滑动到最后
