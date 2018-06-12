@@ -36,23 +36,16 @@ public class SearchResultViewModel extends BaseViewModel {
         super(context);
         this.context = context;
         this.recommendKeyword.set(recommendKeyword);
+        dataIsLoading.set(false);
     }
 
     public void cancel(){
         context.finish();
-
     }
 
-    @Override
-    public void start() {
-    }
-
-    @Override
-    public void destroy() {
-
-    }
 
     public void startGoodsSearch(String keyword) {
+        dataIsLoading.set(true);
         new Thread(() -> {
             User user = UserDataRepository.getInstance().getThisUser();
             GoodsDataRepository.getInstance().goodsSearch(new DataSource.GeneralCallback<List<Goods>>() {

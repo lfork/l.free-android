@@ -61,8 +61,11 @@ public class MyGoodsViewModel extends BaseViewModel {
                         }
                         dataIsLoading.set(false);
 
-                        if (tempItems.size() > 0)
+                        if (tempItems.size() > 0) {
                             dataIsEmpty.set(false);
+                        } else {
+                            dataIsEmpty.set(true);
+                        }
 //                    items.addAll(data);
                         context.runOnUiThread(() -> {
                             ToastUtil.showShort(context, "我的商品数据加载成功");
@@ -77,6 +80,7 @@ public class MyGoodsViewModel extends BaseViewModel {
                     @Override
                     public void failed(String log) {
                         dataIsLoading.set(false);
+                        dataIsEmpty.set(true);
                         context.runOnUiThread(() -> {
                             ToastUtil.showShort(context, log);
                         });

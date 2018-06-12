@@ -12,7 +12,7 @@
     </data>
 
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,8 +43,7 @@
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:scrollbars="vertical"
             >
             <android.support.v7.widget.RecyclerView
@@ -60,11 +59,23 @@
         <com.lfork.a98620.lfree.base.customview.RefreshFooterView
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
             android:visibility="@{viewModel.isLoadingMoreData ? View.VISIBLE : View.GONE}">
 
         </com.lfork.a98620.lfree.base.customview.RefreshFooterView>
 
-    </LinearLayout>
 
+        <ImageButton
+            android:visibility="@{viewModel.isDown ? View.VISIBLE : View.GONE}"
+            android:id="@+id/up"
+            android:layout_gravity="center|bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_upward_black_24dp"
+            android:contentDescription="@string/todo">
+
+        </ImageButton>
+    </android.support.design.widget.CoordinatorLayout>
 
 </layout>

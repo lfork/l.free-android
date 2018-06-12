@@ -64,7 +64,7 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
         RecyclerView recyclerView = binding.myGoodsRecycle;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<MyGoodsItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.items, R.layout.my_goods_contacts_item);
+        RecyclerViewItemAdapter<MyGoodsItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.items, R.layout.my_goods_recycle_item);
         recyclerView.setAdapter(adapter);
     }
 

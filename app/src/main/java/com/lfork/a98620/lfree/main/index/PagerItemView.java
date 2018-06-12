@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
  */
 public class PagerItemView extends View implements PagerDataRefreshListener, SwipeRefreshLayout.OnRefreshListener, GoodsItemNavigator, PagerItemViewNavigator {
 
+    private static final String TAG = "PagerItemView";
     private PagerItemViewModel viewModel;
 
     private Activity activityContext;
@@ -50,6 +52,7 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         viewModel.setNavigator(this);
         setupRecyclerView();
         setupSwipeRefreshLayout();
+        setupUpButton();
 
     }
 
@@ -58,6 +61,8 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
             viewModel.setNavigator(this);
             viewModel.start();
         }
+
+        Log.d(TAG, "onResume: " + binding  + activityContext);
     }
 
     /**
@@ -91,6 +96,13 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         binding.swipeRefresh.setOnRefreshListener(this); //刷新监听
     }
 
+    private void setupUpButton(){
+        binding.up.setOnClickListener(v -> {
+            binding.mainIndexRecycle.scrollToPosition(0);//将recyclerView定位到最后一行
+            viewModel.isDown.set(false);
+        });
+    }
+
     @Override
     public void startRefreshing() {
         viewModel.startRefreshing();
@@ -101,11 +113,17 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         viewModel.endRefresh();
     }
 
+    @Override
+    public void onDown() {
+        viewModel.onDown();
+    }
+
     /**
      * SwipeRefreshLayout的OnRefresh 这里就需要调用viewModel的一些操作进行数据刷新了
      */
     @Override
     public void onRefresh() {
+        Log.d(TAG, "onRefresh: 监听测试" );
         viewModel.refreshData();
 //        viewModel.
     }
@@ -130,6 +148,7 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         getActivityContext().runOnUiThread(() -> {
             ToastUtil.showShort(getContext(), log);
             binding.swipeRefresh.setRefreshing(false);
+
         });
 
 
