@@ -3,6 +3,8 @@ package com.lfork.a98620.lfree.main.publishinfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.goodsupload.GoodsUploadActivity;
 import com.lfork.a98620.lfree.main.MainActivity;
+import com.lfork.a98620.lfree.main.community.CommunityFragment;
 import com.lfork.a98620.lfree.publisharticle.PublishArticleActivity;
 
 import static android.app.Activity.RESULT_OK;
@@ -46,7 +50,7 @@ public class PublishInfoFragment extends Fragment {
                     Log.d(TAG, "onActivityResult: " + requestCode);
                     MainActivity activity = (MainActivity) getActivity();
                     if (activity != null) {
-                        activity.toCommunityFragmentFromPublishFragment();
+                        activity.toCommunityFragment();
                     }
                 }
                 break;

@@ -33,8 +33,10 @@ public class CommunityRemoteDataSource implements CommunityDataSource {
         //}
     }
     @Override
-    public void getArticleList(GeneralCallback callback) {
-        Request request = new Request.Builder().url("http://imyth.top:8080/community_server/getcommunityarticle").build();
+    public void getArticleList(String fromTime, GeneralCallback callback) {
+        String url = "http://imyth.top:8080/community_server/getcommunityarticle?fromTime=" + fromTime;
+        Log.d(TAG, "getArticleList: 请求url"+url);
+        Request request = new Request.Builder().url(url).build();
             new OkHttpClient().newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -46,14 +48,14 @@ public class CommunityRemoteDataSource implements CommunityDataSource {
                     try {
                         String jsonData = response.body().string();
                         Log.d(TAG, "CommunityRemoteDataSource  onResponse: 加载到数据如下: "+jsonData);
-                        List<CommunityArticle> itemViewModelList = new ArrayList<>();
+                        List<CommunityArticle> articleList = new ArrayList<>();
                         if (jsonData == null) {
                             callback.failed(null);
                         } else  {
-                            itemViewModelList = new Gson().fromJson(jsonData, new TypeToken<List<CommunityArticle>>(){}.getType());
+                            articleList = new Gson().fromJson(jsonData, new TypeToken<List<CommunityArticle>>(){}.getType());
                         }
-                        CommunityLocalDataSource.setItemViewModelList(itemViewModelList);
-                        callback.succeed(itemViewModelList);
+                        CommunityLocalDataSource.setArticleList(articleList);
+                        callback.succeed(articleList.size());
                     } catch (Exception e) {
                         e.printStackTrace();
                         callback.failed(null);
@@ -65,12 +67,15 @@ public class CommunityRemoteDataSource implements CommunityDataSource {
     @Override
     public void getCommentList(GeneralCallback callback, int articleId) {
 
-        Request request = new Request.Builder().url("http://imyth.top:8080/community_server/getcommunitycomment?articleId=" + articleId).build();
+        String url = "http://imyth.top:8080/community_server/getcommunitycomment?articleId=" + articleId;
+        Log.d(TAG, "getCommentList: url = " + url);
+        Request request = new Request.Builder().url(url).build();
         try {
             Response response = new OkHttpClient().newCall(request).execute();
             String jsonData = response.body().string();
             Log.d(TAG, "getCommentList: " + jsonData);
-            callback.succeed(new Gson().fromJson(jsonData, new TypeToken<List<CommunityComment>>(){}.getType()));
+            List<CommunityComment> commentList = new Gson().fromJson(jsonData, new TypeToken<List<CommunityComment>>(){}.getType());
+            callback.succeed(commentList);
         } catch (NullPointerException | IOException e) {
             callback.failed(e.getMessage());
         }

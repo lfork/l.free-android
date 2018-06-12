@@ -34,30 +34,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/Login_ForeColor"
-                    android:elevation="6dp">
+                    android:elevation="6dp"
+                    tools:targetApi="lollipop">
 
                     <ImageView
                         android:id="@+id/icon"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="6dp"
-                        android:src="@drawable/main_icon" />
+                        android:layout_marginStart="6dp"
+                        android:src="@drawable/main_icon"
+                        android:contentDescription="@string/todo" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_toEndOf="@id/icon"
                         android:background="@drawable/main_shape_search_rectangle"
-                        android:drawableLeft="@drawable/main_ic_search_grey_24dp"
+                        android:drawableStart="@drawable/main_ic_search_grey_24dp"
                         android:focusable="false"
                         android:hint="Java从入门到精通"
                         android:onClick="@{()->viewModel.openSearch()}"
-                        android:padding="8dp" />
+                        android:padding="8dp"
+                        android:inputType="none" />
 
                 </RelativeLayout>
 

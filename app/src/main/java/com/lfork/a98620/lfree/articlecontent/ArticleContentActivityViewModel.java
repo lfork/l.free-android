@@ -26,7 +26,7 @@ public class ArticleContentActivityViewModel extends BaseViewModel {
                         @Override
                         public void succeed(Object data) {
                             if (isRefresh) {
-                                callback.callback(data, 3);
+                                callback.callback(data, 2);
                             } else {
                                 callback.callback(data, 1);
                             }

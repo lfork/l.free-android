@@ -1,84 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.community.CommunityArticle"/>
+            type="com.lfork.a98620.lfree.main.community.CommunityArticle" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp">
-
-            <ImageView
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="40dp"
-                android:toUserInfoActivity="@{viewModel.publisherId}"
-                app:setImageWithDiskCache="@{viewModel.headImgUri}" />
-
-            <TextView
-                android:text="@{viewModel.headName}"
-                android:toUserInfoActivity="@{viewModel.publisherId}"
-                android:textSize="24sp"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="40dp" />
-
-            <TextView
-                android:text="@{viewModel.articleTime.substring(5, 16)}"
-                android:textSize="12sp"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <TextView
-            android:textSize="20sp"
-            android:layout_marginStart="10dp"
-            android:text="@{viewModel.article}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:textSize="20sp"
-            android:text="评论: \n"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/review_edit"
-                android:textSize="20sp"
-                android:hint="点击评论"
-                android:layout_width="0dp"
-                android:layout_weight="5"
-                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
-            <Button
-                android:text="发送"
-                android:onClick="commentTo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/community_head"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:toUserInfoActivity="@{viewModel.publisherId}"
+                    app:setImageWithDiskCache="@{viewModel.headImgUri}"
+                    android:contentDescription="@string/todo" />
+
+                <TextView
+                    android:id="@+id/community_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/community_head"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/community_head"
+                    android:maxLength="12"
+                    android:text="@{viewModel.headName}"
+                    android:textColor="@color/Login_ForeColor"
+                    android:textSize="20sp"
+                    android:toUserInfoActivity="@{viewModel.publisherId}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/community_username"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="right"
+                    android:text="@{viewModel.articleTime.substring(5, 16)}"
+                    android:textSize="12sp"
+                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+
+
+                <TextView
+                    android:id="@+id/community_community"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/community_username"
+                    android:layout_below="@id/community_username"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@{viewModel.article}"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:background="@color/viewColor" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="你这是写了个啥？？？？？？"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="6dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+
+                <EditText
+                    android:id="@+id/review_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:hint="点击评论..."
+                    android:inputType="text"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/Login_Button"
+                    android:onClick="commentTo"
+                    android:text="发布评论"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true">
+
+                <View
+                    android:id="@+id/view_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="@color/viewColor" />
+
+                <TextView
+                    android:id="@+id/text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_layout1"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableStart="@drawable/ic_comment_message"
+                    android:text="评论区"
+                    android:textSize="20sp" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/article_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_view">
+                </android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+
+
+            <!--<include-->
+                <!--android:id="@+id/review_content"-->
+                <!--layout="@layout/community_comment_include"-->
+                <!--app:viewModel="@{viewModel}" />-->
         </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/article_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    </ScrollView>
 </layout>

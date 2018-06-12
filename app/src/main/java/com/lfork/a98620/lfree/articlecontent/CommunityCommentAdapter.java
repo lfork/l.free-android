@@ -10,12 +10,13 @@ import android.view.ViewGroup;
 import com.lfork.a98620.lfree.BR;
 import com.lfork.a98620.lfree.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class CommunityCommentAdapter extends RecyclerView.Adapter<CommunityCommentAdapter.ViewHolder> {
 
-    private List<CommunityComment> viewModelList;
+    private List<CommunityComment> viewModelList = new ArrayList<>();
 
     public CommunityCommentAdapter(List<CommunityComment> viewModelList) {
         this.viewModelList = viewModelList;

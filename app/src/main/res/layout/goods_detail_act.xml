@@ -9,7 +9,6 @@
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel" />
-
         <import type="android.view.View" />
     </data>
 
@@ -19,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.youth.banner.Banner
@@ -42,8 +41,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp"
-                    android:drawableLeft="@drawable/ic_goods_name"
+                    android:layout_marginStart="25dp"
+                    android:drawableStart="@drawable/ic_goods_name"
                     android:drawablePadding="10dp"
                     android:gravity="center"
                     android:text="@{viewModel.name}"
@@ -67,7 +66,6 @@
                     android:id="@+id/origin_price"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
                     android:layout_weight="1"
                     android:background="@color/Login_Button"
                     android:gravity="center"
@@ -80,8 +78,6 @@
                     android:id="@+id/sell_price"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/origin_price"
                     android:layout_weight="1"
                     android:background="@color/Home_Goods_Money"
                     android:gravity="center"
@@ -115,10 +111,10 @@
                     android:id="@+id/label1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
-                    android:drawableLeft="@drawable/ic_goods_details"
+                    android:drawableStart="@drawable/ic_goods_details"
                     android:drawablePadding="10dp"
                     android:text="商品简介:"
                     android:textSize="17sp" />
@@ -128,7 +124,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/label1"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
                     android:background="@null"
                     android:gravity="start"
                     android:lines="4"
@@ -156,8 +152,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp"
-                    android:drawableLeft="@drawable/ic_goods_kinds"
+                    android:layout_marginStart="25dp"
+                    android:drawableStart="@drawable/ic_goods_kinds"
                     android:drawablePadding="10dp"
                     android:gravity="center"
                     android:text="种类：书籍文具" />
@@ -182,8 +178,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp"
-                    android:drawableLeft="@drawable/ic_goods_location"
+                    android:layout_marginStart="25dp"
+                    android:drawableStart="@drawable/ic_goods_location"
                     android:drawablePadding="10dp"
                     android:gravity="center"
                     android:text="校区：航空港校区" />

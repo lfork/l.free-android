@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.MainActBinding;
@@ -219,8 +220,8 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void toCommunityFragmentFromPublishFragment() {
-        getSupportFragmentManager().beginTransaction().remove(fragments.get(4)).commit();
-        replaceFragment(fragments.get(4));
+    public void toCommunityFragment() {
+        CommunityLocalDataSource.getArticleList().clear();
+        onClick(binding.communityBtn, 4);
     }
 }

@@ -23,6 +23,7 @@ import com.lfork.a98620.lfree.main.community.CommunityCallback;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,20 +53,24 @@ public class ArticleContentActivity extends AppCompatActivity implements Communi
         article = CommunityLocalDataSource.getLocalArticle(articleId);
         viewModel = new ArticleContentActivityViewModel(this, article != null ? article.getArticleId():-1);
         binding.setVariable(BR.viewModel, article);
-        viewModel.loadData(ArticleContentActivity.this, false);
 
+        viewModel.loadData(ArticleContentActivity.this, false);
     }
 
     @Override
     public void callback(Object data, int type) {
-        commentList = (List<CommunityComment>) data;
-        runOnUiThread(() -> {
-            recyclerView = binding.articleComment;
-            adapter = new CommunityCommentAdapter(commentList);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ArticleContentActivity.this);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(adapter);
-        });
+        if (data != null) {
+            runOnUiThread(() -> {
+                commentList = new ArrayList<>();
+                commentList.addAll((List<CommunityComment>) data);
+                recyclerView = binding.articleComment;
+                adapter = new CommunityCommentAdapter(commentList);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ArticleContentActivity.this);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setNestedScrollingEnabled(false);
+            });
+        }
     }
 
     public void commentTo(View view) {

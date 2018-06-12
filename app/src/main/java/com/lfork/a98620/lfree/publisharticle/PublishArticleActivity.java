@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.databinding.ActivityPublishArticleBinding;
 import com.lfork.a98620.lfree.main.community.CommunityArticle;
@@ -29,18 +30,12 @@ import okhttp3.Response;
 public class PublishArticleActivity extends AppCompatActivity {
     private CommunityArticle article = new CommunityArticle();
     private static final String TAG = "PublishArticleActivity";
+    private ActivityPublishArticleBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityPublishArticleBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_publish_article);
-        String articleTime = DateFormat.format("yyyy-MM-dd-HH-mm-ss", new Date()).toString();
-        User user = DataSupport.where("isLogin=?", "1").find(User.class).get(0);
-        article.setArticleTime(articleTime);
-        article.setPublisherId(user.getUserId());
-        article.setHeadImgUri(user.getUserImagePath());
-        article.setHeadName(user.getUserName());
-        binding.setViewModel(article);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_publish_article);
     }
 
     @Override
@@ -55,8 +50,15 @@ public class PublishArticleActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu1:
-                if (!article.getArticle().trim().equals("")) {
-                    new Thread(() ->{
+                String articleTime = DateFormat.format("yyyy-MM-dd-HH-mm-ss", new Date()).toString();
+                User user = DataSupport.where("isLogin=?", "1").find(User.class).get(0);
+                article.setArticleTime(articleTime);
+                article.setPublisherId(user.getUserId());
+                Log.d(TAG, "onOptionsItemSelected: " + article.getArticle() + "  " + articleTime + "  "+article.getPublisherId());
+                binding.setViewModel(article);
+                article.setArticle(binding.articleEdit.getText().toString().trim());
+                if (!article.getArticle().equals("")) {
+                    new Thread(() -> {
                         try {
                             Gson gson = new Gson();
                             Log.d(TAG, "onOptionsItemSelected: " +
@@ -85,7 +87,6 @@ public class PublishArticleActivity extends AppCompatActivity {
                                 runOnUiThread(() -> {
                                     Log.d(TAG, "run: 失败");
                                     Toast.makeText(PublishArticleActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
-                                    finish();
                                 });
                             }
                         } catch (Exception e) {
@@ -93,7 +94,9 @@ public class PublishArticleActivity extends AppCompatActivity {
                         }
                     }).start();
                 } else {
-                    Toast.makeText(this, "不能发布空白", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "不能发布空白", Toast.LENGTH_SHORT).show();
+                    });
                 }
                 break;
              default:
