@@ -21,30 +21,6 @@
             app:setImage="@{viewModel.userPortraitPath}"
             android:contentDescription="@string/todo" />
 
-        <Button
-            android:visibility="gone"
-            android:id="@+id/comment_talk"
-            android:layout_width="60dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/comment_name"
-            android:layout_marginEnd="10dp"
-            android:background="@color/Login_Button"
-            android:text="点击聊天"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-        <TextView
-            android:visibility="invisible"
-            android:id="@+id/number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/comment_head"
-            android:layout_toEndOf="@+id/comment_head"
-            android:singleLine="true"
-            android:text="@{viewModel.index}"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
         <TextView
             android:id="@+id/comment_name"
             android:layout_width="wrap_content"
@@ -60,7 +36,7 @@
             android:id="@+id/comment_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/number"
+            android:layout_alignStart="@id/comment_name"
             android:layout_below="@id/comment_name"
             android:singleLine="true"
             android:text="@{viewModel.time}"
@@ -72,7 +48,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/number"
+            android:layout_alignStart="@id/comment_name"
             android:layout_below="@+id/comment_time"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
