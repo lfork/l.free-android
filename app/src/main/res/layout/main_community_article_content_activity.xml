@@ -38,12 +38,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/community_head"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="16dp"
                     android:layout_toEndOf="@+id/community_head"
+                    android:hint="用户名"
                     android:maxLength="12"
                     android:text="@{viewModel.headName}"
                     android:textColor="@color/Login_ForeColor"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:toUserInfoActivity="@{viewModel.publisherId}" />
 
                 <TextView
@@ -51,6 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/community_username"
                     android:layout_alignParentEnd="true"
+                    android:hint="2018年6月13日18:46:36"
                     android:layout_marginEnd="20dp"
                     android:gravity="right"
                     android:text="@{viewModel.articleTime.substring(5, 16)}"
@@ -62,6 +64,7 @@
                     android:id="@+id/community_community"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:layout_alignStart="@id/community_username"
                     android:layout_below="@id/community_username"
                     android:layout_marginEnd="2dp"
