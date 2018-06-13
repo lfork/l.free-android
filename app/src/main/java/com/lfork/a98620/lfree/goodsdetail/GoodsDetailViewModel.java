@@ -82,7 +82,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
             @Override
             public void failed(String log) {
-                showMessage("加载失败");
+                showMessage("加载失败:" + log);
             }
         }, id)).start();
     }
