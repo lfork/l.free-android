@@ -19,6 +19,7 @@ import com.lfork.a98620.lfree.base.image.GlideImageLoader;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
+import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 import com.youth.banner.Banner;
 
@@ -34,7 +35,10 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     @Override
     protected void onStart() {
         super.onStart();
-        viewModel.start();
+        if (viewModel != null) {
+            viewModel.setNavigator(this);
+            viewModel.start();
+        }
     }
 
     @Override
@@ -45,7 +49,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
        // int categoryId = intent.getIntExtra("category_id", 0);
         binding = DataBindingUtil.setContentView(this, R.layout.goods_detail_act);
         viewModel = new GoodsDetailViewModel(this, goodsId);
-        viewModel.setNavigator(this);
+
         binding.setViewModel(viewModel);
         setupRecyclerView();
         initActionBar("宝贝详情");
@@ -144,6 +148,6 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     @Override
     public void showMessage(String msg) {
-
+        runOnUiThread(() -> ToastUtil.showShort(getBaseContext(), msg));
     }
 }
