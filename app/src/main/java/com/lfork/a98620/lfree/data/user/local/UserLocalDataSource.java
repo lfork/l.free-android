@@ -2,6 +2,7 @@ package com.lfork.a98620.lfree.data.user.local;
 
 import android.util.Log;
 
+import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataSource;
 
@@ -92,6 +93,11 @@ public class UserLocalDataSource implements UserDataSource {
 
     @Override
     public void getUserInfo(GeneralCallback<User> callback, int userId) {
+
+    }
+
+    @Override
+    public void getSchoolList(GeneralCallback<List<School>> callback) {
 
     }
 }

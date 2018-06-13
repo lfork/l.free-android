@@ -1,7 +1,10 @@
 package com.lfork.a98620.lfree.data.user;
 
 import com.lfork.a98620.lfree.data.DataSource;
+import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.data.entity.User;
+
+import java.util.List;
 
 /**
  * Created by 98620 on 2018/3/23.
@@ -30,5 +33,7 @@ public interface UserDataSource extends DataSource {
     void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath);
 
     void getUserInfo(GeneralCallback<User> callback, int userId);
+
+    void getSchoolList(GeneralCallback<List<School>> callback);
 
 }

@@ -134,9 +134,9 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         ImageActivity.actionStart(this);
     }
 
+
     @Override
-    public void setParam2(String param) {
+    public void showMessage(String msg) {
 
     }
-
 }

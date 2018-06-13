@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,31 +9,37 @@
             type="com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel" />
     </data>
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="225dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        app:cardCornerRadius="8dp">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:onClick="@{()->viewModel.onClick()}"
+        app:cardCornerRadius="8dp"
+        android:focusable="true">
 
         <FrameLayout
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{()->viewModel.onClick()}"
             android:orientation="vertical">
 
 
             <ImageView
+                android:clickable="false"
                 android:id="@+id/goods_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:setImageWithDiskCache="@{viewModel.imagePath}" />
+                app:setImageWithDiskCache="@{viewModel.imagePath}"
+                android:contentDescription="@string/todo" />
 
 
             <RelativeLayout
+                android:clickable="false"
                 android:id="@+id/linearOfNewsItem1"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"

@@ -17,8 +17,9 @@ import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.UserInfoActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
-public class UserInfoActivity extends BaseActivity implements ViewModelNavigator{
+import java.util.Objects;
 
+public class UserInfoActivity extends BaseActivity implements ViewModelNavigator{
 
     private UserInfoViewModel viewModel;
 
@@ -27,17 +28,27 @@ public class UserInfoActivity extends BaseActivity implements ViewModelNavigator
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         int userId = intent.getIntExtra("user_id", 0);
+
         UserInfoActBinding binding = DataBindingUtil.setContentView(this, R.layout.user_info_act);
+
         viewModel = new UserInfoViewModel(this, userId);
         viewModel.setNavigator(this);
         binding.setViewModel(viewModel);
-
         initActionBar("卖家信息");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (viewModel != null) {
+            viewModel.setNavigator(this);
+            viewModel.start();
+        }
     }
 
     public void initActionBar(String title) {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
         actionBar.setTitle(title);
         actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
         // 有小箭头，并且图标可以点击
@@ -88,19 +99,11 @@ public class UserInfoActivity extends BaseActivity implements ViewModelNavigator
         context.startActivity(intent);
     }
 
-    @Override
-    public void notifyDataChanged() {
-
-    }
 
     @Override
-    public void setParam1(String param) {
+    public void showMessage(String msg) {
+        runOnUiThread(() -> {
+            ToastUtil.showShort(getBaseContext(), msg);
+        });
     }
-
-    @Override
-    public void setParam2(String param) {
-
-    }
-
-
 }

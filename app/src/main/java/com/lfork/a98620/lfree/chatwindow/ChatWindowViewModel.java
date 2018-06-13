@@ -47,8 +47,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     ChatWindowViewModel(Context context) {
         super(context);
-        repository = IMDataRepository.getInstance();
-        msgMepository = MessageDataRepository.getInstance(0);
+
     }
 
     public void start() {
@@ -56,6 +55,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
         loadMessages();
         //判断当前用户有没有在好友列表中，然后进行addUser操作
         new Thread(() -> {
+            repository = IMDataRepository.getInstance();
             if (!repository.isUserExisted(userId)) {
                 addUser(false);
             }
@@ -81,6 +81,10 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     private void loadMessages() {
         new Thread(() -> {
+
+            if (msgMepository == null) {
+                msgMepository = MessageDataRepository.getInstance(0);
+            }
             MessageContentType type = MessageContentType.COMMUNICATION_USER;
             msgMepository.getMessages(userId, type, new DataSource.GeneralCallback<List<Message>>() {
                 @Override
@@ -103,19 +107,22 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
     }
 
     public void sendMessage() {
-
         String message_sent = newMessage.get();
         if (!TextUtils.isEmpty(message_sent)) {
-
             Message m;
             m = new Message(message_sent, Message.SendType);
             m.setSenderID(thisUserId);
             m.setReceiverID(userId);
             m.setType(MessageType.NORMAL_MESSAGE);
             m.setContentType(MessageContentType.COMMUNICATION_USER);
-            m.setMessageID(System.currentTimeMillis());
-            messages.add(m);
+            long time = System.currentTimeMillis();
+            long time2 = messages.get(messages.size() - 1).getMessageID();
 
+            if (time < time2) {
+                time = time2 + 1;  //两台机器的简单的消息乱序处理，
+            }
+            m.setMessageID(time);
+            messages.add(m);
             navigator.sendMessage(m, new DataSource.GeneralCallback<Message>() {
                 @Override
                 public void succeed(Message data) {
@@ -142,7 +149,6 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
         if (isAdded){
             return;
         }
-
 
         new Thread(() -> {
             UserDataRepository userDataRepository = UserDataRepository.getInstance();

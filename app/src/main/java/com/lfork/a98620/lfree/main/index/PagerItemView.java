@@ -148,7 +148,6 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         getActivityContext().runOnUiThread(() -> {
             ToastUtil.showShort(getContext(), log);
             binding.swipeRefresh.setRefreshing(false);
-
         });
 
 

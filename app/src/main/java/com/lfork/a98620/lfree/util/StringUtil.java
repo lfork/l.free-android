@@ -6,6 +6,7 @@ package com.lfork.a98620.lfree.util;
 
 public class StringUtil {
     public static boolean isNull(String str) {
+
         return str == null || str.equals("") || str.length() == 0;
     }
 }

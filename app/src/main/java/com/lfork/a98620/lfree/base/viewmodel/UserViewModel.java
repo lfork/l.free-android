@@ -25,6 +25,8 @@ public abstract class UserViewModel extends BaseViewModel {
 
     public final ObservableField<String> gender = new ObservableField<>();
 
+    public final ObservableField<String> school = new ObservableField<>();
+
     public UserViewModel() {
         super();
     }
