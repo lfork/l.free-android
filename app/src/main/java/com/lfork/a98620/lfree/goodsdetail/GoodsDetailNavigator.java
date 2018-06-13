@@ -7,12 +7,10 @@ import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
  */
 public interface GoodsDetailNavigator extends ViewModelNavigator{
 
-    @Override
     void notifyDataChanged();
 
     void notifyReviewChanged();
 
-    @Override
     void setParam1(String param);
 
     void openUserInfo(int userId);
@@ -21,6 +19,4 @@ public interface GoodsDetailNavigator extends ViewModelNavigator{
 
     void openBigImages();
 
-    @Override
-    void setParam2(String param);
 }

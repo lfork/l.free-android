@@ -18,7 +18,6 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
         <activity
             android:screenOrientation="portrait"
@@ -47,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".userinfothis.UserInfoThisEditActivity" />
+        <activity android:name=".userinfoedit.UserInfoEditActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -22,16 +22,19 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.databinding.UserInfoThisActBinding;
-import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.base.customview.PopupDialog;
 import com.lfork.a98620.lfree.base.customview.PopupDialogOnclickListener;
+import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
+import com.lfork.a98620.lfree.databinding.UserInfoThisActBinding;
+import com.lfork.a98620.lfree.userinfoedit.UserInfoEditActivity;
+import com.lfork.a98620.lfree.util.ToastUtil;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
-public class UserInfoThisActivity extends AppCompatActivity implements View.OnClickListener {
+public class UserInfoThisActivity extends AppCompatActivity implements View.OnClickListener, ViewModelNavigator{
 
     private static final String TAG = "UserInfoThisActivity";
 
@@ -51,15 +54,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
     private PopupWindow avatorPop; //自定义view
 
 
-    //刷新一下数据
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (viewModel != null) {
-            viewModel.refreshData();
-        }
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +62,24 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
         viewModel = new UserInfoThisViewModel(this);
         binding.setViewModel(viewModel);
         binding.head.setOnClickListener(this);
-        initActionBar();
+        setupActionBar();
     }
 
-    public void initActionBar() {
+
+    //刷新一下数据
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (viewModel != null) {
+
+            viewModel.setNavigator(this);
+            viewModel.start();
+        }
+    }
+
+    public void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
         actionBar.setTitle("用户信息详情");
         actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
         // 有小箭头，并且图标可以点击
@@ -83,77 +89,7 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
 
 
     public void portraitOnClick(ImageView view) {
-
         showMyDialog();
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            case R.id.menu1:
-                Intent intent = new Intent(UserInfoThisActivity.this, UserInfoThisEditActivity.class);
-                startActivityForResult(intent, 4);
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.common_action_bar, menu);
-        MenuItem item = menu.getItem(0);
-        item.setTitle("编辑");
-        return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case 4:
-                if (data == null) {
-                    return;
-                }
-                String log = data.getStringExtra("data_return");
-                if (resultCode == RESULT_OK) {
-                    Toast.makeText(this, log, Toast.LENGTH_LONG).show();
-                } else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(this, log, Toast.LENGTH_LONG).show();
-                }
-                break;
-            case REQUESTCODE_CAM:
-                if (cameraImageUri == null) {
-                    return;
-                }
-//                Uri uri = data.getData();   //这里肯定是空的， 因为处理结果已经放到 cameraImageUri里面去了
-                startPhotoZoom(cameraImageUri);
-                break;
-            case REQUESTCODE_PIC:
-                if (data == null || data.getData() == null) {
-                    return;
-                }
-                startPhotoZoom(data.getData()); //照片选择的结果也是标准的content uri了，所以直接传参进去就可以了
-                break;
-            case UCrop.REQUEST_CROP:
-                if (data != null) {
-                    final Uri resultUri = UCrop.getOutput(data);  //返回的是file类型的uri
-                    if (resultUri != null) {
-                        viewModel.updateUserPortrait(resultUri.getPath());
-                    } else {
-                        ToastUtil.showShort(this, "图片剪裁失败");
-                    }
-                }
-                break;
-
-            case UCrop.RESULT_ERROR:
-                ToastUtil.showShort(this, "剪切失败");
-                break;
-        }
-
     }
 
     private void showMyDialog() {
@@ -202,7 +138,7 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
      * 调用相机
      */
     private void openCamera() {
-        cameraImageUri = initImageUri("portrait.jpg");
+        cameraImageUri = initImageUri();
 
         //启动相机程序
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -211,9 +147,9 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
         startActivityForResult(intent, REQUESTCODE_CAM);
     }
 
-    private Uri initImageUri(String name) {
+    private Uri initImageUri() {
         //创建file对象用于储存拍摄的照片
-        File portraitFile = new File(getExternalCacheDir(), name);
+        File portraitFile = new File(getExternalCacheDir(), "portrait.jpg");
 
         try {
             if (portraitFile.exists()) {
@@ -225,7 +161,8 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
         }
 
         if (Build.VERSION.SDK_INT >= 24) {
-            return FileProvider.getUriForFile(UserInfoThisActivity.this, "com.lfork.a98620.lfree.fileprovider", portraitFile);
+            return FileProvider.getUriForFile(UserInfoThisActivity.this,
+                    "com.lfork.a98620.lfree.fileprovider", portraitFile);
         } else {
             return Uri.fromFile(portraitFile);
         }
@@ -289,5 +226,79 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         portraitOnClick((ImageView) view);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 4:
+                if (data == null) {
+                    return;
+                }
+                String log = data.getStringExtra("data_return");
+                if (resultCode == RESULT_OK) {
+                    Toast.makeText(this, log, Toast.LENGTH_LONG).show();
+                } else if (resultCode == RESULT_CANCELED) {
+                    Toast.makeText(this, log, Toast.LENGTH_LONG).show();
+                }
+                break;
+            case REQUESTCODE_CAM:
+                if (cameraImageUri == null) {
+                    return;
+                }
+//                Uri uri = data.getData();   //这里肯定是空的， 因为处理结果已经放到 cameraImageUri里面去了
+                startPhotoZoom(cameraImageUri);
+                break;
+            case REQUESTCODE_PIC:
+                if (data == null || data.getData() == null) {
+                    return;
+                }
+                startPhotoZoom(data.getData()); //照片选择的结果也是标准的content uri了，所以直接传参进去就可以了
+                break;
+            case UCrop.REQUEST_CROP:
+                if (data != null) {
+                    final Uri resultUri = UCrop.getOutput(data);  //返回的是file类型的uri
+                    if (resultUri != null) {
+                        viewModel.updateUserPortrait(resultUri.getPath());
+                    } else {
+                        ToastUtil.showShort(this, "图片剪裁失败");
+                    }
+                }
+                break;
+
+            case UCrop.RESULT_ERROR:
+                ToastUtil.showShort(this, "剪切失败");
+                break;
+        }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.common_action_bar, menu);
+        MenuItem item = menu.getItem(0);
+        item.setTitle("编辑");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.menu1:
+                Intent intent = new Intent(UserInfoThisActivity.this, UserInfoEditActivity.class);
+                startActivityForResult(intent, 4);
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        runOnUiThread(() -> ToastUtil.showShort(getBaseContext(), msg));
     }
 }

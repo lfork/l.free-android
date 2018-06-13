@@ -71,15 +71,14 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
      */
     private void initData() {
         if (isInitialized) {
-
             //说明还没有完成刷新
             if (!isRefreshed && !dataIsLoading.get()) {
                 refreshUI(tempLog);
             }
-            return;
+        } else {
+            isInitialized = true;
+            getGoodsList(INITIALIZE, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
         }
-        isInitialized = true;
-        getGoodsList(INITIALIZE, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
     }
 
     //上拉加载更多

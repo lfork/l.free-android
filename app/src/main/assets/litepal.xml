@@ -18,7 +18,7 @@
                 For example:
             <version value="1" />
         -->
-    <version value="7" />
+    <version value="8" />
     <!--
             Define your models in the list with mapping tag, LitePal will
             create tables for each mapping class. The supported fields

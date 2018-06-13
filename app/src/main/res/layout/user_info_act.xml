@@ -191,6 +191,34 @@
             </RelativeLayout>
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/img_school"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ic_school_black_24dp"
+                    android:contentDescription="@string/todo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/img_school"
+                    android:gravity="start"
+                    android:text="@{viewModel.school}"
+                    android:hint="学校信息"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

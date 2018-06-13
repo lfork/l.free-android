@@ -32,6 +32,8 @@ public class User extends DataSupport {
 
     private String userMakeDate;        //用户修改或者注册时间
 
+    private School userSchool;
+
     private long timestamp;
 
     private boolean isLogin;
@@ -189,5 +191,13 @@ public class User extends DataSupport {
         return "User [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword + ", userEmail="
                 + userEmail + ", userPhone=" + userPhone + ", userAddress=" + userAddress + ", userImagePath="
                 + userImagePath + ", userDesc=" + userDesc + ", userMakeDate=" + userMakeDate + "]";
+    }
+
+    public School getSchool() {
+        return userSchool;
+    }
+
+    public void setSchool(School school) {
+        this.userSchool = school;
     }
 }

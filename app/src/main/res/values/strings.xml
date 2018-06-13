@@ -3,10 +3,10 @@
     <!-- Strings related to login -->
     <string name="prompt_email">用户名/学号/邮箱</string>
     <string name="prompt_username">用户名</string>
-    <string name="prompt_username_register">用户名(5位以上)</string>
-    <string name="prompt_student_id">学号(10位以上)</string>
+    <string name="prompt_username_register">用户名(5~16位)</string>
+    <string name="prompt_student_id">学号 10位</string>
     <string name="prompt_password">密码</string>
-    <string name="prompt_password_register">密码(字母+数字，8位以上)</string>
+    <string name="prompt_password_register">字母+数字，8~16位</string>
     <string name="prompt_register">注册</string>
     <string name="register">注册新用户</string>
     <string name="welcome">Welcome to L.free!</string>
@@ -31,7 +31,8 @@
     <string name="send">Send</string>
     <string name="type_something_here">Type something here</string>
     <string name="todo">TODO</string>
-    <string name="searching">搜索中...</string>
+    <string name="searching">搜索中…</string>
+    <string name="tempSchool">temp school : cuit</string>
 
 
 </resources>

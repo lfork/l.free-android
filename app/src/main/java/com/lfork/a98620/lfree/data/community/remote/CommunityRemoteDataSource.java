@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.base.network.httpservice.HttpService;
 import com.lfork.a98620.lfree.data.community.CommunityDataSource;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.main.community.CommunityArticle;
 import com.lfork.a98620.lfree.main.community.CommunityComment;
 import com.lfork.a98620.lfree.main.community.CommunityFragmentItemViewModel;
