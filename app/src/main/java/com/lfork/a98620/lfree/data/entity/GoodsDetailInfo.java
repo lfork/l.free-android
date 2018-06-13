@@ -19,7 +19,7 @@ public class GoodsDetailInfo extends Goods {
 
     private String[] images;
 
-    private ArrayList<String> reviews;
+    private ArrayList<Review> reviews;
 
     @Override
     public String getDescription() {
@@ -55,11 +55,11 @@ public class GoodsDetailInfo extends Goods {
         this.images = images;
     }
 
-    public ArrayList<String> getReviews() {
+    public ArrayList<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(ArrayList<String> reviews) {
+    public void setReviews(ArrayList<Review> reviews) {
         this.reviews = reviews;
     }
 }
