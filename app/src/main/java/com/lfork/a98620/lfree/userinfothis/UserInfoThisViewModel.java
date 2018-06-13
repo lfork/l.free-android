@@ -1,18 +1,15 @@
 package com.lfork.a98620.lfree.userinfothis;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.text.TextUtils;
 
 import com.lfork.a98620.lfree.base.viewmodel.UserViewModel;
+import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.util.Config;
-import com.lfork.a98620.lfree.util.StringUtil;
-import com.lfork.a98620.lfree.util.ToastUtil;
 
 /**
  * 两个activity使用同一个类型的viewModel，但是里面的方法确不是通用的
@@ -21,10 +18,14 @@ import com.lfork.a98620.lfree.util.ToastUtil;
 
 public class UserInfoThisViewModel extends UserViewModel {
 
+    private static final String TAG = "UserInfoEditViewModel";
+
     private User user;
     private UserDataRepository repository;
-    private AppCompatActivity context;
-    public ObservableBoolean isUpdating = new ObservableBoolean(false);
+
+    public final ObservableBoolean isUpdating = new ObservableBoolean(false);
+
+    private ViewModelNavigator navigator;
 
 
     UserInfoThisViewModel(AppCompatActivity context) {
@@ -32,17 +33,19 @@ public class UserInfoThisViewModel extends UserViewModel {
         this.context = context;
     }
 
-    void refreshData() {
+    @Override
+    public void start() {
+        getUserInfo();
+    }
 
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                repository = UserDataRepository.getInstance();
-                user = repository.getThisUser();
-                if (user != null) {
+    private void getUserInfo() {
+        new Thread(() -> {
+            repository = UserDataRepository.getInstance();
+            repository.getUserInfo(new DataSource.GeneralCallback<User>() {
+                @Override
+                public void succeed(User user) {
                     username.set(user.getUserName());
-                    if (StringUtil.isNull(user.getUserDesc())) {
+                    if (TextUtils.isEmpty(user.getUserDesc())) {
                         description.set("该用户还没有自我介绍....");
                     } else {
                         description.set(user.getUserDesc());
@@ -51,15 +54,20 @@ public class UserInfoThisViewModel extends UserViewModel {
                     email.set(user.getUserEmail());
                     phone.set(user.getUserPhone());
                     studentNumber.set(user.getUserId() + "");
-                } else {
-                    ToastUtil.showShort(context, "可能没有网络");
+                    school.set(user.getSchool().getSchoolName());
                 }
-            }
+
+                @Override
+                public void failed(String log) {
+                    showMessage(log);
+                }
+            }, repository.getUserId());
+
         }).start();
 
     }
 
-    void updateUserPortrait(String localFilePath) {
+    public void updateUserPortrait(String localFilePath) {
         isUpdating.set(true);
         new Thread(() -> {
             repository.updateUserPortrait(new DataSource.GeneralCallback<String>() {
@@ -68,17 +76,14 @@ public class UserInfoThisViewModel extends UserViewModel {
                     user.setUserImagePath(data1);
                     repository.saveThisUser(user);
                     imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
-                    context.runOnUiThread(() -> {
-                        Toast.makeText(context, "更新成功", Toast.LENGTH_LONG).show();
-                    });
+
+                    showMessage("更新成功");
                 }
 
                 @Override
                 public void failed(String log) {
                     isUpdating.set(false);
-                    context.runOnUiThread(() -> {
-                        Toast.makeText(context, log, Toast.LENGTH_LONG).show();
-                    });
+                    showMessage(log);
                 }
             }, studentNumber.get(), localFilePath);
 
@@ -86,57 +91,20 @@ public class UserInfoThisViewModel extends UserViewModel {
 
     }
 
-    /**
-     * 下面的操作是给edit界面使用的
-     */
-    void updateUserInfo() {
-        //先搞一下异步操作，如果搞完以后是更新成功的话就重置本地信息，如果不是的话就不重置用户信息
-        User newUser = new User();
-        newUser.setUserId(user.getUserId());
-        newUser.setUserPhone(phone.get());
-        newUser.setUserName(user.getUserName());
-        newUser.setUserEmail(email.get());
-        newUser.setUserDesc(description.get());
-
-        isUpdating.set(true);
-        new Thread(() -> {
-            repository.updateThisUser(new DataSource.GeneralCallback<String>() {
-                @Override
-                public void succeed(String data) {
-                    context.runOnUiThread(() -> {
-                        isUpdating.set(false);
-                        //跳转到详细信息的界面
-                        backToUserInfoAct(Activity.RESULT_OK, data);
-                    });
-                }
-
-                @Override
-                public void failed(String log) {
-                    context.runOnUiThread(() -> {
-                        isUpdating.set(false);
-                        //跳转到详细信息的界面
-                        backToUserInfoAct(Activity.RESULT_CANCELED, log);
-                    });
-
-                }
-            }, newUser);
-        }).start();
-    }
-
-    private void backToUserInfoAct(int result, String log) {
-        Intent intent = new Intent();
-        intent.putExtra("data_return", log);
-        context.setResult(result, intent);
-        context.finish();
+    private void showMessage(String msg){
+        if (navigator != null) {
+            navigator.showMessage(msg);
+        }
     }
 
     @Override
-    public void start() {
-
+    public void setNavigator(ViewModelNavigator navigator) {
+        this.navigator = navigator;
     }
 
     @Override
     public void destroy() {
-
+        navigator = null;
     }
 }
+

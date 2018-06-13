@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.register.RegisterActivity"/>
+            type="com.lfork.a98620.lfree.register.RegisterInfoViewModel"/>
     </data>
 
 
@@ -51,7 +51,7 @@
             android:text="@={viewModel.password}"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:textColor="@color/Login_BorderColor"
+            android:textColor="@color/black"
             android:textColorHint="@color/Login_BorderColor"
             android:textSize="18sp" />
 
@@ -64,9 +64,19 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:textColor="@color/Login_BorderColor"
+            android:textColor="@color/black"
             android:textColorHint="@color/Login_BorderColor"
             android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/login_shape_user_rectangle"
+            android:entries="@array/categories"
+            android:padding="12dp"
+            />
 
         <Button
             android:id="@+id/email_sign_in_button"

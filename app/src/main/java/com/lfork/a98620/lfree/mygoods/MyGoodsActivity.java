@@ -80,11 +80,7 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
     }
 
     @Override
-    public void setParam1(String param) {
-    }
-
-    @Override
-    public void setParam2(String param) {
+    public void showMessage(String msg) {
 
     }
 }

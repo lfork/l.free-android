@@ -1,14 +1,28 @@
 package com.lfork.a98620.lfree.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
  * Created by 98620 on 2018/5/7.
  */
-public class Review  {
-   private String content;
+public class Review implements Serializable {
 
-   private String goodsId;
 
-   private String userId;
+    @SerializedName("rContent")
+    private String content;
+
+
+    @SerializedName("rId")
+    private String goodsId;
+
+    private User user;
+
+    private String userId;
+
+    @SerializedName("rMakeDate")
+    private String time;
 
     public Review(String content) {
         this.content = content;
@@ -46,6 +60,22 @@ public class Review  {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     //    public

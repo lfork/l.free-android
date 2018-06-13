@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.lfork.a98620.lfree.ImageBrowser.ImageBrowserActivity;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.image.GlideImageLoader;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
@@ -20,6 +21,9 @@ import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 import com.youth.banner.Banner;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetailNavigator {
 
@@ -38,9 +42,9 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         int goodsId = intent.getIntExtra("id", 0);
-        int categoryId = intent.getIntExtra("category_id", 0);
+       // int categoryId = intent.getIntExtra("category_id", 0);
         binding = DataBindingUtil.setContentView(this, R.layout.goods_detail_act);
-        viewModel = new GoodsDetailViewModel(this, goodsId, binding);
+        viewModel = new GoodsDetailViewModel(this, goodsId);
         viewModel.setNavigator(this);
         binding.setViewModel(viewModel);
         setupRecyclerView();
@@ -56,8 +60,8 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     public void initActionBar(String title){
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle( title);
+        Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(title);
         actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
         // 有小箭头，并且图标可以点击
         actionBar.setDisplayShowHomeEnabled(false);
@@ -68,7 +72,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         RecyclerView recyclerView =   binding.reviewContent.reviewRecycle;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<String> adapter = new RecyclerViewItemAdapter<>(viewModel.reviewItems, R.layout.goods_detail_comment_contacts_item);
+        RecyclerViewItemAdapter<ReviewItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.reviewItems, R.layout.goods_detail_comment_contacts_item);
         recyclerView.setAdapter(adapter);
     }
 
@@ -93,23 +97,20 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         return true;
     }
 
-    @Override
-    public void notifyDataChanged() {
-        binding.reviewContent.reviewRecycle.getAdapter().notifyDataSetChanged();
-    }
 
     @Override
     public void notifyReviewChanged() {
-
+        runOnUiThread(() -> {
+            binding.reviewContent.reviewRecycle.getAdapter().notifyDataSetChanged();
+            binding.reviewContent.reviewRecycle.scrollToPosition(viewModel.reviewItems.size() - 1);//将recyclerView定位到最后一行
+        });
     }
-
 
     /**
      *  关闭软键盘
-     * @param param
      */
     @Override
-    public void setParam1(String param) {
+    public void closeSoftKeyBoard() {
         View view = getWindow().peekDecorView();
         if (view != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -131,12 +132,18 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     @Override
     public void openBigImages() {
-        ImageActivity.actionStart(this);
+        ImageBrowserActivity.actionStart(this);
     }
 
     @Override
-    public void setParam2(String param) {
-
+    public void refreshBanner(ArrayList<String> images) {
+        runOnUiThread(() -> {
+            binding.banner.update(images);      //刷新轮播图
+        });
     }
 
+    @Override
+    public void showMessage(String msg) {
+
+    }
 }
