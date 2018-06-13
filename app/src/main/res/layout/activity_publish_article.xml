@@ -46,6 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:layout_marginLeft="10dp"
                 android:hint="请在此处输入你想要发布的文字.."
                 android:text="@{viewModel.article}" />
         </ScrollView>

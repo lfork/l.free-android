@@ -77,10 +77,11 @@
                     android:id="@+id/community_btn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:padding="3dp"
                     android:layout_above="@+id/community_text"
                     android:layout_centerHorizontal="true"
 
-                    android:src="@drawable/main_talk_btn_selector" />
+                    android:src="@drawable/main_community_btn_selector" />
 
                 <TextView
                     android:id="@+id/community_text"
