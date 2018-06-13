@@ -27,22 +27,12 @@
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/comment_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/comment_head"
-                android:layout_marginLeft="10dp"
-                android:layout_toEndOf="@id/comment_head"
-                android:text="1#"
-                android:textSize="16sp" />
-
-            <TextView
                 android:id="@+id/comment_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/comment_num"
+                android:layout_alignTop="@id/comment_head"
                 android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@id/comment_num"
+                android:layout_toEndOf="@id/comment_head"
                 android:hint="用户名"
                 android:singleLine="true"
                 android:text="@{viewModel.reviewer}"
@@ -54,8 +44,8 @@
                 android:id="@+id/comment_time_before"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@id/comment_num"
-                android:layout_below="@id/comment_num"
+                android:layout_alignStart="@id/comment_name"
+                android:layout_below="@id/comment_name"
                 android:text="发布时间："
                 android:textColor="#afafaf"
                 android:textSize="10sp" />

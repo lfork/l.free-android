@@ -52,9 +52,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/community_username"
                     android:layout_alignParentEnd="true"
-                    android:hint="2018年6月13日18:46:36"
                     android:layout_marginEnd="20dp"
                     android:gravity="right"
+                    android:hint="2018年6月13日18:46:36"
                     android:text="@{viewModel.articleTime.substring(5, 16)}"
                     android:textSize="12sp"
                     tools:ignore="RelativeOverlap,RtlHardcoded" />
@@ -64,12 +64,12 @@
                     android:id="@+id/community_community"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
                     android:layout_alignStart="@id/community_username"
                     android:layout_below="@id/community_username"
                     android:layout_marginEnd="2dp"
                     android:layout_marginTop="6dp"
                     android:text="@{viewModel.article}"
+                    android:textColor="@color/black"
                     android:textSize="20sp" />
 
             </RelativeLayout>
@@ -132,11 +132,24 @@
                     android:text="评论区"
                     android:textSize="20sp" />
 
+                <TextView
+                    android:id="@+id/no_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_view"
+                    android:layout_marginBottom="10dp"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@drawable/ic_talk_notalk"
+                    android:gravity="center"
+                    android:text="还没有人评论过哦~~" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/article_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/text_view"></android.support.v7.widget.RecyclerView>
+                    android:layout_below="@id/text_view">
+
+                </android.support.v7.widget.RecyclerView>
             </RelativeLayout>
 
 
