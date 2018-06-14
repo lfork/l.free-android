@@ -15,7 +15,7 @@ import com.lfork.a98620.lfree.databinding.SearchResultActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 
-public class SearchResultActivity extends AppCompatActivity implements ViewModelNavigator{
+public class SearchResultActivity extends AppCompatActivity implements ViewModelNavigator {
 
     private SearchResultActBinding binding;
 
@@ -24,7 +24,7 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.search_result_act);
+        binding = DataBindingUtil.setContentView(this, R.layout.search_result_act);
         Intent intent = getIntent();
         String recommendKeyword = intent.getStringExtra("recommend_keyword");
         viewModel = new SearchResultViewModel(this, recommendKeyword);
@@ -52,7 +52,7 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
         });
     }
 
-    private void setupRecyclerView(){
+    private void setupRecyclerView() {
         RecyclerView recyclerView = binding.searchRecycler;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -60,24 +60,16 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public void notifyDataChanged() {
-        binding.searchRecycler.getAdapter().notifyDataSetChanged();
-    }
-
-    /**
-     *
-     * @param param 设置searchView的hint
-     */
-    @Override
-    public void setParam1(String param) {
-    }
 
     @Override
-    public void setParam2(String param) {
+    public void showMessage(String msg) {
+        runOnUiThread(() -> {
+            if (msg.equals("搜索完成")) {
+                binding.searchRecycler.getAdapter().notifyDataSetChanged();
+            }
+
+            ToastUtil.showShort(getBaseContext(), msg);
+        });
 
     }
-
-
-    //http://www.lfork.top/22y/goodsSerach_getGoodsByName?goodsLikeName=Java
 }

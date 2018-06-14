@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -8,56 +8,168 @@
             type="com.lfork.a98620.lfree.main.community.CommunityArticle" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/article"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/article"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/community_head"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
-            android:toUserInfoActivity="@{viewModel.publisherId}"
-            app:setImageWithDiskCache="@{viewModel.headImgUri}" />
+            <ImageView
+                android:id="@+id/community_head"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_margin="16dp"
+                android:toUserInfoActivity="@{viewModel.publisherId}"
+                app:setImageWithDiskCache="@{viewModel.headImgUri}" />
 
-        <TextView
-            android:id="@+id/community_username"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/community_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/community_head"
+                android:layout_marginLeft="6dp"
+                android:layout_toEndOf="@+id/community_head"
+                android:hint="用户名"
+                android:maxLength="12"
+                android:text="@{viewModel.headName}"
+                android:textColor="@color/Login_ForeColor"
+                android:textSize="18sp"
+                android:toUserInfoActivity="@{viewModel.publisherId}" />
+
+            <TextView
+                android:id="@+id/community_time_before"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/community_username"
+                android:layout_below="@id/community_username"
+                android:text="发布时间："
+                android:textColor="#afafaf" />
+
+            <TextView
+                android:id="@+id/community_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/community_username"
+                android:layout_toEndOf="@id/community_time_before"
+                android:hint="2018年6月13日18:20:33"
+                android:text="@{viewModel.articleTime.substring(5, 16)}"
+                android:textColor="#afafaf" />
+
+            <TextView
+                android:id="@+id/community_community"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/community_username"
+                android:layout_below="@id/community_time"
+                android:layout_marginBottom="6dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="3"
+                android:text="@{viewModel.article}"
+                android:textSize="19sp"
+                android:toArticleContentActivity="@{viewModel.articleId}" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/article"
+            android:background="@color/viewColor" />
+
+        <LinearLayout
+            android:id="@+id/icon_file"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="4dp"
-            android:layout_toEndOf="@+id/community_head"
-            android:maxLength="12"
-            android:text="@{viewModel.headName}"
-            android:textColor="@color/Login_ForeColor"
-            android:textSize="20sp"
-            android:toUserInfoActivity="@{viewModel.publisherId}" />
+            android:layout_below="@id/view"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@id/community_username"
-            android:layout_marginRight="6dp"
-            android:gravity="right"
-            android:text="@{viewModel.articleTime.substring(5, 16)}"
-            android:textSize="16sp" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
 
-        <TextView
-            android:id="@+id/community_community"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/community_username"
-            android:layout_below="@id/community_username"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="4dp"
-            android:maxLines="3"
-            android:text="@{viewModel.article}"
-            android:textSize="16sp"
-            android:toArticleContentActivity="@{viewModel.articleId}" />
+                <Button
+                    android:id="@+id/community_share"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_community_share_side" />
 
+                <TextView
+                    android:id="@+id/community_share_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="6dp"
+                    android:layout_toEndOf="@id/community_share"
+                    android:text="10"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/viewColor" />
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/community_comment"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_community_comment" />
+
+                <TextView
+                    android:id="@+id/community_comment_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="6dp"
+                    android:layout_toEndOf="@id/community_comment"
+                    android:text="10"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <!--<RelativeLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center">-->
+
+            <!--<Button-->
+            <!--android:id="@+id/community_like"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:background="@drawable/ic_community_like_in" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/community_like_num"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_marginLeft="6dp"-->
+            <!--android:layout_toEndOf="@id/community_like"-->
+            <!--android:text="10"-->
+            <!--android:textSize="16sp" />-->
+            <!--</RelativeLayout>-->
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@id/icon_file"
+            android:background="@color/viewColor" />
     </RelativeLayout>
 </layout>

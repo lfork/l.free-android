@@ -60,6 +60,9 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
+    //image scale library
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
     /**
      * layout相关引用
      */

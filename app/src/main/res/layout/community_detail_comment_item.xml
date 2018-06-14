@@ -2,50 +2,83 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.articlecontent.CommunityComment"/>
+            type="com.lfork.a98620.lfree.articlecontent.CommunityComment" />
     </data>
 
     <RelativeLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/comment_name"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/comment_head"
-            android:layout_toEndOf="@id/comment_head"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:toUserInfoActivity="@{viewModel.reviewerId}"
-            android:text="@{viewModel.reviewer}"
-            android:textSize="16sp" />
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-        <TextView
-            android:id="@+id/comment_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/comment_name"
-            android:layout_below="@id/comment_name"
-            android:layout_marginTop="3dp"
-            android:singleLine="true"
-            android:textColor="#afafaf"
-            android:text="@{viewModel.commentTime}"
-            android:textSize="10sp" />
+            <ImageView
+                android:id="@+id/comment_head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="6dp"
+                android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/comment_name"
-            android:layout_below="@+id/comment_time"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="8dp"
-            android:text="@{viewModel.comment}"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/comment_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/comment_head"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@id/comment_head"
+                android:hint="用户名"
+                android:singleLine="true"
+                android:text="@{viewModel.reviewer}"
+                android:textColor="@color/Login_ForeColor"
+                android:textSize="16sp"
+                android:toUserInfoActivity="@{viewModel.reviewerId}" />
+
+            <TextView
+                android:id="@+id/comment_time_before"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/comment_name"
+                android:layout_below="@id/comment_name"
+                android:text="发布时间："
+                android:textColor="#afafaf"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/comment_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/comment_time_before"
+                android:layout_marginLeft="2dp"
+                android:layout_toEndOf="@id/comment_time_before"
+                android:hint="2018年6月10日00:00:00"
+                android:singleLine="true"
+                android:text="@{viewModel.commentTime}"
+                android:textColor="#afafaf"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/comment_time_before"
+                android:layout_below="@+id/comment_time"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="3dp"
+                android:text="@{viewModel.comment}"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/layout"
+            android:background="@color/viewColor" />
     </RelativeLayout>
 </layout>

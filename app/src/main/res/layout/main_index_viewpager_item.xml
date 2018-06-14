@@ -13,10 +13,9 @@
 
 
     <android.support.design.widget.CoordinatorLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -44,14 +43,14 @@
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            >
+            android:scrollbars="vertical">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_index_recycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:items="@{viewModel.items}"
-                android:visibility="@{viewModel.dataIsLoading?View.GONE:View.VISIBLE}">
+                android:visibility="@{viewModel.dataIsLoading?View.GONE:View.VISIBLE}"
+                app:items="@{viewModel.items}">
 
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
@@ -59,21 +58,24 @@
         <com.lfork.a98620.lfree.base.customview.RefreshFooterView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/white"
             android:layout_gravity="bottom"
+            android:background="@color/viewColor"
             android:visibility="@{viewModel.isLoadingMoreData ? View.VISIBLE : View.GONE}">
 
         </com.lfork.a98620.lfree.base.customview.RefreshFooterView>
 
 
         <ImageButton
-            android:visibility="@{viewModel.isDown ? View.VISIBLE : View.GONE}"
             android:id="@+id/up"
-            android:layout_gravity="center|bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_main_publish_new_goods"
+            android:contentDescription="@string/todo"
             android:src="@drawable/ic_arrow_upward_black_24dp"
-            android:contentDescription="@string/todo">
+            android:visibility="@{viewModel.isDown ? View.VISIBLE : View.GONE}">
 
         </ImageButton>
     </android.support.design.widget.CoordinatorLayout>

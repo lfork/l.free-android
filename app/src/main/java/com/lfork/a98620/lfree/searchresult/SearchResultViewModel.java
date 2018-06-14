@@ -12,7 +12,6 @@ import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
-import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,24 +56,19 @@ public class SearchResultViewModel extends BaseViewModel {
                     }
                     dataIsLoading.set(false);
 
+                    items.clear();
+                    items.addAll(tempItems);
+
                     if (tempItems.size() > 0) {
                         dataIsEmpty.set(false);
-//                    items.addAll(data);
-                        context.runOnUiThread(() -> {
-                            ToastUtil.showShort(context, "搜索完成");
-                            items.clear();
-                            items.addAll(tempItems);
-                            notifyChange();
-                            navigator.notifyDataChanged();
-                        });
+
+                        if (navigator != null) {
+                            navigator.showMessage("搜索完成");
+                        }
                     } else{
-                        context.runOnUiThread(() -> {
-                            ToastUtil.showShort(context, "没有搜索到相关信息");
-                            items.clear();
-                            items.addAll(tempItems);
-                            notifyChange();
-                            navigator.notifyDataChanged();
-                        });
+                        if (navigator != null) {
+                            navigator.showMessage("没有搜索到相关信息");
+                        }
                     }
 
 
@@ -83,22 +77,23 @@ public class SearchResultViewModel extends BaseViewModel {
                 @Override
                 public void failed(String log) {
                     dataIsLoading.set(false);
-                    context.runOnUiThread(() -> {
-                        ToastUtil.showShort(context, log);
-                    });
 
+                    if (navigator != null) {
+                        navigator.showMessage( log);
+                    }
                 }
             }, keyword);
         }).start();
     }
 
-    @Override
-    public ViewModelNavigator getNavigator() {
-        return navigator;
-    }
 
     public void setNavigator(ViewModelNavigator navigator) {
         this.navigator = navigator;
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        navigator = null;
+    }
 }

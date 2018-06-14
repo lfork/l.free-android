@@ -147,7 +147,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
                 callback.failed(result.getMessage());
             }
         } else {
-            callback.failed("error:1 服务器异常");
+            callback.failed("error: 服务器异常");
         }
 
     }
@@ -217,7 +217,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
                 callback.failed(result.getMessage());
             }
         } else {
-            callback.failed("error:1 服务器异常");
+            callback.failed("error: 服务器异常");
         }
 
         //http://www.lfork.top/22y/goodsSerach_getGoodsByName?=Java
@@ -243,7 +243,7 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
                 callback.failed(result.getMessage());
             }
         } else {
-            callback.failed("error:1 服务器异常");
+            callback.failed("error: 服务器异常");
         }
     }
 }

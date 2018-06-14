@@ -1,4 +1,7 @@
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.lfork.a98620.lfree.main.myinfo.MyInforFragment">
 
     <data>
 
@@ -7,204 +10,224 @@
             type="com.lfork.a98620.lfree.userinfothis.UserInfoThisViewModel" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.lfork.a98620.lfree.main.myinfo.MyInforFragment">
+        android:layout_height="match_parent">
 
-
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/all"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/all"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="222dp"
+                android:background="@drawable/background">
+
+                <com.github.siyamed.shapeimageview.RoundedImageView
+                    android:id="@+id/head"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/login_logo"
+                    app:setImageWithDiskCache="@{viewModel.imageUrl}"
+                    app:siBorderColor="@color/white"
+                    app:siBorderWidth="1dp"
+                    app:siRadius="5dp" />
+
+                <TextView
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/head"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:text="点击上传我的头像"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="#fff">
+
+                <ImageView
+                    android:id="@+id/img_sno"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/user_no"
+                    android:contentDescription="@string/todo" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/img_sno"
+                    android:gravity="center"
+                    android:hint="学号"
+                    android:text="@{viewModel.studentNumber}"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="#fff">
+
+                <ImageView
+                    android:id="@+id/img_user"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="@string/todo"
+                    android:background="@drawable/user_user" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/img_user"
+                    android:gravity="center"
+                    android:hint="用户名"
+                    android:text="@{viewModel.username}"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="#fff">
+
+                <ImageView
+                    android:id="@+id/img_phone"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/todo"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/user_phone" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/img_phone"
+                    android:gravity="center"
+                    android:hint="电话号码"
+                    android:text="@{viewModel.phone}"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="#fff">
+
+                <ImageView
+                    android:id="@+id/img_email"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/todo"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/user_email" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/img_email"
+                    android:gravity="center"
+                    android:hint="邮箱"
+                    android:text="@{viewModel.email}"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                android:orientation="vertical">
+                android:background="#fff"
+                android:padding="10dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="222dp"
-                    android:background="@drawable/background">
-
-                    <com.github.siyamed.shapeimageview.RoundedImageView
-                        android:id="@+id/head"
-                        android:layout_width="85dp"
-                        android:layout_height="85dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/login_logo"
-                        android:layout_centerInParent="true"
-                        app:setImageWithDiskCache="@{viewModel.imageUrl}"
-                        app:siBorderColor="@color/white"
-                        app:siBorderWidth="1dp"
-                        app:siRadius="5dp" />
-
-                    <TextView
-                        android:layout_marginTop="10dp"
-                        android:layout_below="@+id/head"
-                        android:id="@+id/edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="@null"
-                        android:text="点击上传我的头像"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-                </RelativeLayout
-                 >
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="#fff">
-
-                    <ImageView
-                        android:id="@+id/img_sno"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/user_no" />
+                <ImageView
+                    android:id="@+id/img_detail"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/user_detail" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/img_sno"
-                        android:gravity="center"
-                        
-                        android:text="@{viewModel.studentNumber}"
-                        android:hint="学号"
-                        android:textSize="14sp" />
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="#fff">
-
-                    <ImageView
-                        android:id="@+id/img_user"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/user_user" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/img_user"
-                        android:gravity="center"
-                        android:hint="用户名"
-                        android:text="@{viewModel.username}"
-                        android:textSize="14sp" />
-
-
-                </RelativeLayout>
-
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="#fff">
-
-                    <ImageView
-                        android:id="@+id/img_phone"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/user_phone" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/img_phone"
-                        android:gravity="center"
-                        android:hint="电话号码"
-                        android:text="@{viewModel.phone}"
-                        android:textSize="14sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="#fff">
-
-                    <ImageView
-                        android:id="@+id/img_email"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/user_email" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/img_email"
-                        android:gravity="center"
-                        android:hint="邮箱"
-                        android:text="@{viewModel.email}"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
-                    android:padding="10dp">
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/img_detail"
+                    android:gravity="start"
+                    android:hint="个人备注和描述."
+                    android:text="@{viewModel.description}"
+                    android:textSize="14sp" />
 
-                    <ImageView
-                        android:id="@+id/img_detail"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/user_detail" />
+            </RelativeLayout>
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/img_detail"
-                        android:gravity="start"
-                        android:text="@{viewModel.description}"
-                        android:hint="个人备注和描述."
-                        android:textSize="14sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:padding="10dp">
 
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/img_school"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ic_school_black_24dp"
+                    android:contentDescription="@string/todo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/img_school"
+                    android:gravity="start"
+                    android:hint="学校信息"
+                    android:text="@{viewModel.school}"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
 
 
-            </LinearLayout>
-        </ScrollView>
-
-    </android.support.design.widget.CoordinatorLayout>
+        </LinearLayout>
+    </ScrollView>
 
 
 </layout>

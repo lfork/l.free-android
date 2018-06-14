@@ -2,9 +2,12 @@ package com.lfork.a98620.lfree.data.user;
 
 import android.util.Log;
 
+import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.local.UserLocalDataSource;
 import com.lfork.a98620.lfree.data.user.remote.UserRemoteDataSource;
+
+import java.util.List;
 
 /**
  * Created by 98620 on 2018/3/23.
@@ -143,6 +146,10 @@ public class UserDataRepository implements UserDataSource {
         remoteDataSource.getUserInfo(callback, userId);
     }
 
+    @Override
+    public void getSchoolList(GeneralCallback<List<School>> callback) {
+        remoteDataSource.getSchoolList(callback);
+    }
 
 
     private void updateLocalUserInfo(User newUser) {
@@ -161,4 +168,6 @@ public class UserDataRepository implements UserDataSource {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+
 }
