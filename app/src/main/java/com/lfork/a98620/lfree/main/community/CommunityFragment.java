@@ -161,7 +161,6 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
                     //加载数据成功
                     Log.d(TAG, "handleMessage: isRefreshing = " + binding.swipeRefresh.isRefreshing());
                     binding.swipeRefresh.setRefreshing(false);
-                    Log.d(TAG, "handleMessage: "+binding.swipeRefresh);
                     Log.d(TAG, "handleMessage: setRefreshing = false");
                     if (fragment.recyclerviewIsLoad) {
                         fragment.adapter.notifyDataSetChanged();
