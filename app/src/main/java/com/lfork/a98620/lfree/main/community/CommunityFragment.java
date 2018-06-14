@@ -90,6 +90,7 @@ public class CommunityFragment extends Fragment implements CommunityCallback {
             Log.d(TAG, "onClick: 开始刷新数据");
             String fromTime = articleList.get(0).getArticleTime();
             CommunityLocalDataSource.getArticleList().clear();
+            isCanRefresh = true;
             viewModel.loadData(">" + fromTime, CommunityFragment.this);
             Log.d(TAG, "onCreateView: "+binding.swipeRefresh);
         });
