@@ -18,8 +18,7 @@ package com.lfork.a98620.lfree.main.index;
 
 /**
  * Defines the navigation actions that can be called from the Details screen.
- * 现在先不忙优化，先把im写完先
  */
 public interface PagerItemViewNavigator {
-    void refreshUI(String log);
+    void toast(String log);
 }

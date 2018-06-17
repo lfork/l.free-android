@@ -15,7 +15,7 @@ import com.lfork.a98620.lfree.main.MainActivity;
 
 public class MyInforFragment extends Fragment {
 
-    private View rootView;
+    private View rootView;//页面缓存 ，这样做，当fragment被destroy的时候 可以让view不被回收，等下就可以快速恢复。
 
     private MyInforFragmentViewModel viewModel;
 
@@ -33,14 +33,12 @@ public class MyInforFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         if (rootView == null) {
             MainMyInforFragBinding binding = DataBindingUtil.inflate(inflater, R.layout.main_my_infor_frag, container, false);
             viewModel = new MyInforFragmentViewModel((MainActivity) getActivity());
             binding.setViewModel(viewModel);
             rootView = binding.getRoot();
         }
-
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
             parent.removeView(rootView);

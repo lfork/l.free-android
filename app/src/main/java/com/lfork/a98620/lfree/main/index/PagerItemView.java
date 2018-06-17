@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +25,17 @@ import java.util.ArrayList;
  */
 public class PagerItemView extends View implements PagerDataRefreshListener, SwipeRefreshLayout.OnRefreshListener, GoodsItemNavigator, PagerItemViewNavigator {
 
-    private static final String TAG = "PagerItemView";
     private PagerItemViewModel viewModel;
 
-    private Activity activityContext;
+    /**
+     * 优化策略
+     * 1、gc的“活对象”回收策略
+     * 2、static 内存泄漏问题  application context内存泄漏问题(把要回收的context给和application同生命
+     *  周期的class可能会阻止gc的回收)
+     * 3、潜在的内存泄漏  Context的引用 ，Activity的引用  (注意：不是一定会内存泄漏)
+     * 4、缓存策略：常驻内存操作 这样可以提升加载速度
+     */
+    private  Activity activityContext;
 
     private MainIndexViewpagerItemBinding binding;
 
@@ -37,14 +43,11 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         super(context);
     }
 
-
-    public PagerItemView(ViewGroup parent, Category category) {
+    public PagerItemView(ViewGroup parent) {
         this(parent.getContext());
-        onCreate(parent, category);
     }
 
-
-    public void onCreate(ViewGroup parent, Category category) {
+    public View onCreateView(ViewGroup parent, Category category) {
         binding = DataBindingUtil.inflate(LayoutInflater
                 .from(parent.getContext()), R.layout.main_index_viewpager_item, parent, false);
         viewModel = new PagerItemViewModel(parent.getContext(), category);
@@ -53,7 +56,7 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         setupRecyclerView();
         setupSwipeRefreshLayout();
         setupUpButton();
-
+        return binding.getRoot();
     }
 
     public void onResume() {
@@ -61,8 +64,10 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
             viewModel.setNavigator(this);
             viewModel.start();
         }
+    }
 
-        Log.d(TAG, "onResume: " + binding  + activityContext);
+    public void onPause(){
+        //do nothing here
     }
 
     /**
@@ -70,7 +75,9 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
      */
     public void onDestroy() {
         activityContext = null;
+        binding = null;
         viewModel.destroy();
+        viewModel = null;
     }
 
 
@@ -83,10 +90,13 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
 
     private void setupRecyclerView() {
         RecyclerView recyclerView = binding.mainIndexRecycle;
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        GoodsRecyclerViewItemAdapter adapter = new GoodsRecyclerViewItemAdapter<>(new ArrayList<Goods>(0), R.layout.goods_recycle_item);
+        GoodsRecyclerViewItemAdapter adapter
+                = new GoodsRecyclerViewItemAdapter<>(new ArrayList<Goods>(0),
+                R.layout.goods_recycle_item);
         recyclerView.setAdapter(adapter);
         adapter.setGoodsItemNavigator(this);
         adapter.setListener(this);
@@ -123,9 +133,7 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
      */
     @Override
     public void onRefresh() {
-        Log.d(TAG, "onRefresh: 监听测试" );
         viewModel.refreshData();
-//        viewModel.
     }
 
     public Activity getActivityContext() {
@@ -144,12 +152,10 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
     }
 
     @Override
-    public void refreshUI(String log) {
+    public void toast(String log) {
         getActivityContext().runOnUiThread(() -> {
             ToastUtil.showShort(getContext(), log);
             binding.swipeRefresh.setRefreshing(false);
         });
-
-
     }
 }

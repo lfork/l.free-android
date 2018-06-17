@@ -28,7 +28,7 @@ public abstract class BaseViewModel extends BaseObservable{
     }
 
     public BaseViewModel(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();     //force to use application context, avoid potential memory leak
     }
 
     public ViewModelNavigator getNavigator() {

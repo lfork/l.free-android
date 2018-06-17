@@ -95,7 +95,7 @@ public class IMDataRepository implements IMDataSource {
     public synchronized void getChatUserList(GeneralCallback<List<User>> callback) {
         if (mCachedUsers != null) {
             ArrayList<User> users = new ArrayList<>(mCachedUsers.values());
-            Collections.sort(users, (o1, o2) -> {
+            Collections.sort(users, (o1, o2) -> {           //小的排前面
                 if (o1.getTimestamp()> o2.getTimestamp() ){
                     return -1;
                 } else {
@@ -129,17 +129,12 @@ public class IMDataRepository implements IMDataSource {
     public synchronized void addChatUser(User user, boolean isExisted, GeneralCallback<String> callback) {
         if (isExisted) {
             if (mCachedUsers != null) {
-
-//                for (User u : mCachedUserList) {
-//                    if (user.getUserId() == u.getUserId()) {
                 mCachedUsers.remove(user.getUserId() + "");
                 addChatUserInLocal(user, callback);
-//                        return;
-//                    }
-//                }
             }
+        } else {
+            addChatUserInLocal(user, callback);
         }
-        addChatUserInLocal(user, callback);
     }
 
     private synchronized void addChatUserInLocal(User user, GeneralCallback<String> callback) {

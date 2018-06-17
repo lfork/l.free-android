@@ -93,7 +93,12 @@ public class UserLocalDataSource implements UserDataSource {
 
     @Override
     public void getUserInfo(GeneralCallback<User> callback, int userId) {
-
+       List<User> list = DataSupport.where("userid=?", userId + "").find(User.class);
+       if (list != null &&list.size() > 0) {
+           callback.succeed(list.get(0));
+       } else {
+           callback.failed("没有数据");
+       }
     }
 
     @Override

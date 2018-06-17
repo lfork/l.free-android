@@ -116,7 +116,11 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
             m.setType(MessageType.NORMAL_MESSAGE);
             m.setContentType(MessageContentType.COMMUNICATION_USER);
             long time = System.currentTimeMillis();
-            long time2 = messages.get(messages.size() - 1).getMessageID();
+            long time2 = 0;
+
+            if (messages.size() > 0) {
+                messages.get(messages.size() - 1).getMessageID();
+            }
 
             if (time < time2) {
                 time = time2 + 1;  //两台机器的简单的消息乱序处理，
@@ -138,9 +142,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
             notifyChange();
             newMessage.set(""); //清空输入框的内容
-
             addUser(true);
-
         }
     }
 
@@ -150,9 +152,12 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
             return;
         }
 
+        Log.d(TAG, "addUser: " + isExisted);
+
         new Thread(() -> {
             UserDataRepository userDataRepository = UserDataRepository.getInstance();
-            userDataRepository.getUserInfo(new DataSource.GeneralCallback<User>() {
+
+            userDataRepository.getUserInfo(userId, isExisted, new DataSource.GeneralCallback<User>() {
                 @Override
                 public void succeed(User data) {
                     repository.addChatUser(data, isExisted, new DataSource.GeneralCallback<String>() {
@@ -164,16 +169,16 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
                         @Override
                         public void failed(String log) {
-
+                            navigator.showToast(log);
                         }
                     });
                 }
 
                 @Override
                 public void failed(String log) {
-
+                    navigator.showToast(log);
                 }
-            }, userId);
+            });
         }).start();
 
 

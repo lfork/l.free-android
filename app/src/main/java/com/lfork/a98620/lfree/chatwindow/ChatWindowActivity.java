@@ -133,7 +133,6 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         if (messageBinder != null) {
             messageBinder.sendMessage(message, callback);
         }
-//        adapter.notifyItemInserted(messageList.size() - 1); //当有新消息时，刷新RecyclerView
     }
 
 

@@ -48,7 +48,7 @@ public class ArticleContentActivity extends AppCompatActivity implements Communi
         binding = DataBindingUtil.setContentView(this, R.layout.main_community_article_content_activity);
         binding.executePendingBindings();
         Intent intent = getIntent();
-        Log.d(TAG, "onCreate: 读取本地数据");
+        Log.d(TAG, "onCreateView: 读取本地数据");
         int articleId = intent.getIntExtra("articleId", -1);
         article = CommunityLocalDataSource.getLocalArticle(articleId);
         viewModel = new ArticleContentActivityViewModel(this, article != null ? article.getArticleId():-1);

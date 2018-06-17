@@ -7,12 +7,9 @@ import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.community.remote.CommunityRemoteDataSource;
 
-import java.util.List;
-
 import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class CommunityFragmentViewModel extends BaseViewModel {
-    private Activity context;
 
     CommunityFragmentViewModel(Activity context) {
         this.context = context;

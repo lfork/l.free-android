@@ -5,7 +5,6 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.text.format.DateFormat;
 
-import com.lfork.a98620.lfree.BR;
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
@@ -18,9 +17,7 @@ import java.util.List;
 /**
  * Created by 98620 on 2018/3/31.
  */
-
 public class PagerItemViewModel extends BaseViewModel implements PagerDataRefreshListener {
-    private static final String TAG = "PagerItemViewModel";
 
     public final ObservableArrayList<Goods> items = new ObservableArrayList<>();
 
@@ -48,10 +45,8 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     PagerItemViewModel(Context context, Category category) {
         super(context);
         this.category = category;
-        this.context = context;
         repository = GoodsDataRepository.getInstance();
     }
-//
 
     /**
      * 刷新ui
@@ -59,7 +54,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     private void refreshUI(String log) {
         dataIsLoading.set(false);
         if (navigator != null) {
-            navigator.refreshUI(log);
+            navigator.toast(log);
             isRefreshed = true;
         } else {
             tempLog = log;
@@ -83,12 +78,9 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
     //上拉加载更多
     private void loadMoreData() {
-
         String cursor = items.get(items.size() - 1).getPublishDate();
         getGoodsList(LOAD_MORE, cursor);
-
     }
-
 
     //下拉刷新
     public void refreshData() {
@@ -124,8 +116,6 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
                         }
 
                         items.addAll(data);
-                        notifyPropertyChanged(BR.viewModel);
-                      //  notifyChange();
 
                         switch (requestType) {
                             case INITIALIZE:
@@ -142,16 +132,13 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
                                 break;
                         }
                     }
-
                     @Override
                     public void failed(String log) {
                         refreshUI(log);
                     }
                 }, cursor[0], category.getCsId());
             }).start();
-
     }
-
 
     @Override
     public void startRefreshing() {
@@ -179,7 +166,6 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     public void start() {
         initData();
     }
-
 
     @Override
     public void destroy() {

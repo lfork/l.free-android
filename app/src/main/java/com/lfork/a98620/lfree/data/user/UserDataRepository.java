@@ -146,6 +146,15 @@ public class UserDataRepository implements UserDataSource {
         remoteDataSource.getUserInfo(callback, userId);
     }
 
+    public void getUserInfo(int userId, boolean isCached,GeneralCallback<User> callback ) {
+        if (isCached) {
+            localDataSource.getUserInfo(callback, userId);
+        } else {
+            remoteDataSource.getUserInfo(callback, userId);
+        }
+
+    }
+
     @Override
     public void getSchoolList(GeneralCallback<List<School>> callback) {
         remoteDataSource.getSchoolList(callback);
