@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedListener {
+
+    private static final String TAG = "PagerItemAdapter";
+
     private List<Category> pageTitles;
 
     private List<PagerItemView> viewList = new ArrayList<>();//view数组
@@ -38,7 +42,6 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
         return viewList.get(index);
     }
 
-
     /**
      * 这个 Count会影响 View的绘制，count = 目标view的个数，而不是已经绘制了的个数。
      *
@@ -58,24 +61,11 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
     }
 
 
-    /**
-     * Create the page for the given position.  The adapter is responsible
-     * for adding the view to the container given here, although it only
-     * must ensure this is done by the time it returns from
-     * {@link #finishUpdate(ViewGroup)}.
-     *
-     * @param parent   The containing View in which the page will be shown.
-     * @param position The page position to be instantiated.
-     * @return Returns an Object representing the new page.  This does not
-     * need to be a View, but can be some other container of the page.
-     * <p>
-     * {@link #getCount()} > 0的时候才能调用这个方法 && notify的时候会重载当前页面(count>0)
-     */
-
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup parent, int position) {
         PagerItemView itemView = viewList.get(position);
+        Log.d(TAG, "instantiateItem: " + position);
         parent.addView(itemView.onCreateView(parent, pageTitles.get(position)));
         return itemView.getView();
     }
@@ -84,9 +74,18 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
      * 对需要加载的子view进行空初始化 ，需要的时候再onCreate
      */
     private void preInitItemView(ViewGroup parent) {
-        for (Category ignored : pageTitles) {
+        //对第一个view进行提前初始化
+        if (pageTitles.size() > 0){
+            PagerItemView itemView = new PagerItemView(parent);
+            itemView.onCreateView(parent, pageTitles.get(0));
+            viewList.add(itemView);
+        }
+
+        for (int i = 1; i < pageTitles.size();i++) {
             PagerItemView itemView = new PagerItemView(parent);
             viewList.add(itemView);
+
+
         }
     }
 
@@ -96,18 +95,22 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
     }
 
     public void replaceData(List<Category> items, ViewPager parent) {
+        Log.d(TAG, "replaceData: " + Thread.currentThread());
         this.pageTitles.addAll(items);
         preInitItemView(parent);
         notifyDataSetChanged(); //先通知数据改变，再绑定数据
+        Log.d(TAG, "replaceData: " + items);
     }
 
     /**
      * 先加载前3个页面，当点击到指定页面的时候就加载指定的前后三个页面的数据
+     * 第一次会先调用onTabSelected 然后才会调用{@link #instantiateItem(ViewGroup, int)}
      *
      * @param tab 被选中的标签
      */
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
+        Log.d("e", "onTabSelected: " + tab.getPosition());
         PagerItemView pagerItemView = viewList.get(tab.getPosition());
         pagerItemView.setActivityContext(context);
         pagerItemView.onResume();

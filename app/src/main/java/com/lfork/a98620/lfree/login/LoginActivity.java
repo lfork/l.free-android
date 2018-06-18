@@ -135,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         status = pref.getInt("status", 0);
-
         int LOGIN = 1;
         if (status == LOGIN) {
             autoLogin();

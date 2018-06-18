@@ -22,11 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class IndexFragment extends Fragment implements IndexFragmentNavigator{
+public class IndexFragment extends Fragment implements IndexFragmentNavigator,TabLayout.OnTabSelectedListener{
 
     private View rootView;// 缓存Fragment view@Override
 
     private ViewPager viewPager;
+
+    private MyViewPagerAdapter adapter2;
 
     private PagerItemAdapter pagerAdapter;
 
@@ -71,6 +73,7 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator{
      */
     private void setupViewPager() {
         viewPager = binding.mainIndexFragViewpager;
+        adapter2 = new MyViewPagerAdapter();
         pagerAdapter = new PagerItemAdapter(new ArrayList<Category>(0), getActivity());
         viewPager.setAdapter(pagerAdapter);
     }
@@ -80,6 +83,7 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator{
      */
     private void setupTabLayout(){
         TabLayout tabLayout = binding.tabLayout;
+//        tabLayout.addOnTabSelectedListener(new TabSelectedListener());
         tabLayout.addOnTabSelectedListener(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -95,31 +99,31 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator{
         Objects.requireNonNull(getContext()).startActivity(intent);
     }
 
-//    /**
-//     * 先加载前3个页面，当点击到指定页面的时候就加载指定的前后三个页面的数据
-//     * @param tab 被选中的标签
-//     */
-//    @Override
-//    public void onTabSelected(TabLayout.Tab tab) {
-//        int position = tab.getPosition();
-//        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
-//        if (pagerItemView != null) {    //如果TabLayout没有初始完完毕，这里可能会报空// 这里viewPager自身和tabLayout 不同步导致的
-//            pagerItemView.setActivityContext(getActivity());
-//            pagerItemView.onResume();
-//        }
-//    }
-//
-//    @Override
-//    public void onTabUnselected(TabLayout.Tab tab) {
-//        int position = tab.getPosition();
-//        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
-//        pagerItemView.onPause();
-//    }
-//
-//    @Override
-//    public void onTabReselected(TabLayout.Tab tab) {
-//        ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(tab.getPosition()).onResume();
-//    }
+    /**
+     * 先加载前3个页面，当点击到指定页面的时候就加载指定的前后三个页面的数据
+     * @param tab 被选中的标签
+     */
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        int position = tab.getPosition();
+        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
+        if (pagerItemView != null) {    //如果TabLayout没有初始完完毕，这里可能会报空// 这里viewPager自身和tabLayout 不同步导致的
+            pagerItemView.setActivityContext(getActivity());
+            pagerItemView.onResume();
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+        int position = tab.getPosition();
+        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
+        pagerItemView.onPause();
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+        ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(tab.getPosition()).onResume();
+    }
 
     /**
      * 在onResume里面设置对view的引用 在{@link #onDestroy()}里面取消view的引用

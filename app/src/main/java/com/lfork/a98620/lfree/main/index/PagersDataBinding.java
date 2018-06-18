@@ -14,6 +14,7 @@ public class PagersDataBinding {
     @SuppressWarnings("unchecked")
     @BindingAdapter("tabs")
     public static void setTabs(ViewPager viewPager, List<Category> items) {
+//        MyViewPagerAdapter adapter = (MyViewPagerAdapter) viewPager.getAdapter();
         PagerItemAdapter adapter = (PagerItemAdapter) viewPager.getAdapter();
         if (adapter != null)
         {

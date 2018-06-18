@@ -68,7 +68,7 @@
          </service>
         <activity android:name=".publisharticle.PublishArticleActivity"/>
         <activity android:name=".articlecontent.ArticleContentActivity"/>
-        <activity android:name=".ImageBrowser.ImageBrowserActivity"/>
+        <activity android:name=".imagebrowser.ImageBrowserActivity"/>
 
     </application>
 

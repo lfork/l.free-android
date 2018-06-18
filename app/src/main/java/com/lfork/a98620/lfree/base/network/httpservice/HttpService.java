@@ -69,8 +69,7 @@ public class HttpService {
         Response response = null;
         try {
             response = client.newCall(request).execute();
-            String responseData = response.body().string();
-            return responseData;
+            return response.body().string();
         } catch (IOException e) {
             return null;
         } finally {

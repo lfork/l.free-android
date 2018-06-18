@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.lfork.a98620.lfree.ImageBrowser.ImageBrowserActivity;
+import com.lfork.a98620.lfree.imagebrowser.ImageBrowserActivity;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.image.GlideImageLoader;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;

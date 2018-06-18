@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.ImageBrowser;
+package com.lfork.a98620.lfree.imagebrowser;
 
 import android.content.Context;
 import android.content.Intent;

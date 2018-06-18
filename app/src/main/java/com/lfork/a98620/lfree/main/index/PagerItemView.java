@@ -39,24 +39,26 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
 
     private MainIndexViewpagerItemBinding binding;
 
-    public PagerItemView(Context context) {
-        super(context);
-    }
-
-    public PagerItemView(ViewGroup parent) {
-        this(parent.getContext());
-    }
+    private View rootView;
 
     public View onCreateView(ViewGroup parent, Category category) {
-        binding = DataBindingUtil.inflate(LayoutInflater
-                .from(parent.getContext()), R.layout.main_index_viewpager_item, parent, false);
-        viewModel = new PagerItemViewModel(parent.getContext(), category);
-        binding.setViewModel(viewModel);
-        viewModel.setNavigator(this);
-        setupRecyclerView();
-        setupSwipeRefreshLayout();
-        setupUpButton();
-        return binding.getRoot();
+        if (rootView == null) {
+            binding = DataBindingUtil.inflate(LayoutInflater
+                    .from(parent.getContext()), R.layout.main_index_viewpager_item, parent, false);
+            viewModel = new PagerItemViewModel(parent.getContext(), category);
+            binding.setViewModel(viewModel);
+            viewModel.setNavigator(this);
+            setupRecyclerView();
+            setupSwipeRefreshLayout();
+            setupUpButton();
+            rootView = binding.getRoot();
+        }
+
+        ViewGroup parent2 = (ViewGroup) rootView.getParent();
+        if (parent2 != null) {
+            parent2.removeView(rootView);
+        }
+        return rootView;
     }
 
     public void onResume() {
@@ -75,9 +77,15 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
      */
     public void onDestroy() {
         activityContext = null;
-        binding = null;
         viewModel.destroy();
-        viewModel = null;
+    }
+
+    public PagerItemView(Context context) {
+        super(context);
+    }
+
+    public PagerItemView(ViewGroup parent) {
+        this(parent.getContext());
     }
 
 
