@@ -3,15 +3,14 @@ package com.lfork.a98620.lfree.main.index;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
-import android.text.format.DateFormat;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
+import com.lfork.a98620.lfree.util.TimeUtil;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,7 +71,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
             }
         } else {
             isInitialized = true;
-            getGoodsList(INITIALIZE, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
+            getGoodsList(INITIALIZE, TimeUtil.getBiggestTime());//DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString()  保证数据的绝对最新
         }
     }
 
@@ -85,7 +84,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     //下拉刷新
     public void refreshData() {
         isRefreshed = false;
-        getGoodsList(REFRESH, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
+        getGoodsList(REFRESH,TimeUtil.getBiggestTime() );//DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString()  保证数据的绝对最新
     }
 
     private void getGoodsList(int requestType, String... cursor) {

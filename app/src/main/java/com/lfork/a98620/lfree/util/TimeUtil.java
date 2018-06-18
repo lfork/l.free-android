@@ -11,4 +11,8 @@ public class TimeUtil {
     public static String getStandardTime(){
          return DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString();
     }
+
+    public static String getBiggestTime(){
+        return DateFormat.format("9999-01-02 13:44:44", new Date()).toString();
+    }
 }

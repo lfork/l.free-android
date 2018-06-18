@@ -84,8 +84,6 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
         for (int i = 1; i < pageTitles.size();i++) {
             PagerItemView itemView = new PagerItemView(parent);
             viewList.add(itemView);
-
-
         }
     }
 
@@ -95,11 +93,9 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
     }
 
     public void replaceData(List<Category> items, ViewPager parent) {
-        Log.d(TAG, "replaceData: " + Thread.currentThread());
         this.pageTitles.addAll(items);
         preInitItemView(parent);
         notifyDataSetChanged(); //先通知数据改变，再绑定数据
-        Log.d(TAG, "replaceData: " + items);
     }
 
     /**
