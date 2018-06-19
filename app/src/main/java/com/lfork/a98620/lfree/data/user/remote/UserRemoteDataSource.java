@@ -1,5 +1,7 @@
 package com.lfork.a98620.lfree.data.user.remote;
 
+import android.text.TextUtils;
+
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.base.network.httpservice.HttpService;
 import com.lfork.a98620.lfree.base.network.httpservice.Result;
@@ -119,14 +121,33 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void updateThisUser(GeneralCallback<String> callback, User user) {
-        RequestBody requestBody = new MultipartBody.Builder()
+
+        MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("studentId", user.getUserId() + "")
-                .addFormDataPart("userEmail", user.getUserEmail())
-                .addFormDataPart("userPhone", user.getUserPhone())
                 .addFormDataPart("userName", user.getUserName())
-                .addFormDataPart("userSchool.id", user.getSchool().getId())
-                .build();
+                .addFormDataPart("userSchool.id", user.getSchool().getId());
+
+        if (!TextUtils.isEmpty(user.getUserDesc())) {
+            builder.addFormDataPart("userDesc", user.getUserDesc());
+        } else {
+            builder.addFormDataPart("userDesc", "");
+        }
+
+        if (!TextUtils.isEmpty(user.getUserEmail())) {
+            builder.addFormDataPart("userEmail", user.getUserEmail());
+        } else {
+            builder.addFormDataPart("userEmail", "");
+        }
+
+        if (!TextUtils.isEmpty(user.getUserPhone())) {
+            builder.addFormDataPart("userPhone", user.getUserPhone());
+        } else {
+            builder.addFormDataPart("userPhone", "");
+        }
+
+        RequestBody requestBody = builder.build();
+
         String responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/user_save", requestBody);
 
         Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {

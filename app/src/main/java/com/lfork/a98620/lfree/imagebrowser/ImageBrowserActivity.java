@@ -46,7 +46,7 @@ public class ImageBrowserActivity extends AppCompatActivity {
     private void setupActionBar(){
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
-        actionBar.setTitle("大图浏览");
+        actionBar.setTitle("原图查看");
         actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
         // 有小箭头，并且图标可以点击
         actionBar.setDisplayShowHomeEnabled(false);

@@ -15,4 +15,6 @@ public interface UserInfoEditNavigator {
     void failed(String result);
 
     void backToUserInfoAct(int result, String log);
+
+    void showMessage(String msg);
 }

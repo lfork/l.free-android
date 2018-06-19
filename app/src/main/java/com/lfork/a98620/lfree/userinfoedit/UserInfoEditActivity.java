@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.databinding.UserInfoThisEditActBinding;
+import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -88,9 +89,9 @@ public class UserInfoEditActivity extends AppCompatActivity implements AdapterVi
     }
 
     @Override
-    public void setupSpinner(List<School> data,int currentSchoolId) {
+    public void setupSpinner(List<School> data, int currentSchoolId) {
         runOnUiThread(() -> {
-            ArrayAdapter<School> arrayAdapter = new ArrayAdapter<School>(this, android.R.layout.simple_spinner_dropdown_item,data);
+            ArrayAdapter<School> arrayAdapter = new ArrayAdapter<School>(this, android.R.layout.simple_spinner_dropdown_item, data);
             binding.spinner.setAdapter(arrayAdapter);
             binding.spinner.setOnItemSelectedListener(this);
             binding.spinner.setSelection(currentSchoolId - 1);
@@ -114,6 +115,13 @@ public class UserInfoEditActivity extends AppCompatActivity implements AdapterVi
             intent.putExtra("data_return", log);
             setResult(result, intent);
             finish();
+        });
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        runOnUiThread(() -> {
+            ToastUtil.showShort(getBaseContext(), msg);
         });
     }
 }
