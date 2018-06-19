@@ -96,12 +96,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:shareTo="@{viewModel.getUrl}"
                 android:gravity="center">
 
                 <Button
                     android:id="@+id/community_share"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:shareTo="@{viewModel.getUrl}"
                     android:background="@drawable/ic_community_share_side" />
             </RelativeLayout>
 
@@ -114,12 +116,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:toArticleComment="@{viewModel.articleId}"
                 android:gravity="center">
 
                 <Button
                     android:id="@+id/community_comment"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:toArticleComment="@{viewModel.articleId}"
                     android:background="@drawable/ic_community_comment" />
             </RelativeLayout>
         </LinearLayout>

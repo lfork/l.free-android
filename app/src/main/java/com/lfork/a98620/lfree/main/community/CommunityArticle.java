@@ -68,5 +68,9 @@ public class CommunityArticle extends BaseViewModel {
     public void setImageUriList(List<String> imageUriList) {
         this.imageUriList = imageUriList;
     }
+
+    public String getUrl() {
+        return "http://imyth.top:8080/community_server/getcommunitycomment?articleId=" + articleId;
+    }
 }
 
