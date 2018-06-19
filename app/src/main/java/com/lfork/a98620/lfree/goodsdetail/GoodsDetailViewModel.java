@@ -113,6 +113,12 @@ public class GoodsDetailViewModel extends GoodsViewModel {
             }
         }
 
+        if (g.getUserId() == UserDataRepository.getInstance().getUserId()) {
+            if (navigator != null) {
+                navigator.setActionBar();
+            }
+        }
+
         userId = g.getUserId();
 
         if (navigator != null) {
@@ -157,10 +163,13 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                 ReviewItemViewModel viewModel = new ReviewItemViewModel(data);
                 reviewItems.add(0,viewModel );
                 review.set("");
+
                 if (navigator != null) {
                     navigator.notifyReviewChanged();
                 }
+                reviewDataIsEmpty.set(false);
                 showMessage("评论成功");
+
 
             }
 

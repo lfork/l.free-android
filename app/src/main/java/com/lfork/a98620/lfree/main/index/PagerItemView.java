@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
 
     private PagerItemViewModel viewModel;
 
+    private static final String TAG = "PagerItemView";
+
     /**
      * 优化策略
      * 1、gc的“活对象”回收策略
@@ -38,6 +41,10 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
     private  Activity activityContext;
 
     private MainIndexViewpagerItemBinding binding;
+
+    private boolean needForceRefresh = false;
+
+    private boolean viewWasCreated = false;
 
     private View rootView;
 
@@ -52,6 +59,7 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
             setupSwipeRefreshLayout();
             setupUpButton();
             rootView = binding.getRoot();
+            viewWasCreated = true;
         }
 
         ViewGroup parent2 = (ViewGroup) rootView.getParent();
@@ -159,6 +167,15 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         activityContext.startActivity(intent);
     }
 
+    public void forceRefresh(){
+        Log.d(TAG, "forceRefresh: " + needForceRefresh);
+        if (needForceRefresh && !viewModel.isInitialized()) {
+            binding.swipeRefresh.setRefreshing(true);
+            onRefresh();
+            needForceRefresh = false;
+        }
+    }
+
     @Override
     public void toast(String log) {
         getActivityContext().runOnUiThread(() -> {
@@ -166,4 +183,15 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
             binding.swipeRefresh.setRefreshing(false);
         });
     }
+
+    public void setNeedForceRefresh(boolean needForceRefresh) {
+        if (viewModel == null || viewModel.isInitialized()) {
+            this.needForceRefresh = needForceRefresh;
+        }
+    }
+
+    public boolean isViewWasCreated() {
+        return viewWasCreated;
+    }
+
 }

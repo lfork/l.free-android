@@ -48,7 +48,6 @@ public class GoodsUploadViewModel extends GoodsViewModel {
 
     private GoodsDataRepository repository;
 
-    private int categoryId = 1;
 
     public final ObservableArrayList<Boolean> imageVisible = new ObservableArrayList<>();
 
@@ -63,6 +62,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
         imagePathList = new ArrayList<>();
         repository = GoodsDataRepository.getInstance();
         dataIsLoading.set(false);
+        setCategoryId(1);
 
     }
 
@@ -171,7 +171,7 @@ public class GoodsUploadViewModel extends GoodsViewModel {
         g.setUserId(UserDataRepository.getInstance().getThisUser().getUserId());
         g.setOriginPrice(originPrice.get());
         g.setPrice(price.get());
-        g.setCategoryId(categoryId);
+        g.setCategoryId(getCategoryId());
 
 
         List<File> newImages = new ArrayList<>();
@@ -239,8 +239,4 @@ public class GoodsUploadViewModel extends GoodsViewModel {
         navigator = null;
     }
 
-    @Override
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
 }

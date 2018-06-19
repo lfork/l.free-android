@@ -22,6 +22,7 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
 
     private List<PagerItemView> viewList = new ArrayList<>();//view数组
 
+    private int currentTabPosition;
     private Activity context;
 
     PagerItemAdapter(List<Category> pageTitles, Activity context) {
@@ -110,6 +111,8 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
         PagerItemView pagerItemView = viewList.get(tab.getPosition());
         pagerItemView.setActivityContext(context);
         pagerItemView.onResume();
+        pagerItemView.forceRefresh();
+        currentTabPosition = tab.getPosition();
     }
 
     @Override
@@ -122,7 +125,12 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
         viewList.get(tab.getPosition()).onResume();
     }
 
-//    public void onDestroy(){
+    public int getCurrentTabPosition() {
+        return currentTabPosition;
+    }
+
+
+    //    public void onDestroy(){
         //缓存的问题  (对于常用的页面 我们应该做一下缓存  而不是直接回收掉)
         // 没错，当前的页面已经是做到位了，很好
 

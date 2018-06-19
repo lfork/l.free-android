@@ -6,6 +6,7 @@
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.goodsdetail.ReviewItemViewModel"/>
+        <import type="android.view.View"/>
     </data>
 
     <RelativeLayout android:layout_width="match_parent"
@@ -54,6 +55,16 @@
             android:layout_marginBottom="10dp"
             android:text="@{viewModel.content}"
             android:textSize="12sp" />
+
+        <Button
+            android:visibility="@{viewModel.isReviewedByThisUser ? View.VISIBLE : View.INVISIBLE}"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除"
+            />
+
         <View
             android:layout_below="@id/textView"
             android:layout_width="match_parent"

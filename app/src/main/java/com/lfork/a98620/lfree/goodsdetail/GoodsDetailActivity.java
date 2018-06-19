@@ -34,6 +34,8 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     private GoodsDetailViewModel viewModel;
 
+    private MenuItem delete, edit;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -48,7 +50,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         int goodsId = intent.getIntExtra("id", 0);
-       // int categoryId = intent.getIntExtra("category_id", 0);
+        // int categoryId = intent.getIntExtra("category_id", 0);
         binding = DataBindingUtil.setContentView(this, R.layout.goods_detail_act);
         viewModel = new GoodsDetailViewModel(this, goodsId);
 
@@ -58,7 +60,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         initBanner();
     }
 
-    private void initBanner(){
+    private void initBanner() {
         Banner banner = findViewById(R.id.banner);
         banner.setImageLoader(new GlideImageLoader()).start();
         banner.setOnBannerListener(new OnBannerListener() {
@@ -70,7 +72,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     }
 
 
-    public void initActionBar(String title){
+    public void initActionBar(String title) {
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
         actionBar.setTitle(title);
@@ -80,11 +82,11 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     }
 
-    private void setupRecyclerView(){
-        RecyclerView recyclerView =   binding.reviewContent.reviewRecycle;
+    private void setupRecyclerView() {
+        RecyclerView recyclerView = binding.reviewContent.reviewRecycle;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<ReviewItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.reviewItems, R.layout.goods_detail_comment_contacts_item);
+        RecyclerViewItemAdapter<ReviewItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.reviewItems, R.layout.goods_detail_comment_item);
         recyclerView.setAdapter(adapter);
     }
 
@@ -94,7 +96,12 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.menu1:
+            case R.id.menu_edit:
+                break;
+            case R.id.menu_delete:
+                break;
+            case R.id.menu_share:
+                break;
             default:
                 break;
         }
@@ -103,9 +110,9 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.common_action_bar, menu);
-        MenuItem item = menu.getItem(0);
-        item.setTitle("");
+        getMenuInflater().inflate(R.menu.goods_detail_action_bar, menu);
+        edit = menu.getItem(1);
+        delete = menu.getItem(2);
         return true;
     }
 
@@ -119,7 +126,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     }
 
     /**
-     *  关闭软键盘
+     * 关闭软键盘
      */
     @Override
     public void closeSoftKeyBoard() {
@@ -152,6 +159,18 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         runOnUiThread(() -> {
             binding.banner.update(images);      //刷新轮播图
         });
+    }
+
+    @Override
+    public void setActionBar() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                edit.setVisible(true);
+                delete.setVisible(true);
+            }
+        });
+
     }
 
     @Override

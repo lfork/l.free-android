@@ -33,5 +33,8 @@
     <string name="todo">TODO</string>
     <string name="searching">搜索中…</string>
     <string name="tempSchool">temp school : cuit</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="share">分享</string>
 
 </resources>

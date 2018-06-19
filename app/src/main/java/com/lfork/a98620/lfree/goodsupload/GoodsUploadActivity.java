@@ -127,7 +127,7 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
                 finish();
                 break;
             case R.id.menu1:
-                viewModel.uploadGoods();
+//                viewModel.uploadGoods();
             default:
                 break;
         }
@@ -136,9 +136,9 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.common_action_bar, menu);
-        MenuItem item = menu.getItem(0);
-        item.setTitle("完成");
+//        getMenuInflater().inflate(R.menu.common_action_bar, menu);
+//        MenuItem item = menu.getItem(0);
+//        item.setTitle("完成");
         return true;
     }
 
@@ -301,13 +301,14 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
 
     @Override
     public void uploadSucceed() {
-
         runOnUiThread(() -> {
             ToastUtil.showLong(getApplicationContext(), "上传成功");
-            setResult(RESULT_OK, new Intent());
+            Intent intent = new Intent();
+            Log.d(TAG, "uploadSucceed: " +viewModel.getCategoryId() );
+            intent.putExtra("category", viewModel.getCategoryId() - 1);
+            setResult(RESULT_OK, intent);
             finish();
         });
-
     }
 
     @Override

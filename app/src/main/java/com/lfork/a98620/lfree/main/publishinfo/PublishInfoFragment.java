@@ -2,20 +2,16 @@ package com.lfork.a98620.lfree.main.publishinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.goodsupload.GoodsUploadActivity;
 import com.lfork.a98620.lfree.main.MainActivity;
-import com.lfork.a98620.lfree.main.community.CommunityFragment;
 import com.lfork.a98620.lfree.publisharticle.PublishArticleActivity;
 
 import static android.app.Activity.RESULT_OK;
@@ -24,15 +20,16 @@ public class PublishInfoFragment extends Fragment {
     private static final String TAG = "PublishInfoFragment";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_goods_upload_frag, container, false);
         Button upload = view.findViewById(R.id.btn_upload);
         upload.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), GoodsUploadActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, MainActivity.CODE_UPLOAD);
         });
-        Button publishArticle = (Button) view.findViewById(R.id.btn_publish_article);
+
+        Button publishArticle = view.findViewById(R.id.btn_publish_article);
         publishArticle.setOnClickListener((view1) -> {
             Intent intent = new Intent(getContext(), PublishArticleActivity.class);
             startActivityForResult(intent, 1);
@@ -44,13 +41,20 @@ public class PublishInfoFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        MainActivity activity = (MainActivity) getActivity();
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    Log.d(TAG, "onActivityResult: " + requestCode);
-                    MainActivity activity = (MainActivity) getActivity();
+
+
                     if (activity != null) {
                         activity.toCommunityFragment();
+                    }
+                }
+            case MainActivity.CODE_UPLOAD:
+                if (resultCode == RESULT_OK) {
+                    if (activity != null) {
+                        activity.refreshIndexFragment(data.getIntExtra("category", 0));
                     }
                 }
                 break;

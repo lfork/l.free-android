@@ -174,4 +174,8 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     public void setNavigator(PagerItemViewNavigator navigator) {
         this.navigator = navigator;
     }
+
+    public boolean isInitialized() {
+        return isInitialized;
+    }
 }

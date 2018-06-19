@@ -23,4 +23,6 @@ public interface GoodsDetailNavigator extends ViewModelNavigator{
 
     void refreshBanner(ArrayList<String> images);
 
+    void setActionBar();
+
 }
