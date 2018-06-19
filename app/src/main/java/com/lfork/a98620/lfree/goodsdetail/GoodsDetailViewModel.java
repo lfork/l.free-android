@@ -41,6 +41,8 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     public final ObservableBoolean reviewDataIsEmpty = new ObservableBoolean(false);
 
+    private boolean initialized = false;
+
 
     private int id;
 
@@ -58,7 +60,10 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     @Override
     public void start() {
-        getNormalData();
+        if (!initialized) {
+            getNormalData();
+            initialized = true;
+        }
     }
 
     private void getNormalData() {

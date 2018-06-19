@@ -144,7 +144,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     @Override
     public void openBigImages(ObservableArrayList<String> images, int position) {
-        ImageBrowserActivity.actionStart(this, images, 0);
+        ImageBrowserActivity.actionStart(this, images, position);
     }
 
     @Override
