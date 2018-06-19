@@ -41,7 +41,6 @@ public class IndexFragmentViewModel extends BaseObservable {
      */
     private void initData() {
 
-
         if (categories.size() != 0){
             return;
         }

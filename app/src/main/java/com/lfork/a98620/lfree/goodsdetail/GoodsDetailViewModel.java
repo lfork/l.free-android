@@ -2,6 +2,7 @@ package com.lfork.a98620.lfree.goodsdetail;
 
 import android.content.Context;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.text.TextUtils;
 
@@ -38,6 +39,9 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     public final ObservableField<String> review = new ObservableField<>("");
 
+    public final ObservableBoolean reviewDataIsEmpty = new ObservableBoolean(false);
+
+
     private int id;
 
     private int userId;
@@ -66,7 +70,6 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                 if (reviews.size() > 0) {
                     reviewItems.clear();
                     Collections.reverse(reviews);
-
                     for (Review r: reviews) {
                         ReviewItemViewModel viewModel = new ReviewItemViewModel(r);
                         reviewItems.add(0, viewModel);
@@ -76,6 +79,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                         navigator.notifyReviewChanged();
                     }
                 } else {
+                    reviewDataIsEmpty.set(true);  //这个data指的是review
                     setData();
                 }
             }
@@ -171,8 +175,8 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     }
 
 
-    public void onClickImage(int index) {
-        navigator.openBigImages();
+    public void onClickImage(int position) {
+        navigator.openBigImages(images, position);
     }
 
     @Override

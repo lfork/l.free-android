@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.goodsdetail;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -59,6 +61,12 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     private void initBanner(){
         Banner banner = findViewById(R.id.banner);
         banner.setImageLoader(new GlideImageLoader()).start();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                viewModel.onClickImage(position);
+            }
+        });
     }
 
 
@@ -135,8 +143,8 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     }
 
     @Override
-    public void openBigImages() {
-        ImageBrowserActivity.actionStart(this);
+    public void openBigImages(ObservableArrayList<String> images, int position) {
+        ImageBrowserActivity.actionStart(this, images, 0);
     }
 
     @Override

@@ -13,15 +13,15 @@ public abstract class UserViewModel extends BaseViewModel {
 
     public final ObservableField<String> username = new ObservableField<>();
 
-    public final ObservableField<String> description = new ObservableField<>();
+    public final ObservableField<String> description = new ObservableField<>("");
 
     public final ObservableField<String> imageUrl = new ObservableField<>();
 
-    public final ObservableField<String> studentNumber = new ObservableField<>();
+    public final ObservableField<String> studentNumber = new ObservableField<>("");
 
     public final ObservableField<String> phone = new ObservableField<>();
 
-    public final ObservableField<String> email = new ObservableField<>();
+    public final ObservableField<String> email = new ObservableField<>("");
 
     public final ObservableField<String> gender = new ObservableField<>();
 

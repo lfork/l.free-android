@@ -6,6 +6,7 @@
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.goodsdetail.GoodsDetailViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <RelativeLayout
@@ -59,6 +60,7 @@
             android:background="@color/viewColor" />
 
         <TextView
+
             android:id="@+id/text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,6 +79,7 @@
             android:layout_below="@id/text_view"
             android:layout_marginBottom="10dp"
             android:drawablePadding="10dp"
+            android:visibility="@{viewModel.reviewDataIsEmpty ? View.VISIBLE : View.GONE}"
             android:drawableTop="@drawable/ic_talk_notalk"
             android:gravity="center"
             android:text="还没有人评论过哦~~" />

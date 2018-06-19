@@ -47,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
         // 有小箭头，并且图标可以点击
         actionBar.setDisplayShowHomeEnabled(false);
-
     }
 
 
@@ -63,12 +62,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void success(final String result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                finish();
-            }
+        runOnUiThread(() -> {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            finish();
         });
     }
 

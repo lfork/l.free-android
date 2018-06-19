@@ -55,14 +55,13 @@ public class UserInfoEditViewModel extends UserViewModel {
                 public void succeed(User user) {
                     mUser = user;
                     username.set(user.getUserName());
-                    if (TextUtils.isEmpty(user.getUserDesc())) {
-                        description.set("该用户还没有自我介绍....");
-                    } else {
-                        description.set(user.getUserDesc());
-                    }
-                    imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
+
+                    description.set(user.getUserDesc());
                     email.set(user.getUserEmail());
                     phone.set(user.getUserPhone());
+                    imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
+
+
                     studentNumber.set(user.getUserId() + "");
                     school.set(user.getSchool().getSchoolName());
                     getSchoolList();
@@ -94,6 +93,21 @@ public class UserInfoEditViewModel extends UserViewModel {
         newUser.setUserDesc(description.get());
         newUser.setSchool(mUser.getSchool());
 
+        if (TextUtils.isEmpty(newUser.getUserDesc())) {
+            showMessage("描述不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(newUser.getUserEmail())) {
+            showMessage("邮箱不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(newUser.getUserPhone())) {
+            showMessage("电话不能为空");
+            return;
+        }
+
         isUpdating.set(true);
         new Thread(() -> {
             repository.updateThisUser(new DataSource.GeneralCallback<String>() {
@@ -119,6 +133,12 @@ public class UserInfoEditViewModel extends UserViewModel {
     }
 
 
+    private void showMessage(String msg){
+        if (navigator != null) {
+            //跳转到详细信息的界面
+            navigator.showMessage(msg);
+        }
+    }
 
 
     /**
