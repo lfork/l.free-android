@@ -1,5 +1,7 @@
 package com.lfork.a98620.lfree.goodsdetail;
 
+import android.databinding.ObservableArrayList;
+
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public interface GoodsDetailNavigator extends ViewModelNavigator{
 
     void openChatWindow(String s, int userId);
 
-    void openBigImages();
+    void openBigImages(ObservableArrayList<String> images, int position);
 
     void refreshBanner(ArrayList<String> images);
 

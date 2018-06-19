@@ -17,6 +17,10 @@ public class IMUser {
 
     private String portraitPath;
 
+    private int deleted;  //0表示 在列表当中 ，1表示被删除了
+
+    private int newMessageNumber; //未读消息的数量
+
     public IMUser() {
     }
 
