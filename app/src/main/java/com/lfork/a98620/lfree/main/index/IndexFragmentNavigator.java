@@ -24,4 +24,7 @@ public interface IndexFragmentNavigator {
 
     void openSearchActivity();
 
+    void openWebClient(String url);
+    //ppt 文档  心得体会  源码 数据库 配置文件  需求文档 概要设计
+
 }

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".base.FreeApplication"
         android:hardwareAccelerated="true"
@@ -18,10 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:screenOrientation="portrait"
             android:name=".main.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />
-        <activity android:launchMode="singleTask" android:name=".chatwindow.ChatWindowActivity" />
+        <activity
+            android:name=".chatwindow.ChatWindowActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".goodsdetail.GoodsDetailActivity" />
         <activity android:name=".goodsupload.GoodsUploadActivity" />
         <activity
@@ -64,12 +67,12 @@
         <service
             android:name=".imservice.MessageService"
             android:enabled="true"
-            android:exported="true" >
-         </service>
-        <activity android:name=".publisharticle.PublishArticleActivity"/>
-        <activity android:name=".articlecontent.ArticleContentActivity"/>
-        <activity android:name=".imagebrowser.ImageBrowserActivity"/>
+            android:exported="true"></service>
 
+        <activity android:name=".publisharticle.PublishArticleActivity" />
+        <activity android:name=".articlecontent.ArticleContentActivity" />
+        <activity android:name=".imagebrowser.ImageBrowserActivity" />
+        <activity android:name=".webclient.WebClient"></activity>
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import com.lfork.a98620.lfree.base.image.GlideImageLoader;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.databinding.MainIndexFragBinding;
 import com.lfork.a98620.lfree.searchresult.SearchResultActivity;
+import com.lfork.a98620.lfree.webclient.WebClient;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator,Ta
 
     private ViewPager viewPager;
 
-    private MyViewPagerAdapter adapter2;
 
     private PagerItemAdapter pagerAdapter;
 
@@ -66,14 +66,16 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator,Ta
         images.add("http://www.lfork.top/Test/3.png");
         images.add("http://www.lfork.top/Test/4.png");
         banner.setImages(images).setImageLoader(new GlideImageLoader()).start();
+        banner.setOnBannerListener(position -> viewModel.openUrl(position));
     }
+
+
 
     /**
      * 这里设置了 viewPager以后 fragment需要持有viewPager的view的引用
      */
     private void setupViewPager() {
         viewPager = binding.mainIndexFragViewpager;
-        adapter2 = new MyViewPagerAdapter();
         pagerAdapter = new PagerItemAdapter(new ArrayList<Category>(0), getActivity());
         viewPager.setAdapter(pagerAdapter);
     }
@@ -89,14 +91,20 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator,Ta
     }
 
 
-    private static final String TAG = "A";
+    private static final String TAG = "IndexFragment";
 
 
     @Override
     public void openSearchActivity() {
         Intent intent = new Intent(getContext(), SearchResultActivity.class);
         intent.putExtra("recommend_keyword", "Java从入门到精通");
+
         Objects.requireNonNull(getContext()).startActivity(intent);
+    }
+
+    @Override
+    public void openWebClient(String url) {
+        WebClient.openUrlInWebClient(getActivity(), url);
     }
 
     /**
