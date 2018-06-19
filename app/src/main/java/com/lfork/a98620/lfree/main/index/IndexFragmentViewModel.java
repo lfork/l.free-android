@@ -10,6 +10,7 @@ import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,8 @@ public class IndexFragmentViewModel extends BaseObservable {
     private GoodsDataRepository repository;
     public final ObservableBoolean dataIsLoading = new ObservableBoolean(true);
 
+    private ArrayList<String> announcementsUrls = new ArrayList<>();
+
     IndexFragmentViewModel(Context context) {
         this.context = context;
     }
@@ -37,9 +40,15 @@ public class IndexFragmentViewModel extends BaseObservable {
      *  数据只加载一次 ，第二次加载需要用户的手动刷新
      */
     private void initData() {
+
+
         if (categories.size() != 0){
             return;
         }
+        announcementsUrls.add("http://www.lfork.top");
+        announcementsUrls.add("https://mp.weixin.qq.com/s?src=11&timestamp=1529370001&ver=947&signature=lzSrX7IJGYJ2DzSNE33nktmFsOXlcGokMjg8-UGhe66cpNhZV6igGEXkT0sblwBqNgkE3X2T-giEJ8IPqpaSmt1rQac6z0BV6L1Zf2Wwlr1GDGcM9fxOWmzgEu5kJpFp&new=1");
+        announcementsUrls.add("https://mp.weixin.qq.com/s?src=11&timestamp=1529370001&ver=947&signature=TUhhdkOn62I10W5IpgcS65L152H3p74uX*bdnjuF1DtzcFLIcqdC50yA5qPVPd2Bb526FiDdHjXyR7ZrY2DZi4qJU*GHIYxDkTDVrXwNlZHwlmbJRYWcpHTcaNhsWceT&new=1");
+
         repository = GoodsDataRepository.getInstance();
         new Thread(() -> {
             repository.getCategories(new DataSource.GeneralCallback<List<Category>>() {
@@ -69,6 +78,12 @@ public class IndexFragmentViewModel extends BaseObservable {
     public void openSearch(){
         if (navigator != null) {
             navigator.openSearchActivity();
+        }
+    }
+
+    public void openUrl(int position){
+        if (navigator != null) {
+            navigator.openWebClient(announcementsUrls.get(position));
         }
     }
 

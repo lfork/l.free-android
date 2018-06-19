@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.lfork.a98620.lfree.util.mvvmadapter.Image;
 import com.youth.banner.loader.ImageLoader;
 
 public class GlideImageLoader extends ImageLoader {
@@ -12,7 +12,7 @@ public class GlideImageLoader extends ImageLoader {
     public void displayImage(Context context, Object path, ImageView imageView) {
         //Glide 加载图片简单用法
         if (isValidContextForGlide(context))
-            Glide.with(context).load(path).into(imageView);
+            Image.setImageNoCache(imageView, path);
     }
 
 //    final Context  context = getContext();

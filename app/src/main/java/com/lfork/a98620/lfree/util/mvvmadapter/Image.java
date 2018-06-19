@@ -20,6 +20,14 @@ public class Image {
         Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
     }
 
+    public static void setImageNoCache(ImageView view,Object path) {
+        GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
+        Glide.with(view.getContext()).load( path).apply(options).into(view);
+    }
+
+
+
+
     @BindingAdapter({"setImageWithDiskCache"})
     public static void setImageWithDiskCache(ImageView view, String imageUrl) {
         GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).placeholder(R.drawable.login_logo).skipMemoryCache(false);
