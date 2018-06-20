@@ -29,7 +29,7 @@ public interface GoodsDetailNavigator extends ViewModelNavigator{
 
     void deleteGoods(boolean succeed);
 
-    void deleteReview(boolean succeed);
+    void deleteReview(boolean succeed, int reviewId);
 
     void updateGoods(int goodsId);
 

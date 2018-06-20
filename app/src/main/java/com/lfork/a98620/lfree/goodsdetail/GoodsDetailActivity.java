@@ -180,12 +180,22 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     @Override
     public void deleteGoods(boolean succeed) {
         runOnUiThread(() -> {
-            ToastUtil.showShort(getBaseContext(), succeed ?"删除成功":"删除失败");
+            ToastUtil.showShort(getBaseContext(), succeed ?"假装删除成功:后台功能还在开发中":"删除失败");
+
+            if (succeed) {
+                finish();
+            }
         });
     }
 
     @Override
-    public void deleteReview(boolean succeed) {
+    public void deleteReview(boolean succeed, int reviewId) {
+        if (reviewId == -1) {
+            runOnUiThread(() -> ToastUtil.showShort(getBaseContext(), "假装删除成功:后台功能还在开发中"));
+        } else {
+            viewModel.deleteReview(reviewId);
+        }
+
 
     }
 

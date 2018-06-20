@@ -14,7 +14,8 @@ public class Review implements Serializable {
     private String content;
 
 
-    @SerializedName("rId")
+
+    @SerializedName("gId")
     private String goodsId;
 
     private User user;
@@ -28,7 +29,7 @@ public class Review implements Serializable {
         this.content = content;
     }
 
-    @SerializedName("gId")
+    @SerializedName("rId")
     private int id;
 
     public String getContent() {

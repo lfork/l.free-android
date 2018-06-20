@@ -48,7 +48,7 @@ public class ReviewItemViewModel {
 
     public void deleteReview(){
         if (navigator != null && navigator.get() != null) {
-            navigator.get().deleteReview(true);
+            navigator.get().deleteReview(true, id.get());
         }
 
     }

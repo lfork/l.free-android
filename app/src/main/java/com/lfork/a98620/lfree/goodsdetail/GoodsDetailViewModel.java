@@ -227,7 +227,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
             @Override
             public void succeed(String data) {
                 if (navigator != null) {
-                    navigator.deleteGoods(false);
+                    navigator.deleteGoods(true);
                 }
             }
 
@@ -240,7 +240,25 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         }, g.getId());
     }
 
-    public void deleteReview(){
-        showMessage("假装删除成功:后台功能还在完善中");
+    public void deleteReview(int reviewId){
+
+        int i = -1;
+        for (ReviewItemViewModel next : reviewItems) {
+            i++;
+            if (next.id.get() == reviewId) {
+                break;
+            }
+
+        }
+
+        if (i != -1) {
+            reviewItems.remove(i );
+            if (navigator != null){
+                navigator.deleteReview(true, -1);
+                navigator.notifyReviewChanged();
+            }
+        }
+
+
     }
 }
