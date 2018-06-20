@@ -80,6 +80,11 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
             adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void openChatWindow(int userId, String userName) {
+
+    }
+
 //
 
 }

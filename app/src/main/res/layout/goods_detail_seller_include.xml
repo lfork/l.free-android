@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -24,7 +25,8 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_toStartOf="@id/btn_chat"
             android:onClick="@{()->viewModel.openSellerInfo()}"
-            android:focusable="true">
+            android:focusable="true"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_gravity="center"
@@ -60,7 +62,7 @@
             android:layout_marginEnd="30dp"
             android:background="@color/Login_Button"
             android:onClick="@{()->viewModel.startPrivateChat()}"
-            android:text="私聊"
+            android:text="@string/private_chat"
             android:textColor="@color/white"
             android:textSize="17sp" />
 

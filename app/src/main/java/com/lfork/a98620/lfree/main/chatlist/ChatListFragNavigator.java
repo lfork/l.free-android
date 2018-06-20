@@ -5,4 +5,6 @@ package com.lfork.a98620.lfree.main.chatlist;
  */
 public interface ChatListFragNavigator {
     void notifyUsersChanged();
+
+    void openChatWindow(int userId, String userName);
 }

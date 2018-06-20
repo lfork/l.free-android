@@ -36,5 +36,15 @@
     <string name="edit">编辑</string>
     <string name="delete">删除</string>
     <string name="share">分享</string>
+    <string name="address">位置:</string>
+    <string name="commit">提交</string>
+    <string name="uploading">正在上传…</string>
+    <string name="choose_image">选择图片上传</string>
+    <string name="goods_name">商品名</string>
+    <string name="goods_description">商品描述</string>
+    <string name="origin_price">原价:</string>
+    <string name="sell_price">卖价:</string>
+    <string name="category">分类:</string>
+    <string name="private_chat">私聊</string>
 
 </resources>

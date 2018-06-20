@@ -28,6 +28,7 @@ public class Review implements Serializable {
         this.content = content;
     }
 
+    @SerializedName("gId")
     private int id;
 
     public String getContent() {

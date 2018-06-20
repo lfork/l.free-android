@@ -5,5 +5,5 @@ package com.lfork.a98620.lfree.main.index;
  */
 interface GoodsItemNavigator {
 
-    void openGoodsDetail(int goodsId);
+    void openGoodsDetail(int goodsId, int categoryId);
 }

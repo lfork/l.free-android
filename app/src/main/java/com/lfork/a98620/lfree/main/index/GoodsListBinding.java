@@ -20,8 +20,6 @@ public class GoodsListBinding {
         if (adapter != null)
         {
             if (items.size() > 0)
-
-            Log.d(TAG, "setItems: 没更新吗？" +  items);
             adapter.setItems(items);
         }
     }

@@ -1,7 +1,8 @@
-package com.lfork.a98620.lfree.goodsupload;
+package com.lfork.a98620.lfree.goodsuploadupdate;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -30,6 +31,7 @@ import com.lfork.a98620.lfree.base.customview.PopupDialog;
 import com.lfork.a98620.lfree.base.customview.PopupDialogOnclickListener;
 import com.lfork.a98620.lfree.base.image.GlideEngine;
 import com.lfork.a98620.lfree.databinding.GoodsUploadActBinding;
+import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.mvvmadapter.Image;
 import com.zhihu.matisse.Matisse;
@@ -41,40 +43,50 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploadNavigator{
+public class GoodsUploadUpdateActivity extends AppCompatActivity implements GoodsUploadUpdateNavigator {
 
     private static final int REQUEST_CODE_CHOOSE = 1; //相册 多张选择
 
     private static final int REQUESTCODE_CAM = 2;//相机 单张拍摄
 
-    private GoodsUploadViewModel viewModel;
+    private GoodsUploadUpdateViewModel viewModel;
 
     private GoodsUploadActBinding binding;
 
-    private static final String TAG = "GoodsUploadActivity";
+    private static final String TAG = "GoodsUploadUpdate";
 
     private List<ImageView> imageViews = new ArrayList<>();
     private File portraitFile;
+
     private Uri imageUri;
-
-
 
     private int tempImageCount;
 
-    private int imageViewIndex = -1;
+    int launchType,goodsId,categoryId;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        launchType = intent.getIntExtra("launch_type", 0);
+        goodsId = intent.getIntExtra("goods_id", 0);
+        categoryId = intent.getIntExtra("category_id", 0);
+
+        if (launchType == 0) {
+            Log.d(TAG, "onCreate: 启动参数有误");
+            finish();
+            return;
+        }
+
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.goods_upload_act);
-        viewModel = new GoodsUploadViewModel(getApplicationContext());
-        viewModel.setNavigator(this);
+        viewModel = new GoodsUploadUpdateViewModel(getApplicationContext());
         binding.setViewModel(viewModel);
         initActionBar();
-
         setupSpinner();
-
         if (imageViews.size() < 1) {
             imageViews.add(binding.image1);
             imageViews.add(binding.image2);
@@ -82,7 +94,6 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
             imageViews.add(binding.image4);
             imageViews.add(binding.image5);
         }
-
         /*
           避免滑动冲突
          */
@@ -92,13 +103,30 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (viewModel != null) {
+            viewModel.start(launchType, goodsId, categoryId);
+            viewModel.setNavigator(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (viewModel != null)
+         viewModel.destroy();
+    }
+
+
 
     private void setupSpinner(){
         Spinner spinner = binding.spinner;
+//        spinner.setAdapter();
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "setupSpinner: " + position);
                 viewModel.setCategoryId(position + 1);
             }
 
@@ -142,7 +170,7 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
         return true;
     }
 
-    List<Uri> mSelected;
+    List<Uri> mSelected = new ArrayList<>();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -171,7 +199,7 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
     }
 
     public void selectImages(int count) {
-        Matisse.from(GoodsUploadActivity.this)
+        Matisse.from(GoodsUploadUpdateActivity.this)
                 .choose(MimeType.of(MimeType.PNG, MimeType.GIF, MimeType.JPEG))
                 .countable(true)
                 .maxSelectable(count)
@@ -223,7 +251,7 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
                 int checkCallPhonePermission = ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) + ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
                     ToastUtil.showLong(getApplicationContext(), "请允许程序访问您的SD卡，以便上传图片^v^");
-                    ActivityCompat.requestPermissions(GoodsUploadActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
+                    ActivityCompat.requestPermissions(GoodsUploadUpdateActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
                 } else {
                     openCamera();
                 }
@@ -231,9 +259,9 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
 
             @Override
             public void onSecondButtonClicked(PopupDialog dialog) {
-                if (ContextCompat.checkSelfPermission(GoodsUploadActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(GoodsUploadUpdateActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     //6.0及以上的系统在使用危险权限的时候必须进行运行时权限处理
-                    ActivityCompat.requestPermissions(GoodsUploadActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    ActivityCompat.requestPermissions(GoodsUploadUpdateActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 } else {
                    selectImages(count);
                 }
@@ -245,6 +273,23 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
             }
         }, binding.getRoot()).show();
 
+    }
+
+    @Override
+    public void setDefaultCategory(int category) {
+        runOnUiThread(() -> {
+            binding.spinner.setSelection(category);
+        });
+
+    }
+
+    @Override
+    public void setImages(List<Uri> images) {
+        runOnUiThread(() -> {
+            mSelected.addAll(images);
+            tempImageCount = mSelected.size();
+            setImages();
+        });
     }
 
 
@@ -300,9 +345,9 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
     }
 
     @Override
-    public void uploadSucceed() {
+    public void uploadSucceed(String msg) {
         runOnUiThread(() -> {
-            ToastUtil.showLong(getApplicationContext(), "上传成功");
+            ToastUtil.showLong(getApplicationContext(), msg);
             Intent intent = new Intent();
             Log.d(TAG, "uploadSucceed: " +viewModel.getCategoryId() );
             intent.putExtra("category", viewModel.getCategoryId() - 1);
@@ -319,11 +364,27 @@ public class GoodsUploadActivity extends AppCompatActivity implements GoodsUploa
 
     }
 
+
+    public static void openUploadActivityForResult(Activity context){
+        Intent intent = new Intent(context, GoodsUploadUpdateActivity.class);
+        intent.putExtra("launch_type", MainActivity.CODE_UPLOAD);
+        context.startActivityForResult(intent, MainActivity.CODE_UPLOAD);
+
+    }
+
+    public static void openUpdateActivityForResult(Activity context,int goodsId, int categoryId){
+        Intent intent = new Intent(context, GoodsUploadUpdateActivity.class);
+        intent.putExtra("launch_type", MainActivity.CODE_UPDATE);
+        intent.putExtra("goods_id", goodsId);
+        intent.putExtra("category_id", categoryId);
+        context.startActivityForResult(intent, MainActivity.CODE_UPDATE);
+    }
+
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewModel.destroy();
+    public void showMessage(String msg) {
+        runOnUiThread(() -> {
+            ToastUtil.showShort(getApplicationContext(), msg);
+        });
     }
 }
-
-

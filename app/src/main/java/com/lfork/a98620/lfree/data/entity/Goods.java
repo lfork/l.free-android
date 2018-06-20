@@ -31,6 +31,7 @@ public class Goods implements Serializable{
     @SerializedName("gDesc")
     private String description;
 
+    @SerializedName("userImage")
     private String userPortraitPath;
 
     @SerializedName("gMakeDate")
@@ -127,5 +128,15 @@ public class Goods implements Serializable{
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    @Override
+    public String toString() {
+
+        return "【商品名称】:" + getName() +
+                "\n【商品价格】：" + getPrice() +
+                "\n【描述】:" + getDescription()+
+                "\n更多详细信息，就赶快来下载L.Free吧 "+
+                "\nhttp://www.lfork.top";
     }
 }

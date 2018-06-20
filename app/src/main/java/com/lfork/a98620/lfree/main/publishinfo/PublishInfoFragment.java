@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.goodsupload.GoodsUploadActivity;
+import com.lfork.a98620.lfree.goodsuploadupdate.GoodsUploadUpdateActivity;
 import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.publisharticle.PublishArticleActivity;
 
@@ -25,8 +25,7 @@ public class PublishInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.main_goods_upload_frag, container, false);
         Button upload = view.findViewById(R.id.btn_upload);
         upload.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), GoodsUploadActivity.class);
-            startActivityForResult(intent, MainActivity.CODE_UPLOAD);
+            GoodsUploadUpdateActivity.openUploadActivityForResult(getActivity());
         });
 
         Button publishArticle = view.findViewById(R.id.btn_publish_article);

@@ -13,9 +13,7 @@ import com.lfork.a98620.lfree.util.Config;
 
 public class GoodsItemViewModel extends GoodsViewModel {
 
-    private int id;
 
-    private int categoryId;
 
     public GoodsItemViewModel(Context context, Goods g) {
         super(context, g.getId());
@@ -23,11 +21,12 @@ public class GoodsItemViewModel extends GoodsViewModel {
         price.set(g.getPrice() + "元");
         imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath() ); //
         publishDate.set(g.getPublishDate());
+        setCategoryId(g.getCategoryId());
     }
 
     public void onClick(){
         Intent intent = new Intent(context, GoodsDetailActivity.class);
-        intent.putExtra("id", getId());
+        intent.putExtra("goods_id", getId());
         intent.putExtra("category_id", getCategoryId());
         context.startActivity(intent);
     }

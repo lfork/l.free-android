@@ -25,4 +25,12 @@ public interface GoodsDetailNavigator extends ViewModelNavigator{
 
     void setActionBar();
 
+    void shareGoods(String str);
+
+    void deleteGoods(boolean succeed);
+
+    void deleteReview(boolean succeed);
+
+    void updateGoods(int goodsId);
+
 }

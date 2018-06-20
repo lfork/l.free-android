@@ -14,16 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.lfork.a98620.lfree.imagebrowser.ImageBrowserActivity;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.image.GlideImageLoader;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.databinding.GoodsDetailActBinding;
+import com.lfork.a98620.lfree.goodsuploadupdate.GoodsUploadUpdateActivity;
+import com.lfork.a98620.lfree.imagebrowser.ImageBrowserActivity;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
+import com.lfork.a98620.lfree.util.ShareUtil;
 import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
 import com.youth.banner.Banner;
-import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -49,10 +50,10 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        int goodsId = intent.getIntExtra("id", 0);
-        // int categoryId = intent.getIntExtra("category_id", 0);
+        int goodsId = intent.getIntExtra("goods_id", 0);
+        int categoryId = intent.getIntExtra("category_id", 0);
         binding = DataBindingUtil.setContentView(this, R.layout.goods_detail_act);
-        viewModel = new GoodsDetailViewModel(this, goodsId);
+        viewModel = new GoodsDetailViewModel(this, goodsId, categoryId);
 
         binding.setViewModel(viewModel);
         setupRecyclerView();
@@ -63,12 +64,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     private void initBanner() {
         Banner banner = findViewById(R.id.banner);
         banner.setImageLoader(new GlideImageLoader()).start();
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                viewModel.onClickImage(position);
-            }
-        });
+        banner.setOnBannerListener(position -> viewModel.onClickImage(position));
     }
 
 
@@ -97,10 +93,13 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
                 finish();
                 break;
             case R.id.menu_edit:
+                viewModel.updateGoods();
                 break;
             case R.id.menu_delete:
+                viewModel.deleteGoods();
                 break;
             case R.id.menu_share:
+                viewModel.shareGoods();
                 break;
             default:
                 break;
@@ -115,6 +114,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         delete = menu.getItem(2);
         return true;
     }
+
 
 
     @Override
@@ -163,18 +163,51 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
 
     @Override
     public void setActionBar() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                edit.setVisible(true);
-                delete.setVisible(true);
-            }
+        runOnUiThread(() -> {
+            edit.setVisible(true);
+            delete.setVisible(true);
         });
 
     }
 
     @Override
+    public void shareGoods(String str) {
+        runOnUiThread(() -> {
+            ShareUtil.shareTextBySystem(getBaseContext(), str, "分享到");
+        });
+    }
+
+    @Override
+    public void deleteGoods(boolean succeed) {
+        runOnUiThread(() -> {
+            ToastUtil.showShort(getBaseContext(), succeed ?"删除成功":"删除失败");
+        });
+    }
+
+    @Override
+    public void deleteReview(boolean succeed) {
+
+    }
+
+    @Override
+    public void updateGoods(int goodsId) {
+        runOnUiThread(() -> {
+            GoodsUploadUpdateActivity.openUpdateActivityForResult(GoodsDetailActivity.this, goodsId, viewModel.getCategoryId());
+        });
+    }
+
+    @Override
     public void showMessage(String msg) {
+
         runOnUiThread(() -> ToastUtil.showShort(getBaseContext(), msg));
     }
+
+    public static void startActivity(Context context, int goodsId, int categoryId){
+        Intent intent = new Intent(context, GoodsDetailActivity.class);
+        intent.putExtra("goods_id", goodsId);
+        intent.putExtra("category_id", categoryId);
+        context.startActivity(intent);
+    }
+
+
 }

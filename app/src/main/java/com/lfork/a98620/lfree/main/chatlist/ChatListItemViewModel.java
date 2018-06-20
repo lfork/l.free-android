@@ -10,6 +10,8 @@ import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.util.Config;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by 98620 on 2018/4/9.
  */
@@ -27,8 +29,11 @@ public class ChatListItemViewModel extends BaseViewModel {
 
     private int userId;
 
+    public WeakReference<Context> reference;
+
     ChatListItemViewModel(Context context, User user) {
         super(context);
+        reference = new WeakReference<>(context);
         username.set(user.getUserName());
         imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
         userId = user.getUserId();
@@ -36,10 +41,10 @@ public class ChatListItemViewModel extends BaseViewModel {
 
     public void onClick(){
         Log.d(TAG, "onButton1Clicked: ???" );
-        Intent intent = new Intent(context, ChatWindowActivity.class);
+        Intent intent = new Intent(reference.get(), ChatWindowActivity.class);
         intent.putExtra("user_id", userId);
         intent.putExtra("username", username.get());
-        context.startActivity(intent);
+        reference.get().startActivity(intent);
     }
 
     @Override

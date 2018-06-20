@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.lfork.a98620.lfree.util.data.Print.print;
+import static com.lfork.a98620.lfree.util.Print.print;
 
 /**
  * 负责的功能：

@@ -15,7 +15,6 @@ public class GoodsDetailInfo extends Goods {
 
     private String username;
 
-    private String userImage;
 
     private String[] images;
 
@@ -39,13 +38,6 @@ public class GoodsDetailInfo extends Goods {
         this.username = username;
     }
 
-    public String getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
-    }
 
     public String[] getImages() {
         return images;

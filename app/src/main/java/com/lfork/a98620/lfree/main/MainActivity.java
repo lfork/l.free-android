@@ -27,9 +27,9 @@ import com.lfork.a98620.lfree.databinding.MainActBinding;
 import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
 import com.lfork.a98620.lfree.main.community.CommunityFragment;
-import com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment;
 import com.lfork.a98620.lfree.main.index.IndexFragment;
 import com.lfork.a98620.lfree.main.myinfo.MyInforFragment;
+import com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     public final static int CODE_UPLOAD = 3;
+    public final static int CODE_UPDATE = 4;
     private static final String TAG = "MainActivity";
     private List<Fragment> fragments;
     MainActBinding binding;
@@ -62,37 +63,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.main_act);
         binding.setViewModel(this);
-
-        int userId = UserDataRepository.getInstance().getUserId();
-
-        if (userId != 0) {  //存
-            SharedPreferences.Editor editor = getSharedPreferences("data_main", MODE_PRIVATE).edit();
-            editor.putInt("user_id", UserDataRepository.getInstance().getUserId());
-            editor.apply();
-        } else {        //取
-            SharedPreferences sharedPreferences = getSharedPreferences("data_main", MODE_PRIVATE);
-            userId = sharedPreferences.getInt("user_id", 0);
-            if (userId != 0) {//存
-                UserDataRepository.getInstance().setUserId(userId);
-            }
-        }
-
+        initData();
         initFragments();
-        UserDataRepository.getInstance(); //初始化user数据
         startService();
         bindService();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "chat";
-            String channelName = "聊天消息";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            createNotificationChannel(channelId, channelName, importance);
-
-            channelId = "subscribe";
-            channelName = "订阅消息";
-            importance = NotificationManager.IMPORTANCE_DEFAULT;
-            createNotificationChannel(channelId, channelName, importance);
-        }
+        registerNotification();
+        setupStatusBarColor();
     }
 
     @Override
@@ -109,6 +85,65 @@ public class MainActivity extends AppCompatActivity {
         unBindService();
         stopService();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+
+    }
+
+    private void setupStatusBarColor(){
+        Objects.requireNonNull(getSupportActionBar()).hide();
+//        QMUIStatusBarHelper.translucent(this, getResources().getColor(R.color.main_color));
+    }
+
+
+    private void initData(){
+        int userId = UserDataRepository.getInstance().getUserId();
+        if (userId != 0) {  //存
+            SharedPreferences.Editor editor = getSharedPreferences("data_main", MODE_PRIVATE).edit();
+            editor.putInt("user_id", UserDataRepository.getInstance().getUserId());
+            editor.apply();
+        } else {        //取
+            SharedPreferences sharedPreferences = getSharedPreferences("data_main", MODE_PRIVATE);
+            userId = sharedPreferences.getInt("user_id", 0);
+            if (userId != 0) {//存
+                UserDataRepository.getInstance().setUserId(userId);
+            }
+        }
+
+    }
+
+    private void registerNotification(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = "chat";
+            String channelName = "聊天消息";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            createNotificationChannel(channelId, channelName, importance);
+
+            channelId = "subscribe";
+            channelName = "订阅消息";
+            importance = NotificationManager.IMPORTANCE_DEFAULT;
+            createNotificationChannel(channelId, channelName, importance);
+        }
+    }
+
 
     public void onClick(View imageView, int index) {
 
@@ -196,21 +231,6 @@ public class MainActivity extends AppCompatActivity {
         binding.goodsText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //fragment 会截取 这个方法
-//        Log.d(TAG, "onActivityResult: " + requestCode);
-//        if (requestCode == CODE_UPLOAD) {
-//            if ( resultCode == RESULT_OK) {
-//                Log.d(TAG, "onActivityResult: " + requestCode);
-//                IndexFragment indexFragment = (IndexFragment) fragments.get(1);
-//                replaceFragment(indexFragment);
-//                int category = data.getIntExtra("category", 0);
-//                indexFragment.uploadSuccessAndRefreshData(category);
-//            }
-//        }
-    }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -222,22 +242,6 @@ public class MainActivity extends AppCompatActivity {
     public void toCommunityFragment() {
         CommunityLocalDataSource.getArticleList().clear();
         onClick(binding.communityBtn, 4);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            moveTaskToBack(true);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-
     }
 
     public void refreshIndexFragment(int category) {

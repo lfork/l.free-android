@@ -2,13 +2,14 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.lfork.a98620.lfree.goodsupload.GoodsUploadActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.lfork.a98620.lfree.goodsuploadupdate.GoodsUploadUpdateActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.goodsupload.GoodsUploadViewModel" />
+            type="com.lfork.a98620.lfree.goodsuploadupdate.GoodsUploadUpdateViewModel" />
 
         <import type="android.view.View" />
 
@@ -22,7 +23,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="选择图片上传" />
+                    android:text="@string/choose_image" />
 
                 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
@@ -51,7 +52,8 @@
                         <ImageView
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:src="@drawable/photo_select" />
+                            android:src="@drawable/photo_select"
+                            android:contentDescription="@string/todo" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -66,8 +68,8 @@
                         android:id="@+id/frame2"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_toRightOf="@id/frame1"
+                        android:layout_marginStart="30dp"
+                        android:layout_toEndOf="@id/frame1"
                         android:visibility="@{viewModel.imageVisible[0] ? View.VISIBLE : View.GONE}"
                       >
 
@@ -75,7 +77,7 @@
                             android:id="@+id/image1"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:contentDescription="TODO"
+                            android:contentDescription="@string/todo"
 
                             android:src="@drawable/goods_upload_icon"
                             />
@@ -86,15 +88,16 @@
                             android:layout_gravity="right"
                             android:onClick="@{()->viewModel.deleteImage(0)}"
                             android:src="@drawable/close"
-                            />
+                            tools:ignore="RtlHardcoded"
+                            android:contentDescription="@string/todo" />
                     </FrameLayout>
 
                     <FrameLayout
                         android:id="@+id/frame3"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_toRightOf="@id/frame2"
+                        android:layout_marginStart="30dp"
+                        android:layout_toEndOf="@id/frame2"
                         android:visibility="@{viewModel.imageVisible[1] ? View.VISIBLE : View.GONE}"
                         >
 
@@ -102,7 +105,7 @@
                             android:id="@+id/image2"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:contentDescription="TODO"
+                            android:contentDescription="@string/todo"
                             android:src="@drawable/goods_upload_icon"
                             />
 
@@ -112,7 +115,8 @@
                             android:layout_gravity="right"
                             android:onClick="@{()->viewModel.deleteImage(1)}"
                             android:src="@drawable/close"
-                           />
+                            tools:ignore="RtlHardcoded"
+                            android:contentDescription="@string/todo" />
                     </FrameLayout>
 
                     <FrameLayout
@@ -128,7 +132,7 @@
                             android:id="@+id/image3"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:contentDescription="TODO"
+                            android:contentDescription="@string/todo"
                             android:src="@drawable/goods_upload_icon"
                             />
 
@@ -138,7 +142,8 @@
                             android:layout_gravity="right"
                             android:onClick="@{()->viewModel.deleteImage(2)}"
                             android:src="@drawable/close"
-                            />
+                            tools:ignore="RtlHardcoded"
+                            android:contentDescription="@string/todo" />
                     </FrameLayout>
 
                     <FrameLayout
@@ -146,16 +151,16 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_below="@id/frame2"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
                         android:layout_marginTop="20dp"
                         android:visibility="@{viewModel.imageVisible[3] ? View.VISIBLE : View.GONE}"
-                        android:layout_toRightOf="@id/frame4">
+                        android:layout_toEndOf="@id/frame4">
 
                         <ImageView
                             android:id="@+id/image4"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:contentDescription="TODO"
+                            android:contentDescription="@string/todo"
                             android:src="@drawable/goods_upload_icon"
                             />
 
@@ -165,7 +170,8 @@
                             android:layout_gravity="right"
                             android:onClick="@{()->viewModel.deleteImage(3)}"
                             android:src="@drawable/close"
-                            />
+                            tools:ignore="RtlHardcoded"
+                            android:contentDescription="@string/todo" />
                     </FrameLayout>
 
                     <FrameLayout
@@ -173,16 +179,16 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_below="@id/frame3"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
                         android:layout_marginTop="20dp"
-                        android:layout_toRightOf="@id/frame5"
+                        android:layout_toEndOf="@id/frame5"
                         android:visibility="@{viewModel.imageVisible[4] ? View.VISIBLE : View.GONE}">
 
                         <ImageView
                             android:id="@+id/image5"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:contentDescription="TODO"
+                            android:contentDescription="@string/todo"
                             android:src="@drawable/goods_upload_icon"
                              />
 
@@ -192,7 +198,8 @@
                             android:layout_gravity="right"
                             android:onClick="@{()->viewModel.deleteImage(4)}"
                             android:src="@drawable/close"
-                             />
+                            android:contentDescription="@string/todo"
+                            tools:ignore="RtlHardcoded" />
                     </FrameLayout>
                 </RelativeLayout>
 
@@ -210,10 +217,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:hint="商品名"
+                        android:hint="@string/goods_name"
                         android:inputType="text"
-                        android:paddingLeft="25dp"
-                        android:text="@={viewModel.name}" />
+                        android:paddingStart="25dp"
+                        android:text="@={viewModel.name}"
+                        tools:ignore="RtlSymmetry" />
 
                     <View
                         android:layout_width="match_parent"
@@ -236,12 +244,13 @@
                         android:background="@null"
                         android:singleLine="false"
                         android:gravity="start"
-                        android:hint="商品描述"
+                        android:hint="@string/goods_description"
                         android:scrollbars="vertical"
                         android:inputType="textMultiLine"
                         android:paddingStart="25dp"
                         android:paddingTop="10dp"
-                        android:text="@={viewModel.description}" />
+                        android:text="@={viewModel.description}"
+                        tools:ignore="RtlSymmetry" />
 
                     <View
                         android:layout_width="match_parent"
@@ -262,7 +271,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:gravity="center"
-                        android:text="原价:"
+                        android:text="@string/origin_price"
                         android:textColor="@color/Login_Button"
                         android:textSize="15sp" />
 
@@ -273,7 +282,8 @@
                         android:layout_toStartOf="@id/line1"
                         android:background="@null"
                         android:inputType="number"
-                        android:text="@={viewModel.originPrice}" />
+                        android:text="@={viewModel.originPrice}"
+                        tools:ignore="LabelFor" />
 
                     <View
                         android:id="@+id/line1"
@@ -290,7 +300,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@id/line1"
                         android:gravity="center"
-                        android:text="卖价:"
+                        android:text="@string/sell_price"
                         android:textColor="@color/Home_Goods_Money"
                         android:textSize="15sp" />
 
@@ -302,7 +312,8 @@
                         android:layout_toEndOf="@id/sell_price"
                         android:background="@null"
                         android:inputType="number"
-                        android:text="@={viewModel.price}" />
+                        android:text="@={viewModel.price}"
+                        tools:ignore="LabelFor" />
 
                     <View
                         android:layout_width="match_parent"
@@ -324,7 +335,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:gravity="center"
-                        android:text="分类:" />
+                        android:text="@string/category" />
 
                     <Spinner
                         android:id="@+id/spinner"
@@ -333,7 +344,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@id/categories"
-                        android:entries="@array/categories" />
+                        app:categories_items="@{viewModel.categories}"
+                         />
 
                     <View
                         android:id="@+id/view"
@@ -356,14 +368,15 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:gravity="center"
-                        android:text="校区:" />
+                        android:text="@string/address" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@id/college_location"
                         android:background="@null"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        tools:ignore="LabelFor" />
 
                     <View
                         android:layout_width="match_parent"
@@ -383,7 +396,7 @@
                         android:layout_margin="30dp"
                         android:onClick="@{()->viewModel.uploadGoods()}"
                         android:background="@color/Login_Button"
-                        android:text="提交"
+                        android:text="@string/commit"
                         android:textColor="#fff"
                         android:textSize="18sp" />
                 </RelativeLayout>
@@ -412,7 +425,7 @@
                     android:layout_below="@id/progress"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="正在上传..."
+                    android:text="@string/uploading"
                     android:textColor="@color/white" />
             </RelativeLayout>
         </FrameLayout>
