@@ -19,7 +19,6 @@ import java.util.Objects;
 public class WebClient extends AppCompatActivity {
 
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +30,33 @@ public class WebClient extends AppCompatActivity {
         setTitle(url);
         if (url != null) {
             WebView webView = findViewById(R.id.webview);
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.setWebViewClient(new WebViewClient());
-            WebSettings settings = webView.getSettings();
-            settings.setLoadWithOverviewMode(true);
+            setWebView(webView.getSettings());
             webView.setWebViewClient(new WebClient.MyWebViewClient(webView));
             webView.loadUrl(url);
         }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void setWebView(WebSettings mWebSettings){
+        mWebSettings.setSupportZoom(true);
+        mWebSettings.setLoadWithOverviewMode(true);
+        mWebSettings.setUseWideViewPort(true);
+        mWebSettings.setDefaultTextEncodingName("utf-8");
+        mWebSettings.setLoadsImagesAutomatically(true);
+        //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
+        mWebSettings.setJavaScriptEnabled(true);
+        //有时候网页需要自己保存一些关键数据,Android WebView 需要自己设置
+        mWebSettings.setDomStorageEnabled(true);
+        mWebSettings.setDatabaseEnabled(true);
+//        mWebSettings.setAppCacheEnabled(true);
+        String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
+        mWebSettings.setAppCachePath(appCachePath);
+        //html中的_bank标签就是新建窗口打开，有时会打不开，需要加以下
+        //然后 复写 WebChromeClient的onCreateWindow方法
+        mWebSettings.setSupportMultipleWindows(false);
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
     }
 
     private void setupActionBar(){

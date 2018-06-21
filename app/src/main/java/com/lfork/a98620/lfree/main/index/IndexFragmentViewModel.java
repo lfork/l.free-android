@@ -44,7 +44,7 @@ public class IndexFragmentViewModel extends BaseObservable {
         if (categories.size() != 0){
             return;
         }
-        announcementsUrls.add("http://www.lfork.top");
+        announcementsUrls.add("http://www.lfork.top/luo/lfree/HTML/MS2.html");
         announcementsUrls.add("https://mp.weixin.qq.com/s/tAImac9BHMfxp_xRSZQ9dg");
         announcementsUrls.add("https://mp.weixin.qq.com/s/tcg4CFph33DR69sYBpQhBQ");
 
