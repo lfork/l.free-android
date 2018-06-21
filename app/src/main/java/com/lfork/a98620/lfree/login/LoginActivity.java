@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void succeed(User data) {
                     Log.d(TAG, "succeed: " + data);
-                    showDealResult("登录成功" + data.toString());
+                    showDealResult("登录成功" ); //+ data.toString()
                     saveLoginStatus(1);
                     closeLoginDialog();
                     startMainActivity();

@@ -33,7 +33,7 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
         setupRecyclerView();
 
         binding.toolbarSearch.setOnSearchClickListener(v -> {
-            ToastUtil.showLong(this, "SearchTest");
+//            ToastUtil.showLong(this, "SearchTest");
         });
 
         binding.toolbarSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -46,7 +46,7 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ToastUtil.showLong(getApplicationContext(), newText);
+//                ToastUtil.showLong(getApplicationContext(), newText);
                 return false;
             }
         });
@@ -67,7 +67,6 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
             if (msg.equals("搜索完成")) {
                 binding.searchRecycler.getAdapter().notifyDataSetChanged();
             }
-
             ToastUtil.showShort(getBaseContext(), msg);
         });
 
