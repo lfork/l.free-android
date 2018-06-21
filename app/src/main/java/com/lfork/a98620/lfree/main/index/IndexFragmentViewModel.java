@@ -45,8 +45,8 @@ public class IndexFragmentViewModel extends BaseObservable {
             return;
         }
         announcementsUrls.add("http://www.lfork.top/luo/lfree/HTML/MS2.html");
-        announcementsUrls.add("https://mp.weixin.qq.com/s/tAImac9BHMfxp_xRSZQ9dg");
         announcementsUrls.add("https://mp.weixin.qq.com/s/tcg4CFph33DR69sYBpQhBQ");
+        announcementsUrls.add("https://mp.weixin.qq.com/s/tAImac9BHMfxp_xRSZQ9dg");
 
         repository = GoodsDataRepository.getInstance();
         new Thread(() -> {
