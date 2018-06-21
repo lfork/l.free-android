@@ -89,6 +89,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult:2 " + requestCode);
+        Log.d(TAG, "onActivityResult: " + requestCode);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    toCommunityFragment();
+                }
+                break;
+            case MainActivity.CODE_UPLOAD:
+                if (resultCode == RESULT_OK) {
+                    refreshIndexFragment(data.getIntExtra("category", 0));
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -248,6 +264,5 @@ public class MainActivity extends AppCompatActivity {
         IndexFragment indexFragment = (IndexFragment) fragments.get(1);
         replaceFragment(indexFragment);
         indexFragment.setTargetPosition(category);
-
     }
 }

@@ -11,10 +11,9 @@ import android.widget.Button;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.goodsuploadupdate.GoodsUploadUpdateActivity;
-import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.publisharticle.PublishArticleActivity;
 
-import static android.app.Activity.RESULT_OK;
+import java.util.Objects;
 
 public class PublishInfoFragment extends Fragment {
     private static final String TAG = "PublishInfoFragment";
@@ -31,34 +30,9 @@ public class PublishInfoFragment extends Fragment {
         Button publishArticle = view.findViewById(R.id.btn_publish_article);
         publishArticle.setOnClickListener((view1) -> {
             Intent intent = new Intent(getContext(), PublishArticleActivity.class);
-            startActivityForResult(intent, 1);
+            Objects.requireNonNull(getActivity()).startActivityForResult(intent, 1);
         });
-
         // Inflate the layout for this fragment
         return view;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        MainActivity activity = (MainActivity) getActivity();
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-
-
-                    if (activity != null) {
-                        activity.toCommunityFragment();
-                    }
-                }
-            case MainActivity.CODE_UPLOAD:
-                if (resultCode == RESULT_OK) {
-                    if (activity != null) {
-                        activity.refreshIndexFragment(data.getIntExtra("category", 0));
-                    }
-                }
-                break;
-            default:
-                break;
-        }
     }
 }
