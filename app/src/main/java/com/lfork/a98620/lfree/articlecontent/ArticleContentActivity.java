@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 import com.google.gson.Gson;
 import com.lfork.a98620.lfree.BR;
@@ -115,7 +116,11 @@ public class ArticleContentActivity extends AppCompatActivity implements Communi
                 recyclerView.setAdapter(adapter);
                 recyclerView.setNestedScrollingEnabled(false);
                 if (fromCommentButton) {
-                    binding.scrollView.scrollTo(0, binding.linearLayout.getMeasuredHeight() - binding.scrollView.getHeight());
+                    int height = binding.scrollView.getMeasuredHeight() - binding.articleComment.getMeasuredHeight();
+                    Log.d(TAG, "callback: height = " + height);
+                    binding.scrollView.scrollTo(0, height);
+                } else {
+                    binding.scrollView.scrollTo(0, -1);
                 }
             });
         }
