@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.goodsdetail.ReviewItemViewModel"/>
-        <import type="android.view.View"/>
+            type="com.lfork.a98620.lfree.goodsdetail.ReviewItemViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
-    <RelativeLayout android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -17,10 +21,10 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="10dp"
-            android:src="@drawable/login_logo"
             android:layout_marginStart="10dp"
-            app:setImage="@{viewModel.userPortraitPath}"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/login_logo"
+            app:setImage="@{viewModel.userPortraitPath}" />
 
         <TextView
             android:id="@+id/comment_name"
@@ -51,27 +55,25 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/comment_name"
             android:layout_below="@+id/comment_time"
-            android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
             android:text="@{viewModel.content}"
             android:textSize="12sp" />
 
         <Button
-            android:background="@color/Login_Button"
-            android:visibility="@{viewModel.isReviewedByThisUser ? View.VISIBLE : View.INVISIBLE}"
-            android:layout_centerVertical="true"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentEnd="true"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/trash2"
             android:onClick="@{()->viewModel.deleteReview()}"
-            android:text="@string/delete"
-            />
+            android:visibility="@{viewModel.isReviewedByThisUser ? View.VISIBLE : View.INVISIBLE}" />
 
         <View
-            android:layout_below="@id/textView"
             android:layout_width="match_parent"
             android:layout_height="2dp"
+            android:layout_below="@id/textView"
             android:background="@color/viewColor" />
     </RelativeLayout>
 </layout>
