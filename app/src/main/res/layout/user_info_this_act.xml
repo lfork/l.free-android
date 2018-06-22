@@ -95,8 +95,8 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="10dp"
-                    android:contentDescription="@string/todo"
-                    android:background="@drawable/user_user" />
+                    android:background="@drawable/user_user"
+                    android:contentDescription="@string/todo" />
 
 
                 <TextView
@@ -124,10 +124,10 @@
                     android:layout_height="32dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:contentDescription="@string/todo"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/user_phone" />
+                    android:background="@drawable/user_phone"
+                    android:contentDescription="@string/todo" />
 
 
                 <TextView
@@ -150,12 +150,12 @@
                     android:id="@+id/img_email"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:contentDescription="@string/todo"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/user_email" />
+                    android:background="@drawable/user_email"
+                    android:contentDescription="@string/todo" />
 
 
                 <TextView
@@ -166,6 +166,35 @@
                     android:gravity="center"
                     android:hint="邮箱"
                     android:text="@{viewModel.email}"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="#fff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/img_school"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ic_school"
+                    android:contentDescription="@string/todo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/img_school"
+                    android:gravity="start"
+                    android:hint="学校信息"
+                    android:text="@{viewModel.school}"
                     android:textSize="14sp" />
 
             </RelativeLayout>
@@ -193,34 +222,6 @@
                     android:gravity="start"
                     android:hint="个人备注和描述."
                     android:text="@{viewModel.description}"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/img_school"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ic_school_black_24dp"
-                    android:contentDescription="@string/todo" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/img_school"
-                    android:gravity="start"
-                    android:hint="学校信息"
-                    android:text="@{viewModel.school}"
                     android:textSize="14sp" />
 
             </RelativeLayout>
