@@ -92,6 +92,34 @@
                     android:padding="10dp">
 
                     <ImageView
+                        android:id="@+id/img_school"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/ic_school"
+                        android:contentDescription="@string/todo" />
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/img_school"
+                        android:background="@drawable/login_shape_user_rectangle"
+                        android:entries="@array/categories"
+                        android:spinnerMode="dialog" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:padding="10dp">
+
+                    <ImageView
                         android:id="@+id/img_detail"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
@@ -113,36 +141,6 @@
                         android:textSize="14sp" />
 
                 </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#fff"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:id="@+id/img_school"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/ic_school_black_24dp"
-                        android:contentDescription="@string/todo" />
-
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:spinnerMode="dialog"
-                        android:layout_toEndOf="@+id/img_school"
-                        android:layout_width="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/login_shape_user_rectangle"
-                        android:entries="@array/categories"
-                        />
-
-                </RelativeLayout>
-
 
 
             </LinearLayout>
