@@ -19,7 +19,7 @@ public interface UserDataSource extends DataSource {
 
     /**
      * 从本地数据库获取当前用户信息
-     * @param callback
+     * @param callback c
      */
     void getThisUser(GeneralCallback<User> callback);
 

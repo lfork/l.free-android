@@ -6,8 +6,6 @@ import com.lfork.a98620.lfree.util.JSONUtil;
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 
-import static com.lfork.a98620.lfree.util.data.Print.print;
-
 public class MessageHelper {
 //    public static UDPConnectionInfo UDPConnectionInfoParse(DatagramPacket dgp) {
 //        InetAddress address = dgp.getAddress();
@@ -49,7 +47,7 @@ public class MessageHelper {
         Message message = null;
         try {
             String str =  new String(dgp.getData(), 0, dgp.getLength(), "utf-8");
-            print("UDPConnection.startReceiveListener(): 接收到的信息：" + str );
+//            print("UDPConnection.startReceiveListener(): 接收到的信息：" + str );
             message = JSONUtil.parseJson(str, new TypeToken<Message>(){});
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

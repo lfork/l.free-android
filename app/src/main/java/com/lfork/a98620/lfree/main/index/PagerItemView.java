@@ -2,11 +2,11 @@ package com.lfork.a98620.lfree.main.index;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +27,8 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
 
     private PagerItemViewModel viewModel;
 
+    private static final String TAG = "PagerItemView";
+
     /**
      * 优化策略
      * 1、gc的“活对象”回收策略
@@ -38,6 +40,10 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
     private  Activity activityContext;
 
     private MainIndexViewpagerItemBinding binding;
+
+    private boolean needForceRefresh = false;
+
+    private boolean viewWasCreated = false;
 
     private View rootView;
 
@@ -52,6 +58,9 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
             setupSwipeRefreshLayout();
             setupUpButton();
             rootView = binding.getRoot();
+            viewWasCreated = true;
+
+            Log.d(TAG, "onCreateView: the view was created" + category);
         }
 
         ViewGroup parent2 = (ViewGroup) rootView.getParent();
@@ -152,11 +161,20 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         this.activityContext = activityContext;
     }
 
-    @Override
-    public void openGoodsDetail(int goodsId) {
-        Intent intent = new Intent(activityContext, GoodsDetailActivity.class);
-        intent.putExtra("id", goodsId);
-        activityContext.startActivity(intent);
+
+    /**
+     * 有3种情况
+     * 1、当前页面(只会调用OnTabSelected)
+     * 2、已经初始化了的隔壁页面 会先调用 OnTabSelected 然后调用 instantiateItem
+     * 3、未初始化的页面  会先调用 OnTabSelected 然后调用 instantiateItem  
+     */
+    public void forceRefresh(){     //
+        Log.d(TAG, "forceRefresh: " + needForceRefresh);
+        if (needForceRefresh && !viewModel.dataIsLoading.get()) {  //没有被初始化 也不需要强制刷新
+            binding.swipeRefresh.setRefreshing(true);
+            onRefresh();
+            needForceRefresh = false;
+        }
     }
 
     @Override
@@ -165,5 +183,20 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
             ToastUtil.showShort(getContext(), log);
             binding.swipeRefresh.setRefreshing(false);
         });
+    }
+
+    public void setNeedForceRefresh(boolean needForceRefresh) {
+        if (viewModel == null || viewModel.isInitialized()) {
+            this.needForceRefresh = needForceRefresh;
+        }
+    }
+
+    public boolean isViewWasCreated() {
+        return viewWasCreated;
+    }
+
+    @Override
+    public void openGoodsDetail(int goodsId, int categoryId) {
+        GoodsDetailActivity.startActivity(activityContext, goodsId, categoryId );
     }
 }

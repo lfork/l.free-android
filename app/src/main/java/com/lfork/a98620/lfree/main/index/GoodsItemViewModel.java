@@ -31,18 +31,7 @@ public class GoodsItemViewModel extends GoodsViewModel{
         publishDate.set(g.getPublishDate());
     }
 
-//<<<<<<< HEAD
-//
-//    public void onClick(){
-//
-//        Intent intent = new Intent(context, GoodsDetailActivity.class);
-//        intent.putExtra("id", getId());
-//        intent.putExtra("category_id", getCategoryId());
-//        context.startActivity(intent);
-//=======
-//
-//>>>>>>> master
-//    }
+
 
     GoodsItemViewModel(Context context, Goods g) {
         this(context, g, 0);
@@ -62,7 +51,7 @@ public class GoodsItemViewModel extends GoodsViewModel{
             return;
         }
         if (mNavigator != null && mNavigator.get() != null) {
-            mNavigator.get().openGoodsDetail(goodsId);
+            mNavigator.get().openGoodsDetail(goodsId, getCategoryId());
         }
     }
 

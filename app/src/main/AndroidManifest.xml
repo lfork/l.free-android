@@ -20,13 +20,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".main.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar" />
+            android:screenOrientation="portrait"/>
+        <!--android:theme="@style/AppThemeNoActionBar"-->
         <activity
             android:name=".chatwindow.ChatWindowActivity"
             android:launchMode="singleTask" />
         <activity android:name=".goodsdetail.GoodsDetailActivity" />
-        <activity android:name=".goodsupload.GoodsUploadActivity" />
+        <activity android:name=".goodsuploadupdate.GoodsUploadUpdateActivity" />
         <activity
             android:name=".login.LoginActivity"
             android:theme="@style/LoginTheme" />

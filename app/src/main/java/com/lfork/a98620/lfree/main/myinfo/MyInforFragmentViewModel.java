@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.main.myinfo;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.base.viewmodel.UserViewModel;
@@ -13,7 +14,6 @@ import com.lfork.a98620.lfree.mygoods.MyGoodsActivity;
 import com.lfork.a98620.lfree.settings.SettingsActivity;
 import com.lfork.a98620.lfree.userinfothis.UserInfoThisActivity;
 import com.lfork.a98620.lfree.util.Config;
-import com.lfork.a98620.lfree.util.StringUtil;
 
 import static android.content.ContentValues.TAG;
 
@@ -56,7 +56,7 @@ public class MyInforFragmentViewModel extends UserViewModel {
 
     private void initData(User user){
         username.set(user.getUserName());
-        if (StringUtil.isNull(user.getUserDesc())) {
+        if (TextUtils.isEmpty(user.getUserDesc())) {
             description.set("该用户还没有自我介绍....");
         } else {
             description.set(user.getUserDesc());

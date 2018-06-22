@@ -36,7 +36,7 @@ public class ImageBrowserActivity extends AppCompatActivity {
         photoView = findViewById(R.id.big_image);
 
         if (urls != null && urls.size() > 0) {
-            Image.setImageNoCache(photoView, urls.get(0));
+            Image.setImageNoCache(photoView, urls.get(position));
         }
 
         setupActionBar();

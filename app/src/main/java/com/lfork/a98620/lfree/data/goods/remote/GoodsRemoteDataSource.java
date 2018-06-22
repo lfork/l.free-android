@@ -28,10 +28,9 @@ import okhttp3.RequestBody;
 
 public class GoodsRemoteDataSource implements GoodsDataSource {
 
-    private static GoodsRemoteDataSource INSTANCE;
-//    private ArrayList<ResponseGetUser.UserInfo> mCachedUserList = new ArrayList<>();
-
     private static final String TAG = "IMRemoteDataSource";
+
+    private static GoodsRemoteDataSource INSTANCE;
 
     private GoodsRemoteDataSource() {
     }
@@ -122,11 +121,6 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         } else {
             callback.failed("error:1 服务器异常");
         }
-    }
-
-    @Override
-    public void refreshData() {
-
     }
 
     @Override
@@ -221,6 +215,55 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         }
 
         //http://www.lfork.top/22y/goodsSerach_getGoodsByName?=Java
+    }
+
+    @Override
+    public void deleteGoods(GeneralCallback<String> callback, int goodsId) {
+        callback.succeed("删除成功");
+    }
+
+    @Override
+    public void updateGoods(GeneralCallback<String> callback, Goods g) {
+        String[] images = g.getImagesPath();
+        RequestBody[] files = new RequestBody[images.length];
+        for (int i = 0; i < images.length; i++) {
+            files[i] = RequestBody.create(MediaType.parse("image/png"), new File(images[i]));
+        }
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builder
+                .addFormDataPart("studentId", g.getUserId() + "")
+                .addFormDataPart("csId", g.getCategoryId() + "")
+                .addFormDataPart("gName", g.getName())
+                .addFormDataPart("gBuyPrice", g.getOriginPrice())
+                .addFormDataPart("gSellPrice", g.getPrice())
+                .addFormDataPart("gDesc", g.getDescription())
+                .addFormDataPart("coverImage", System.currentTimeMillis() + "image.png", files[0]);
+
+        for (int i = 1; i < files.length; i++) {
+            builder.addFormDataPart("images", System.currentTimeMillis() + "image.png", files[i])
+                    .addFormDataPart("desc", "这个拿来干啥？？");
+        }
+
+        if (files.length == 1) {
+            builder.addFormDataPart("desc", "只传了一张图片，没有描述");
+        }
+
+        RequestBody requestBody = builder.build();
+
+
+        String responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/goods_upload", requestBody);
+        Result<String> result = JSONUtil.parseJson(responseData, new TypeToken<Result<String>>() {
+        });
+
+        if (result != null) {
+            if (result.getCode() == 1) {
+                callback.succeed(result.getMessage());
+            } else {
+                callback.failed(result.getMessage());
+            }
+        } else {
+            callback.failed("error 服务器异常");
+        }
     }
 
 

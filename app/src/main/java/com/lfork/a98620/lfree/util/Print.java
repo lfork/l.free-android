@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.util.data;
+package com.lfork.a98620.lfree.util;
 
 import android.util.Log;
 

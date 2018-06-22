@@ -19,7 +19,7 @@ public interface GoodsDataSource extends DataSource {
 
     void getCategories(GeneralCallback<List<Category>> callback);
 
-    void refreshData();
+//    void refreshData();  因为这里的数据都直接缓存到view+viewModel里面了。
 
     void getGoods(GeneralCallback<GoodsDetailInfo> callback, int goodsId);
 
@@ -27,6 +27,9 @@ public interface GoodsDataSource extends DataSource {
 
     void goodsSearch(GeneralCallback<List<Goods>> callback,  String keyword);
 
+    void deleteGoods(GeneralCallback<String> callback, int goodsId);
+
+    void updateGoods(GeneralCallback<String> callback, Goods g);
 
     void addReview(GeneralCallback<Review> callback, Review review);
 }

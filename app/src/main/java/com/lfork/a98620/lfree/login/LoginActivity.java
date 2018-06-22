@@ -7,6 +7,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,8 +23,6 @@ import com.lfork.a98620.lfree.databinding.LoginActBinding;
 import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.register.RegisterActivity;
 import com.lfork.a98620.lfree.util.GlideOptions;
-
-import static com.lfork.a98620.lfree.util.StringUtil.isNull;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -45,9 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         LoginActBinding binding = DataBindingUtil.setContentView(this, R.layout.login_act);
         binding.setViewModel(this);
-
         RequestOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
-
         ImageView loginLogo = findViewById(R.id.login_logo);
         Glide.with(this).load(R.drawable.login_logo)
                 .apply(options)
@@ -70,27 +67,25 @@ public class LoginActivity extends AppCompatActivity {
         user.setUserName(username.get());
         user.setUserPassword(password.get());
         //合法检测
-        if (!isNull(user.getUserName()) || !isNull(user.getUserPassword())) {
+        if (!TextUtils.isEmpty(user.getUserName()) || !TextUtils.isEmpty(user.getUserPassword())) {
 
-            new Thread(() -> {
-                UserDataRepository.getInstance().login(new DataSource.GeneralCallback<User>() {
-                    @Override
-                    public void succeed(User data) {
-                        Log.d(TAG, "succeed: " + data);
-                        showDealResult("登录成功" + data.toString());
-                        saveLoginStatus(1);
-                        closeLoginDialog();
-                        startMainActivity();
-                    }
+            new Thread(() -> UserDataRepository.getInstance().login(new DataSource.GeneralCallback<User>() {
+                @Override
+                public void succeed(User data) {
+                    Log.d(TAG, "succeed: " + data);
+                    showDealResult("登录成功" + data.toString());
+                    saveLoginStatus(1);
+                    closeLoginDialog();
+                    startMainActivity();
+                }
 
-                    @Override
-                    public void failed(String log) {
-                        Log.d(TAG, "failed: " + log);
-                        closeLoginDialog();
-                        showDealResult("登录失败" + log);
-                    }
-                }, user);
-            }).start();
+                @Override
+                public void failed(String log) {
+                    Log.d(TAG, "failed: " + log);
+                    closeLoginDialog();
+                    showDealResult("登录失败" + log);
+                }
+            }, user)).start();
         } else {
             showDealResult("输入的信息不能为空");
             closeLoginDialog();

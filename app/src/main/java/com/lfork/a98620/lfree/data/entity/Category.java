@@ -42,4 +42,9 @@ public class Category extends DataSupport implements Serializable {
     public void setCsId(int csId) {
         this.csId = csId;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

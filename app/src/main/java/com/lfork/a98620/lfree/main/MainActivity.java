@@ -27,16 +27,18 @@ import com.lfork.a98620.lfree.databinding.MainActBinding;
 import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
 import com.lfork.a98620.lfree.main.community.CommunityFragment;
-import com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment;
 import com.lfork.a98620.lfree.main.index.IndexFragment;
 import com.lfork.a98620.lfree.main.myinfo.MyInforFragment;
+import com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static int CODE_UPLOAD = 1;
+    public final static int CODE_UPLOAD = 3;
+    public final static int CODE_UPDATE = 4;
     private static final String TAG = "MainActivity";
     private List<Fragment> fragments;
     MainActBinding binding;
@@ -45,12 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            Log.d(TAG, "onServiceConnected: MessageSevice启动成功");
             messageBinder = (MessageService.MessageBinder) iBinder;
             messageBinder.buildConnection();
-            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？6");
-//            messageBinder.startDownload();
-//            messageBinder.getProgress();
         }
 
         @Override
@@ -65,9 +63,59 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.main_act);
         binding.setViewModel(this);
+        initData();
+        initFragments();
+        startService();
+        bindService();
+        registerNotification();
+        setupStatusBarColor();
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        ((MyInforFragment) fragments.get(3)).refreshData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GoodsDataRepository.destroyInstance();
+        UserDataRepository.destroyInstance();
+        unBindService();
+        stopService();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+
+    }
+
+    private void setupStatusBarColor(){
+        Objects.requireNonNull(getSupportActionBar()).hide();
+//        QMUIStatusBarHelper.translucent(this, getResources().getColor(R.color.main_color));
+    }
+
+
+    private void initData(){
         int userId = UserDataRepository.getInstance().getUserId();
-
         if (userId != 0) {  //存
             SharedPreferences.Editor editor = getSharedPreferences("data_main", MODE_PRIVATE).edit();
             editor.putInt("user_id", UserDataRepository.getInstance().getUserId());
@@ -80,11 +128,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        initFragments();
-        UserDataRepository.getInstance(); //初始化user数据
-        startService();
-        bindService();
+    }
 
+    private void registerNotification(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channelId = "chat";
             String channelName = "聊天消息";
@@ -98,21 +144,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        ((MyInforFragment) fragments.get(3)).refreshData();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: 退出后没有释放资源？？");
-        GoodsDataRepository.destroyInstance();
-        UserDataRepository.destroyInstance();
-        unBindService();
-        stopService();
-    }
 
     public void onClick(View imageView, int index) {
 
@@ -151,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Log.d(TAG, "onButton1Clicked: why there is no any response " + index);
         replaceFragment(fragments.get(index));
 
     }
@@ -162,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
         NotificationManager notificationManager = (NotificationManager) getSystemService(
                 NOTIFICATION_SERVICE);
-        notificationManager.createNotificationChannel(channel);
+        Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
     }
 
     private void startService() {
@@ -173,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
     private void bindService() {
         Intent bindIntent = new Intent(this, MessageService.class);
         bindService(bindIntent, connection, BIND_AUTO_CREATE);// bind service
-        Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？7");
     }
 
     private void unBindService() {
@@ -202,16 +231,6 @@ public class MainActivity extends AppCompatActivity {
         binding.goodsText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CODE_UPLOAD) {
-            if ( resultCode == RESULT_OK) {
-                replaceFragment(fragments.get(1));
-            }
-        }
-    }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -225,23 +244,10 @@ public class MainActivity extends AppCompatActivity {
         onClick(binding.communityBtn, 4);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Log.d(TAG, "onBackPressed: ");
-        moveTaskToBack(true);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            moveTaskToBack(true);
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
+    public void refreshIndexFragment(int category) {
+        IndexFragment indexFragment = (IndexFragment) fragments.get(1);
+        replaceFragment(indexFragment);
+        indexFragment.setTargetPosition(category);
 
     }
-
 }

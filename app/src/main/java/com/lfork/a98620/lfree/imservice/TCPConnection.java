@@ -19,7 +19,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import static com.lfork.a98620.lfree.util.data.Print.print;
+import static com.lfork.a98620.lfree.util.Print.print;
 
 
 public class TCPConnection {

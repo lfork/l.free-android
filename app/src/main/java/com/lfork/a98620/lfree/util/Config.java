@@ -7,6 +7,8 @@ package com.lfork.a98620.lfree.util;
 public class Config {
     public static String ServerURL = "http://www.lfork.top";
 
+    public static String ServerImagePathRoot = "http://www.lfork.top/image/";
+
     public static String ServerURLTest = "http://www.lfork.top";
 
     private static boolean connected;  //这个同tcp 的 connected保持一致

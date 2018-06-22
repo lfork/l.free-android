@@ -51,12 +51,12 @@ dependencies {
     /**
      * Image
      */
-    //image selection
-    implementation 'com.zhihu.android:matisse:0.4.3'
-    //图片压缩库  https://github.com/Curzibn/Luban
-    implementation 'top.zibin:Luban:1.1.3'
-    //Image load library https://github.com/bumptech/glide    https://muyangmin.github.io/glide-docs-cn/doc/caching.html
-    implementation 'com.github.bumptech.glide:glide:4.6.1'
+
+    implementation 'com.zhihu.android:matisse:0.4.3'  //image selection
+
+    implementation 'top.zibin:Luban:1.1.3' //图片压缩库  https://github.com/Curzibn/Luban
+
+    implementation 'com.github.bumptech.glide:glide:4.6.1'  //Image load library https://github.com/bumptech/glide    https://muyangmin.github.io/glide-docs-cn/doc/caching.html
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
@@ -80,4 +80,7 @@ dependencies {
     //SwipeLayout
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
     implementation 'com.android.support:recyclerview-v7:27.0.0'
+
+    //message transmission
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

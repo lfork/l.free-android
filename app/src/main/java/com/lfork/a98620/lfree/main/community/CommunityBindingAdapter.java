@@ -2,14 +2,11 @@ package com.lfork.a98620.lfree.main.community;
 
 import android.content.Intent;
 import android.databinding.BindingAdapter;
-import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 
 import com.lfork.a98620.lfree.articlecontent.ArticleContentActivity;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
-
-import static com.yalantis.ucrop.UCropFragment.TAG;
+import com.lfork.a98620.lfree.util.ShareUtil;
 
 public class CommunityBindingAdapter {
 
@@ -35,12 +32,7 @@ public class CommunityBindingAdapter {
     @BindingAdapter("android:shareTo")
     public static void shareTo(View view, String url) {
         view.setOnClickListener((view1) -> {
-            Log.d(TAG, "onClick: url=" + Uri.parse(url));
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_SEND)
-                    .setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, url);
-            view1.getContext().startActivity(Intent.createChooser(intent, "分享到"));
+            ShareUtil.shareTextBySystem(view.getContext(), url, "分享到");
         });
     }
 

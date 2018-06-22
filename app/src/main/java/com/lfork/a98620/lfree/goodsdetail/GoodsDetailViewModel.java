@@ -41,7 +41,6 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     public final ObservableBoolean reviewDataIsEmpty = new ObservableBoolean(false);
 
-
     private int id;
 
     private int userId;
@@ -50,19 +49,24 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
     private GoodsDetailInfo g;
 
-    GoodsDetailViewModel(Context context, int goodsId) {
+    private GoodsDataRepository repository;
+
+    GoodsDetailViewModel(Context context, int goodsId, int categoryId) {
         super(context);
         this.id = goodsId;
         this.context = context;
+        setCategoryId(categoryId);
     }
 
     @Override
-    public void start() {
+    public void start() {       //直接刷新
         getNormalData();
     }
 
     private void getNormalData() {
-        new Thread(() -> GoodsDataRepository.getInstance().getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
+        repository = GoodsDataRepository.getInstance();
+
+        new Thread(() ->  repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
             @Override
             public void succeed(GoodsDetailInfo data) {
                 g = data;
@@ -71,8 +75,8 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                     reviewItems.clear();
                     Collections.reverse(reviews);
                     for (Review r: reviews) {
-                        ReviewItemViewModel viewModel = new ReviewItemViewModel(r);
-                        reviewItems.add(0, viewModel);
+                        ReviewItemViewModel viewModel = new ReviewItemViewModel(r, navigator);
+                        reviewItems.add(viewModel);
                     }
                     setData();
                     if (navigator != null) {
@@ -101,10 +105,17 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         publishDate.set(g.getPublishDate());
         sellerImage.set(Config.ServerURL + "/image" + g.getUserPortraitPath());
 
+
         if (g.getImages() != null) {
             String[] imagesStr = g.getImages();
             for (String image : imagesStr) {
                 images.add("http://www.lfork.top/image" + image);
+            }
+        }
+
+        if (g.getUserId() == UserDataRepository.getInstance().getUserId()) {
+            if (navigator != null) {
+                navigator.setActionBar();
             }
         }
 
@@ -149,13 +160,16 @@ public class GoodsDetailViewModel extends GoodsViewModel {
             @Override
             public void succeed(Review data) {
 
-                ReviewItemViewModel viewModel = new ReviewItemViewModel(data);
+                ReviewItemViewModel viewModel = new ReviewItemViewModel(data, navigator);
                 reviewItems.add(0,viewModel );
                 review.set("");
+
                 if (navigator != null) {
                     navigator.notifyReviewChanged();
                 }
+                reviewDataIsEmpty.set(false);
                 showMessage("评论成功");
+
 
             }
 
@@ -194,5 +208,57 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         if (navigator != null) {
             navigator.showMessage(msg);
         }
+    }
+
+    public void updateGoods(){
+        if (navigator != null) {
+           navigator.updateGoods(g.getId());
+        }
+    }
+
+    public void shareGoods(){
+        if (navigator != null) {
+            navigator.shareGoods(g.toString());
+        }
+    }
+
+    public void deleteGoods(){
+        repository.deleteGoods(new DataSource.GeneralCallback<String>() {
+            @Override
+            public void succeed(String data) {
+                if (navigator != null) {
+                    navigator.deleteGoods(true);
+                }
+            }
+
+            @Override
+            public void failed(String log) {
+                if (navigator != null) {
+                    navigator.deleteGoods(false);
+                }
+            }
+        }, g.getId());
+    }
+
+    public void deleteReview(int reviewId){
+
+        int i = -1;
+        for (ReviewItemViewModel next : reviewItems) {
+            i++;
+            if (next.id.get() == reviewId) {
+                break;
+            }
+
+        }
+
+        if (i != -1) {
+            reviewItems.remove(i );
+            if (navigator != null){
+                navigator.deleteReview(true, -1);
+                navigator.notifyReviewChanged();
+            }
+        }
+
+
     }
 }

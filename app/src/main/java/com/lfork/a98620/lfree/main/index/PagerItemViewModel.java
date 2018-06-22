@@ -101,6 +101,8 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
                 repository.getGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
                     @Override
                     public void succeed(List<Goods> data) {
+
+
                         switch (requestType) {
                             case INITIALIZE:
                                 items.clear();
@@ -113,6 +115,8 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
                             default:
                                 break;
                         }
+
+
 
                         items.addAll(data);
 
@@ -173,5 +177,14 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
     public void setNavigator(PagerItemViewNavigator navigator) {
         this.navigator = navigator;
+    }
+
+    public boolean isInitialized() {
+        return isInitialized;
+    }
+
+
+    public Category getCategory() {
+        return category;
     }
 }

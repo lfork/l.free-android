@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class IndexFragment extends Fragment implements IndexFragmentNavigator,TabLayout.OnTabSelectedListener{
+public class IndexFragment extends Fragment implements IndexFragmentNavigator{
 
     private View rootView;// 缓存Fragment view@Override
 
     private ViewPager viewPager;
 
+    private int targetPosition = -1;
 
     private PagerItemAdapter pagerAdapter;
 
@@ -98,7 +100,6 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator,Ta
     public void openSearchActivity() {
         Intent intent = new Intent(getContext(), SearchResultActivity.class);
         intent.putExtra("recommend_keyword", "Java从入门到精通");
-
         Objects.requireNonNull(getContext()).startActivity(intent);
     }
 
@@ -107,31 +108,32 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator,Ta
         WebClient.openUrlInWebClient(getActivity(), url);
     }
 
-    /**
-     * 先加载前3个页面，当点击到指定页面的时候就加载指定的前后三个页面的数据
-     * @param tab 被选中的标签
-     */
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        int position = tab.getPosition();
-        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
-        if (pagerItemView != null) {    //如果TabLayout没有初始完完毕，这里可能会报空// 这里viewPager自身和tabLayout 不同步导致的
-            pagerItemView.setActivityContext(getActivity());
-            pagerItemView.onResume();
-        }
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-        int position = tab.getPosition();
-        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
-        pagerItemView.onPause();
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-        ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(tab.getPosition()).onResume();
-    }
+//    /**
+//     * 先加载前3个页面，当点击到指定页面的时候就加载指定的前后三个页面的数据
+//     * @param tab 被选中的标签
+//     */
+//    @Override
+//    public void onTabSelected(TabLayout.Tab tab) {
+//        int position = tab.getPosition();
+//        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
+//        Log.d(TAG, "onTabSelected: " + position);
+//        if (pagerItemView != null) {    //如果TabLayout没有初始完完毕，这里可能会报空// 这里viewPager自身和tabLayout 不同步导致的
+//            pagerItemView.setActivityContext(getActivity());
+//            pagerItemView.onResume();
+//        }
+//    }
+//
+//    @Override
+//    public void onTabUnselected(TabLayout.Tab tab) {
+//        int position = tab.getPosition();
+//        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
+//        pagerItemView.onPause();
+//    }
+//
+//    @Override
+//    public void onTabReselected(TabLayout.Tab tab) {
+//        ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(tab.getPosition()).onResume();
+//    }
 
     /**
      * 在onResume里面设置对view的引用 在{@link #onDestroy()}里面取消view的引用
@@ -154,11 +156,39 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator,Ta
             viewModel.setNavigator(this);   //恢复到当前的UI，重新设置view
             viewModel.start();
         }
+
+        if (targetPosition != -1) {
+            uploadSuccessAndRefreshData(targetPosition);
+            targetPosition = -1;
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         viewModel.onDestroy();
+    }
+
+    public void uploadSuccessAndRefreshData(int position) {
+
+        Log.d(TAG, "uploadSuccessAndRefreshData: "+position);
+        PagerItemView pagerItemView = ((PagerItemAdapter) Objects.requireNonNull(viewPager.getAdapter())).getPagerItemView(position);
+        if (pagerItemView != null) {
+            pagerItemView.setNeedForceRefresh(true);
+            if (!pagerItemView.isViewWasCreated()) {
+                pagerItemView.onCreateView(viewPager, viewModel.categories.get(position));
+            }
+
+            if (pagerAdapter.getCurrentTabPosition() == position ) {
+                pagerItemView.forceRefresh();
+            } else {
+                viewPager.setCurrentItem(position);
+            }
+
+        }
+    }
+
+    public void setTargetPosition(int targetPosition) {
+        this.targetPosition = targetPosition;
     }
 }
