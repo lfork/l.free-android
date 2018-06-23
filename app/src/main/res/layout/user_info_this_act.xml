@@ -1,10 +1,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.lfork.a98620.lfree.main.myinfo.MyInforFragment">
+    tools:context="com.lfork.a98620.lfree.main.myinfo.MyInfoFragment">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.userinfothis.UserInfoThisViewModel" />

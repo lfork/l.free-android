@@ -94,10 +94,8 @@ public class TCPConnection {
                     Log.d(TAG, "rebindClientInfo: " + result);
                     print("连接失败");
                     return false;
-
             }
         }
-
         return false;
     }
 

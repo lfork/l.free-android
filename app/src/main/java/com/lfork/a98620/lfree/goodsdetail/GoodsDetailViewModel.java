@@ -199,14 +199,14 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     }
 
     @Override
-    public void destroy() {
+    public void onDestroy() {
         navigator = null;
     }
 
     private void showMessage(String msg) {
 
         if (navigator != null) {
-            navigator.showMessage(msg);
+            navigator.showToast(msg);
         }
     }
 

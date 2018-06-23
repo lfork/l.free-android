@@ -63,11 +63,11 @@ public class SearchResultViewModel extends BaseViewModel {
                         dataIsEmpty.set(false);
 
                         if (navigator != null) {
-                            navigator.showMessage("搜索完成");
+                            navigator.showToast("搜索完成");
                         }
                     } else{
                         if (navigator != null) {
-                            navigator.showMessage("没有搜索到相关信息");
+                            navigator.showToast("没有搜索到相关信息");
                         }
                     }
 
@@ -79,7 +79,7 @@ public class SearchResultViewModel extends BaseViewModel {
                     dataIsLoading.set(false);
 
                     if (navigator != null) {
-                        navigator.showMessage( log);
+                        navigator.showToast( log);
                     }
                 }
             }, keyword);
@@ -92,8 +92,8 @@ public class SearchResultViewModel extends BaseViewModel {
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
+    public void onDestroy() {
+        super.onDestroy();
         navigator = null;
     }
 }

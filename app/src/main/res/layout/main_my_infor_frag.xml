@@ -3,14 +3,14 @@
 
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.main.myinfo.MyInforFragmentViewModel" />
+            type="com.lfork.a98620.lfree.main.myinfo.MyInfoFragmentViewModel" />
     </data>
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.lfork.a98620.lfree.main.myinfo.MyInforFragment">
+        tools:context="com.lfork.a98620.lfree.main.myinfo.MyInfoFragment">
 
         <ScrollView
             android:layout_width="match_parent"

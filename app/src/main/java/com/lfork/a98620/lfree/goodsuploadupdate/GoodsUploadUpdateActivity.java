@@ -116,7 +116,7 @@ public class GoodsUploadUpdateActivity extends AppCompatActivity implements Good
     protected void onDestroy() {
         super.onDestroy();
         if (viewModel != null)
-         viewModel.destroy();
+         viewModel.onDestroy();
     }
 
 
@@ -382,7 +382,7 @@ public class GoodsUploadUpdateActivity extends AppCompatActivity implements Good
 
 
     @Override
-    public void showMessage(String msg) {
+    public void showToast(String msg) {
         runOnUiThread(() -> {
             ToastUtil.showShort(getApplicationContext(), msg);
         });

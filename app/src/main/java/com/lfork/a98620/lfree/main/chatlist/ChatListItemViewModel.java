@@ -53,7 +53,7 @@ public class ChatListItemViewModel extends BaseViewModel {
     }
 
     @Override
-    public void destroy() {
+    public void onDestroy() {
 
     }
 }

@@ -207,8 +207,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     }
 
     @Override
-    public void showMessage(String msg) {
-
+    public void showToast(String msg) {
         runOnUiThread(() -> ToastUtil.showShort(getBaseContext(), msg));
     }
 

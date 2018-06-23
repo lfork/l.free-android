@@ -24,7 +24,7 @@ public class CommunityBindingAdapter {
         view.setOnClickListener((view1) -> {
             Intent intent = new Intent(view1.getContext(), ArticleContentActivity.class);
             intent.putExtra("articleId", articleId);
-            intent.putExtra("fromCommentButton", true);
+            intent.putExtra("fromCommentButton", false);
             view1.getContext().startActivity(intent);
         });
     }

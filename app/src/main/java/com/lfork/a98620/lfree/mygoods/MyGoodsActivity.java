@@ -71,7 +71,7 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        viewModel.destroy();
+        viewModel.onDestroy();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
     }
 
     @Override
-    public void showMessage(String msg) {
+    public void showToast(String msg) {
 
     }
 }

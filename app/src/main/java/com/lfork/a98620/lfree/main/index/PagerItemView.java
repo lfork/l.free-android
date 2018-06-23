@@ -86,7 +86,7 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
      */
     public void onDestroy() {
         activityContext = null;
-        viewModel.destroy();
+        viewModel.onDestroy();
     }
 
     public PagerItemView(Context context) {

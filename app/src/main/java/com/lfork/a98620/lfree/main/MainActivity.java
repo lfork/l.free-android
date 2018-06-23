@@ -28,7 +28,7 @@ import com.lfork.a98620.lfree.imservice.MessageService;
 import com.lfork.a98620.lfree.main.chatlist.ChatListFragment;
 import com.lfork.a98620.lfree.main.community.CommunityFragment;
 import com.lfork.a98620.lfree.main.index.IndexFragment;
-import com.lfork.a98620.lfree.main.myinfo.MyInforFragment;
+import com.lfork.a98620.lfree.main.myinfo.MyInfoFragment;
 import com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        ((MyInforFragment) fragments.get(3)).refreshData();
+        ((MyInfoFragment) fragments.get(3)).refreshData();
     }
 
     @Override
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new PublishInfoFragment());
         fragments.add(new IndexFragment());
         fragments.add(new ChatListFragment());
-        fragments.add(new MyInforFragment());
+        fragments.add(new MyInfoFragment());
         fragments.add(new CommunityFragment());
         replaceFragment(fragments.get(1));
         binding.goodsBtn.setSelected(true);

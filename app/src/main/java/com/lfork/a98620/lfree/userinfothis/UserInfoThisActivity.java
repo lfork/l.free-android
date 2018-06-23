@@ -298,7 +298,7 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void showMessage(String msg) {
+    public void showToast(String msg) {
         runOnUiThread(() -> ToastUtil.showShort(getBaseContext(), msg));
     }
 }

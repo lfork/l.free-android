@@ -305,12 +305,12 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
 
     private void showMessage(String msg) {
         if (navigator != null) {
-            navigator.showMessage(msg);
+            navigator.showToast(msg);
         }
     }
 
     @Override
-    public void destroy() {
+    public void onDestroy() {
         navigator = null;
     }
 

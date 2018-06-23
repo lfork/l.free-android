@@ -167,7 +167,7 @@ public class UserInfoEditViewModel extends UserViewModel {
     }
 
     @Override
-    public void destroy() {
+    public void onDestroy() {
         navigator = null;
     }
 

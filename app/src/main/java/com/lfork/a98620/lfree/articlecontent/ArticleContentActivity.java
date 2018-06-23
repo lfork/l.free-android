@@ -116,6 +116,8 @@ public class ArticleContentActivity extends AppCompatActivity implements Communi
                 recyclerView.setNestedScrollingEnabled(false);
                 if (fromCommentButton) {
                     binding.scrollView.scrollTo(0, binding.linearLayout.getMeasuredHeight() - binding.scrollView.getHeight());
+                } else {
+                    binding.scrollView.scrollTo(0, -1);
                 }
             });
         }

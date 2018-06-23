@@ -22,7 +22,7 @@ public abstract class BaseViewModel extends BaseObservable{
 
     public  void start(){};
 
-    public  void destroy(){};
+    public  void onDestroy(){};
 
     public BaseViewModel() {
     }

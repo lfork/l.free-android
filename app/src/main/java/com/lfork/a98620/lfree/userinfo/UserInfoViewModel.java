@@ -58,7 +58,7 @@ public class UserInfoViewModel extends UserViewModel {
             @Override
             public void failed(String log) {
                 if (navigator != null) {
-                    navigator.showMessage(log);
+                    navigator.showToast(log);
                 }
             }
         }, userId)).start();
@@ -72,7 +72,7 @@ public class UserInfoViewModel extends UserViewModel {
 
 
     @Override
-    public void destroy() {
+    public void onDestroy() {
         navigator = null;
     }
 }

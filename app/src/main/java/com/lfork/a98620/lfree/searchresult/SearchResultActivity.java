@@ -62,7 +62,7 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
 
 
     @Override
-    public void showMessage(String msg) {
+    public void showToast(String msg) {
         runOnUiThread(() -> {
             if (msg.equals("搜索完成")) {
                 binding.searchRecycler.getAdapter().notifyDataSetChanged();

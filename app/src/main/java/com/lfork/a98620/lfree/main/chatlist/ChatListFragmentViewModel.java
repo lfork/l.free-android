@@ -75,7 +75,7 @@ public class ChatListFragmentViewModel extends BaseViewModel {
     }
 
     @Override
-    public void destroy() {
+    public void onDestroy() {
 
     }
 

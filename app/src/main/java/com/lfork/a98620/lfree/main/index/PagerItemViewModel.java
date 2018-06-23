@@ -171,7 +171,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     }
 
     @Override
-    public void destroy() {
+    public void onDestroy() {
         navigator = null;
     }
 

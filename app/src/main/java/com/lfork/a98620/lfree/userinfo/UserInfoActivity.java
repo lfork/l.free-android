@@ -101,7 +101,7 @@ public class UserInfoActivity extends BaseActivity implements ViewModelNavigator
 
 
     @Override
-    public void showMessage(String msg) {
+    public void showToast(String msg) {
         runOnUiThread(() -> {
             ToastUtil.showShort(getBaseContext(), msg);
         });
