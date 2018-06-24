@@ -27,13 +27,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.base.bindingadapter.ImageBinding;
 import com.lfork.a98620.lfree.base.customview.PopupDialog;
 import com.lfork.a98620.lfree.base.customview.PopupDialogOnclickListener;
 import com.lfork.a98620.lfree.base.image.GlideEngine;
 import com.lfork.a98620.lfree.databinding.GoodsUploadActBinding;
 import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
-import com.lfork.a98620.lfree.util.mvvmadapter.Image;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 
@@ -217,7 +217,7 @@ public class GoodsUploadUpdateActivity extends AppCompatActivity implements Good
             mSelected = new ArrayList<>();
         }
         mSelected.add(imageUri);
-        Image.setImage(imageViews.get(mSelected.size() - 1), imageUri);
+        ImageBinding.setImage(imageViews.get(mSelected.size() - 1), imageUri);
         viewModel.setImage(portraitFile.getPath());
     }
 
@@ -226,7 +226,7 @@ public class GoodsUploadUpdateActivity extends AppCompatActivity implements Good
      */
     public void setImages() {
         for (int i = 0; i < mSelected.size(); i++) {
-            Image.setImage(imageViews.get(i), mSelected.get(i));
+            ImageBinding.setImage(imageViews.get(i), mSelected.get(i));
         }
         viewModel.setImages(mSelected);
     }

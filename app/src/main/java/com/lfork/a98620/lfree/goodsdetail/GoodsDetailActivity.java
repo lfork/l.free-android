@@ -23,7 +23,7 @@ import com.lfork.a98620.lfree.imagebrowser.ImageBrowserActivity;
 import com.lfork.a98620.lfree.userinfo.UserInfoActivity;
 import com.lfork.a98620.lfree.util.ShareUtil;
 import com.lfork.a98620.lfree.util.ToastUtil;
-import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
+import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;

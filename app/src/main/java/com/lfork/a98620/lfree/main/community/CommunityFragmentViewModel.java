@@ -1,6 +1,6 @@
 package com.lfork.a98620.lfree.main.community;
 
-import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
@@ -11,8 +11,8 @@ import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class CommunityFragmentViewModel extends BaseViewModel {
 
-    CommunityFragmentViewModel(Activity context) {
-        this.context = context;
+    CommunityFragmentViewModel(Context context) {
+        super(context);
     }
 
     public void loadData(String fromTime, CommunityCallback callback) {

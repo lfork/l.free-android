@@ -24,8 +24,8 @@
             android:layout_height="50dp"
             android:background="@color/Login_ForeColor"
             android:gravity="left|center"
-            android:paddingLeft="25dp"
-            android:text="聊天记录"
+            android:paddingStart="25dp"
+            android:text="@string/chat_record"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -37,13 +37,14 @@
             android:gravity="center"
             android:layout_marginTop="50dp"
             android:drawablePadding="30dp"
-            android:text="您还没有与卖家交流过，赶快去寻找卖家进行交流吧~~"
+            android:text="@string/tips_chat"
             android:visibility="@{viewModel.dataIsEmpty ? View.VISIBLE : View.GONE}" />
 
         <ListView
             android:id="@+id/main_chat_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:setListViewItems="{viewModel.mItems}"
             android:visibility="@{viewModel.dataIsEmpty ? View.GONE:View.VISIBLE}">
 
         </ListView>

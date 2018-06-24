@@ -34,7 +34,7 @@ import top.zibin.luban.Luban;
  */
 
 public class GoodsUploadUpdateViewModel extends GoodsViewModel {
-    private static final String TAG = "GoodsUploadUpdateViewModel";
+    private static final String TAG = "GoodsUploadUpdateVM";
 
     public final ObservableField<String> tips = new ObservableField<>("已选择(0/5)");
 
@@ -120,7 +120,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
         imageCount = mSelected.size();
         imagePathList.clear();
         for (int i = 0; i < mSelected.size(); i++) {
-            imagePathList.add(UriHelper.getPath(context, mSelected.get(i)));
+            imagePathList.add(UriHelper.getPath(getContext(), mSelected.get(i)));
         }
         tips.set("已选择(" + imageCount + "/5)");
         setImageVisibility();
@@ -137,26 +137,26 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
 
 
         if (imagePathList.size() < 1) {
-            ToastUtil.showShort(context, "请添加图片");
+            ToastUtil.showShort(getContext(), "请添加图片");
             return;
         }
         if (TextUtils.isEmpty(name.get())) {
-            ToastUtil.showShort(context, "名称不能为空");
+            ToastUtil.showShort(getContext(), "名称不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(description.get())) {
-            ToastUtil.showShort(context, "描述不能为空");
+            ToastUtil.showShort(getContext(), "描述不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(description.get())) {
-            ToastUtil.showShort(context, "描述不能为空");
+            ToastUtil.showShort(getContext(), "描述不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(price.get())) {
-            ToastUtil.showShort(context, "价格不能为空");
+            ToastUtil.showShort(getContext(), "价格不能为空");
             return;
         }
 
@@ -180,9 +180,9 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
                         .map(list -> {
                             // 同步方法直接返回压缩后的文件
                             newImages.addAll(
-                                    Luban.with(context)
+                                    Luban.with(getContext())
                                             .load(list)
-                                            .setTargetDir(Objects.requireNonNull(context.getExternalCacheDir()).toString())
+                                            .setTargetDir(Objects.requireNonNull(getContext().getExternalCacheDir()).toString())
                                             .get());
                             for (File str : newImages) {
                                 Log.d(TAG, "onSuccess: " + str.getPath());
@@ -238,24 +238,22 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
 
 
     private void getCategories() {
-        new Thread(() -> {
-            repository.getCategories(new DataSource.GeneralCallback<List<Category>>() {
-                @Override
-                public void succeed(List<Category> data) {
-                    categories.clear();
-                    categories.addAll(data);
-                    if (navigator != null) {
-                        navigator.setDefaultCategory(getCategoryId());
-                    }
-
+        new Thread(() -> repository.getCategories(new DataSource.GeneralCallback<List<Category>>() {
+            @Override
+            public void succeed(List<Category> data) {
+                categories.clear();
+                categories.addAll(data);
+                if (navigator != null) {
+                    navigator.setDefaultCategory(getCategoryId());
                 }
 
-                @Override
-                public void failed(String log) {
-                    Log.d(TAG, "failed: " + log);
-                }
-            });
-        }).start();
+            }
+
+            @Override
+            public void failed(String log) {
+                Log.d(TAG, "failed: " + log);
+            }
+        })).start();
 
     }
 

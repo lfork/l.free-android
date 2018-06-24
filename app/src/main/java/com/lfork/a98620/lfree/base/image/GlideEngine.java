@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.lfork.a98620.lfree.util.mvvmadapter.Image;
+import com.lfork.a98620.lfree.base.bindingadapter.ImageBinding;
 import com.zhihu.matisse.engine.ImageEngine;
 
 /**
@@ -35,7 +35,7 @@ public class GlideEngine implements ImageEngine {
     }
     
     private void setImage(ImageView imageView, Uri uri){
-        Image.setImageWithDiskCache(imageView, uri);
+        ImageBinding.setImageWithDiskCache(imageView, uri);
     }
 
 

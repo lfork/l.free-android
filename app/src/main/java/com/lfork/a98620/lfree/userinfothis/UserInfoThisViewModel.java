@@ -30,7 +30,6 @@ public class UserInfoThisViewModel extends UserViewModel {
 
     UserInfoThisViewModel(AppCompatActivity context) {
         super(context);
-        this.context = context;
     }
 
     @Override
@@ -97,7 +96,6 @@ public class UserInfoThisViewModel extends UserViewModel {
         }
     }
 
-    @Override
     public void setNavigator(ViewModelNavigator navigator) {
         this.navigator = navigator;
     }

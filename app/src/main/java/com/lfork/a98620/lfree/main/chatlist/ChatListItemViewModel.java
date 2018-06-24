@@ -1,11 +1,8 @@
 package com.lfork.a98620.lfree.main.chatlist;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.ObservableField;
-import android.util.Log;
 
-import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.util.Config;
@@ -17,7 +14,6 @@ import java.lang.ref.WeakReference;
  */
 
 public class ChatListItemViewModel extends BaseViewModel {
-    private static final String TAG = "ChatListItemViewModel";
 
     public final ObservableField<String> username = new ObservableField<>();
 
@@ -29,31 +25,24 @@ public class ChatListItemViewModel extends BaseViewModel {
 
     private int userId;
 
-    public WeakReference<Context> reference;
+    public WeakReference<ChatListFragNavigator> reference;
 
     ChatListItemViewModel(Context context, User user) {
         super(context);
-        reference = new WeakReference<>(context);
+
         username.set(user.getUserName());
         imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
         userId = user.getUserId();
     }
 
     public void onClick(){
-        Log.d(TAG, "onButton1Clicked: ???" );
-        Intent intent = new Intent(reference.get(), ChatWindowActivity.class);
-        intent.putExtra("user_id", userId);
-        intent.putExtra("username", username.get());
-        reference.get().startActivity(intent);
+        if (reference != null && reference.get() != null) {
+            reference.get().openChatWindow(userId, username.get());
+        }
     }
 
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
+    public void setNavigator(ChatListFragNavigator navigator) {
+        super.setNavigator(navigator);
+        reference = new WeakReference<>( navigator);
     }
 }

@@ -24,15 +24,14 @@ public class ImageTool {
         if (source == null) {
             return null;
         }
-        Bitmap inputBmp = source;
         //(1)
         RenderScript renderScript =  RenderScript.create(context);
 
-        Log.i(TAG,"scale size:"+inputBmp.getWidth()+"*"+inputBmp.getHeight());
+        Log.i(TAG,"scale size:"+ source.getWidth()+"*"+ source.getHeight());
 
         // Allocate memory for Renderscript to work with
         //(2)
-        final Allocation input = Allocation.createFromBitmap(renderScript,inputBmp);
+        final Allocation input = Allocation.createFromBitmap(renderScript, source);
         final Allocation output = Allocation.createTyped(renderScript,input.getType());
         //(3)
         // Load up an instance of the specific script that we want to use.
@@ -47,11 +46,11 @@ public class ImageTool {
         scriptIntrinsicBlur.forEach(output);
         //(7)
         // Copy the output to the blurred bitmap
-        output.copyTo(inputBmp);
+        output.copyTo(source);
         //(8)
         renderScript.destroy();
 
-        return inputBmp;
+        return source;
     }
 
 

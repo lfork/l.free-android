@@ -88,7 +88,6 @@ public class MessageService extends Service {
                 //这里会获取一些连接的索引 dataRepository。。  用来及时地进行交互
                 //进行登录操作
                 repository = IMDataRepository.getInstance();
-
                 repository.login(user, new LoginListener() {
                     @Override
                     public void succeed(User user) {

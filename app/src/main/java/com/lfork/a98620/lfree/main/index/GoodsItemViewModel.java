@@ -24,7 +24,6 @@ public class GoodsItemViewModel extends GoodsViewModel{
 
     private GoodsItemViewModel(Context context, Goods g, int categoryId) {
         super(context, g.getId(), categoryId);
-        this.context = context;
         name.set(g.getName());
         price.set(g.getPrice() + "元");
         imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath() );
@@ -35,7 +34,6 @@ public class GoodsItemViewModel extends GoodsViewModel{
 
     GoodsItemViewModel(Context context, Goods g) {
         this(context, g, 0);
-        this.context = context;
         name.set(g.getName());
         price.set(g.getPrice() + "元");
         imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath());

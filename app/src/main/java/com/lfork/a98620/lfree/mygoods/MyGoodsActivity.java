@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.BaseActivity;
 import com.lfork.a98620.lfree.databinding.MyGoodsActBinding;
-import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
+import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
 
 public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavigator {
 

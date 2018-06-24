@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.github.chrisbanes.photoview.PhotoView;
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.util.mvvmadapter.Image;
+import com.lfork.a98620.lfree.base.bindingadapter.ImageBinding;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -36,7 +36,7 @@ public class ImageBrowserActivity extends AppCompatActivity {
         photoView = findViewById(R.id.big_image);
 
         if (urls != null && urls.size() > 0) {
-            Image.setImageNoCache(photoView, urls.get(position));
+            ImageBinding.setImageNoCache(photoView, urls.get(position));
         }
 
         setupActionBar();

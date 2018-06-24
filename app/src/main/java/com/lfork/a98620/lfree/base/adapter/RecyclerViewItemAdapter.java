@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.util.adapter;
+package com.lfork.a98620.lfree.base.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;

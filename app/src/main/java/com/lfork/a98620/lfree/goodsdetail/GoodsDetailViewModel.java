@@ -54,7 +54,6 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     GoodsDetailViewModel(Context context, int goodsId, int categoryId) {
         super(context);
         this.id = goodsId;
-        this.context = context;
         setCategoryId(categoryId);
     }
 
@@ -193,7 +192,6 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         navigator.openBigImages(images, position);
     }
 
-    @Override
     public void setNavigator(ViewModelNavigator navigator) {
         this.navigator = (GoodsDetailNavigator) navigator;
     }

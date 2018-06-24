@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.util.mvvmadapter;
+package com.lfork.a98620.lfree.base.bindingadapter;
 
 import android.databinding.BindingAdapter;
 import android.net.Uri;
@@ -13,7 +13,7 @@ import com.lfork.a98620.lfree.util.GlideOptions;
  * Created by 98620 on 2018/4/7.
  */
 
-public class Image {
+public class ImageBinding {
     @BindingAdapter({"setImageNoCache"})
     public static void setImageNoCache(ImageView view, String imageUrl) {
         GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).placeholder(R.drawable.login_logo).skipMemoryCache(true);
@@ -24,9 +24,6 @@ public class Image {
         GlideOptions options = GlideOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
         Glide.with(view.getContext()).load( path).apply(options).into(view);
     }
-
-
-
 
     @BindingAdapter({"setImageWithDiskCache"})
     public static void setImageWithDiskCache(ImageView view, String imageUrl) {

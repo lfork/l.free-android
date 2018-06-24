@@ -46,5 +46,7 @@
     <string name="sell_price">卖价:</string>
     <string name="category">分类:</string>
     <string name="private_chat">私聊</string>
+    <string name="chat_record">聊天记录</string>
+    <string name="tips_chat">您还没有与卖家交流过，赶快去寻找卖家进行交流吧~~</string>
 
 </resources>

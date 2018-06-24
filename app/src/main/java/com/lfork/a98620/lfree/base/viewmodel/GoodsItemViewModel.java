@@ -30,7 +30,7 @@ public class GoodsItemViewModel extends GoodsViewModel {
     public void onClick(){
 
         if (reference != null && reference.get() != null) {
-            Intent intent = new Intent(context, GoodsDetailActivity.class);
+            Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
             intent.putExtra("goods_id", getId());
             intent.putExtra("category_id", getCategoryId());
             reference .get().startActivity(intent);

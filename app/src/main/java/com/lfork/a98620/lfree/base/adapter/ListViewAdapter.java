@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.util.adapter;
+package com.lfork.a98620.lfree.base.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -15,22 +15,35 @@ import java.util.List;
  * Created by 98620 on 2017/12/16.
  */
 
-public class ListViewAdapter<T> extends BaseAdapter {
-
-    private static final String TAG = "MyBaseAdapter";
+public class ListViewAdapter<ViewModel> extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
     private int layoutId;
     private int variableId;
-    private List<T> viewModelList;
+    private List<ViewModel> viewModelList;
 
-    public ListViewAdapter(Context context, int layoutId, List<T> list, int resId) {
+    public ListViewAdapter(Context context, int layoutId, List<ViewModel> list, int resId) {
         this.context = context;
         this.layoutId = layoutId;
         this.viewModelList = list;
         this.variableId = resId;
         inflater = LayoutInflater.from(context);
+    }
+
+    public ListViewAdapter(Context context, int layoutId,int resId) {
+        this.context = context;
+        this.layoutId = layoutId;
+        this.variableId = resId;
+        inflater = LayoutInflater.from(context);
+    }
+
+    public List<ViewModel> getViewModelList() {
+        return viewModelList;
+    }
+
+    public void setViewModelList(List<ViewModel> viewModelList) {
+        this.viewModelList = viewModelList;
     }
 
     @Override
@@ -58,9 +71,5 @@ public class ListViewAdapter<T> extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
-//
-//    public void refreshData(){
-//
-//    }
 
 }

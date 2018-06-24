@@ -13,7 +13,7 @@ import com.lfork.a98620.lfree.base.viewmodel.GoodsItemViewModel;
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.databinding.SearchResultActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
-import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
+import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
 
 public class SearchResultActivity extends AppCompatActivity implements ViewModelNavigator {
 

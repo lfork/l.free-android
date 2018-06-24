@@ -75,4 +75,8 @@ public class UserInfoViewModel extends UserViewModel {
     public void onDestroy() {
         navigator = null;
     }
+
+    public void setNavigator(ViewModelNavigator  navigator) {
+        this.navigator = navigator;
+    }
 }

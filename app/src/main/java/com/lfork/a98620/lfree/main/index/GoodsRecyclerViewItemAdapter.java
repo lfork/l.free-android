@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.databinding.GoodsRecycleItemBinding;
-import com.lfork.a98620.lfree.util.adapter.RecyclerViewItemAdapter;
+import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
 
 import java.util.List;
 

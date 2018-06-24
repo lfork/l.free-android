@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.main.chatlist;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,25 +12,21 @@ import android.widget.ListView;
 
 import com.lfork.a98620.lfree.BR;
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.databinding.MainChatListFragBinding;
-import com.lfork.a98620.lfree.util.adapter.ListViewAdapter;
+import com.lfork.a98620.lfree.base.adapter.ListViewAdapter;
+import com.lfork.a98620.lfree.util.ToastUtil;
+
+import java.util.Objects;
 
 public class ChatListFragment extends Fragment implements ChatListFragNavigator {
 
-    private static final String TAG = "ChatListFragment";
-
     private MainChatListFragBinding binding;
-    private ChatListFragmentViewModel viewModel;
-    private View rootView;// 缓存Fragment view@Override
-    private ListView listView;
-    private ListViewAdapter<ChatListItemViewModel> adapter;
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //虽然是执行了onDestroy 但是models 依然是models ，里面的数据是没有被释放的。 因为mainactivity还持有fragment的引用。
-        //也就是说fragment destory后 依然能够重新启动
-    }
+    private ChatListFragmentViewModel viewModel;
+
+    private View rootView;// 缓存Fragment view
+
 
     @Override
     public void onResume() {
@@ -38,6 +35,15 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
         viewModel.start();
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (viewModel != null) {
+            viewModel.onDestroy();
+        }
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -61,30 +67,24 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
     }
 
     private void setupListView() {
-        listView = binding.mainChatList;
-        adapter = new ListViewAdapter<>(getContext(), R.layout.main_chat_list_contacts_item, viewModel.items, BR.viewModel); //BR 里面的entity 是经过处理的entity
+        ListView listView = binding.mainChatList;
+        ListViewAdapter adapter = new ListViewAdapter<>(getContext(), R.layout.main_chat_list_contacts_item, BR.viewModel);
         listView.setAdapter(adapter);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (viewModel != null) {
-            viewModel.unbindNavigator();
-        }
-    }
 
-    @Override
-    public void notifyUsersChanged() {
-        if (adapter != null)
-            adapter.notifyDataSetChanged();
-    }
 
     @Override
     public void openChatWindow(int userId, String userName) {
-
+        Intent intent = new Intent(getContext(), ChatWindowActivity.class);
+        intent.putExtra("user_id", userId);
+        intent.putExtra("username",  userName);
+        startActivity(intent);
     }
 
-//
+    @Override
+    public void showToast(String msg) {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> ToastUtil.showShort(getContext(), msg));
+    }
 
 }

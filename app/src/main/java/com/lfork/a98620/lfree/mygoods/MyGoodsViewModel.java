@@ -66,7 +66,7 @@ public class MyGoodsViewModel extends BaseViewModel {
                         } else {
                             dataIsEmpty.set(true);
                         }
-//                    items.addAll(data);
+//                    mItems.addAll(data);
                         context.runOnUiThread(() -> {
                             ToastUtil.showShort(context, "我的商品数据加载成功");
                             items.clear();
@@ -94,7 +94,6 @@ public class MyGoodsViewModel extends BaseViewModel {
         }).start();
     }
 
-    @Override
     public MyGoodsActivityNavigator getNavigator() {
         return navigator;
     }
