@@ -11,6 +11,9 @@ import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.BaseActivity;
 import com.lfork.a98620.lfree.databinding.MyGoodsActBinding;
 import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
+import com.lfork.a98620.lfree.util.ToastUtil;
+
+import java.util.Objects;
 
 public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavigator {
 
@@ -25,6 +28,13 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel.onDestroy();
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.my_goods_act);
@@ -37,17 +47,15 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
 
     private void initActionBar(){
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
         actionBar.setTitle("我的商品");
         actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
         // 有小箭头，并且图标可以点击
         actionBar.setDisplayShowHomeEnabled(false);
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -64,23 +72,24 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
         RecyclerView recyclerView = binding.myGoodsRecycle;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<MyGoodsItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.items, R.layout.my_goods_recycle_item);
+        RecyclerViewItemAdapter<MyGoodsItemViewModel> adapter = new RecyclerViewItemAdapter<>(R.layout.my_goods_recycle_item);
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewModel.onDestroy();
-    }
 
-    @Override
-    public void notifyDataChanged() {
-        binding.myGoodsRecycle.getAdapter().notifyDataSetChanged();
-    }
 
     @Override
     public void showToast(String msg) {
+        runOnUiThread(() -> ToastUtil.showShort(getApplicationContext(), msg));
+    }
+
+    @Override
+    public void refreshFinished(String log) {
+
+    }
+
+    @Override
+    public void loadMoreFinished(String log) {
 
     }
 }

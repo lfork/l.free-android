@@ -2,7 +2,6 @@ package com.lfork.a98620.lfree.mygoods;
 
 import android.app.Activity;
 import android.databinding.ObservableArrayList;
-import android.os.Looper;
 import android.text.format.DateFormat;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
@@ -11,7 +10,6 @@ import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
-import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,16 +19,12 @@ import java.util.List;
  * Created by 98620 on 2018/5/5.
  */
 public class MyGoodsViewModel extends BaseViewModel {
-
-    private Activity context;
-
-    public ObservableArrayList<MyGoodsItemViewModel> items = new ObservableArrayList<>();
+    public final ObservableArrayList<MyGoodsItemViewModel> items = new ObservableArrayList<>();
 
     private MyGoodsActivityNavigator navigator;
 
     MyGoodsViewModel(Activity context) {
         super(context);
-        this.context = context;
     }
 
     @Override
@@ -40,7 +34,7 @@ public class MyGoodsViewModel extends BaseViewModel {
 
     @Override
     public void onDestroy() {
-
+        navigator = null;
     }
 
     private void getGoodsList() {
@@ -57,7 +51,7 @@ public class MyGoodsViewModel extends BaseViewModel {
                     public void succeed(List<Goods> goodsList) {
                         ArrayList<MyGoodsItemViewModel> tempItems = new ArrayList<>();
                         for (Goods g : goodsList) {
-                            tempItems.add(new MyGoodsItemViewModel(context, g));
+                            tempItems.add(new MyGoodsItemViewModel(getContext(), g));
                         }
                         dataIsLoading.set(false);
 
@@ -66,39 +60,32 @@ public class MyGoodsViewModel extends BaseViewModel {
                         } else {
                             dataIsEmpty.set(true);
                         }
-//                    mItems.addAll(data);
-                        context.runOnUiThread(() -> {
-                            ToastUtil.showShort(context, "我的商品数据加载成功");
-                            items.clear();
-                            items.addAll(tempItems);
-                            notifyChange();
-                            navigator.notifyDataChanged();
-                        });
 
+                        items.clear();
+                        items.addAll(tempItems);
+                        showToast("我的商品数据加载成功");
                     }
 
                     @Override
                     public void failed(String log) {
                         dataIsLoading.set(false);
                         dataIsEmpty.set(true);
-                        context.runOnUiThread(() -> {
-                            ToastUtil.showShort(context, log);
-                        });
-
+                        showToast( log);
                     }
                 }, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString(), user.getUserId() + "");
             } else {
-                Looper.prepare();//???
-                ToastUtil.showShort(context, "可能没有网络");
+                showToast("可能没有网络");
             }
         }).start();
     }
 
-    public MyGoodsActivityNavigator getNavigator() {
-        return navigator;
+    public void setNavigator(MyGoodsActivityNavigator navigator) {
+        super.setNavigator(navigator);
+        this.navigator = navigator;
     }
 
-    public void setNavigator(MyGoodsActivityNavigator navigator) {
-        this.navigator = navigator;
+    @Override
+    public void showToast(String msg) {
+        super.showToast(msg);
     }
 }

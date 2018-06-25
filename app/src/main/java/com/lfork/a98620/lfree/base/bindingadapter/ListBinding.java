@@ -4,13 +4,14 @@ import android.databinding.BindingAdapter;
 import android.widget.ListView;
 
 import com.lfork.a98620.lfree.base.adapter.ListViewAdapter;
+import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
 
 import java.util.ArrayList;
 
 /**
  * Created by 98620 on 2018/6/24.
  */
-public class ListViewBinding {
+public class ListBinding {
 
     /**
      * 这个方法只适合一般需求的listView ，
@@ -26,8 +27,22 @@ public class ListViewBinding {
             return;
         }
         if (adapter != null) {
-            if (adapter.getViewModelList() == null) {
-                adapter.setViewModelList(viewModels);
+            if (adapter.getItems() == null) {
+                adapter.setItems(viewModels);
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @BindingAdapter({"setRecyclerViewItems"})
+    public static void refreshRecyclerView(ListView listView, ArrayList viewModels) {
+        RecyclerViewItemAdapter  adapter = (RecyclerViewItemAdapter) listView.getAdapter();
+        if (viewModels == null) {
+            return;
+        }
+        if (adapter != null) {
+            if (adapter.getItems() == null) {
+                adapter.setItems(viewModels);
             }
             adapter.notifyDataSetChanged();
         }

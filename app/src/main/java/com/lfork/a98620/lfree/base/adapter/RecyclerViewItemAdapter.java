@@ -17,13 +17,17 @@ import java.util.List;
  * Created by 98620 on 2018/3/31.
  */
 
-public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerViewItemAdapter.ViewHolder> {
-    private List<T> items;
+public class RecyclerViewItemAdapter<ViewModel> extends RecyclerView.Adapter<RecyclerViewItemAdapter.ViewHolder> {
+    private List<ViewModel> items;
 
     private int layoutId;
 
-    public RecyclerViewItemAdapter(List<T> models, int layoutId) {
+    public RecyclerViewItemAdapter(List<ViewModel> models, int layoutId) {
         this.items = models;
+        this.layoutId = layoutId;
+    }
+
+    public RecyclerViewItemAdapter(int layoutId) {
         this.layoutId = layoutId;
     }
 
@@ -49,23 +53,13 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
         return items.size();
     }
 
-    public List<T> getItems() {
+    public List<ViewModel> getItems() {
         return items;
     }
 
-    public void setItems(List<T> items) {
+    public void setItems(List<ViewModel> items) {
         notifyDataSetChanged();
         this.items = items;
-    }
-
-    public void addData(List<T> items) {
-        if (this.items == null) {
-            this.items = items;
-        } else{
-            this.items.clear();
-            this.items.addAll(items);
-        }
-        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,9 +80,5 @@ public class RecyclerViewItemAdapter<T> extends RecyclerView.Adapter<RecyclerVie
 
     protected int getLayoutId() {
         return layoutId;
-    }
-
-    public void setLayoutId(int layoutId) {
-        this.layoutId = layoutId;
     }
 }

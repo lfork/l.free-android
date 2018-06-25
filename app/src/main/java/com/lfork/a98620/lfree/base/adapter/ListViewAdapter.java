@@ -21,12 +21,12 @@ public class ListViewAdapter<ViewModel> extends BaseAdapter {
     private LayoutInflater inflater;
     private int layoutId;
     private int variableId;
-    private List<ViewModel> viewModelList;
+    private List<ViewModel> items;
 
     public ListViewAdapter(Context context, int layoutId, List<ViewModel> list, int resId) {
         this.context = context;
         this.layoutId = layoutId;
-        this.viewModelList = list;
+        this.items = list;
         this.variableId = resId;
         inflater = LayoutInflater.from(context);
     }
@@ -38,12 +38,12 @@ public class ListViewAdapter<ViewModel> extends BaseAdapter {
         inflater = LayoutInflater.from(context);
     }
 
-    public List<ViewModel> getViewModelList() {
-        return viewModelList;
+    public List<ViewModel> getItems() {
+        return items;
     }
 
-    public void setViewModelList(List<ViewModel> viewModelList) {
-        this.viewModelList = viewModelList;
+    public void setItems(List<ViewModel> items) {
+        this.items = items;
     }
 
     @Override
@@ -54,17 +54,17 @@ public class ListViewAdapter<ViewModel> extends BaseAdapter {
         }else{
             dataBinding = DataBindingUtil.getBinding(convertView);
         }
-        dataBinding.setVariable(variableId, viewModelList.get(position));
+        dataBinding.setVariable(variableId, items.get(position));
         return dataBinding.getRoot();
     }
 
     public int getCount() {
-        return viewModelList.size();
+        return items.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return viewModelList.get(position);
+        return items.get(position);
     }
 
     @Override
