@@ -45,4 +45,5 @@ public class ChatListItemViewModel extends BaseViewModel {
         super.setNavigator(navigator);
         reference = new WeakReference<>( navigator);
     }
+
 }

@@ -72,5 +72,15 @@ public class CommunityArticle extends BaseViewModel {
     public String getUrl() {
         return "http://imyth.top:8080/community_server/getcommunitycomment?articleId=" + articleId;
     }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
 }
 

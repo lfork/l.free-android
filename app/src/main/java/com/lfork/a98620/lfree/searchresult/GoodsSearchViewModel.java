@@ -5,8 +5,6 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
-import com.lfork.a98620.lfree.base.viewmodel.GoodsItemViewModel;
-import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.User;
@@ -19,27 +17,28 @@ import java.util.List;
 /**
  * Created by 98620 on 2018/5/5.
  */
-public class SearchResultViewModel extends BaseViewModel {
-
-    private Activity context;
+public class GoodsSearchViewModel extends BaseViewModel {
 
 
-    public final ObservableField<String> recommendKeyword = new ObservableField<String>();
+    public final ObservableField<String> recommendKeyword = new ObservableField<>();
 
 
-    public ObservableArrayList<GoodsItemViewModel> items = new ObservableArrayList<>();
+    public ObservableArrayList<GoodsSearchItemViewModel> items = new ObservableArrayList<>();
 
-    private ViewModelNavigator navigator;
+    private GoodsSearchNavigator navigator;
 
-    SearchResultViewModel(Activity context, String recommendKeyword ) {
+
+
+    GoodsSearchViewModel(Activity context, String recommendKeyword ) {
         super(context);
-        this.context = context;
         this.recommendKeyword.set(recommendKeyword);
         dataIsLoading.set(false);
     }
 
     public void cancel(){
-        context.finish();
+        if (navigator != null){
+            navigator.cancelSearch();
+        }
     }
 
 
@@ -50,9 +49,11 @@ public class SearchResultViewModel extends BaseViewModel {
             GoodsDataRepository.getInstance().goodsSearch(new DataSource.GeneralCallback<List<Goods>>() {
                 @Override
                 public void succeed(List<Goods> goodsList) {
-                    ArrayList<GoodsItemViewModel> tempItems = new ArrayList<>();
+                    ArrayList<GoodsSearchItemViewModel> tempItems = new ArrayList<>();
                     for (Goods g : goodsList) {
-                        tempItems.add(new GoodsItemViewModel(context, g));
+                        GoodsSearchItemViewModel vm = new GoodsSearchItemViewModel(getContext(), g);
+                        vm.setNavigator(navigator);
+                        tempItems.add(vm);
                     }
                     dataIsLoading.set(false);
 
@@ -61,14 +62,9 @@ public class SearchResultViewModel extends BaseViewModel {
 
                     if (tempItems.size() > 0) {
                         dataIsEmpty.set(false);
-
-                        if (navigator != null) {
-                            navigator.showToast("搜索完成");
-                        }
+                        showToast("搜索完成");
                     } else{
-                        if (navigator != null) {
-                            navigator.showToast("没有搜索到相关信息");
-                        }
+                        showToast("没有搜索到相关信息");
                     }
 
 
@@ -77,23 +73,32 @@ public class SearchResultViewModel extends BaseViewModel {
                 @Override
                 public void failed(String log) {
                     dataIsLoading.set(false);
+                    showToast(log);
 
-                    if (navigator != null) {
-                        navigator.showToast( log);
-                    }
                 }
             }, keyword);
         }).start();
     }
 
 
-    public void setNavigator(ViewModelNavigator navigator) {
+    public void setNavigator(GoodsSearchNavigator navigator) {
+        super.setNavigator(navigator);
         this.navigator = navigator;
+    }
+
+    @Override
+    public void start() {
+        super.start();//暂时没有需要预加载的任务
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         navigator = null;
+    }
+
+    @Override
+    public void showToast(String msg) {
+        super.showToast(msg);
     }
 }

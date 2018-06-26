@@ -11,6 +11,16 @@ import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class CommunityFragmentViewModel extends BaseViewModel {
 
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
+
     CommunityFragmentViewModel(Context context) {
         super(context);
     }

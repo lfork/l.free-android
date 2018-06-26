@@ -5,7 +5,6 @@ import android.content.Context;
 import com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
-import com.lfork.a98620.lfree.util.Config;
 
 import java.lang.ref.WeakReference;
 
@@ -18,12 +17,9 @@ public class MyGoodsItemViewModel extends GoodsViewModel{
     private WeakReference<Context> reference;
 
     MyGoodsItemViewModel(Context context, Goods g) {
-        super(context, g.getId());
+        super(context, g);
         reference = new WeakReference<>(context);
-        name.set(g.getName());
-        price.set(g.getPrice() + "元");
-        imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath() ); //
-        publishDate.set(g.getPublishDate());
+
     }
 
     public void onClick(){

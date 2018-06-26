@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.searchresult.SearchResultViewModel"/>
+            type="com.lfork.a98620.lfree.searchresult.GoodsSearchViewModel"/>
 
         <import type="android.view.View"/>
 
@@ -17,7 +17,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lfork.a98620.lfree.searchresult.SearchResultActivity">
+    tools:context="com.lfork.a98620.lfree.searchresult.GoodsSearchActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

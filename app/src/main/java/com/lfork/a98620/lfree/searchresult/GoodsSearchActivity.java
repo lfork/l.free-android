@@ -9,32 +9,39 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.SearchView;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.base.viewmodel.GoodsItemViewModel;
-import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
-import com.lfork.a98620.lfree.databinding.SearchResultActBinding;
-import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
+import com.lfork.a98620.lfree.databinding.SearchResultActBinding;
+import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
+import com.lfork.a98620.lfree.util.ToastUtil;
 
-public class SearchResultActivity extends AppCompatActivity implements ViewModelNavigator {
+public class GoodsSearchActivity extends AppCompatActivity implements GoodsSearchNavigator {
 
     private SearchResultActBinding binding;
 
-    private SearchResultViewModel viewModel;
+    private GoodsSearchViewModel viewModel;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        viewModel.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.search_result_act);
+        binding = DataBindingUtil.setContentView(this, R.layout.goods_search_act);
         Intent intent = getIntent();
         String recommendKeyword = intent.getStringExtra("recommend_keyword");
-        viewModel = new SearchResultViewModel(this, recommendKeyword);
+        viewModel = new GoodsSearchViewModel(this, recommendKeyword);
         binding.setViewModel(viewModel);
         viewModel.setNavigator(this);
         setupRecyclerView();
-
-        binding.toolbarSearch.setOnSearchClickListener(v -> {
-//            ToastUtil.showLong(this, "SearchTest");
-        });
 
         binding.toolbarSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -56,7 +63,7 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
         RecyclerView recyclerView = binding.searchRecycler;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<GoodsItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.items, R.layout.my_goods_recycle_item);
+        RecyclerViewItemAdapter<GoodsSearchItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.items, R.layout.my_goods_recycle_item);
         recyclerView.setAdapter(adapter);
     }
 
@@ -70,5 +77,15 @@ public class SearchResultActivity extends AppCompatActivity implements ViewModel
             ToastUtil.showShort(getBaseContext(), msg);
         });
 
+    }
+
+    @Override
+    public void openGoodsDetail(int goodsId,int categoryId) {
+        GoodsDetailActivity.startActivity(this, goodsId, categoryId);
+    }
+
+    @Override
+    public void cancelSearch() {
+        finish();
     }
 }

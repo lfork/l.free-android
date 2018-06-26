@@ -5,34 +5,14 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
+import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.util.Config;
 
 /**
  * Created by 98620 on 2018/4/14.
  */
 
 public abstract class GoodsViewModel extends BaseViewModel {
-
-    private int id;
-
-    private int categoryId;
-
-    public GoodsViewModel(Context context, int id, int categoryId) {
-        super(context);
-        this.id = id;
-        this.categoryId = categoryId;
-    }
-
-    public GoodsViewModel(Context context, int id) {
-        super(context);
-        this.id = id;
-    }
-
-    public GoodsViewModel() {
-    }
-
-    public GoodsViewModel(Context context) {
-        super(context);
-    }
 
 
     public ObservableField<String> imagePath = new ObservableField<>(); //封面图片
@@ -52,7 +32,38 @@ public abstract class GoodsViewModel extends BaseViewModel {
     public ObservableArrayList<String> images = new ObservableArrayList<>();
 
 
-    public void onClick(){};
+    private int id;
+
+    private int categoryId;
+
+    public GoodsViewModel(Context context, Goods g, int categoryId) {
+        this(context, g);
+        g.setCategoryId(categoryId);
+        this.id = g.getId();
+        this.categoryId = categoryId;
+    }
+
+
+    public GoodsViewModel(Context context, Goods g) {
+        super(context);
+        name.set(g.getName());
+        price.set(g.getPrice() + "元");
+        imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath());
+        publishDate.set(g.getPublishDate());
+    }
+
+    public GoodsViewModel() {
+    }
+
+    public GoodsViewModel(Context context) {
+        super(context);
+    }
+
+
+    public void onClick() {
+    }
+
+    ;
 
     public int getId() {
         return id;
