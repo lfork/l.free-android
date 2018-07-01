@@ -29,9 +29,7 @@ public class ListBinding {
             return;
         }
         if (adapter != null) {
-            if (adapter.getItems() == null) {
-                adapter.setItems(viewModels);
-            }
+            adapter.setItems(viewModels);
             adapter.notifyDataSetChanged();
         }
     }
@@ -43,9 +41,7 @@ public class ListBinding {
             return;
         }
         if (adapter != null) {
-            if (adapter.getItems() == null) {
-                adapter.setItems(viewModels);
-            }
+            adapter.setItems(viewModels);
             adapter.notifyDataSetChanged();
         }
     }

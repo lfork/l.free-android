@@ -44,7 +44,7 @@
             android:id="@+id/main_chat_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:setListViewItems="@{viewModel.mItems}"
+            app:setListViewItems="@{viewModel.mItems }"
             android:visibility="@{viewModel.dataIsEmpty ? View.GONE:View.VISIBLE}">
 
         </ListView>

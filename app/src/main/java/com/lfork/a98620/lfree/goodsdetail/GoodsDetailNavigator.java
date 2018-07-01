@@ -11,6 +11,9 @@ import java.util.ArrayList;
  */
 public interface GoodsDetailNavigator extends ViewModelNavigator{
 
+    /**
+     * 这里主要是把View下滑到最后一行
+     */
     void notifyReviewChanged();
 
     void closeSoftKeyBoard();

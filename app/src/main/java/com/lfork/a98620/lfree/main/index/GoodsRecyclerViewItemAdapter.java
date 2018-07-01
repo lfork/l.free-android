@@ -16,16 +16,16 @@ import java.util.List;
  * Created by 98620 on 2018/3/31.
  */
 
-class GoodsRecyclerViewItemAdapter<T> extends RecyclerViewItemAdapter {
-
-    private static final String TAG = "GoodsRecyclerViewItemAd";
+class GoodsRecyclerViewItemAdapter extends RecyclerViewItemAdapter {
 
     private GoodsItemNavigator mGoodsItemNavigator;
 
     private PagerDataRefreshListener listener;
 
-    GoodsRecyclerViewItemAdapter(List<T> models, int layoutId) {
-        super(models, layoutId);
+
+    GoodsRecyclerViewItemAdapter(GoodsItemNavigator mGoodsItemNavigator,int layoutId) {
+        super(layoutId);
+        this.mGoodsItemNavigator = mGoodsItemNavigator;
     }
 
     @NonNull
@@ -42,15 +42,13 @@ class GoodsRecyclerViewItemAdapter<T> extends RecyclerViewItemAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final GoodsItemViewModel viewmodel = new GoodsItemViewModel(holder.getBinding().getRoot().getContext(),
-                (Goods)getItems().get(position)
-        );
-        ((GoodsRecycleItemBinding)holder.getBinding()).setViewModel(viewmodel);
-        viewmodel.setNavigator(getmGoodsItemNavigator());
+        super.onBindViewHolder(holder, position);
+        GoodsItemViewModel viewModel = (GoodsItemViewModel)getItems().get(position);
+        viewModel.setNavigator(mGoodsItemNavigator);
+
         if (position + 1 == getItemCount()) {
             listener.startRefreshing();
         }
-
         if (position > 10) {
             listener.onDown();
         }
@@ -58,20 +56,11 @@ class GoodsRecyclerViewItemAdapter<T> extends RecyclerViewItemAdapter {
 
     //滑动到最后
 
-
     public PagerDataRefreshListener getListener() {
         return listener;
     }
 
     public void setListener(PagerDataRefreshListener listener) {
         this.listener = listener;
-    }
-
-    public GoodsItemNavigator getmGoodsItemNavigator() {
-        return mGoodsItemNavigator;
-    }
-
-    public void setGoodsItemNavigator(GoodsItemNavigator mGoodsItemNavigator) {
-        this.mGoodsItemNavigator = mGoodsItemNavigator;
     }
 }

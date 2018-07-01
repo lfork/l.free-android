@@ -50,6 +50,7 @@ public class ChatListFragmentViewModel extends BaseViewModel {
                     dataIsLoading.set(false);
 
                 }
+
                 @Override
                 public void failed(String log) {
                     showToast(log);
@@ -60,11 +61,7 @@ public class ChatListFragmentViewModel extends BaseViewModel {
 
     @Override
     public void start() {
-        if (repository != null) {
-            getChatList();
-        } else {
-            showToast("可能没有网络...");
-        }
+        getChatList();
     }
 
     @Override

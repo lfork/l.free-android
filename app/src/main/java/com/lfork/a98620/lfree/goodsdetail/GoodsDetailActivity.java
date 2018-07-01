@@ -82,7 +82,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         RecyclerView recyclerView = binding.reviewContent.reviewRecycle;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<ReviewItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.reviewItems, R.layout.goods_detail_comment_item);
+        RecyclerViewItemAdapter<ReviewItemViewModel> adapter = new RecyclerViewItemAdapter<>(R.layout.goods_detail_comment_item);
         recyclerView.setAdapter(adapter);
     }
 
@@ -120,7 +120,6 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
     @Override
     public void notifyReviewChanged() {
         runOnUiThread(() -> {
-            binding.reviewContent.reviewRecycle.getAdapter().notifyDataSetChanged();
             binding.reviewContent.reviewRecycle.scrollToPosition(viewModel.reviewItems.size() - 1);//将recyclerView定位到最后一行
         });
     }

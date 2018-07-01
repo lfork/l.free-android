@@ -63,7 +63,7 @@ public class GoodsSearchActivity extends AppCompatActivity implements GoodsSearc
         RecyclerView recyclerView = binding.searchRecycler;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<GoodsSearchItemViewModel> adapter = new RecyclerViewItemAdapter<>(viewModel.items, R.layout.my_goods_recycle_item);
+        RecyclerViewItemAdapter<GoodsSearchItemViewModel> adapter = new RecyclerViewItemAdapter<>( R.layout.my_goods_recycle_item);
         recyclerView.setAdapter(adapter);
     }
 
@@ -71,9 +71,6 @@ public class GoodsSearchActivity extends AppCompatActivity implements GoodsSearc
     @Override
     public void showToast(String msg) {
         runOnUiThread(() -> {
-            if (msg.equals("搜索完成")) {
-                binding.searchRecycler.getAdapter().notifyDataSetChanged();
-            }
             ToastUtil.showShort(getBaseContext(), msg);
         });
 

@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.BR;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 这个通用的适配器只能接收 已经初始化好了的viewModel ， 如果需要在适配器里面进行相应
+ * 的初始化，那么就需要继承自这个适配器或者自己另外写了
  *
+ * 还有我也为这个通用适配器写了个通用的数据绑定，见{@link com.lfork.a98620.lfree.base.bindingadapter.ListBinding#refreshRecyclerView(RecyclerView, ArrayList)}
  * Created by 98620 on 2018/3/31.
  */
 
@@ -21,11 +25,6 @@ public class RecyclerViewItemAdapter<ViewModel> extends RecyclerView.Adapter<Rec
     private List<ViewModel> items;
 
     private int layoutId;
-
-    public RecyclerViewItemAdapter(List<ViewModel> models, int layoutId) {
-        this.items = models;
-        this.layoutId = layoutId;
-    }
 
     public RecyclerViewItemAdapter(int layoutId) {
         this.layoutId = layoutId;
@@ -50,6 +49,9 @@ public class RecyclerViewItemAdapter<ViewModel> extends RecyclerView.Adapter<Rec
 
     @Override
     public int getItemCount() {
+        if (items == null) {
+            return 0;
+        }
         return items.size();
     }
 

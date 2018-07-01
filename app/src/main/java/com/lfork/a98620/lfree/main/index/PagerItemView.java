@@ -13,12 +13,9 @@ import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.data.entity.Category;
-import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.databinding.MainIndexViewpagerItemBinding;
 import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
-
-import java.util.ArrayList;
 
 /**
  * Created by 98620 on 2018/6/4.
@@ -112,10 +109,8 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         recyclerView.setLayoutManager(layoutManager);
 
         GoodsRecyclerViewItemAdapter adapter
-                = new GoodsRecyclerViewItemAdapter<>(new ArrayList<Goods>(0),
-                R.layout.goods_recycle_item);
+                = new GoodsRecyclerViewItemAdapter(this,R.layout.goods_recycle_item);
         recyclerView.setAdapter(adapter);
-        adapter.setGoodsItemNavigator(this);
         adapter.setListener(this);
     }
 

@@ -18,7 +18,8 @@ import java.util.List;
  */
 public class PagerItemViewModel extends BaseViewModel implements PagerDataRefreshListener {
 
-    public final ObservableArrayList<Goods> items = new ObservableArrayList<>();
+    public final ObservableArrayList<GoodsItemViewModel> items = new ObservableArrayList<>();
+
 
     public ObservableBoolean isLoadingMoreData = new ObservableBoolean(false);
 
@@ -77,7 +78,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
     //上拉加载更多
     private void loadMoreData() {
-        String cursor = items.get(items.size() - 1).getPublishDate();
+        String cursor = items.get(items.size() - 1).publishDate.get();
         getGoodsList(LOAD_MORE, cursor);
     }
 
@@ -102,11 +103,8 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
                     @Override
                     public void succeed(List<Goods> data) {
 
-
                         switch (requestType) {
                             case INITIALIZE:
-                                items.clear();
-                                break;
                             case REFRESH:
                                 items.clear();
                                 break;
@@ -117,8 +115,10 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
                         }
 
 
-
-                        items.addAll(data);
+                        for (Goods g: data) {
+                            GoodsItemViewModel viewModel = new GoodsItemViewModel(getContext(), g);
+                            items.add(viewModel);
+                        }
 
                         switch (requestType) {
                             case INITIALIZE:
