@@ -10,13 +10,13 @@ import android.widget.SearchView;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
-import com.lfork.a98620.lfree.databinding.SearchResultActBinding;
+import com.lfork.a98620.lfree.databinding.GoodsSearchActBinding;
 import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
 public class GoodsSearchActivity extends AppCompatActivity implements GoodsSearchNavigator {
 
-    private SearchResultActBinding binding;
+    private GoodsSearchActBinding binding;
 
     private GoodsSearchViewModel viewModel;
 

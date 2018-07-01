@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.base.bindingadapter;
 
 import android.databinding.BindingAdapter;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
 import com.lfork.a98620.lfree.base.adapter.ListViewAdapter;
@@ -35,7 +36,7 @@ public class ListBinding {
     }
 
     @BindingAdapter({"setRecyclerViewItems"})
-    public static void refreshRecyclerView(ListView listView, ArrayList viewModels) {
+    public static void refreshRecyclerView(RecyclerView listView, ArrayList viewModels) {
         RecyclerViewItemAdapter  adapter = (RecyclerViewItemAdapter) listView.getAdapter();
         if (viewModels == null) {
             return;

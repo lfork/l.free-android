@@ -59,6 +59,9 @@ public class ListViewAdapter<ViewModel> extends BaseAdapter {
     }
 
     public int getCount() {
+        if (items == null) {
+            return  0;
+        }
         return items.size();
     }
 

@@ -93,6 +93,11 @@ public class MyInfoFragmentViewModel extends UserViewModel {
 
     }
 
+    public void setNavigator(MyInfoFragmentNavigator navigator) {
+        super.setNavigator(navigator);
+        this.navigator = navigator;
+    }
+
     @Override
     public void start() {
         getUserInfo();

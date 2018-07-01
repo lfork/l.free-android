@@ -50,6 +50,7 @@ public abstract class GoodsViewModel extends BaseViewModel {
         price.set(g.getPrice() + "元");
         imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath());
         publishDate.set(g.getPublishDate());
+        id = g.getId();
     }
 
     public GoodsViewModel() {

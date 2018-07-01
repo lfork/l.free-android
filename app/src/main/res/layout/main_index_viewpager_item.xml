@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{viewModel.dataIsLoading?View.GONE:View.VISIBLE}"
-                app:items="@{viewModel.items}">
+                app:mItems="@{viewModel.items}">
 
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>

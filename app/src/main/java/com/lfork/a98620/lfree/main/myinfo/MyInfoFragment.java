@@ -29,7 +29,9 @@ public class MyInfoFragment extends Fragment implements MyInfoFragmentNavigator 
 //        if (viewModel != null){
 //            viewModel.refreshData();
 //        }
+        //TODO 修改用户资料后的回执操作
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -51,6 +53,7 @@ public class MyInfoFragment extends Fragment implements MyInfoFragmentNavigator 
     public void onResume() {
         super.onResume();  //时时刻刻都要保证数据的最新状态
         viewModel.start();
+        viewModel.setNavigator(this);
     }
 
     @Override
@@ -84,5 +87,10 @@ public class MyInfoFragment extends Fragment implements MyInfoFragmentNavigator 
         intent.putExtra("status", LoginActivity.LOGOUT);
         startActivity(intent);
         Objects.requireNonNull(getActivity()).finish(); //释放资源
+    }
+
+    @Override
+    public void showToast(String msg) {
+
     }
 }

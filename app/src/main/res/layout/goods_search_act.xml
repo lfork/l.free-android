@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout>
-
     <data>
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.searchresult.GoodsSearchViewModel"/>
-
         <import type="android.view.View"/>
 
     </data>
