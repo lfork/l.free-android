@@ -51,6 +51,7 @@ public abstract class GoodsViewModel extends BaseViewModel {
         imagePath.set(Config.ServerURL + "/image" + g.getCoverImagePath());
         publishDate.set(g.getPublishDate());
         id = g.getId();
+        categoryId = g.getCategoryId();
     }
 
     public GoodsViewModel() {

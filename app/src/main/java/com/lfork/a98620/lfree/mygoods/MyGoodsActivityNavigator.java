@@ -10,4 +10,6 @@ interface MyGoodsActivityNavigator extends ViewModelNavigator {
 
     void loadMoreFinished(String log);
 
+    void openGoodsDetail(int goodsId, int categoryId);
+
 }

@@ -10,6 +10,7 @@ import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
 import java.util.ArrayList;
 
 /**
+ * 通用的 ListView和RecyclerView的数据绑定
  * Created by 98620 on 2018/6/24.
  */
 public class ListBinding {

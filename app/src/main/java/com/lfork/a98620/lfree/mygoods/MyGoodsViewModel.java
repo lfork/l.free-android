@@ -51,7 +51,10 @@ public class MyGoodsViewModel extends BaseViewModel {
                     public void succeed(List<Goods> goodsList) {
                         ArrayList<MyGoodsItemViewModel> tempItems = new ArrayList<>();
                         for (Goods g : goodsList) {
-                            tempItems.add(new MyGoodsItemViewModel(getContext(), g));
+                            MyGoodsItemViewModel viewModel = new MyGoodsItemViewModel(getContext(), g);
+                            viewModel.setNavigator(navigator);
+                            tempItems.add(viewModel);
+
                         }
                         dataIsLoading.set(false);
 
@@ -63,14 +66,14 @@ public class MyGoodsViewModel extends BaseViewModel {
 
                         items.clear();
                         items.addAll(tempItems);
-                        showToast("我的商品数据加载成功");
+//                        showToast("我的商品数据加载成功");
                     }
 
                     @Override
                     public void failed(String log) {
                         dataIsLoading.set(false);
                         dataIsEmpty.set(true);
-                        showToast( log);
+                        showToast(log);
                     }
                 }, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString(), user.getUserId() + "");
             } else {

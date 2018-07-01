@@ -11,6 +11,7 @@ import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.BaseActivity;
 import com.lfork.a98620.lfree.databinding.MyGoodsActBinding;
 import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
+import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.Objects;
@@ -91,5 +92,10 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
     @Override
     public void loadMoreFinished(String log) {
 
+    }
+
+    @Override
+    public void openGoodsDetail(int goodsId, int categoryId) {
+        GoodsDetailActivity.startActivity(this, goodsId, categoryId);
     }
 }
