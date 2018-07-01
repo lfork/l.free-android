@@ -35,7 +35,7 @@
                 <SearchView
                     android:id="@+id/toolbar_search"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:layout_weight="8"
                     android:background="@drawable/main_shape_search_rectangle"
