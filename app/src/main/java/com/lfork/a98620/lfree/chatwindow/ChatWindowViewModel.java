@@ -65,7 +65,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     @Override
     public void onDestroy() {
-
+        super.onDestroy();
     }
 
     public void setNavigator(ChatWindowNavigator navigator) {

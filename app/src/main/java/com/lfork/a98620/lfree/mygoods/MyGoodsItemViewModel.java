@@ -16,7 +16,7 @@ public class MyGoodsItemViewModel extends GoodsViewModel{
 
 
 
-    private WeakReference<MyGoodsActivityNavigator> reference;
+    private WeakReference<MyGoodsItemNavigator> reference;
 
     MyGoodsItemViewModel(Context context, Goods g) {
         super(context, g);
@@ -32,9 +32,10 @@ public class MyGoodsItemViewModel extends GoodsViewModel{
 
     }
 
-    public void setNavigator(MyGoodsActivityNavigator navigator) {
+    @Override
+    public void setNavigator(Object navigator) {
         super.setNavigator(navigator);
-        this.reference = new WeakReference<>(navigator);
+        this.reference = new WeakReference<>((MyGoodsItemNavigator)navigator);
     }
 
 }

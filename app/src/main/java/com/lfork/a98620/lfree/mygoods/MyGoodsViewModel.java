@@ -52,7 +52,6 @@ public class MyGoodsViewModel extends BaseViewModel {
                         ArrayList<MyGoodsItemViewModel> tempItems = new ArrayList<>();
                         for (Goods g : goodsList) {
                             MyGoodsItemViewModel viewModel = new MyGoodsItemViewModel(getContext(), g);
-                            viewModel.setNavigator(navigator);
                             tempItems.add(viewModel);
 
                         }

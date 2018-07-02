@@ -18,7 +18,7 @@ public class CommunityFragmentViewModel extends BaseViewModel {
 
     @Override
     public void onDestroy() {
-
+        super.onDestroy();
     }
 
     CommunityFragmentViewModel(Context context) {

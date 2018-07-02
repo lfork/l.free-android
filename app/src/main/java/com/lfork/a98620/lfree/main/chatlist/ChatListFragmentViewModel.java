@@ -5,6 +5,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
+import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
@@ -26,7 +27,7 @@ public class ChatListFragmentViewModel extends BaseViewModel {
 
     private IMDataRepository repository;
 
-    private ChatListFragNavigator navigator;
+    private ViewModelNavigator navigator;
 
     ChatListFragmentViewModel(Context context) {
         super(context);
@@ -66,16 +67,11 @@ public class ChatListFragmentViewModel extends BaseViewModel {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         navigator = null;
     }
 
-    public void setNavigator(ChatListFragNavigator navigator) {
+    public void setNavigator(ChatListItemNavigator navigator) {
         super.setNavigator(navigator);
-        this.navigator = navigator;
-    }
-
-    @Override
-    public void showToast(String msg) {
-        super.showToast(msg);
     }
 }

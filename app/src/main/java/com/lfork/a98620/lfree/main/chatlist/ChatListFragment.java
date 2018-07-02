@@ -19,7 +19,7 @@ import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.Objects;
 
-public class ChatListFragment extends Fragment implements ChatListFragNavigator {
+public class ChatListFragment extends Fragment implements ChatListItemNavigator {
 
     private MainChatListFragBinding binding;
 
@@ -27,11 +27,12 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
 
     private View rootView;// 缓存Fragment view
 
+    private ListViewAdapter adapter;
+
 
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.setNavigator(this);
         viewModel.start();
 
     }
@@ -39,9 +40,8 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (viewModel != null) {
-            viewModel.onDestroy();
-        }
+        viewModel.onDestroy();
+        adapter.onDestroy();
     }
 
 
@@ -68,17 +68,17 @@ public class ChatListFragment extends Fragment implements ChatListFragNavigator 
 
     private void setupListView() {
         ListView listView = binding.mainChatList;
-        ListViewAdapter adapter = new ListViewAdapter<>(getContext(), R.layout.main_chat_list_contacts_item, BR.viewModel);
+        adapter = new ListViewAdapter<ChatListItemViewModel>(getContext(), R.layout.main_chat_list_contacts_item, BR.viewModel);
+        adapter.setNavigator(this);
         listView.setAdapter(adapter);
     }
-
 
 
     @Override
     public void openChatWindow(int userId, String userName) {
         Intent intent = new Intent(getContext(), ChatWindowActivity.class);
         intent.putExtra("user_id", userId);
-        intent.putExtra("username",  userName);
+        intent.putExtra("username", userName);
         startActivity(intent);
     }
 

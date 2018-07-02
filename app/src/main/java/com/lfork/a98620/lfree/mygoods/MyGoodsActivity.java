@@ -16,11 +16,13 @@ import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.Objects;
 
-public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavigator {
+public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavigator , MyGoodsItemNavigator{
 
     private MyGoodsActBinding binding;
 
     private MyGoodsViewModel viewModel;
+
+    RecyclerViewItemAdapter<MyGoodsItemViewModel> adapter;
 
     @Override
     protected void onStart() {
@@ -32,6 +34,8 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
     protected void onDestroy() {
         super.onDestroy();
         viewModel.onDestroy();
+        adapter.onDestroy();
+
     }
 
 
@@ -73,7 +77,8 @@ public class MyGoodsActivity extends BaseActivity implements MyGoodsActivityNavi
         RecyclerView recyclerView = binding.myGoodsRecycle;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewItemAdapter<MyGoodsItemViewModel> adapter = new RecyclerViewItemAdapter<>(R.layout.my_goods_recycle_item);
+        adapter = new RecyclerViewItemAdapter<>(R.layout.my_goods_recycle_item);
+        adapter.setNavigator(this);
         recyclerView.setAdapter(adapter);
     }
 

@@ -102,6 +102,7 @@ public class UserInfoThisViewModel extends UserViewModel {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         navigator = null;
     }
 }

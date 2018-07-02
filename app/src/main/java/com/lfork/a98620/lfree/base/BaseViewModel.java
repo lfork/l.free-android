@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.base;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
+import android.support.annotation.CallSuper;
 
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 
@@ -23,12 +24,13 @@ public abstract class BaseViewModel extends BaseObservable {
     public void start() {
     }
 
-    ;
-
+    /**
+     * 释放掉一些东西，防止内存泄漏
+     */
+    @CallSuper
     public void onDestroy() {
+        navigator = null;
     }
-
-    ;
 
     public BaseViewModel() {
     }
@@ -45,8 +47,14 @@ public abstract class BaseViewModel extends BaseObservable {
         this.context = context;
     }
 
-    public void setNavigator(ViewModelNavigator navigator){
-        this.navigator = navigator;
+    /**
+     *
+     * @param navigator 自定义的navigator 必须是继承自{@link ViewModelNavigator}
+     *                  否则下面会报错
+     *                  继承自{@link ViewModelNavigator}  只有一个作用 ，通用的toast操作
+     */
+    public void setNavigator(Object navigator){
+        this.navigator = (ViewModelNavigator) navigator;
     }
 
     //    public abstract void showToast();     大部分viewModel应该都有提示的操作：Toast,SnackBar,自定义提示等等

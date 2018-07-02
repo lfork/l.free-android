@@ -25,7 +25,7 @@ public class ChatListItemViewModel extends BaseViewModel {
 
     private int userId;
 
-    public WeakReference<ChatListFragNavigator> reference;
+    public WeakReference<ChatListItemNavigator> reference;
 
     ChatListItemViewModel(Context context, User user) {
         super(context);
@@ -35,15 +35,17 @@ public class ChatListItemViewModel extends BaseViewModel {
         userId = user.getUserId();
     }
 
-    public void onClick(){
+    public void onClick() {
         if (reference != null && reference.get() != null) {
             reference.get().openChatWindow(userId, username.get());
         }
     }
 
-    public void setNavigator(ChatListFragNavigator navigator) {
+
+    @Override
+    public void setNavigator(Object navigator) {
         super.setNavigator(navigator);
-        reference = new WeakReference<>( navigator);
+        reference = new WeakReference<>((ChatListItemNavigator) navigator);
     }
 
 }

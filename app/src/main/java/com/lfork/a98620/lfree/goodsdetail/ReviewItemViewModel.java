@@ -4,6 +4,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 
+import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.Review;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.util.Config;
@@ -13,7 +14,7 @@ import java.lang.ref.WeakReference;
 /**
  * Created by 98620 on 2018/6/13.
  */
-public class ReviewItemViewModel {
+public class ReviewItemViewModel extends BaseViewModel{
 
     public final ObservableField<String> userPortraitPath = new ObservableField<>();
 
@@ -53,5 +54,8 @@ public class ReviewItemViewModel {
 
     }
 
-
+    @Override
+    public void setNavigator(Object navigator) {
+        super.setNavigator(navigator);
+    }
 }

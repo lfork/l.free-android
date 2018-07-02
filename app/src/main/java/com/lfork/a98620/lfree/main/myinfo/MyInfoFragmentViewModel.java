@@ -105,6 +105,7 @@ public class MyInfoFragmentViewModel extends UserViewModel {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         navigator = null;
     }
 }

@@ -309,6 +309,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         navigator = null;
     }
 

@@ -80,7 +80,7 @@ public class CommunityArticle extends BaseViewModel {
 
     @Override
     public void onDestroy() {
-
+        super.onDestroy();
     }
 }
 
