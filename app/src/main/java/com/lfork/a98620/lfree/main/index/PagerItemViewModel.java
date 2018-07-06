@@ -20,7 +20,6 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
     public final ObservableArrayList<GoodsItemViewModel> items = new ObservableArrayList<>();
 
-
     public ObservableBoolean isLoadingMoreData = new ObservableBoolean(false);
 
     /**
@@ -54,7 +53,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     private void refreshUI(String log) {
         dataIsLoading.set(false);
         if (navigator != null) {
-            navigator.toast(log);
+          //  navigator.toast(log);
             isRefreshed = true;
         } else {
             tempLog = log;
@@ -122,13 +121,14 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
                         switch (requestType) {
                             case INITIALIZE:
-//                                refreshUI("数据初始化成功");
+                                refreshUI("数据初始化成功");
                                 break;
                             case REFRESH:
                                 refreshUI("数据刷新成功");
+                                navigator.refreshEnd();
                                 break;
                             case LOAD_MORE:
-//                                refreshUI("数据加载成功");
+                                refreshUI("数据加载成功");
                                 endRefresh();
                                 break;
                             default:

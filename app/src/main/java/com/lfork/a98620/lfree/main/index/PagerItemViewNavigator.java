@@ -16,9 +16,11 @@
 
 package com.lfork.a98620.lfree.main.index;
 
+import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
+
 /**
  * Defines the navigation actions that can be called from the Details screen.
  */
-public interface PagerItemViewNavigator {
-    void toast(String log);
+public interface PagerItemViewNavigator extends ViewModelNavigator {
+    void refreshEnd();
 }

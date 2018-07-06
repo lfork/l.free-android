@@ -172,13 +172,6 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         }
     }
 
-    @Override
-    public void toast(String log) {
-        getActivityContext().runOnUiThread(() -> {
-            ToastUtil.showShort(getContext(), log);
-            binding.swipeRefresh.setRefreshing(false);
-        });
-    }
 
     public void setNeedForceRefresh(boolean needForceRefresh) {
         if (viewModel == null || viewModel.isInitialized()) {
@@ -193,5 +186,22 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
     @Override
     public void openGoodsDetail(int goodsId, int categoryId) {
         GoodsDetailActivity.startActivity(activityContext, goodsId, categoryId );
+    }
+
+    @Override
+    public void refreshEnd() {
+        getActivityContext().runOnUiThread(() -> {
+            binding.swipeRefresh.setRefreshing(false);
+        });
+
+
+    }
+
+    @Override
+    public void showToast(String msg) {
+        getActivityContext().runOnUiThread(() -> {
+            ToastUtil.showShort(getContext(), msg);
+
+        });
     }
 }
