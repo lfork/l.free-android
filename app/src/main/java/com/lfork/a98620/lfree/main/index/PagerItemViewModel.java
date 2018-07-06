@@ -122,13 +122,13 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
 
                         switch (requestType) {
                             case INITIALIZE:
-                                refreshUI("数据初始化成功");
+//                                refreshUI("数据初始化成功");
                                 break;
                             case REFRESH:
                                 refreshUI("数据刷新成功");
                                 break;
                             case LOAD_MORE:
-                                refreshUI("数据加载成功");
+//                                refreshUI("数据加载成功");
                                 endRefresh();
                                 break;
                             default:
