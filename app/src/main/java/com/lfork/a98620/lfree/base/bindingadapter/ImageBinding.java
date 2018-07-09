@@ -11,6 +11,8 @@ import com.lfork.a98620.lfree.util.GlideOptions;
 
 /**
  * Created by 98620 on 2018/4/7.
+ *
+ * 对不同的图片加载方式的封装
  */
 
 public class ImageBinding {

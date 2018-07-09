@@ -70,8 +70,6 @@ public class IndexFragmentViewModel extends BaseObservable {
                 }
             });
         }).start();
-
-
     }
 
     public void openSearch(){

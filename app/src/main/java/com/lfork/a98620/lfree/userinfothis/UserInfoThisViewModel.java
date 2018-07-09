@@ -53,7 +53,12 @@ public class UserInfoThisViewModel extends UserViewModel {
                     email.set(user.getUserEmail());
                     phone.set(user.getUserPhone());
                     studentNumber.set(user.getUserId() + "");
-                    school.set(user.getSchool().getSchoolName());
+                    if (user.getSchool() == null) {
+                        school.set("未知");
+                    } else {
+                        school.set(user.getSchool().getSchoolName());
+                    }
+
                 }
 
                 @Override

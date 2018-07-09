@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.base.customview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
@@ -34,6 +35,7 @@ public class PopupDialog {
 
     private int mScreenWidth;
 
+    @SuppressLint("ClickableViewAccessibility")
     public void show() {
         View view = LayoutInflater.from(context).inflate(R.layout.user_info_this_pop_show_dialog, null);
         RelativeLayout layout_choose = view.findViewById(R.id.layout_choose);
@@ -59,15 +61,12 @@ public class PopupDialog {
         //getWindowManager().getDefaultDisplay().getMetrics(metric);
         mScreenWidth = metric.widthPixels;
         avatorPop = new PopupWindow(view, mScreenWidth, 200);
-        avatorPop.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    avatorPop.dismiss();
-                    return true;
-                }
-                return false;
+        avatorPop.setTouchInterceptor((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                avatorPop.dismiss();
+                return true;
             }
+            return false;
         });
         avatorPop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         avatorPop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);

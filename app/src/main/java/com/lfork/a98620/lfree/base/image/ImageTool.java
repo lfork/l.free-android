@@ -18,6 +18,9 @@ public class ImageTool {
 
     private static final String TAG = "ImageTool";
 
+    /**
+     * 图片高斯化处理
+     */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap rsBlur(Context context, Bitmap source, int radius){
 
@@ -49,16 +52,7 @@ public class ImageTool {
         output.copyTo(source);
         //(8)
         renderScript.destroy();
-
         return source;
     }
-
-
-
-
-
-
-
-
 
 }

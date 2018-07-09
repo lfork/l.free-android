@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.lfork.a98620.lfree.R;
@@ -50,10 +49,6 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
     private static final int REQUESTCODE_PIC = 1;//相册
     private static final int REQUESTCODE_CAM = 2;//相机
     private static final int REQUESTCODE_CUT = 3;//图片裁剪
-
-    private PopupWindow avatorPop; //自定义view
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
