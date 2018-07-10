@@ -3,8 +3,8 @@ package com.lfork.a98620.lfree.data.user.remote;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
-import com.lfork.a98620.lfree.base.network.httpservice.HttpService;
-import com.lfork.a98620.lfree.base.network.httpservice.Result;
+import com.lfork.a98620.lfree.base.network.HttpService;
+import com.lfork.a98620.lfree.base.network.Result;
 import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataSource;
@@ -18,6 +18,9 @@ import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by 98620 on 2018/3/23.
@@ -48,29 +51,54 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void login(final GeneralCallback<User> callback, User user) {
+        UserNetService service = HttpService.getNetWorkService(UserNetService.class);
+        Call<Result<User>> call = service.login(user.getUserName(), user.getUserPassword());
+        call.enqueue(new Callback<Result<User>>() {
+            @Override
+            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
+                Result<User> result = response.body();
+                if (result != null) {
+                    User u = result.getData();
+                    if (u != null)
+                        callback.succeed(u);
+                    else {
+                        callback.failed(result.getMessage());
+                    }
+                } else {
+                    callback.failed("error");
+                }
+            }
 
-        String url = Config.ServerURL + "/22y/user_login";
-
-        RequestBody requestbody = new FormBody.Builder()
-                .add("studentId", user.getUserName())
-                .add("userPassword", user.getUserPassword())
-                .build();
-
-        String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
-
-        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {
+            @Override
+            public void onFailure(Call<Result<User>> call, Throwable t) {
+                callback.failed(t.getMessage());
+            }
         });
 
-        if (result != null) {
-            User u = result.getData();
-            if (u != null)
-                callback.succeed(u);
-            else {
-                callback.failed(result.getMessage());
-            }
-        } else {
-            callback.failed("error");
-        }
+//        HttpService.getNetWorkService(UserNetService)
+//
+//        String url = Config.ServerURL + "/22y/user_login";
+//
+//        RequestBody requestbody = new FormBody.Builder()
+//                .add("studentId", user.getUserName())
+//                .add("userPassword", user.getUserPassword())
+//                .build();
+//
+//        String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
+//
+//        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {
+//        });
+//
+//        if (result != null) {
+//            User u = result.getData();
+//            if (u != null)
+//                callback.succeed(u);
+//            else {
+//                callback.failed(result.getMessage());
+//            }
+//        } else {
+//            callback.failed("error");
+//        }
     }
 
     @Override
@@ -92,7 +120,7 @@ public class UserRemoteDataSource implements UserDataSource {
         });
 
         if (result != null) {
-          //  Log.d(TAG, "register: ");
+            //  Log.d(TAG, "register: ");
             if (result.getCode() == 1) {
                 callback.succeed(result.getMessage());
             } else {
@@ -105,12 +133,13 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public User getThisUser() {
+        //do nothing here
         return null;
     }
 
     @Override
     public void getThisUser(GeneralCallback<User> callback) {
-
+        //do nothing here
     }
 
     @Override
@@ -217,7 +246,6 @@ public class UserRemoteDataSource implements UserDataSource {
     @Override
     public void getSchoolList(GeneralCallback<List<School>> callback) {
 
-
         // http://www.lfork.top/22y/school_getSchoolList
         String jsonData = "[{\"id\":1,\"schoolName\":\"四川大学\"},{\"id\":2,\"schoolName\":\"电子科技大学\"}," +
                 "{\"id\":3,\"schoolName\":\"西南交通大学\"},{\"id\":4,\"schoolName\":\"西南财经大学\"}," +
@@ -246,7 +274,8 @@ public class UserRemoteDataSource implements UserDataSource {
                 "{\"id\":49,\"schoolName\":\"成都信息工程大学银杏酒店管理学院\"}," +
                 "{\"id\":50,\"schoolName\":\"四川外国语大学成都学院\"},{\"id\":51,\"schoolName\":\"西南科技大学城市学院\"}]";
 
-        List<School> schools = JSONUtil.parseJson(jsonData, new TypeToken<List<School>>(){});
+        List<School> schools = JSONUtil.parseJson(jsonData, new TypeToken<List<School>>() {
+        });
         callback.succeed(schools);
     }
 }

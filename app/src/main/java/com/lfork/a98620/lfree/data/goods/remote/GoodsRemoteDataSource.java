@@ -3,8 +3,8 @@ package com.lfork.a98620.lfree.data.goods.remote;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
-import com.lfork.a98620.lfree.base.network.httpservice.HttpService;
-import com.lfork.a98620.lfree.base.network.httpservice.Result;
+import com.lfork.a98620.lfree.base.network.HttpService;
+import com.lfork.a98620.lfree.base.network.Result;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;

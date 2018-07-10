@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.base.network.httpservice;
+package com.lfork.a98620.lfree.base.network;
 
 import com.google.gson.annotations.SerializedName;
 

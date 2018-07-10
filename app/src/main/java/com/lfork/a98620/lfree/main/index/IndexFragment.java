@@ -64,9 +64,9 @@ public class IndexFragment extends Fragment implements IndexFragmentNavigator{
     private void setupBanner(){
         Banner banner = rootView.findViewById(R.id.announcement_banner);
         List<String> images = new ArrayList<>();
-        images.add("http://www.lfork.top/Test/2.png");
-        images.add("http://www.lfork.top/Test/3.png");
-        images.add("http://www.lfork.top/Test/4.png");
+        images.add("http://www.lfork.top/NetWorkService/2.png");
+        images.add("http://www.lfork.top/NetWorkService/3.png");
+        images.add("http://www.lfork.top/NetWorkService/4.png");
         banner.setImages(images).setImageLoader(new GlideImageLoader()).start();
         banner.setOnBannerListener(position -> viewModel.openUrl(position));
     }

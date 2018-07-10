@@ -77,10 +77,8 @@ public class UserInfoThisViewModel extends UserViewModel {
             repository.updateUserPortrait(new DataSource.GeneralCallback<String>() {
                 @Override
                 public void succeed(String data1) {
-                    user.setUserImagePath(data1);
-                    repository.saveThisUser(user);
-                    imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
 
+                    imageUrl.set(Config.ServerURL + "/image" + data1);
                     showMessage("更新成功");
                 }
 
@@ -111,4 +109,3 @@ public class UserInfoThisViewModel extends UserViewModel {
         navigator = null;
     }
 }
-

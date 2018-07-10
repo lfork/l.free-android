@@ -54,6 +54,7 @@ public class UserDataRepository implements UserDataSource {
             public void succeed(User data) {
                 mUser = data;
             }
+
             @Override
             public void failed(String log) {
                 Log.d(TAG, "failed: " + log);
@@ -96,7 +97,7 @@ public class UserDataRepository implements UserDataSource {
 
     @Override
     public void getThisUser(GeneralCallback<User> callback) {
-        if (mUser != null){
+        if (mUser != null) {
             callback.succeed(mUser);
             return;
         }
@@ -138,7 +139,19 @@ public class UserDataRepository implements UserDataSource {
 
     @Override
     public void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath) {
-        remoteDataSource.updateUserPortrait(callback, studentId, localFilePath);
+        remoteDataSource.updateUserPortrait(new GeneralCallback<String>() {
+            @Override
+            public void succeed(String data) {
+                getThisUser().setUserImagePath(data);
+                saveThisUser(getThisUser());
+                callback.succeed(data);
+            }
+
+            @Override
+            public void failed(String log) {
+                callback.failed(log);
+            }
+        }, studentId, localFilePath);
     }
 
     @Override
@@ -146,7 +159,7 @@ public class UserDataRepository implements UserDataSource {
         remoteDataSource.getUserInfo(callback, userId);
     }
 
-    public void getUserInfo(int userId, boolean isCached,GeneralCallback<User> callback ) {
+    public void getUserInfo(int userId, boolean isCached, GeneralCallback<User> callback) {
         if (isCached) {
             localDataSource.getUserInfo(callback, userId);
         } else {

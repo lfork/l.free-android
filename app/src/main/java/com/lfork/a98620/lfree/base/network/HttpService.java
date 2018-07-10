@@ -1,8 +1,9 @@
-package com.lfork.a98620.lfree.base.network.httpservice;
+package com.lfork.a98620.lfree.base.network;
 
 import android.util.Log;
 
 import com.lfork.a98620.lfree.data.DataSource;
+import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.http.HttpLogger;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by 98620 on 2018/3/24.
@@ -124,8 +127,18 @@ public class HttpService {
                 }
             }
         });
-
-
-
     }
+
+    /**
+     * 获取由retrofit 封装的，Json解析类型的网络服务,网路地址为基本的服务器地址
+     */
+    public static <T> T getNetWorkService(final Class<T> service){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.BaseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(service);
+    }
+
+
 }
