@@ -23,7 +23,6 @@ public class IMRemoteDataSource implements IMDataSource {
 
     private static IMRemoteDataSource INSTANCE;
 
-
     private IMRemoteDataSource() {
         mConnection = new TCPConnection(Config.URL, 7000);
         mConnection.start();
@@ -56,11 +55,9 @@ public class IMRemoteDataSource implements IMDataSource {
 
         mConnection.setUser(u);
 
-        Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？9");
 
         if (!mConnection.send(request.getRequest())) {
             listener.failed("与服务器的连接已断开");
-            Log.d(TAG, "buildUDPConnection: 不执行这里的吗？？10");
             return;
         }
         //这里还需要添加一个超时检测， 因为网络连接有问题的话 服务器是不会发送回执给客户端的

@@ -10,17 +10,15 @@ import android.util.Log;
  */
 public class ShareUtil {
     private static final String TAG = "ShareUtil";
-    public static boolean shareTextBySystem( Context context, String text,String tips){
-        
+    public static void shareTextBySystem(Context context, String text, String tips){
         if (context == null || TextUtils.isEmpty(text) || TextUtils.isEmpty(tips)) {
             Log.d(TAG, "shareTextBySystem: 参数不能为空");
-            return false;
+            return;
         }
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND)
                 .setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         context.startActivity(Intent.createChooser(intent,  tips));
-        return true;
     }
 }

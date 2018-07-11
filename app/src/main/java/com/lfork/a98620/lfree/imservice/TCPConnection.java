@@ -56,9 +56,11 @@ public class TCPConnection {
 
     private void buildConnection() throws IOException {
         socket = new Socket(URL, PORT);
-        InputStreamReader inSR = new InputStreamReader(new DataInputStream(socket.getInputStream()), "UTF-8");  //控制乱码问题
+        //控制乱码问题
+        InputStreamReader inSR = new InputStreamReader(new DataInputStream(socket.getInputStream()), "UTF-8");
         in = new BufferedReader(inSR);
-        OutputStreamWriter outSW = new OutputStreamWriter(new DataOutputStream(socket.getOutputStream()), "UTF-8"); //控制乱码问题
+        //控制乱码问题
+        OutputStreamWriter outSW = new OutputStreamWriter(new DataOutputStream(socket.getOutputStream()), "UTF-8");
         out = new PrintWriter(outSW);
         // status = true;
         print("TCPConnection.buildConnection()：服务器连接成功");
@@ -101,12 +103,13 @@ public class TCPConnection {
 
     private void rebuildConnection() {
         try {
-           // print("正在重连....");
+            print("正在重连....");
             buildConnection();
             //意思就是，在这里还需要发送客户端的连接信息给服务端，因为服务端需要连接信息来建立udp连接
             //连接成功后，还要将客户端的其他信息发送到服务器
-            if (rebindClientInfo())
+            if (rebindClientInfo()) {
                 print("重连成功");
+            }
         } catch (IOException e) {
            // print("重连失败，继续重连");
             e.printStackTrace();
@@ -160,8 +163,9 @@ public class TCPConnection {
     public boolean closeConnection() {
         try {
             setRunning(false);
-            if (socket != null)
+            if (socket != null) {
                 socket.close();
+            }
             print("连接已关闭");
             return true;
         } catch (IOException e) {

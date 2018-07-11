@@ -11,27 +11,21 @@ import java.util.List;
  **/
 
 public interface UserDataSource extends DataSource {
-    void login(GeneralCallback<User> callback, User user);
 
     void register(GeneralCallback<String> callback, User user);
 
-    User getThisUser();
-
-    /**
-     * 从本地数据库获取当前用户信息
-     * @param callback c
-     */
-    void getThisUser(GeneralCallback<User> callback);
-
-    /**
-     * 将已经登录的用户保存到数据库
-     */
-    boolean saveThisUser(User user);
-
-    void updateThisUser(GeneralCallback<String> callback, User user);
+    void updateUserInfo(GeneralCallback<String> callback, User user);
 
     void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath);
 
+    void login(GeneralCallback<User> callback, User user);
+
+    /**
+     * 获取用户信息 userId为-1的时候表示获取当前用户信息
+     * 当前用户信息需要存放在本地数据库(只保存部份关键信息)
+     * @param callback .
+     * @param userId userId
+     */
     void getUserInfo(GeneralCallback<User> callback, int userId);
 
     void getSchoolList(GeneralCallback<List<School>> callback);

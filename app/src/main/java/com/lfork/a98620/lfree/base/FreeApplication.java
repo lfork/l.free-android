@@ -11,6 +11,9 @@ import org.litepal.LitePal;
  */
 
 public class FreeApplication extends Application{
+
+    public final static String APP_SHARED_PREF = "application_shared_pref";
+
     /**
      * 这里因为是application context 所以就没有内存泄漏的问题，
      * 因为application的生命周期是最长的

@@ -75,8 +75,9 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     @Override
     protected void onPause() {
         super.onPause();
-        if (messageBinder != null)
+        if (messageBinder != null) {
             messageBinder.cancelListener();
+        }
     }
 
     private void initUI() {
@@ -128,6 +129,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         return true;
     }
 
+    @Override
     public void sendMessage(Message message, DataSource.GeneralCallback<Message> callback) {
         recyclerView.scrollToPosition(viewModel.messages.size() - 1);//将recyclerView定位到最后一行
         if (messageBinder != null) {

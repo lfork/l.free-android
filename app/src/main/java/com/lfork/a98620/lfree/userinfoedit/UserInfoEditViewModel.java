@@ -110,7 +110,7 @@ public class UserInfoEditViewModel extends UserViewModel {
 
         isUpdating.set(true);
         new Thread(() -> {
-            repository.updateThisUser(new DataSource.GeneralCallback<String>() {
+            repository.updateUserInfo(new DataSource.GeneralCallback<String>() {
                 @Override
                 public void succeed(String data) {
                     isUpdating.set(false);

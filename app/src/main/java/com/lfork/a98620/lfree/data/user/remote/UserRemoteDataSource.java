@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.data.user.remote;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
@@ -8,13 +9,11 @@ import com.lfork.a98620.lfree.base.network.Result;
 import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataSource;
-import com.lfork.a98620.lfree.util.Config;
 import com.lfork.a98620.lfree.util.JSONUtil;
 
 import java.io.File;
 import java.util.List;
 
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -24,14 +23,13 @@ import retrofit2.Response;
 
 /**
  * Created by 98620 on 2018/3/23.
+ *
+ * @author 98620
  */
 
 public class UserRemoteDataSource implements UserDataSource {
 
     private static UserRemoteDataSource INSTANCE;
-//    private ArrayList<ResponseGetUser.UserInfo> mCachedUserList = new ArrayList<>();
-
-    private static final String TAG = "IMRemoteDataSource";
 
     private UserRemoteDataSource() {
     }
@@ -51,17 +49,16 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void login(final GeneralCallback<User> callback, User user) {
-        UserNetService service = HttpService.getNetWorkService(UserNetService.class);
-        Call<Result<User>> call = service.login(user.getUserName(), user.getUserPassword());
+        Call<Result<User>> call = getNetService().login(user.getUserName(), user.getUserPassword());
         call.enqueue(new Callback<Result<User>>() {
             @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
+            public void onResponse(@NonNull Call<Result<User>> call, @NonNull Response<Result<User>> response) {
                 Result<User> result = response.body();
                 if (result != null) {
                     User u = result.getData();
-                    if (u != null)
+                    if (u != null) {
                         callback.succeed(u);
-                    else {
+                    } else {
                         callback.failed(result.getMessage());
                     }
                 } else {
@@ -70,86 +67,45 @@ public class UserRemoteDataSource implements UserDataSource {
             }
 
             @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Result<User>> call, @NonNull Throwable t) {
                 callback.failed(t.getMessage());
             }
         });
-
-//        HttpService.getNetWorkService(UserNetService)
-//
-//        String url = Config.ServerURL + "/22y/user_login";
-//
-//        RequestBody requestbody = new FormBody.Builder()
-//                .add("studentId", user.getUserName())
-//                .add("userPassword", user.getUserPassword())
-//                .build();
-//
-//        String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
-//
-//        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {
-//        });
-//
-//        if (result != null) {
-//            User u = result.getData();
-//            if (u != null)
-//                callback.succeed(u);
-//            else {
-//                callback.failed(result.getMessage());
-//            }
-//        } else {
-//            callback.failed("error");
-//        }
     }
 
     @Override
     public void register(GeneralCallback<String> callback, User user) {
-        String url = Config.ServerURL + "/22y/user_regist";
+        Call<Result> call = getNetService().register(
+                user.getStudentId(),
+                user.getUserPassword(),
+                user.getUserName(),
+                user.getSchool().getId());
 
-        RequestBody requestbody = new FormBody.Builder()
-                .add("studentId", user.getStudentId())
-                .add("userPassword", user.getUserPassword())
-                .add("userName", user.getUserName())
-                .add("userSchool.id", user.getSchool().getId())
-                .build();
-
-        //Log.d(TAG, "validate s: " + user.getStudentId() + " u:" + user.getUserName() + " p:" + user.getUserPassword());
-
-        String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
-
-        Result result = JSONUtil.parseJson(responseData, new TypeToken<Result>() {
-        });
-
-        if (result != null) {
-            //  Log.d(TAG, "register: ");
-            if (result.getCode() == 1) {
-                callback.succeed(result.getMessage());
-            } else {
-                callback.failed(result.getMessage());
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(@NonNull Call<Result> call, @NonNull Response<Result> response) {
+                Result result = response.body();
+                if (result != null) {
+                    if (result.getCode() == 1) {
+                        callback.succeed(result.getMessage());
+                    } else {
+                        callback.failed(result.getMessage());
+                    }
+                } else {
+                    callback.failed("error 服务器异常");
+                }
             }
-        } else {
-            callback.failed("error 服务器异常");
-        }
-    }
 
-    @Override
-    public User getThisUser() {
-        //do nothing here
-        return null;
-    }
-
-    @Override
-    public void getThisUser(GeneralCallback<User> callback) {
-        //do nothing here
-    }
-
-    @Override
-    public boolean saveThisUser(User user) {
-        return false;
+            @Override
+            public void onFailure(@NonNull Call<Result> call, @NonNull Throwable t) {
+                callback.failed(t.toString());
+            }
+        });
     }
 
 
     @Override
-    public void updateThisUser(GeneralCallback<String> callback, User user) {
+    public void updateUserInfo(GeneralCallback<String> callback, User user) {
 
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -196,51 +152,55 @@ public class UserRemoteDataSource implements UserDataSource {
     @Override
     public void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath) {
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), new File(localFilePath));
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("image", "image.png", fileBody)
-                .addFormDataPart("studentId", studentId)
-                .build();
-        String responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/user_imageUpload", requestBody);
-        Result<String> result = JSONUtil.parseJson(responseData, new TypeToken<Result<String>>() {
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("image", "image.png", fileBody);
+
+        Call<Result<String>> call = getNetService().updatePortrait(photo, RequestBody.create(null, studentId));
+        call.enqueue(new Callback<Result<String>>() {
+            @Override
+            public void onResponse(@NonNull Call<Result<String>> call, @NonNull Response<Result<String>> response) {
+                Result<String> result = response.body();
+                if (result != null) {
+                    if (result.getCode() == 1) {
+                        callback.succeed(result.getData());
+                    } else {
+                        callback.failed(result.getMessage());
+                    }
+                } else {
+                    callback.failed("error 服务器异常");
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<Result<String>> call, @NonNull Throwable t) {
+                callback.failed(t.toString());
+            }
         });
 
-        if (result != null) {
-            if (result.getCode() == 1) {
-                callback.succeed(result.getData());
-            } else {
-                callback.failed(result.getMessage());
-            }
-        } else {
-            callback.failed("error 服务器异常");
-        }
-    }
 
+    }
 
     @Override
     public void getUserInfo(GeneralCallback<User> callback, int userId) {
-        new Thread(() -> {
-            RequestBody requestBody = new FormBody.Builder()
-                    .add("studentId", userId + "")
-                    .build();
-
-            String responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/user_info", requestBody);
-
-            Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() { //GSON
-            });
-
-            if (result != null) {
-                if (result.getCode() == 1) {
-                    callback.succeed(result.getData());
+        Call<Result<User>> call = getNetService().getUserInfo(userId + "");
+        call.enqueue(new Callback<Result<User>>() {
+            @Override
+            public void onResponse(@NonNull Call<Result<User>> call, @NonNull Response<Result<User>> response) {
+                Result<User> result = response.body();
+                if (result != null) {
+                    if (result.getCode() == 1) {
+                        callback.succeed(result.getData());
+                    } else {
+                        callback.failed(result.getMessage());
+                    }
                 } else {
-                    callback.failed(result.getMessage());
+                    callback.failed("error 服务器异常");
                 }
-            } else {
-                callback.failed("error 服务器异常");
             }
 
-        }).start();
-
+            @Override
+            public void onFailure(@NonNull Call<Result<User>> call, @NonNull Throwable t) {
+                callback.failed(t.toString());
+            }
+        });
     }
 
     @Override
@@ -277,5 +237,9 @@ public class UserRemoteDataSource implements UserDataSource {
         List<School> schools = JSONUtil.parseJson(jsonData, new TypeToken<List<School>>() {
         });
         callback.succeed(schools);
+    }
+
+    private UserNetService getNetService() {
+        return HttpService.getNetWorkService(UserNetService.class);
     }
 }

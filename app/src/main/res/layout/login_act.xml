@@ -1,9 +1,10 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="viewModel"
-            type="com.lfork.a98620.lfree.login.LoginActivity"/>
+            type="com.lfork.a98620.lfree.login.LoginViewModel"/>
         <import type="android.view.View"/>
     </data>
     <FrameLayout
@@ -92,7 +93,7 @@
                 <Button
                     android:id="@+id/register"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:onClick="@{()->viewModel.startRegisterActivity()}"
+                    android:onClick="@{()->viewModel.register()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

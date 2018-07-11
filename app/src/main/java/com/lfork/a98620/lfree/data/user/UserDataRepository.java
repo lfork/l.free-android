@@ -1,7 +1,5 @@
 package com.lfork.a98620.lfree.data.user;
 
-import android.util.Log;
-
 import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.local.UserLocalDataSource;
@@ -23,7 +21,9 @@ public class UserDataRepository implements UserDataSource {
     private UserRemoteDataSource remoteDataSource;
     private UserLocalDataSource localDataSource;
 
-    private User mUser;
+    private User mCachedUser;
+
+    private boolean mCachedUserIsDirty = true;
 
     private int userId;
 
@@ -31,7 +31,7 @@ public class UserDataRepository implements UserDataSource {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
         //当数据仓库初始化的时候，同时也需要异步初始化用户数据。
-        initUser();
+//        initUser();
     }
 
 
@@ -49,18 +49,18 @@ public class UserDataRepository implements UserDataSource {
     }
 
     private void initUser() {
-        new Thread(() -> getThisUser(new GeneralCallback<User>() {
-            @Override
-            public void succeed(User data) {
-                mUser = data;
-            }
-
-            @Override
-            public void failed(String log) {
-                Log.d(TAG, "failed: " + log);
-            }
-        })
-        ).start();
+//        new Thread(() -> getThisUser(new GeneralCallback<User>() {
+//            @Override
+//            public void succeed(User data) {
+//                mCachedUser = data;
+//            }
+//
+//            @Override
+//            public void failed(String log) {
+//                Log.d(TAG, "failed: " + log);
+//            }
+//        })
+//        ).start();
 
     }
 
@@ -70,12 +70,21 @@ public class UserDataRepository implements UserDataSource {
         remoteDataSource.login(new GeneralCallback<User>() {
             @Override
             public void succeed(User data) {
-                Log.d(TAG, "onQuit: " + UserDataRepository.getInstance().hashCode());
-                data.setLogin(true);
-                saveThisUser(data);
-                mUser = data;
-                setUserId(mUser.getUserId());
+                //只需要登录成功的UserId即可
                 callback.succeed(data);
+//                data.setLogin(true);
+//                mCachedUser = data;
+//                setUserId(mCachedUser.getUserId());
+//                localDataSource.updateUserInfo(new GeneralCallback<String>() {
+//                    @Override
+//                    public void succeed(String data) {
+//                        callback.succeed(mCachedUser);
+//                    }
+//                    @Override
+//                    public void failed(String log) {
+//                        callback.failed(log);
+//                    }
+//                }, user);
             }
 
             @Override
@@ -90,49 +99,47 @@ public class UserDataRepository implements UserDataSource {
         remoteDataSource.register(callback, user);
     }
 
-    @Override
-    public User getThisUser() {
-        return mUser;
-    }
+//    public User getThisUser() {
+//        return mCachedUser;
+//    }
+//
+//    public void getThisUser(GeneralCallback<User> callback) {
+//        if (mCachedUser != null) {
+//            callback.succeed(mCachedUser);
+//            return;
+//        }
+//        localDataSource.getThisUser(new GeneralCallback<User>() {
+//            @Override
+//            public void succeed(User data) {
+//                mCachedUser = data;
+//                callback.succeed(data);
+//            }
+//
+//            @Override
+//            public void failed(String log) {
+//                callback.failed(log);
+//            }
+//        });
+//    }
+//
+//    public boolean saveThisUser(User user) {
+//        return localDataSource.saveThisUser(user);
+//    }
 
     @Override
-    public void getThisUser(GeneralCallback<User> callback) {
-        if (mUser != null) {
-            callback.succeed(mUser);
-            return;
-        }
-        localDataSource.getThisUser(new GeneralCallback<User>() {
-            @Override
-            public void succeed(User data) {
-                mUser = data;
-                callback.succeed(data);
-            }
-
-            @Override
-            public void failed(String log) {
-                callback.failed(log);
-            }
-        });
-    }
-
-    @Override
-    public boolean saveThisUser(User user) {
-        return localDataSource.saveThisUser(user);
-    }
-
-    @Override
-    public void updateThisUser(GeneralCallback<String> callback, User user) {
-        remoteDataSource.updateThisUser(new GeneralCallback<String>() {
+    public void updateUserInfo(GeneralCallback<String> callback, User user) {
+        remoteDataSource.updateUserInfo(new GeneralCallback<String>() {
             @Override
             public void succeed(String data) {
+                mCachedUserIsDirty = true;
                 callback.succeed(data);
-                updateLocalUserInfo(user);
+
+//                localDataSource.updateLocalUserInfo(user);
             }
 
             @Override
             public void failed(String log) {
                 callback.failed(log);
-
             }
         }, user);
     }
@@ -142,8 +149,9 @@ public class UserDataRepository implements UserDataSource {
         remoteDataSource.updateUserPortrait(new GeneralCallback<String>() {
             @Override
             public void succeed(String data) {
-                getThisUser().setUserImagePath(data);
-                saveThisUser(getThisUser());
+                mCachedUserIsDirty = true;
+//                getThisUser().setUserImagePath(data);
+//                saveThisUser(getThisUser());
                 callback.succeed(data);
             }
 
@@ -154,9 +162,37 @@ public class UserDataRepository implements UserDataSource {
         }, studentId, localFilePath);
     }
 
+    /**
+     * 还是可以做下当前用户信息的内存缓存
+     *
+     * @param callback .
+     * @param userId   userId
+     */
     @Override
     public void getUserInfo(GeneralCallback<User> callback, int userId) {
-        remoteDataSource.getUserInfo(callback, userId);
+        if (userId != getUserId()) {
+            remoteDataSource.getUserInfo(callback, userId);
+            return;
+        }
+
+        // 对当前用户做的缓存
+        if (mCachedUserIsDirty) {
+            remoteDataSource.getUserInfo(new GeneralCallback<User>() {
+                @Override
+                public void succeed(User data) {
+                    mCachedUser = data;
+                    mCachedUserIsDirty = false;
+                    callback.succeed(mCachedUser);
+                }
+                @Override
+                public void failed(String log) {
+                    callback.failed(log);
+                }
+            }, userId);
+        } else {
+            callback.succeed(mCachedUser);
+        }
+        ;
     }
 
     public void getUserInfo(int userId, boolean isCached, GeneralCallback<User> callback) {
@@ -173,16 +209,6 @@ public class UserDataRepository implements UserDataSource {
         remoteDataSource.getSchoolList(callback);
     }
 
-
-    private void updateLocalUserInfo(User newUser) {
-
-        //更新本地的user信息
-        mUser.setUserPhone(newUser.getUserPhone());
-        mUser.setUserEmail(newUser.getUserEmail());
-        mUser.setUserDesc(newUser.getUserDesc());
-        saveThisUser(mUser);
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -190,6 +216,14 @@ public class UserDataRepository implements UserDataSource {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+//    private void updateLocalUserInfo(User newUser) {
+//        //更新本地的user信息
+//        mCachedUser.setUserPhone(newUser.getUserPhone());
+//        mCachedUser.setUserEmail(newUser.getUserEmail());
+//        mCachedUser.setUserDesc(newUser.getUserDesc());
+//        saveThisUser(mCachedUser);
+//    }
 
 
 }

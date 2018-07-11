@@ -90,8 +90,9 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
 
         Log.d(TAG, "setImageVisibility: " + i + "image count" + imageCount);
 
-        for (; i < MAX_COUNT; i++)
+        for (; i < MAX_COUNT; i++) {
             imageVisible.set(i, false);
+        }
 
     }
 
@@ -101,8 +102,9 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
      * @param index e
      */
     public void deleteImage(int index) {
-        if (navigator != null)
+        if (navigator != null) {
             navigator.deleteImage(index);
+        }
     }
 
     /**
@@ -112,8 +114,9 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
         if (imageCount == MAX_COUNT) {
             return;
         }
-        if (navigator != null)
+        if (navigator != null) {
             navigator.showMyDialog(MAX_COUNT - imageCount);
+        }
     }
 
     public void setImages(List<Uri> mSelected) {
@@ -165,7 +168,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
         g.setName(name.get());
         g.setDescription(description.get());
         g.setCoverImagePath(imagePathList.get(0));
-        g.setUserId(UserDataRepository.getInstance().getThisUser().getUserId());
+        g.setUserId(UserDataRepository.getInstance().getUserId());
         g.setOriginPrice(originPrice.get());
         g.setPrice(price.get());
         g.setCategoryId(getCategoryId());
@@ -203,15 +206,17 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
                                 public void succeed(String data) {
                                     dataIsLoading.set(false);
 
-                                    if (navigator != null)
+                                    if (navigator != null) {
                                         navigator.uploadSucceed("上传成功");
+                                    }
                                 }
 
                                 @Override
                                 public void failed(String log) {
                                     dataIsLoading.set(false);
-                                    if (navigator != null)
+                                    if (navigator != null) {
                                         navigator.uploadFailed(log);
+                                    }
 
                                 }
                             }, g);
@@ -227,8 +232,9 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
                 //已经上传了的图片就不用管了，但是本地图片还需要压缩一下
                 //所以这里的操作应该比上传操作还要麻烦点
                 new Thread(() -> {
-                    if (navigator != null)
+                    if (navigator != null) {
                         navigator.uploadSucceed("假装修改成功:后台接口还在开发中");
+                    }
                 }).start();
                 break;
         }

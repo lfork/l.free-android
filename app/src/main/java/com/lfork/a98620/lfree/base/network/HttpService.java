@@ -1,12 +1,13 @@
 package com.lfork.a98620.lfree.base.network;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.util.Config;
-import com.lfork.a98620.lfree.util.http.HttpLogger;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -33,6 +34,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * .readTimeout(500, TimeUnit.MILLISECONDS)
  * .build();
  * 这样创建的实例与原实例共享线程池、连接池和其他设置项，只需进行少量配置就可以实现特殊需求。
+ *
+ * @author 98620
  */
 public class HttpService {
 
@@ -47,14 +50,16 @@ public class HttpService {
     private static HttpService INSTANCE = null;
 
     /**
-     *  Double-checked locking for singleton
+     * Double-checked locking for singleton
+     *
      * @return instance
      */
     public static HttpService getInstance() {
         if (INSTANCE == null) {
             synchronized (HttpService.class) {
-                if (INSTANCE == null)
+                if (INSTANCE == null) {
                     INSTANCE = new HttpService();
+                }
             }
         }
         return INSTANCE;
@@ -66,16 +71,20 @@ public class HttpService {
         client = new OkHttpClient()
                 .newBuilder()
                 .addNetworkInterceptor(logInterceptor)
-                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)//设置读取超时时间
-                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)//设置写的超时时间
-                .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)//设置连接超时时间
+                //设置读取超时时间
+                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                //设置写的超时时间
+                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                //设置连接超时时间
+                .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .build();
     }
 
     public void closeConnection() {
         try {
-            if (client != null && client.cache() != null)
+            if (client != null && client.cache() != null) {
                 client.cache().close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,6 +93,11 @@ public class HttpService {
 
 
     /**
+     * request body 的构造方法
+     * RequestBody requestbody = new FormBody.Builder()
+     * .add("studentId", user.getUserName())
+     * .add("userPassword", user.getUserPassword())
+     * .build();
      * synchronize post
      */
     public String sendPostRequest(String url, RequestBody requestBody) {
@@ -92,8 +106,9 @@ public class HttpService {
         Response response = null;
         String result = null;
         try {
-            response = client.newCall(request).execute(); //同步请求
-            result = response.body().string();
+            //同步请求
+            response = client.newCall(request).execute();
+            result = Objects.requireNonNull(response.body()).string();
         } catch (IOException e) {
             Log.d(TAG, "sendPostRequest: " + e);
         } finally {
@@ -113,31 +128,57 @@ public class HttpService {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 callback.failed(e.getMessage());
 
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                callback.succeed(response.body().string());
-
-                if (response != null) {
-                    response.close();
-                }
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                callback.succeed(Objects.requireNonNull(response.body()).string());
+                response.close();
             }
         });
     }
 
+
+    private static Retrofit retrofitInstance = null;
+
     /**
      * 获取由retrofit 封装的，Json解析类型的网络服务,网路地址为基本的服务器地址
+     * DCL单例模式
      */
-    public static <T> T getNetWorkService(final Class<T> service){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Config.BaseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        return retrofit.create(service);
+    public static <T> T getNetWorkService(final Class<T> service) {
+        if (retrofitInstance == null) {
+            synchronized (HttpService.class) {
+                if (retrofitInstance == null) {
+                    HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLogger());
+                    logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient client2 = new OkHttpClient()
+                            .newBuilder()
+                            .addNetworkInterceptor(logInterceptor)
+                            //设置读取超时时间
+                            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                            //设置写的超时时间
+                            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                            //设置连接超时时间
+                            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                            .build();
+
+                    retrofitInstance = new Retrofit.Builder()
+                            //配置OkHttp客户端 主要是设置日志
+                            .callFactory(client2)
+                            .baseUrl(Config.BaseURL)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                }
+            }
+        }
+        return retrofitInstance.create(service);
+    }
+
+    public static void closeNetWorkService(){
+        retrofitInstance = null;
     }
 
 

@@ -11,7 +11,6 @@ import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.entity.Review;
-import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.util.Config;
@@ -65,7 +64,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     private void getNormalData() {
         repository = GoodsDataRepository.getInstance();
 
-        new Thread(() ->  repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
+        new Thread(() -> repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
             @Override
             public void succeed(GoodsDetailInfo data) {
                 g = data;
@@ -73,7 +72,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                 if (reviews.size() > 0) {
                     reviewItems.clear();
                     Collections.reverse(reviews);
-                    for (Review r: reviews) {
+                    for (Review r : reviews) {
                         ReviewItemViewModel viewModel = new ReviewItemViewModel(r, navigator);
                         reviewItems.add(viewModel);
                     }
@@ -95,7 +94,9 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     }
 
     private void setData() {
-        if (g == null) return;
+        if (g == null) {
+            return;
+        }
         name.set(g.getName());
         price.set("现价：" + g.getPrice());
         originPrice.set("原价：" + g.getOriginPrice());
@@ -126,20 +127,12 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     }
 
     public void startPrivateChat() {
-        UserDataRepository userDataRepository = UserDataRepository.getInstance();
-        User u = userDataRepository.getThisUser();
-        if (u != null) {
-            if (u.getUserId() == userId) {
-                showMessage("不能和自己聊天");
-                return;
-            }
-
-            navigator.openChatWindow(sellerName.get(), userId);
-
-        } else {
-            showMessage("IM模块正在初始化...");
+        if (UserDataRepository.getInstance().getUserId() == userId) {
+            showMessage("不能和自己聊天");
+            return;
         }
 
+        navigator.openChatWindow(sellerName.get(), userId);
     }
 
     public void addReview() {
@@ -152,15 +145,14 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
         Review r = new Review(review.get());
         r.setGoodsId(id + "");
-        r.setUserId(UserDataRepository.getInstance().getThisUser().getUserId() + "");
-        r.setUser(UserDataRepository.getInstance().getThisUser());
+        r.setUserId(UserDataRepository.getInstance().getUserId() + "");
         r.setTime(TimeUtil.getStandardTime());
         new Thread(() -> GoodsDataRepository.getInstance().addReview(new DataSource.GeneralCallback<Review>() {
             @Override
             public void succeed(Review data) {
 
                 ReviewItemViewModel viewModel = new ReviewItemViewModel(data, navigator);
-                reviewItems.add(0,viewModel );
+                reviewItems.add(0, viewModel);
                 review.set("");
 
                 if (navigator != null) {
@@ -209,19 +201,19 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         }
     }
 
-    public void updateGoods(){
+    public void updateGoods() {
         if (navigator != null) {
-           navigator.updateGoods(g.getId());
+            navigator.updateGoods(g.getId());
         }
     }
 
-    public void shareGoods(){
+    public void shareGoods() {
         if (navigator != null) {
             navigator.shareGoods(g.toString());
         }
     }
 
-    public void deleteGoods(){
+    public void deleteGoods() {
         repository.deleteGoods(new DataSource.GeneralCallback<String>() {
             @Override
             public void succeed(String data) {
@@ -239,7 +231,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         }, g.getId());
     }
 
-    public void deleteReview(int reviewId){
+    public void deleteReview(int reviewId) {
 
         int i = -1;
         for (ReviewItemViewModel next : reviewItems) {
@@ -251,8 +243,8 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         }
 
         if (i != -1) {
-            reviewItems.remove(i );
-            if (navigator != null){
+            reviewItems.remove(i);
+            if (navigator != null) {
                 navigator.deleteReview(true, -1);
                 navigator.notifyReviewChanged();
             }

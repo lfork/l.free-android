@@ -1,5 +1,7 @@
 package com.lfork.a98620.lfree.register;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -101,5 +103,10 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     protected void onDestroy() {
         super.onDestroy();
         viewModel.onDestroy();
+    }
+
+    public static void start(Context activityContext){
+        Intent intent = new Intent(activityContext, RegisterActivity.class);
+        activityContext.startActivity(intent);
     }
 }

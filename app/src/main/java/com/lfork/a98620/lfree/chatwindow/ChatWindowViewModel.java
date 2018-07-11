@@ -50,6 +50,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     }
 
+    @Override
     public void start() {
         isAdded = false;
         loadMessages();

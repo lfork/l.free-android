@@ -12,14 +12,13 @@ import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.BaseActivity;
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
-import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.databinding.UserInfoActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.Objects;
 
-public class UserInfoActivity extends BaseActivity implements ViewModelNavigator{
+public class UserInfoActivity extends BaseActivity implements ViewModelNavigator {
 
     private UserInfoViewModel viewModel;
 
@@ -63,22 +62,17 @@ public class UserInfoActivity extends BaseActivity implements ViewModelNavigator
                 finish();
                 break;
             case R.id.menu1:
-                UserDataRepository userDataRepository = UserDataRepository.getInstance();
-                User u = userDataRepository.getThisUser();
-                if (u != null) {
-                    if (u.getUserId() == viewModel.getUserId()){
-                        ToastUtil.showShort(this, "不能和自己聊天");
-                        break;
-                    }
-                    Intent intent = new Intent(this, ChatWindowActivity.class);
-                    intent.putExtra("username", viewModel.username.get());
-                    intent.putExtra("user_id", viewModel.getUserId());
-                    this.startActivity(intent);
-                } else {
-                    ToastUtil.showShort(this, "IM模块正在初始化...");
+                UserDataRepository repository = UserDataRepository.getInstance();
+                if (repository.getUserId() == viewModel.getUserId()) {
+                    ToastUtil.showShort(this, "不能和自己聊天");
+                    break;
                 }
+                Intent intent = new Intent(this, ChatWindowActivity.class);
+                intent.putExtra("username", viewModel.username.get());
+                intent.putExtra("user_id", viewModel.getUserId());
+                this.startActivity(intent);
                 break;
-                
+
             default:
                 break;
         }
@@ -93,7 +87,7 @@ public class UserInfoActivity extends BaseActivity implements ViewModelNavigator
         return true;
     }
 
-    public static void activityStart(Context context, int userId){
+    public static void activityStart(Context context, int userId) {
         Intent intent = new Intent(context, UserInfoActivity.class);
         intent.putExtra("user_id", userId);
         context.startActivity(intent);

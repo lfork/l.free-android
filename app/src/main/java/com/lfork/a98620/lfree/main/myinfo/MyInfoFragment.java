@@ -16,6 +16,7 @@ import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.mygoods.MyGoodsActivity;
 import com.lfork.a98620.lfree.settings.SettingsActivity;
 import com.lfork.a98620.lfree.userinfothis.UserInfoThisActivity;
+import com.lfork.a98620.lfree.util.ToastUtil;
 
 import java.util.Objects;
 
@@ -83,14 +84,15 @@ public class MyInfoFragment extends Fragment implements MyInfoFragmentNavigator 
 
     @Override
     public void logoff() {
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        intent.putExtra("status", LoginActivity.LOGOUT);
-        startActivity(intent);
-        Objects.requireNonNull(getActivity()).finish(); //释放资源
+        LoginActivity.start(getContext(),LoginActivity.STATUS_LOGOUT );
+        //释放资源
+        Objects.requireNonNull(getActivity()).finish();
     }
 
     @Override
     public void showToast(String msg) {
-
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            ToastUtil.showShort(getContext(), msg);
+        });
     }
 }

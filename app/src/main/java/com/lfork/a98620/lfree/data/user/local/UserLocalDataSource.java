@@ -43,21 +43,17 @@ public class UserLocalDataSource implements UserDataSource {
 
     @Override
     public void register(GeneralCallback<String> callback, User user) {
-
+        //do nothing here
 
     }
 
-    @Override
-    public User getThisUser() {
-        return null;
-    }
 
-    @Override
     public void getThisUser(GeneralCallback<User> callback) {
         List<User> userList = DataSupport.where("isLogin=?", "1").find(User.class);
         User user = null;
-        if (userList != null && userList.size() > 0)
+        if (userList != null && userList.size() > 0) {
             user = userList.get(0);
+        }
 
         if (user != null) {
             callback.succeed(user);
@@ -66,12 +62,9 @@ public class UserLocalDataSource implements UserDataSource {
         }
     }
 
-    @Override
     public boolean saveThisUser(User user) {
         try {
             DataSupport.deleteAll(User.class, "islogin=0 and userid=? ",user.getUserId()+"");
-            //lie
-//            user.setId(0);
             boolean result = user.save();
             Log.d(TAG, "saveThisUser: 用户信息本地更新成功" + result);
             return result;
@@ -81,9 +74,15 @@ public class UserLocalDataSource implements UserDataSource {
     }
 
     @Override
-    public void updateThisUser(GeneralCallback<String> callback, User user) {
-        user.update(user.getId());
+    public void updateUserInfo(GeneralCallback<String> callback, User user) {
 
+        try {
+            DataSupport.deleteAll(User.class, "islogin=0 and userid=? ",user.getUserId()+"");
+            boolean result = user.save();
+            Log.d(TAG, "saveThisUser: 用户信息本地更新成功" + result);
+        } catch (Exception e) {
+        }
+        user.update(user.getId());
     }
 
     @Override

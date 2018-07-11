@@ -20,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
@@ -63,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.main_act);
         binding.setViewModel(this);
+
         initData();
+        Log.d(TAG, "onCreate: ???"  + UserDataRepository.getInstance().getUserId());
         initFragments();
         startService();
         bindService();
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(true);
             return true;
         }
@@ -124,29 +127,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setupStatusBarColor(){
+    private void setupStatusBarColor() {
         Objects.requireNonNull(getSupportActionBar()).hide();
 //        QMUIStatusBarHelper.translucent(this, getResources().getColor(R.color.main_color));
     }
 
 
-    private void initData(){
-        int userId = UserDataRepository.getInstance().getUserId();
-        if (userId != 0) {  //存
-            SharedPreferences.Editor editor = getSharedPreferences("data_main", MODE_PRIVATE).edit();
-            editor.putInt("user_id", UserDataRepository.getInstance().getUserId());
-            editor.apply();
-        } else {        //取
-            SharedPreferences sharedPreferences = getSharedPreferences("data_main", MODE_PRIVATE);
-            userId = sharedPreferences.getInt("user_id", 0);
-            if (userId != 0) {//存
-                UserDataRepository.getInstance().setUserId(userId);
-            }
-        }
-
+    private void initData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(FreeApplication.APP_SHARED_PREF, MODE_PRIVATE);
+        UserDataRepository.getInstance().setUserId(Integer.parseInt(sharedPreferences.getString("recent_user_id", "0")));
     }
 
-    private void registerNotification(){
+    private void registerNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channelId = "chat";
             String channelName = "聊天消息";
@@ -168,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
         binding.chatBtn.setSelected(false);
         binding.myBtn.setSelected(false);
         binding.communityBtn.setSelected(false);
-
 
         //设置文本颜色
         binding.goodsText.setTextColor(getResources().getColor(R.color.Home_act_text));
@@ -195,7 +186,8 @@ public class MainActivity extends AppCompatActivity {
                 binding.communityText.setTextColor(getResources().getColor(R.color.Login_ForeColor));
                 binding.communityBtn.setSelected(true);
                 break;
-
+            default:
+                break;
         }
 
         replaceFragment(fragments.get(index));
@@ -213,19 +205,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void startService() {
         Intent startIntent = new Intent(this, MessageService.class);
-        startService(startIntent); //launch service
+        startService(startIntent);
     }
 
     private void bindService() {
         Intent bindIntent = new Intent(this, MessageService.class);
-        bindService(bindIntent, connection, BIND_AUTO_CREATE);// bind service
+        bindService(bindIntent, connection, BIND_AUTO_CREATE);
     }
 
     private void unBindService() {
-
         messageBinder.closeConnection();
         unbindService(connection);
-        Log.d(TAG, "unBindService: Message服务已断开" );
+        Log.d(TAG, "unBindService: Message服务已断开");
     }
 
     private void stopService() {
@@ -265,4 +256,5 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(indexFragment);
         indexFragment.setTargetPosition(category);
     }
+
 }

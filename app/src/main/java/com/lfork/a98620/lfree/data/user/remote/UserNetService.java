@@ -3,47 +3,87 @@ package com.lfork.a98620.lfree.data.user.remote;
 import com.lfork.a98620.lfree.base.network.Result;
 import com.lfork.a98620.lfree.data.entity.User;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 /**
- * Created by 98620 on 2018/7/10.
+ * @author 98620
+ * @date 2018/7/10
  */
 public interface UserNetService {
 
+    /**
+     * 用户登录
+     *
+     * @param username studentId,email,username都行
+     * @param password 密码
+     * @return 指定请求数据的Call对象
+     */
     @FormUrlEncoded
     @POST("22y/user_login")
-    Call<Result<User>> login(@Field("studentId") String username, @Field("studentId") String password);
+    Call<Result<User>> login(
+            @Field("studentId") String username,
+            @Field("userPassword") String password);
+
 
     /**
-     *  @Override
-    public void login(final GeneralCallback<User> callback, User user) {
-
-    String url = Config.ServerURL + "/22y/user_login";
-
-    RequestBody requestbody = new FormBody.Builder()
-    .add("studentId", user.getUserName())
-    .add("userPassword", user.getUserPassword())
-    .build();
-
-    String responseData = HttpService.getInstance().sendPostRequest(url, requestbody);
-
-    Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {
-    });
-
-    if (result != null) {
-    User u = result.getData();
-    if (u != null)
-    callback.succeed(u);
-    else {
-    callback.failed(result.getMessage());
-    }
-    } else {
-    callback.failed("error");
-    }
-    }
+     * 用户注册
+     *
+     * @param studentId .
+     * @param password  .
+     * @param username  .
+     * @param schoolId  .
+     * @return 指定请求数据的Call对象
      */
+    @FormUrlEncoded
+    @POST("22y/user_regist")
+    Call<Result> register(
+            @Field("studentId") String studentId,
+            @Field("userPassword") String password,
+            @Field("userName") String username,
+            @Field("userSchool.id") String schoolId);
+
+    /**
+     * 根据Id获取用户的完整信息
+     *
+     * @param userId .
+     * @return .
+     */
+    @GET("22y/user_info")
+    Call<Result<User>> getUserInfo(@Query("studentId") String userId);
+
+
+    /**
+     * 更新用户头像 单文件上传实例
+     * Part的普通键值对需要用RequestBody来写
+     * RequestBody.create(null, studentId)
+     * @param fileBody  .
+     * @param studentId .
+     * @return .
+     */
+    @Multipart
+    @POST("22y/user_imageUpload")
+    Call<Result<String>> updatePortrait(
+            @Part MultipartBody.Part fileBody,
+            @Part("studentId") RequestBody studentId);
+
+    @FormUrlEncoded
+    @POST("22y/user_save")
+    Call<Result<User>> updateUserInfo(
+            @Field("studentId") String studentId,
+            @Field("userName") String username,
+            @Field("userSchool.id") String schoolId,
+            @Field("userDesc") String dec,
+            @Field("userEmail") String email,
+            @Field("userPhone") String phone
+    );
 
 }
