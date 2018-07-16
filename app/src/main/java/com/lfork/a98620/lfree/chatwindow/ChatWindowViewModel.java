@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.imservice.message.Message;
@@ -47,7 +48,6 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     ChatWindowViewModel(Context context) {
         super(context);
-
     }
 
     @Override
@@ -55,12 +55,12 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
         isAdded = false;
         loadMessages();
         //判断当前用户有没有在好友列表中，然后进行addUser操作
-        new Thread(() -> {
+        FreeApplication.executeThreadInDefaultThreadPool(() -> {
             repository = IMDataRepository.getInstance();
             if (!repository.isUserExisted(userId)) {
                 addUser(false);
             }
-        }).start();
+        });
 
     }
 
@@ -81,7 +81,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
 
     private void loadMessages() {
-        new Thread(() -> {
+        FreeApplication.executeThreadInDefaultThreadPool(() -> {
 
             if (msgMepository == null) {
                 msgMepository = MessageDataRepository.getInstance(0);
@@ -93,7 +93,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
                     messages.clear();
                     messages.addAll(data);
 
-                navigator.notifyMessagesChanged();
+                    navigator.notifyMessagesChanged();
 //                notifyPropertyChanged(BR.viewModel); // It's a @Bindable so update manually
 //                    navigator.showToast("聊天记录加载成功");
                 }
@@ -103,7 +103,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
                     navigator.showToast("log");
                 }
             });
-        }).start();
+        });
 
     }
 
@@ -149,38 +149,36 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     private void addUser(boolean isExisted) {
 
-        if (isAdded){
+        if (isAdded) {
             return;
         }
 
         Log.d(TAG, "addUser: " + isExisted);
 
-        new Thread(() -> {
-            UserDataRepository userDataRepository = UserDataRepository.getInstance();
+        UserDataRepository userDataRepository = UserDataRepository.getInstance();
 
-            userDataRepository.getUserInfo(userId, isExisted, new DataSource.GeneralCallback<User>() {
-                @Override
-                public void succeed(User data) {
-                    repository.addChatUser(data, isExisted, new DataSource.GeneralCallback<String>() {
-                        @Override
-                        public void succeed(String data) {
-                            Log.d(TAG, "succeed: 用户添加成功");
-                            isAdded = true;
-                        }
+        userDataRepository.getUserInfo(userId, isExisted, new DataSource.GeneralCallback<User>() {
+            @Override
+            public void succeed(User data) {
+                repository.addChatUser(data, isExisted, new DataSource.GeneralCallback<String>() {
+                    @Override
+                    public void succeed(String data) {
+                        Log.d(TAG, "succeed: 用户添加成功");
+                        isAdded = true;
+                    }
 
-                        @Override
-                        public void failed(String log) {
-                            navigator.showToast(log);
-                        }
-                    });
-                }
+                    @Override
+                    public void failed(String log) {
+                        navigator.showToast(log);
+                    }
+                });
+            }
 
-                @Override
-                public void failed(String log) {
-                    navigator.showToast(log);
-                }
-            });
-        }).start();
+            @Override
+            public void failed(String log) {
+                navigator.showToast(log);
+            }
+        });
 
 
     }

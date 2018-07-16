@@ -7,17 +7,40 @@ import com.lfork.a98620.lfree.data.entity.User;
 import java.util.List;
 
 /**
- * Created by 98620 on 2018/3/23.
+ *
+ * @author 98620
+ * @date 2018/3/23
  **/
 
 public interface UserDataSource extends DataSource {
 
+    /**
+     * apply an account
+     * @param callback call back with string result
+     * @param user user information
+     */
     void register(GeneralCallback<String> callback, User user);
 
+    /**
+     * update user information
+     * @param callback call back with string result
+     * @param user user information
+     */
     void updateUserInfo(GeneralCallback<String> callback, User user);
 
+    /**
+     * update user photo
+     * @param callback  call back with string result
+     * @param studentId user id
+     * @param localFilePath local file path
+     */
     void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath);
 
+    /**
+     * do login
+     * @param callback call back with User object
+     * @param user user information
+     */
     void login(GeneralCallback<User> callback, User user);
 
     /**
@@ -28,6 +51,9 @@ public interface UserDataSource extends DataSource {
      */
     void getUserInfo(GeneralCallback<User> callback, int userId);
 
+    /**
+     * get schools information
+     * @param callback call back with school information list.
+     */
     void getSchoolList(GeneralCallback<List<School>> callback);
-
 }

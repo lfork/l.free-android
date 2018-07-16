@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.imservice;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.entity.IMUser;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.imservice.request.Request;
@@ -111,7 +112,7 @@ public class TCPConnection {
                 print("重连成功");
             }
         } catch (IOException e) {
-           // print("重连失败，继续重连");
+            // print("重连失败，继续重连");
             e.printStackTrace();
         }
     }
@@ -122,7 +123,7 @@ public class TCPConnection {
      */
     private void keepAlive() {
         // 心跳机制证明自己在线
-        new Thread(() -> {
+        FreeApplication.getDefaultThreadPool().execute(() -> {
             setRunning(true);
             System.out.println("超时检测已开启(心跳机制)");
             long aMinute = 60000;
@@ -139,7 +140,7 @@ public class TCPConnection {
 //                            System.out.println("检测结果：连接正常");
                             }
                         }
-                      //  System.out.println("服务器连接失败，正在重连");
+                        //  System.out.println("服务器连接失败，正在重连");
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -156,7 +157,7 @@ public class TCPConnection {
                 }
 
             }
-        }).start();
+        });
     }
 
 

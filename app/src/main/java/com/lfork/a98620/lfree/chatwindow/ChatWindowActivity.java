@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
@@ -51,7 +52,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
 
         viewModel = new ChatWindowViewModel(this);
         binding.setViewModel(viewModel);
-        new Thread(() -> {
+        FreeApplication.executeThreadInDefaultThreadPool(() -> {
             messageBinder = IMDataRepository.getInstance().getBinder();
             if (messageBinder != null) {
                 messageBinder.setListener(viewModel, userId);
@@ -63,7 +64,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
                 });
             }
 
-        }).start();
+        });
         initActionBar(username);
         int thisUserId = UserDataRepository.getInstance().getUserId();
         viewModel.setUserInfo(username, userId, thisUserId);

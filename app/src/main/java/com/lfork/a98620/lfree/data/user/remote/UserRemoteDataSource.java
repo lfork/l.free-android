@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.base.network.HttpService;
 import com.lfork.a98620.lfree.base.network.Result;
+import com.lfork.a98620.lfree.base.network.api.UserApi;
 import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataSource;
@@ -31,7 +32,10 @@ public class UserRemoteDataSource implements UserDataSource {
 
     private static UserRemoteDataSource INSTANCE;
 
+    private UserApi api;
+
     private UserRemoteDataSource() {
+        api = HttpService.getNetWorkService(UserApi.class);
     }
 
     public static UserRemoteDataSource getInstance() {
@@ -49,7 +53,7 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void login(final GeneralCallback<User> callback, User user) {
-        Call<Result<User>> call = getNetService().login(user.getUserName(), user.getUserPassword());
+        Call<Result<User>> call = api.login(user.getUserName(), user.getUserPassword());
         call.enqueue(new Callback<Result<User>>() {
             @Override
             public void onResponse(@NonNull Call<Result<User>> call, @NonNull Response<Result<User>> response) {
@@ -75,7 +79,7 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void register(GeneralCallback<String> callback, User user) {
-        Call<Result> call = getNetService().register(
+        Call<Result> call = api.register(
                 user.getStudentId(),
                 user.getUserPassword(),
                 user.getUserName(),
@@ -103,50 +107,45 @@ public class UserRemoteDataSource implements UserDataSource {
         });
     }
 
-
     @Override
     public void updateUserInfo(GeneralCallback<String> callback, User user) {
 
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("studentId", user.getUserId() + "")
-                .addFormDataPart("userName", user.getUserName())
-                .addFormDataPart("userSchool.id", user.getSchool().getId());
-
-        if (!TextUtils.isEmpty(user.getUserDesc())) {
-            builder.addFormDataPart("userDesc", user.getUserDesc());
-        } else {
-            builder.addFormDataPart("userDesc", "");
+        if (TextUtils.isEmpty(user.getUserDesc())) {
+            user.setUserDesc("");
+        }
+        if (TextUtils.isEmpty(user.getUserEmail())) {
+            user.setUserEmail("");
+        }
+        if (TextUtils.isEmpty(user.getUserPhone())) {
+            user.setUserPhone("");
         }
 
-        if (!TextUtils.isEmpty(user.getUserEmail())) {
-            builder.addFormDataPart("userEmail", user.getUserEmail());
-        } else {
-            builder.addFormDataPart("userEmail", "");
-        }
+        Call<Result<User>> call = api.updateUserInfo(user.getUserId(), user.getUserName(), user.getSchool().getId(), user.getUserDesc(), user.getUserEmail(), user.getUserPhone());
 
-        if (!TextUtils.isEmpty(user.getUserPhone())) {
-            builder.addFormDataPart("userPhone", user.getUserPhone());
-        } else {
-            builder.addFormDataPart("userPhone", "");
-        }
 
-        RequestBody requestBody = builder.build();
+        call.enqueue(new Callback<Result<User>>() {
+            @Override
+            public void onResponse(@NonNull Call<Result<User>> call, @NonNull Response<Result<User>> response) {
+                Result<User> result =response.body();
+                if (result != null) {
+                    if (result.getCode() == 1) {
+                        callback.succeed(result.getMessage());
+                    } else {
+                        callback.failed(result.getMessage());
+                    }
+                } else {
+                    callback.failed("error 服务器异常");
+                }
+            }
 
-        String responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/user_save", requestBody);
-
-        Result<User> result = JSONUtil.parseJson(responseData, new TypeToken<Result<User>>() {
+            @Override
+            public void onFailure(@NonNull Call<Result<User>> call, @NonNull Throwable t) {
+                callback.failed(t.toString());
+            }
         });
 
-        if (result != null) {
-            if (result.getCode() == 1) {
-                callback.succeed(result.getMessage());
-            } else {
-                callback.failed(result.getMessage());
-            }
-        } else {
-            callback.failed("error 服务器异常");
-        }
+
+
     }
 
     @Override
@@ -154,7 +153,7 @@ public class UserRemoteDataSource implements UserDataSource {
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), new File(localFilePath));
         MultipartBody.Part photo = MultipartBody.Part.createFormData("image", "image.png", fileBody);
 
-        Call<Result<String>> call = getNetService().updatePortrait(photo, RequestBody.create(null, studentId));
+        Call<Result<String>> call = api.updatePortrait(photo, RequestBody.create(null, studentId));
         call.enqueue(new Callback<Result<String>>() {
             @Override
             public void onResponse(@NonNull Call<Result<String>> call, @NonNull Response<Result<String>> response) {
@@ -180,7 +179,7 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void getUserInfo(GeneralCallback<User> callback, int userId) {
-        Call<Result<User>> call = getNetService().getUserInfo(userId + "");
+        Call<Result<User>> call = api.getUserInfo(userId + "");
         call.enqueue(new Callback<Result<User>>() {
             @Override
             public void onResponse(@NonNull Call<Result<User>> call, @NonNull Response<Result<User>> response) {
@@ -237,9 +236,5 @@ public class UserRemoteDataSource implements UserDataSource {
         List<School> schools = JSONUtil.parseJson(jsonData, new TypeToken<List<School>>() {
         });
         callback.succeed(schools);
-    }
-
-    private UserNetService getNetService() {
-        return HttpService.getNetWorkService(UserNetService.class);
     }
 }

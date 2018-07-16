@@ -13,9 +13,9 @@ import java.util.List;
 
 /**
  * 
- * Created by 98620 on 2018/4/7.
+ * @author 98620
+ * @date 2018/4/7
  */
-
 public class GoodsDataRepository implements GoodsDataSource {
     private static GoodsDataRepository INSTANCE;
 //    private ArrayList<ResponseGetGoods.GoodsInfo> mCachedGoodsList = new ArrayList<>();

@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.util.Config;
+import com.lfork.a98620.lfree.base.Config;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -47,7 +47,10 @@ public class HttpService {
 
     private OkHttpClient client;
 
-    private static HttpService INSTANCE = null;
+    /**
+     * 使用volatile关键字来保证程序的正确性
+     */
+    private static volatile HttpService INSTANCE = null;
 
     /**
      * Double-checked locking for singleton
@@ -177,9 +180,14 @@ public class HttpService {
         return retrofitInstance.create(service);
     }
 
-    public static void closeNetWorkService(){
+    public static void destroyNetWorkService() {
         retrofitInstance = null;
     }
 
-
+    static class HttpLogger implements HttpLoggingInterceptor.Logger {
+        @Override
+        public void log(String message) {
+            Log.d("HttpLogInfo", message);
+        }
+    }
 }

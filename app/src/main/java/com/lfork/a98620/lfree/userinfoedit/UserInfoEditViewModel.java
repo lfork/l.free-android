@@ -12,13 +12,15 @@ import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.School;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
-import com.lfork.a98620.lfree.util.Config;
+import com.lfork.a98620.lfree.base.Config;
 
 import java.util.List;
 
 /**
  * 两个activity使用同一个类型的viewModel，但是里面的方法确不是通用的
- * Created by 98620 on 2018/4/9.
+ *
+ * @author 98620
+ * @date 2018/4/9
  */
 
 public class UserInfoEditViewModel extends UserViewModel {
@@ -27,7 +29,6 @@ public class UserInfoEditViewModel extends UserViewModel {
 
     private User mUser;
     private UserDataRepository repository;
-    private AppCompatActivity context;
     public final ObservableBoolean isUpdating = new ObservableBoolean(false);
     public final ObservableField<String> school = new ObservableField<>("10");
 
@@ -38,7 +39,6 @@ public class UserInfoEditViewModel extends UserViewModel {
 
     UserInfoEditViewModel(AppCompatActivity context) {
         super(context);
-        this.context = context;
     }
 
     @Override
@@ -48,35 +48,31 @@ public class UserInfoEditViewModel extends UserViewModel {
     }
 
     private void getUserInfo() {
-        new Thread(() -> {
-            repository = UserDataRepository.getInstance();
-            repository.getUserInfo(new DataSource.GeneralCallback<User>() {
-                @Override
-                public void succeed(User user) {
-                    mUser = user;
-                    username.set(user.getUserName());
+        repository = UserDataRepository.getInstance();
+        repository.getUserInfo(new DataSource.GeneralCallback<User>() {
+            @Override
+            public void succeed(User user) {
+                mUser = user;
+                username.set(user.getUserName());
 
-                    description.set(user.getUserDesc());
-                    email.set(user.getUserEmail());
-                    phone.set(user.getUserPhone());
-                    imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
+                description.set(user.getUserDesc());
+                email.set(user.getUserEmail());
+                phone.set(user.getUserPhone());
+                imageUrl.set(Config.ServerURL + "/image" + user.getUserImagePath());
 
 
-                    studentNumber.set(user.getUserId() + "");
-                    school.set(user.getSchool().getSchoolName());
-                    getSchoolList();
+                studentNumber.set(user.getUserId() + "");
+                school.set(user.getSchool().getSchoolName());
+                getSchoolList();
+            }
+
+            @Override
+            public void failed(String log) {
+                if (navigator != null) {
+                    navigator.failed(log);
                 }
-
-                @Override
-                public void failed(String log) {
-                   if (navigator != null) {
-                       navigator.failed(log);
-                   }
-                }
-            }, repository.getUserId());
-
-        }).start();
-
+            }
+        }, repository.getUserId());
     }
 
 
@@ -109,31 +105,29 @@ public class UserInfoEditViewModel extends UserViewModel {
         }
 
         isUpdating.set(true);
-        new Thread(() -> {
-            repository.updateUserInfo(new DataSource.GeneralCallback<String>() {
-                @Override
-                public void succeed(String data) {
-                    isUpdating.set(false);
-                    if (navigator != null) {
-                        //跳转到详细信息的界面
-                        navigator.backToUserInfoAct(Activity.RESULT_OK, data);
-                    }
+        repository.updateUserInfo(new DataSource.GeneralCallback<String>() {
+            @Override
+            public void succeed(String data) {
+                isUpdating.set(false);
+                if (navigator != null) {
+                    //跳转到详细信息的界面
+                    navigator.backToUserInfoAct(Activity.RESULT_OK, data);
                 }
+            }
 
-                @Override
-                public void failed(String log) {
-                    isUpdating.set(false);
-                    if (navigator != null) {
-                        //跳转到详细信息的界面
-                        navigator.backToUserInfoAct(Activity.RESULT_CANCELED, log);
-                    }
+            @Override
+            public void failed(String log) {
+                isUpdating.set(false);
+                if (navigator != null) {
+                    //跳转到详细信息的界面
+                    navigator.backToUserInfoAct(Activity.RESULT_CANCELED, log);
                 }
-            }, newUser);
-        }).start();
+            }
+        }, newUser);
     }
 
 
-    private void showMessage(String msg){
+    private void showMessage(String msg) {
         if (navigator != null) {
             //跳转到详细信息的界面
             navigator.showMessage(msg);
@@ -156,6 +150,7 @@ public class UserInfoEditViewModel extends UserViewModel {
                     navigator.setupSpinner(data, Integer.parseInt(mUser.getSchool().getId()));
                 }
             }
+
             @Override
             public void failed(String log) {
                 if (navigator != null) {

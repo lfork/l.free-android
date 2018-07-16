@@ -2,15 +2,15 @@ package com.lfork.a98620.lfree.welcome;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.login.LoginActivity;
 import com.lfork.a98620.lfree.util.GlideOptions;
 
@@ -18,6 +18,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private static final String TAG = "WelcomeActivity";
     private WelcomeActivity welcomeActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,19 +29,19 @@ public class WelcomeActivity extends AppCompatActivity {
         welcomeActivity = this;
         hideSystemNavigationBar();
 
-        new Thread(()->{
+        FreeApplication.getDefaultThreadPool().execute(() -> {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             runOnUiThread(() -> {
-                Intent intent = new Intent( welcomeActivity, LoginActivity.class);
+                Intent intent = new Intent(welcomeActivity, LoginActivity.class);
                 welcomeActivity.startActivity(intent);
                 welcomeActivity.finish();
             });
-        }).start();
+        });
+
 
     }
 

@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.R;
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
@@ -84,7 +85,7 @@ public class MessageService extends Service {
          * 建立TCP连接，并进行用户登录
          */
         public void buildConnection() {
-            new Thread(() -> {
+            FreeApplication.executeThreadInDefaultThreadPool(() -> {
                 //这里会获取一些连接的索引 dataRepository。。  用来及时地进行交互
                 //进行登录操作
                 repository = IMDataRepository.getInstance();
@@ -98,7 +99,7 @@ public class MessageService extends Service {
                     public void failed(String log) {
                     }
                 });
-            }).start();
+            });
         }
 
         private void buildUDPConnection() {

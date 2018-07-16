@@ -72,7 +72,8 @@ public class GoodsDetailActivity extends AppCompatActivity implements GoodsDetai
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayShowTitleEnabled(true);
         actionBar.setTitle(title);
-        actionBar.setDisplayHomeAsUpEnabled(true); // 决定左上角图标的右侧是否有向左的小箭头, true
+        // 决定左上角图标的右侧是否有向左的小箭头, true
+        actionBar.setDisplayHomeAsUpEnabled(true);
         // 有小箭头，并且图标可以点击
         actionBar.setDisplayShowHomeEnabled(false);
 

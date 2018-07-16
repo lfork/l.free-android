@@ -3,6 +3,7 @@ package com.lfork.a98620.lfree.data.imdata;
 
 import android.util.Log;
 
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.imdata.local.MessageLocalDataSource;
 import com.lfork.a98620.lfree.data.imdata.remote.MessageRemoteDataSource;
 import com.lfork.a98620.lfree.imservice.MessageListener;
@@ -141,31 +142,34 @@ public class MessageDataRepository<C> implements MessageDataSource, MessageListe
      * @param msg e
      */
     private void saveMessageCache(Message msg) {
-        new Thread(() -> {
+
+        FreeApplication.executeThreadInDefaultThreadPool(() -> {
             List<Message> messageList = mCachedUserMessages.get(msg.getReceiverID() + "");
             if (messageList == null) {
                 messageList = new ArrayList<>();
                 mCachedUserMessages.put(msg.getReceiverID() + "", messageList);
             }
             messageList.add(msg);
-        }).start();
+        });
 
     }
 
 
     private void addReceivedMessage(Message msg) {
 
-        new Thread(() -> {
+        FreeApplication.executeThreadInDefaultThreadPool(() -> {
             List<Message> messageList = mCachedUserMessages.get(msg.getSenderID() + "");
             if (messageList == null) {
                 messageList = new ArrayList<>();
                 mCachedUserMessages.put(msg.getSenderID() + "", messageList);
             }
             messageList.add(msg);
-        }).start();
+        });
+
 
     }
 
+    @Override
     public void setMessageListener(MessageListener listener) {
         this.listener = listener;
         mMessageRemoteDataSource.setMessageListener(this);

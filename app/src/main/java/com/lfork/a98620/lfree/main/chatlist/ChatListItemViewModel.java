@@ -5,7 +5,7 @@ import android.databinding.ObservableField;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.entity.User;
-import com.lfork.a98620.lfree.util.Config;
+import com.lfork.a98620.lfree.base.Config;
 
 import java.lang.ref.WeakReference;
 

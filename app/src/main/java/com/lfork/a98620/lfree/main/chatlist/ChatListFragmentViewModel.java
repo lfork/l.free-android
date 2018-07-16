@@ -5,6 +5,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
@@ -34,7 +35,7 @@ public class ChatListFragmentViewModel extends BaseViewModel {
     }
 
     private void getChatList() {
-        new Thread(() -> {
+        FreeApplication.executeThreadInDefaultThreadPool(() -> {
             repository = IMDataRepository.getInstance();
             repository.getChatUserList(new DataSource.GeneralCallback<List<User>>() {
                 @Override
@@ -57,7 +58,7 @@ public class ChatListFragmentViewModel extends BaseViewModel {
                     showToast(log);
                 }
             });
-        }).start();
+        });
     }
 
     @Override

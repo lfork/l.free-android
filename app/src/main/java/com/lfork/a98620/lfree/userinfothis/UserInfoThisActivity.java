@@ -33,7 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class UserInfoThisActivity extends AppCompatActivity implements View.OnClickListener, ViewModelNavigator{
+public class UserInfoThisActivity extends AppCompatActivity implements View.OnClickListener, ViewModelNavigator {
 
     private static final String TAG = "UserInfoThisActivity";
 
@@ -265,8 +265,9 @@ public class UserInfoThisActivity extends AppCompatActivity implements View.OnCl
             case UCrop.RESULT_ERROR:
                 ToastUtil.showShort(this, "剪切失败");
                 break;
+            default:
+                break;
         }
-
     }
 
     @Override

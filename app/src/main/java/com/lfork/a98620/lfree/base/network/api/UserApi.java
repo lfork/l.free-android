@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.data.user.remote;
+package com.lfork.a98620.lfree.base.network.api;
 
 import com.lfork.a98620.lfree.base.network.Result;
 import com.lfork.a98620.lfree.data.entity.User;
@@ -18,8 +18,7 @@ import retrofit2.http.Query;
  * @author 98620
  * @date 2018/7/10
  */
-public interface UserNetService {
-
+public interface UserApi {
     /**
      * 用户登录
      *
@@ -75,15 +74,23 @@ public interface UserNetService {
             @Part MultipartBody.Part fileBody,
             @Part("studentId") RequestBody studentId);
 
+    /**
+     * @param studentId .
+     * @param username .
+     * @param schoolId .
+     * @param dec .
+     * @param email .
+     * @param phone .
+     * @return .
+     */
     @FormUrlEncoded
     @POST("22y/user_save")
     Call<Result<User>> updateUserInfo(
-            @Field("studentId") String studentId,
+            @Field("studentId") int studentId,
             @Field("userName") String username,
             @Field("userSchool.id") String schoolId,
             @Field("userDesc") String dec,
             @Field("userEmail") String email,
             @Field("userPhone") String phone
     );
-
 }

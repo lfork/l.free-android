@@ -2,6 +2,7 @@ package com.lfork.a98620.lfree.data.imdata.remote;
 
 import android.util.Log;
 
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.imdata.MessageDataRepository;
 import com.lfork.a98620.lfree.data.imdata.MessageDataSource;
 import com.lfork.a98620.lfree.imservice.Config;
@@ -100,7 +101,7 @@ public class MessageRemoteDataSource implements MessageDataSource {
      */
     @Override
     public synchronized void saveAndSendMessage(Message msg, GeneralCallback<Message> callback) {
-        new Thread(() -> {
+        FreeApplication.executeThreadInDefaultThreadPool(() -> {
             int repeatTimes = 3;
             boolean succeed = false;
 
@@ -122,7 +123,7 @@ public class MessageRemoteDataSource implements MessageDataSource {
                 callback.failed("发送失败");
                 msg.setStatus(MessageStatus.SENT_FAILED);
             }
-        }).start();
+        });
     }
 
     @Override
@@ -131,6 +132,7 @@ public class MessageRemoteDataSource implements MessageDataSource {
     }
 
 
+    @Override
     public void setMessageListener(MessageListener listener){
         this.listener = listener;
     }

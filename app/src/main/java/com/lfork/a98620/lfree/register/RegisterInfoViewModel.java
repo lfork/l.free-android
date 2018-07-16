@@ -76,7 +76,7 @@ public class RegisterInfoViewModel {
 
         String result = dataValidate();  //等于null，说明注册成功
         if (result == null) {
-            new Thread(() -> repository.register(new DataSource.GeneralCallback<String>() {
+            repository.register(new DataSource.GeneralCallback<String>() {
                 @Override
                 public void succeed(String data) {
                     if (navigator != null) {
@@ -91,7 +91,7 @@ public class RegisterInfoViewModel {
                     }
 
                 }
-            }, user)).start();
+            }, user);
         } else {
             if (navigator != null) {
                 navigator.failed(result);
@@ -113,7 +113,7 @@ public class RegisterInfoViewModel {
         navigator = null;
     }
 
-    public void setSchool(int position){
+    public void setSchool(int position) {
         Log.d(TAG, "succeed: " + position + " " + schools.get(position));
         school.set(schools.get(position).getId());
     }

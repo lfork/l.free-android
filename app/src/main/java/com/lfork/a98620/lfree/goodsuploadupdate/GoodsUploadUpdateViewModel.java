@@ -15,7 +15,7 @@ import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.main.MainActivity;
-import com.lfork.a98620.lfree.util.Config;
+import com.lfork.a98620.lfree.base.Config;
 import com.lfork.a98620.lfree.util.ToastUtil;
 import com.lfork.a98620.lfree.util.file.UriHelper;
 

@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.data.imdata;
 
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.imdata.local.IMLocalDataSource;
 import com.lfork.a98620.lfree.data.imdata.remote.IMRemoteDataSource;
@@ -86,9 +87,9 @@ public class IMDataRepository implements IMDataSource {
 
     @Override
     public void logout(int userId, GeneralCallback<User> result) {
-        new Thread(() -> {
+       FreeApplication.executeThreadInDefaultThreadPool(() -> {
             mRemoteDataSource.logout(userId, result);
-        }).start();
+        });
     }
 
     @Override

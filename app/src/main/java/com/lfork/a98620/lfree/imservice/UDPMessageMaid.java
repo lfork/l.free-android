@@ -32,9 +32,9 @@ public class UDPMessageMaid extends Thread {
         while (isRunning()) {
             Log.d(TAG, "run: UDPMaid运行中");
             while (message == null) {
-                if (messageReceiveQueue.size() > 0 && dataSource.getListener() != null)
+                if (messageReceiveQueue.size() > 0 && dataSource.getListener() != null) {
                     message = messageReceiveQueue.remove(0);
-                else {
+                } else {
                     try {
                         sleep(100); //适当休眠，降低cpu负载
                     } catch (InterruptedException e) {

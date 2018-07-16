@@ -2,6 +2,10 @@ package com.lfork.a98620.lfree.base.network;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * 对服务器返回结果的进行JSON封装处理
+ * @author 98620
+ */
 public class Result<T> {
 
     @SerializedName("id")

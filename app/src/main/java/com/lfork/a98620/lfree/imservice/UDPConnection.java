@@ -1,5 +1,6 @@
 package com.lfork.a98620.lfree.imservice;
 
+import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.imservice.message.MessageHelper;
 import com.lfork.a98620.lfree.imservice.message.MessageType;
@@ -66,12 +67,16 @@ public class UDPConnection extends Thread {
             Message message = MessageHelper.messageParse(receive());
             if (message != null) {
                 switch (message.getType()) {
+                    case CONNECTION_INFO:
+                        break;
                     case NORMAL_MESSAGE:
                         messageReceiveQueue.add(message);
                         sendFeedBack(message);
                         break;
                     case FEEDBACK:
                         feedBackRepository.put(message.getMessageID() + "", "ok");
+                        break;
+                    default:
                         break;
                 }
             }
@@ -87,7 +92,7 @@ public class UDPConnection extends Thread {
     }
 
     private void keepAlive() {
-        new Thread(() -> {
+        FreeApplication.getDefaultThreadPool().execute(() -> {
             while (isRunning()) {
                 if (Config.isConnected()) {
                     Message msg = new Message();
@@ -103,7 +108,7 @@ public class UDPConnection extends Thread {
                         e.printStackTrace();
                     }
                     // 300秒就保活一次
-                   // print("UDPConnection.keepAlive():保活消息已发送(30秒一次)");
+                    // print("UDPConnection.keepAlive():保活消息已发送(30秒一次)");
                     try {
                         Thread.sleep(1000 * 30);
                     } catch (InterruptedException e) {
@@ -113,7 +118,7 @@ public class UDPConnection extends Thread {
                 } else {
                     //缩短休眠时间，以便重连之后能马上激活服务端的udp服务
 //                    System.out.println("UDPConnection.keepAlive()://缩短休眠时间，以便重连之后能马上激活服务端的udp服务");
-                   // print("UDPConnection.keepAlive():保活消息未发送  当前连接无效");
+                    // print("UDPConnection.keepAlive():保活消息未发送  当前连接无效");
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -123,7 +128,7 @@ public class UDPConnection extends Thread {
 
                 //难道是保连消息没有收到？？？
             }
-        }).start();
+        });
     }
 
     public void rebuildConnection() {
@@ -162,7 +167,7 @@ public class UDPConnection extends Thread {
 
     /**
      * @param message msg
-     * @return  e
+     * @return e
      */
     public boolean sendNormalMessage(Message message) {
         String content = message.toString();
@@ -206,7 +211,7 @@ public class UDPConnection extends Thread {
 
     private DatagramPacket receive() {
         // receive会自动的卡在这里 ， 看来在这里还需要开一个子线程来接收消息
-        byte[]buffer = new byte[65000];
+        byte[] buffer = new byte[65000];
         DatagramPacket in = new DatagramPacket(buffer, buffer.length);
         try {
             socket.receive(in);

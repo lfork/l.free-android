@@ -7,7 +7,7 @@ import com.lfork.a98620.lfree.data.DataSource;
 import com.lfork.a98620.lfree.data.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.main.MainActivity;
-import com.lfork.a98620.lfree.util.Config;
+import com.lfork.a98620.lfree.base.Config;
 
 /**
  * Created by 98620 on 2018/4/5.

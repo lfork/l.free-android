@@ -5,12 +5,13 @@ import android.util.Log;
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.base.network.HttpService;
 import com.lfork.a98620.lfree.base.network.Result;
+import com.lfork.a98620.lfree.base.network.api.GoodsApi;
 import com.lfork.a98620.lfree.data.entity.Category;
 import com.lfork.a98620.lfree.data.entity.Goods;
 import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.entity.Review;
 import com.lfork.a98620.lfree.data.goods.GoodsDataSource;
-import com.lfork.a98620.lfree.util.Config;
+import com.lfork.a98620.lfree.base.Config;
 import com.lfork.a98620.lfree.util.JSONUtil;
 
 import java.io.File;
@@ -23,7 +24,9 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
- * Created by 98620 on 2018/3/23.
+ *
+ * @author 98620
+ * @date 2018/3/23
  */
 
 public class GoodsRemoteDataSource implements GoodsDataSource {
@@ -32,7 +35,10 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
 
     private static GoodsRemoteDataSource INSTANCE;
 
+    private GoodsApi api;
+
     private GoodsRemoteDataSource() {
+        api = HttpService.getNetWorkService(GoodsApi.class);
     }
 
     public static GoodsRemoteDataSource getInstance() {
@@ -65,9 +71,9 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
 
         if (result != null) {
             ArrayList<Goods> list = result.getData();
-            if (list != null && list.size() > 0)
+            if (list != null && list.size() > 0) {
                 callback.succeed(list);
-            else {
+            } else {
                 callback.failed(result.getMessage());
             }
         } else {
@@ -91,9 +97,9 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
 
         if (result != null) {
             ArrayList<Goods> list = result.getData();
-            if (list != null && list.size() > 0)
+            if (list != null && list.size() > 0) {
                 callback.succeed(list);
-            else {
+            } else {
                 callback.failed(result.getMessage());
             }
         } else {
@@ -113,9 +119,9 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
 
         if (result != null) {
             List<Category> list = result.getData();
-            if (list != null)
+            if (list != null) {
                 callback.succeed(list);
-            else {
+            } else {
                 callback.failed(result.getMessage());
             }
         } else {
@@ -135,9 +141,9 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         });
 
         if (result != null) {
-            if (result.getCode() == 1)
+            if (result.getCode() == 1) {
                 callback.succeed(result.getData());
-            else {
+            } else {
                 callback.failed(result.getMessage());
             }
         } else {
@@ -205,9 +211,9 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         });
 
         if (result != null) {
-            if (result.getCode() == 1)
+            if (result.getCode() == 1) {
                 callback.succeed(result.getData());
-            else {
+            } else {
                 callback.failed(result.getMessage());
             }
         } else {
@@ -280,9 +286,9 @@ public class GoodsRemoteDataSource implements GoodsDataSource {
         });
 
         if (result != null) {
-            if (result.getCode() == 1)
+            if (result.getCode() == 1) {
                 callback.succeed(review);
-            else {
+            } else {
                 callback.failed(result.getMessage());
             }
         } else {
