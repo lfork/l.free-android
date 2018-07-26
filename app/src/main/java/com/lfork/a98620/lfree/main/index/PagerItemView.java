@@ -109,8 +109,9 @@ public class PagerItemView extends View implements PagerDataRefreshListener, Swi
         recyclerView.setLayoutManager(layoutManager);
 
         GoodsRecyclerViewItemAdapter adapter
-                = new GoodsRecyclerViewItemAdapter(this,R.layout.goods_recycle_item);
+                = new GoodsRecyclerViewItemAdapter(this,R.layout.common_goods_recycle_item);
         recyclerView.setAdapter(adapter);
+//        recyclerView.addItemDecoration(new MyItemDecoration(40, getContext(), getResources().getColor(R.color.sub_background)));
         adapter.setListener(this);
     }
 

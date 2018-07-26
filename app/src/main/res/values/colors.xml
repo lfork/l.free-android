@@ -25,4 +25,8 @@
     <color name="main_color">#0aa4ea</color>
 
     <color name="community_refresh">#6cf</color>
+
+    <color name="base_background">#fafafa</color>
+
+    <color name="sub_background">#f2f2f2</color>
 </resources>

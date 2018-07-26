@@ -4,7 +4,6 @@
     tools:context="com.lfork.a98620.lfree.main.MainActivity">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.MainActivity" />
@@ -25,11 +24,11 @@
         </FrameLayout>
 
         <LinearLayout
+            android:background="@color/base_background"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#fafafa"
             android:baselineAligned="false"
-            android:elevation="3dp">
+            >
 
 
             <RelativeLayout

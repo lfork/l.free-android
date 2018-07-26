@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{()->viewModel.onClick()}"
+        android:orientation="vertical"
+        app:cardBackgroundColor="@null"
+        app:cardCornerRadius="8dp">
+
+
+        <ImageView
+            android:id="@+id/goods_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:contentDescription="@string/todo"
+            android:scaleType="centerCrop"
+            app:setImageWithDiskCache="@{viewModel.imagePath}" />
+
+
+        <RelativeLayout
+            android:id="@+id/linearOfNewsItem1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_gravity="bottom"
+            android:background="#9d000000"
+            android:clickable="false"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/goods_name"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/goods_date"
+                android:ellipsize="end"
+                android:text="@{viewModel.name}"
+                android:textColor="@color/Home_Goods_Text2"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/goods_date"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_below="@id/goods_name"
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:text="@{viewModel.publishDate}"
+                android:textColor="@color/Home_Goods_Text2"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="5dp"
+                android:ellipsize="end"
+                android:text="@{viewModel.price}"
+                android:textColor="@color/Home_Goods_Money"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

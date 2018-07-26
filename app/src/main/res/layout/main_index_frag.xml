@@ -4,7 +4,6 @@
     tools:context="com.lfork.a98620.lfree.main.index.IndexFragment">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.lfork.a98620.lfree.main.index.IndexFragmentViewModel" />
@@ -15,7 +14,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/viewColor">
+       >
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                tools:background="@color/white"
                 android:focusableInTouchMode="true"
                 app:layout_scrollFlags="scroll">
                 <!--android:focusableInTouchMode="true" 这个可以禁用 search view自动获取焦点-->
@@ -69,15 +68,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_below="@id/top_frame">
-
                 </com.youth.banner.Banner>
 
             </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@color/base_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:visibility="@{viewModel.dataIsLoading ? View.VISIBLE : View.GONE}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -105,30 +104,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
+
             android:orientation="vertical"
             android:visibility="@{viewModel.dataIsLoading?View.GONE:View.VISIBLE}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
             <android.support.design.widget.TabLayout
+                android:paddingTop="5dp"
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:background="@color/white"
+                android:background="@color/sub_background"
                 app:tabIndicatorColor="@color/Login_ForeColor"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/Login_ForeColor"
                 tools:targetApi="lollipop">
-
             </android.support.design.widget.TabLayout>
 
             <android.support.v4.view.ViewPager
+                android:background="@color/sub_background"
                 app:tabs="@{viewModel.categories}"
                 android:id="@+id/main_index_frag_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/viewColor">
+                android:layout_height="match_parent">
 
             </android.support.v4.view.ViewPager>
         </LinearLayout>

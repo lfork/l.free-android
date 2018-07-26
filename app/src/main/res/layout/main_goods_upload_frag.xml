@@ -2,15 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/base_background"
     tools:context="com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <!--<TextView-->
-    <!--android:layout_margin="30dp"-->
-    <!--android:id="@+id/tips1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="请阅读以下上传流程：\n1、请准备好你需要出售的物品\n2、5张以内的实物照片\n3、准备一段物品的描述文字 \n4、点击下方的按钮来上传自己的的物品吧" />-->
 
     <Button
         android:id="@+id/btn_upload"

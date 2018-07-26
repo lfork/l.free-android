@@ -5,11 +5,8 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.lfork.a98620.lfree.data.entity.Goods;
-import com.lfork.a98620.lfree.databinding.GoodsRecycleItemBinding;
 import com.lfork.a98620.lfree.base.adapter.RecyclerViewItemAdapter;
-
-import java.util.List;
+import com.lfork.a98620.lfree.databinding.CommonGoodsRecycleItemBinding;
 
 /**
  *
@@ -31,7 +28,7 @@ class GoodsRecyclerViewItemAdapter extends RecyclerViewItemAdapter {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        GoodsRecycleItemBinding binding = DataBindingUtil.inflate(LayoutInflater
+        CommonGoodsRecycleItemBinding binding = DataBindingUtil.inflate(LayoutInflater
                 .from(parent.getContext()), getLayoutId(), parent, false);
         
         ViewHolder holder = new ViewHolder(binding.getRoot());

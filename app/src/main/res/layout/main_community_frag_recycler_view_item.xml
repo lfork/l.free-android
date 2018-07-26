@@ -17,7 +17,7 @@
             android:id="@+id/article"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            >
 
             <ImageView
                 android:id="@+id/community_head"
@@ -81,14 +81,13 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_below="@id/article"
-            android:background="@color/viewColor" />
+            android:background="@color/sub_background" />
 
         <LinearLayout
             android:id="@+id/icon_file"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/view"
-            android:background="@color/white"
             android:orientation="horizontal"
             android:padding="5dp">
 
@@ -110,7 +109,7 @@
             <View
                 android:layout_width="2dp"
                 android:layout_height="23dp"
-                android:background="@color/viewColor"/>
+                android:background="@color/sub_background"/>
 
             <RelativeLayout
                 android:layout_width="0dp"

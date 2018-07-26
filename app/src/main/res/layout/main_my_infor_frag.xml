@@ -10,6 +10,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/sub_background"
         tools:context="com.lfork.a98620.lfree.main.myinfo.MyInfoFragment">
 
         <ScrollView
@@ -19,7 +20,7 @@
             <LinearLayout
                 android:id="@+id/all"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 android:orientation="vertical">
 
@@ -45,7 +46,7 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@id/head"
                         android:text="@={viewModel.username}"
@@ -57,11 +58,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/name"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="6dp"
                         android:layout_toEndOf="@+id/head"
-
-                        android:paddingRight="20dp"
+                        android:paddingEnd="20dp"
                         android:text="@={viewModel.description}"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
@@ -69,8 +69,10 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:background="@color/viewColor" />
+                    android:layout_height="15dp"
+                     />
+
+                <!--android:background="@color/viewColor"-->
 
                 <RelativeLayout
                     android:layout_width="match_parent"

@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         bindService();
         registerNotification();
         setupStatusBarColor();
+
+        //取消默认背景，减少UI的过度绘制
+        getWindow().setBackgroundDrawable(null);
     }
 
     @Override
