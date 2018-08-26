@@ -83,6 +83,10 @@ public class HttpService {
                 .build();
     }
 
+    public static Retrofit getRetrofitInstance() {
+        return retrofitInstance;
+    }
+
     public void closeConnection() {
         try {
             if (client != null && client.cache() != null) {

@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
-import com.lfork.a98620.lfree.base.network.HttpService;
 import com.lfork.a98620.lfree.base.network.Result;
 import com.lfork.a98620.lfree.base.network.api.UserApi;
 import com.lfork.a98620.lfree.data.entity.School;
@@ -35,7 +34,7 @@ public class UserRemoteDataSource implements UserDataSource {
     private UserApi api;
 
     private UserRemoteDataSource() {
-        api = HttpService.getNetWorkService(UserApi.class);
+        api = UserApi.Companion.create();
     }
 
     public static UserRemoteDataSource getInstance() {
@@ -79,15 +78,15 @@ public class UserRemoteDataSource implements UserDataSource {
 
     @Override
     public void register(GeneralCallback<String> callback, User user) {
-        Call<Result> call = api.register(
+        Call<Result<?>> call = api.register(
                 user.getStudentId(),
                 user.getUserPassword(),
                 user.getUserName(),
                 user.getSchool().getId());
 
-        call.enqueue(new Callback<Result>() {
+        call.enqueue(new Callback<Result<?>>() {
             @Override
-            public void onResponse(@NonNull Call<Result> call, @NonNull Response<Result> response) {
+            public void onResponse(@NonNull Call<Result<?>> call, @NonNull Response<Result<?>> response) {
                 Result result = response.body();
                 if (result != null) {
                     if (result.getCode() == 1) {
@@ -101,7 +100,7 @@ public class UserRemoteDataSource implements UserDataSource {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Result> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Result<?>> call, @NonNull Throwable t) {
                 callback.failed(t.toString());
             }
         });

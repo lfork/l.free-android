@@ -48,7 +48,9 @@ public class MessageService extends Service {
         super.onDestroy();
     }
 
-    //为主线程提供服务控制器 进而控制消息的接收
+    /**
+     * 为主线程提供服务控制器 进而控制消息的接收
+     */
     public class MessageBinder extends Binder implements MessageListener {
 
         private User user;
@@ -106,7 +108,6 @@ public class MessageService extends Service {
             messageDataRepository = MessageDataRepository.getInstance(user.getId());
             messageDataRepository.setMessageListener(this);
             repository.setServiceBinder(this);
-
         }
 
         public void closeConnection() {

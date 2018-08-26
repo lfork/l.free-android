@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by 98620 on 2018/4/22.
  */
-public class ChatWindowViewModel extends BaseViewModel implements MessageListener {
+public class ChatWindowViewModel extends BaseViewModel {
 
     public final ObservableArrayList<Message> messages = new ObservableArrayList<>();
 
@@ -44,6 +44,17 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
     private int thisUserId;
 
     private boolean isAdded = false;
+
+    public MessageListener listener = new MessageListener() {
+        @Override
+        public void onReceived(Message message) {
+            message.setChatType(Message.ReceiveType);
+            if (message.getSenderID() == userId) {
+                messages.add(message);
+                navigator.notifyMessagesChanged();
+            }
+        }
+    };
 
 
     ChatWindowViewModel(Context context) {
@@ -184,12 +195,4 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
     }
 
 
-    @Override
-    public void onReceived(Message message) {
-        message.setChatType(Message.ReceiveType);
-        if (message.getSenderID() == userId) {
-            messages.add(message);
-            navigator.notifyMessagesChanged();
-        }
-    }
 }
