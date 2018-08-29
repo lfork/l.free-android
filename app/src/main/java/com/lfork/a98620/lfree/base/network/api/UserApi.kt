@@ -13,12 +13,6 @@ import retrofit2.http.*
  * Created by 98620 on 2018/8/26.
  */
 interface UserApi {
-    companion object {
-        fun create() : UserApi {
-            val retrofit = HttpService.getRetrofitInstance()
-            return retrofit.create(UserApi::class.java)
-        }
-    }
 
     /**
      * 用户登录
@@ -94,4 +88,12 @@ interface UserApi {
             @Field("userEmail") email: String,
             @Field("userPhone") phone: String
     ): Call<Result<User>>
+
+    companion object {
+        fun create() : UserApi {
+            val retrofit = HttpService.getRetrofitInstance()
+            return retrofit.create(UserApi::class.java)
+        }
+    }
+
 }

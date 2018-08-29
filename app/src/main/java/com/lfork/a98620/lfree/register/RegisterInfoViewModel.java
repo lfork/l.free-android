@@ -72,7 +72,7 @@ public class RegisterInfoViewModel {
         user.setStudentId(studentId.get());
         user.setUserName(username.get());
         user.setUserPassword(password.get());
-        user.setSchool(new School(school.get()));
+        user.setUserSchool(new School(school.get(),""));
 
         String result = dataValidate();  //等于null，说明注册成功
         if (result == null) {

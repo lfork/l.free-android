@@ -82,7 +82,7 @@ public class UserRemoteDataSource implements UserDataSource {
                 user.getStudentId(),
                 user.getUserPassword(),
                 user.getUserName(),
-                user.getSchool().getId());
+                user.getUserSchool().getId());
 
         call.enqueue(new Callback<Result<?>>() {
             @Override
@@ -119,7 +119,7 @@ public class UserRemoteDataSource implements UserDataSource {
             user.setUserPhone("");
         }
 
-        Call<Result<User>> call = api.updateUserInfo(user.getUserId(), user.getUserName(), user.getSchool().getId(), user.getUserDesc(), user.getUserEmail(), user.getUserPhone());
+        Call<Result<User>> call = api.updateUserInfo(user.getUserId(), user.getUserName(), user.getUserSchool().getId(), user.getUserDesc(), user.getUserEmail(), user.getUserPhone());
 
 
         call.enqueue(new Callback<Result<User>>() {

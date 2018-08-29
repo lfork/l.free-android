@@ -47,10 +47,10 @@ public class UserInfoThisViewModel extends UserViewModel {
                 email.set(user.getUserEmail());
                 phone.set(user.getUserPhone());
                 studentNumber.set(user.getUserId() + "");
-                if (user.getSchool() == null) {
+                if (user.getUserSchool() == null) {
                     school.set("未知");
                 } else {
-                    school.set(user.getSchool().getSchoolName());
+                    school.set(user.getUserSchool().getSchoolName());
                 }
 
             }

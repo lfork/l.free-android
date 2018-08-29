@@ -62,7 +62,7 @@ public class UserInfoEditViewModel extends UserViewModel {
 
 
                 studentNumber.set(user.getUserId() + "");
-                school.set(user.getSchool().getSchoolName());
+                school.set(user.getUserSchool().getSchoolName());
                 getSchoolList();
             }
 
@@ -87,7 +87,7 @@ public class UserInfoEditViewModel extends UserViewModel {
         newUser.setUserName(mUser.getUserName());
         newUser.setUserEmail(email.get());
         newUser.setUserDesc(description.get());
-        newUser.setSchool(mUser.getSchool());
+        newUser.setUserSchool(mUser.getUserSchool());
 
         if (TextUtils.isEmpty(newUser.getUserDesc())) {
             showMessage("描述不能为空");
@@ -147,7 +147,7 @@ public class UserInfoEditViewModel extends UserViewModel {
                 schools = data;
                 Log.d(TAG, "succeed: " + data);
                 if (navigator != null) {
-                    navigator.setupSpinner(data, Integer.parseInt(mUser.getSchool().getId()));
+                    navigator.setupSpinner(data, Integer.parseInt(mUser.getUserSchool().getId()));
                 }
             }
 
@@ -173,7 +173,7 @@ public class UserInfoEditViewModel extends UserViewModel {
 
     public void setSchool(int position) {
         Log.d(TAG, "succeed: " + position + " " + schools.get(position));
-        mUser.setSchool(schools.get(position));
+        mUser.setUserSchool(schools.get(position));
     }
 
 }

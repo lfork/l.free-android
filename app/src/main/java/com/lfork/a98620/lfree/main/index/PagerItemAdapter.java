@@ -90,7 +90,7 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pageTitles.get(position).getName();
+        return pageTitles.get(position).getCsName();
     }
 
     public void replaceData(List<Category> items, ViewPager parent) {

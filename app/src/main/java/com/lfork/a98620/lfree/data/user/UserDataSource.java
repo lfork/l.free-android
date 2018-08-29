@@ -53,7 +53,7 @@ public interface UserDataSource extends DataSource {
 
     /**
      * get schools information
-     * @param callback call back with school information list.
+     * @param callback call back with userSchool information list.
      */
     void getSchoolList(GeneralCallback<List<School>> callback);
 }

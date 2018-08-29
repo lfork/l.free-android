@@ -46,8 +46,7 @@ public class IMRemoteDataSource implements IMDataSource {
 
     @Override
     public void login(User user, LoginListener listener) {
-        IMUser u = new IMUser();
-        u.setId(user.getId());
+        IMUser u = new IMUser(user.getId());
         Request<IMUser> request = new Request<IMUser>()
                 .setData(u)
                 .setRequestType(UserRequestType.DO_LOGIN)

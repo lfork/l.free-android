@@ -101,7 +101,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         price.set("现价：" + g.getPrice());
         originPrice.set("原价：" + g.getOriginPrice());
         description.set(g.getDescription());
-        sellerName.set(g.getUsername());
+        sellerName.set(g.getSellerName());
         publishDate.set(g.getPublishDate());
         sellerImage.set(Config.ServerURL + "/image" + g.getUserPortraitPath());
 
