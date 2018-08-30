@@ -33,7 +33,7 @@ public class UserInfoThisViewModel extends UserViewModel {
     }
 
     private void getUserInfo() {
-        repository = UserDataRepository.getInstance();
+        repository = UserDataRepository.INSTANCE;
         repository.getUserInfo(new DataSource.GeneralCallback<User>() {
             @Override
             public void succeed(User user) {

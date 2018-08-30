@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         binding.setViewModel(this);
 
         initData();
-        Log.d(TAG, "onCreate: ???"  + UserDataRepository.getInstance().getUserId());
+        Log.d(TAG, "onCreate: ???"  + UserDataRepository.INSTANCE.getUserId());
         initFragments();
         startService();
         bindService();
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         GoodsDataRepository.destroyInstance();
-        UserDataRepository.destroyInstance();
         unBindService();
         stopService();
     }
@@ -138,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         SharedPreferences sharedPreferences = getSharedPreferences(FreeApplication.APP_SHARED_PREF, MODE_PRIVATE);
-        UserDataRepository.getInstance().setUserId(Integer.parseInt(sharedPreferences.getString("recent_user_id", "0")));
+        UserDataRepository.INSTANCE.setUserId(Integer.parseInt(sharedPreferences.getString("recent_user_id", "0")));
     }
 
     private void registerNotification() {

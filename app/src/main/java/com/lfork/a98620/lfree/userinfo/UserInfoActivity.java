@@ -62,7 +62,7 @@ public class UserInfoActivity extends BaseActivity implements ViewModelNavigator
                 finish();
                 break;
             case R.id.menu1:
-                UserDataRepository repository = UserDataRepository.getInstance();
+                UserDataRepository repository = UserDataRepository.INSTANCE;
                 if (repository.getUserId() == viewModel.getUserId()) {
                     ToastUtil.showShort(this, "不能和自己聊天");
                     break;

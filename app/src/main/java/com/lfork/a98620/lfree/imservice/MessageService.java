@@ -80,7 +80,7 @@ public class MessageService extends Service {
 
         MessageBinder() {
             user = new User();
-            user.setId(UserDataRepository.getInstance().getUserId());
+            user.setId(UserDataRepository.INSTANCE.getUserId());
         }
 
         /**
@@ -147,7 +147,7 @@ public class MessageService extends Service {
 
 
     public void sendChatMsg(int senderID, String message) {
-        UserDataRepository repository = UserDataRepository.getInstance();
+        UserDataRepository repository = UserDataRepository.INSTANCE;
         repository.getUserInfo(new DataSource.GeneralCallback<User>() {
             @Override
             public void succeed(User data) {

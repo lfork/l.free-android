@@ -41,7 +41,7 @@ public class LoginViewModel extends BaseViewModel {
     public void start() {
         super.start();
         this.isLogging.set(false);
-        repository = UserDataRepository.getInstance();
+        repository = UserDataRepository.INSTANCE;
         getLoginInfo();
     }
 

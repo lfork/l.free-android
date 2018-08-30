@@ -66,7 +66,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
 
         });
         initActionBar(username);
-        int thisUserId = UserDataRepository.getInstance().getUserId();
+        int thisUserId = UserDataRepository.INSTANCE.getUserId();
         viewModel.setUserInfo(username, userId, thisUserId);
         viewModel.setNavigator(this);
         initUI();

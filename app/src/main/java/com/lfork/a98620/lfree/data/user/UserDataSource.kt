@@ -1,32 +1,28 @@
-package com.lfork.a98620.lfree.data.user;
+package com.lfork.a98620.lfree.data.user
 
-import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.School;
-import com.lfork.a98620.lfree.data.entity.User;
-
-import java.util.List;
+import com.lfork.a98620.lfree.data.DataSource
+import com.lfork.a98620.lfree.data.DataSource.GeneralCallback
+import com.lfork.a98620.lfree.data.entity.School
+import com.lfork.a98620.lfree.data.entity.User
 
 /**
  *
- * @author 98620
- * @date 2018/3/23
- **/
-
-public interface UserDataSource extends DataSource {
-
+ * Created by 98620 on 2018/8/30.
+ */
+interface UserDataSource : DataSource{
     /**
      * apply an account
      * @param callback call back with string result
      * @param user user information
      */
-    void register(GeneralCallback<String> callback, User user);
+    fun register(callback: GeneralCallback<String>, user: User)
 
     /**
      * update user information
      * @param callback call back with string result
      * @param user user information
      */
-    void updateUserInfo(GeneralCallback<String> callback, User user);
+    fun updateUserInfo(callback: GeneralCallback<String>, user: User)
 
     /**
      * update user photo
@@ -34,14 +30,14 @@ public interface UserDataSource extends DataSource {
      * @param studentId user id
      * @param localFilePath local file path
      */
-    void updateUserPortrait(GeneralCallback<String> callback, String studentId, String localFilePath);
+    fun updateUserPortrait(callback: GeneralCallback<String>, studentId: String, localFilePath: String)
 
     /**
      * do login
      * @param callback call back with User object
      * @param user user information
      */
-    void login(GeneralCallback<User> callback, User user);
+    fun login(callback: GeneralCallback<User>, user: User)
 
     /**
      * 获取用户信息 userId为-1的时候表示获取当前用户信息
@@ -49,11 +45,11 @@ public interface UserDataSource extends DataSource {
      * @param callback .
      * @param userId userId
      */
-    void getUserInfo(GeneralCallback<User> callback, int userId);
+    fun getUserInfo(callback: GeneralCallback<User>, userId: Int)
 
     /**
      * get schools information
      * @param callback call back with userSchool information list.
      */
-    void getSchoolList(GeneralCallback<List<School>> callback);
+    fun getSchoolList(callback: GeneralCallback<List<School>>)
 }

@@ -48,7 +48,7 @@ public class UserInfoEditViewModel extends UserViewModel {
     }
 
     private void getUserInfo() {
-        repository = UserDataRepository.getInstance();
+        repository = UserDataRepository.INSTANCE;
         repository.getUserInfo(new DataSource.GeneralCallback<User>() {
             @Override
             public void succeed(User user) {
@@ -139,7 +139,7 @@ public class UserInfoEditViewModel extends UserViewModel {
      * 简单的获取学校信息
      */
     private void getSchoolList() {
-        repository = UserDataRepository.getInstance();
+        repository = UserDataRepository.INSTANCE;
         repository.getSchoolList(new DataSource.GeneralCallback<List<School>>() {
             @Override
             public void succeed(List<School> data) {

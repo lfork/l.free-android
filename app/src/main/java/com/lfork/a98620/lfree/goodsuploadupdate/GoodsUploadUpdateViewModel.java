@@ -168,7 +168,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
         g.setName(name.get());
         g.setDescription(description.get());
         g.setCoverImagePath(imagePathList.get(0));
-        g.setUserId(UserDataRepository.getInstance().getUserId());
+        g.setUserId(UserDataRepository.INSTANCE.getUserId());
         g.setOriginPrice(originPrice.get());
         g.setPrice(price.get());
         g.setCategoryId(getCategoryId());

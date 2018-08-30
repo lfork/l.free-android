@@ -113,7 +113,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
             }
         }
 
-        if (g.getUserId() == UserDataRepository.getInstance().getUserId()) {
+        if (g.getUserId() == UserDataRepository.INSTANCE.getUserId()) {
             if (navigator != null) {
                 navigator.setActionBar();
             }
@@ -127,7 +127,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     }
 
     public void startPrivateChat() {
-        if (UserDataRepository.getInstance().getUserId() == userId) {
+        if (UserDataRepository.INSTANCE.getUserId() == userId) {
             showMessage("不能和自己聊天");
             return;
         }
@@ -145,7 +145,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
         Review r = new Review(review.get());
         r.setGoodsId(id + "");
-        r.setUserId(UserDataRepository.getInstance().getUserId() + "");
+        r.setUserId(UserDataRepository.INSTANCE.getUserId() + "");
         r.setTime(TimeUtil.getStandardTime());
         new Thread(() -> GoodsDataRepository.getInstance().addReview(new DataSource.GeneralCallback<Review>() {
             @Override

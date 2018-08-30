@@ -72,7 +72,7 @@ public class MyGoodsViewModel extends BaseViewModel {
                     dataIsEmpty.set(true);
                     showToast(log);
                 }
-            }, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString(), UserDataRepository.getInstance().getUserId() + "");
+            }, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString(), UserDataRepository.INSTANCE.getUserId() + "");
            
         }).start();
     }

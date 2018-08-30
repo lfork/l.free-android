@@ -41,7 +41,7 @@ public class ReviewItemViewModel extends BaseViewModel{
         content.set(review.getContent());
         id.set(review.getId());
         int reviewerId = review.getUser().getUserId();
-        if (reviewerId == UserDataRepository.getInstance().getUserId()) {
+        if (reviewerId == UserDataRepository.INSTANCE.getUserId()) {
             isReviewedByThisUser.set(true);
         }
     }

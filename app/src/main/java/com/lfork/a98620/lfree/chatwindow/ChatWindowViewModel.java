@@ -166,7 +166,7 @@ public class ChatWindowViewModel extends BaseViewModel {
 
         Log.d(TAG, "addUser: " + isExisted);
 
-        UserDataRepository userDataRepository = UserDataRepository.getInstance();
+        UserDataRepository userDataRepository = UserDataRepository.INSTANCE;
 
         userDataRepository.getUserInfo(userId, isExisted, new DataSource.GeneralCallback<User>() {
             @Override
