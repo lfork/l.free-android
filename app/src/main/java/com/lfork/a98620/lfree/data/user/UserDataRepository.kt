@@ -12,15 +12,23 @@ import com.lfork.a98620.lfree.data.user.remote.UserRemoteDataSource
  */
 object UserDataRepository : UserDataSource {
     //当数据仓库初始化的时候，同时也需要异步初始化用户数据。
-    val remoteDataSource = UserRemoteDataSource.instance
+    private val remoteDataSource = UserRemoteDataSource
 
-    val localDataSource = UserLocalDataSource.instance
+    private val localDataSource = UserLocalDataSource
 
     private var mCachedUser: User? = null
 
     private var mCachedUserIsDirty = true
 
     var userId: Int = 0
+
+    override fun destroyInstance(){
+        remoteDataSource.destroyInstance()
+        localDataSource.destroyInstance()
+        mCachedUser = null;
+        mCachedUserIsDirty = true
+        userId = 0
+    }
 
     override fun login(callback: GeneralCallback<User>, user: User) {
         remoteDataSource.login(object : GeneralCallback<User> {

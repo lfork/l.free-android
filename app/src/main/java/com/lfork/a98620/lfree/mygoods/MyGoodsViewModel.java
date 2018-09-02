@@ -44,7 +44,7 @@ public class MyGoodsViewModel extends BaseViewModel {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GoodsDataRepository.getInstance().getUserGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
+            GoodsDataRepository.INSTANCE.getUserGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
                 @Override
                 public void succeed(List<Goods> goodsList) {
                     ArrayList<MyGoodsItemViewModel> tempItems = new ArrayList<>();

@@ -62,7 +62,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
     }
 
     private void getNormalData() {
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
 
         new Thread(() -> repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
             @Override
@@ -147,7 +147,7 @@ public class GoodsDetailViewModel extends GoodsViewModel {
         r.setGoodsId(id + "");
         r.setUserId(UserDataRepository.INSTANCE.getUserId() + "");
         r.setTime(TimeUtil.getStandardTime());
-        new Thread(() -> GoodsDataRepository.getInstance().addReview(new DataSource.GeneralCallback<Review>() {
+        new Thread(() -> GoodsDataRepository.INSTANCE.addReview(new DataSource.GeneralCallback<Review>() {
             @Override
             public void succeed(Review data) {
 

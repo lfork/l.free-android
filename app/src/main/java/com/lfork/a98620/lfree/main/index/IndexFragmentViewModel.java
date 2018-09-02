@@ -48,7 +48,7 @@ public class IndexFragmentViewModel extends BaseObservable {
         announcementsUrls.add("https://mp.weixin.qq.com/s/tcg4CFph33DR69sYBpQhBQ");
         announcementsUrls.add("https://mp.weixin.qq.com/s/tAImac9BHMfxp_xRSZQ9dg");
 
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
         new Thread(() -> {
             repository.getCategories(new DataSource.GeneralCallback<List<Category>>() {
                 @Override

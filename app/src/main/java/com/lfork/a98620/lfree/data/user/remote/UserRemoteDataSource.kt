@@ -22,7 +22,10 @@ import java.io.File
  * Created by 98620 on 2018/8/30.
  */
 
-class UserRemoteDataSource private constructor() : UserDataSource {
+object UserRemoteDataSource : UserDataSource {
+    override fun destroyInstance() {
+        // Do nothing here temporarily
+    }
 
     private val api: UserApi
 
@@ -198,24 +201,5 @@ class UserRemoteDataSource private constructor() : UserDataSource {
 
         })
         callback.succeed(schools)
-    }
-
-    companion object {
-
-        private var INSTANCE: UserRemoteDataSource? = null
-
-        val instance: UserRemoteDataSource
-            get() {
-                if (INSTANCE != null) {
-                    return INSTANCE as UserRemoteDataSource
-                } else {
-                    INSTANCE = UserRemoteDataSource()
-                }
-                return INSTANCE as UserRemoteDataSource
-            }
-
-        fun destroyInstance() {
-            INSTANCE = null
-        }
     }
 }

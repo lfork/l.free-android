@@ -43,7 +43,7 @@ public class GoodsSearchViewModel extends BaseViewModel {
     public void startGoodsSearch(String keyword) {
         dataIsLoading.set(true);
         new Thread(() -> {
-            GoodsDataRepository.getInstance().goodsSearch(new DataSource.GeneralCallback<List<Goods>>() {
+            GoodsDataRepository.INSTANCE.goodsSearch(new DataSource.GeneralCallback<List<Goods>>() {
                 @Override
                 public void succeed(List<Goods> goodsList) {
                     ArrayList<GoodsSearchItemViewModel> tempItems = new ArrayList<>();

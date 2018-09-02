@@ -9,4 +9,6 @@ interface DataSource {
         fun succeed(data: T)
         fun failed(log: String)
     }
+
+    fun destroyInstance()
 }

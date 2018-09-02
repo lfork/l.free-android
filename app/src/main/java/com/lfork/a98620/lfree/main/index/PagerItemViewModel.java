@@ -44,7 +44,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     PagerItemViewModel(Context context, Category category) {
         super(context);
         this.category = category;
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
     }
 
     /**

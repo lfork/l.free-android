@@ -61,7 +61,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
         super(context);
         setImageVisibility();
         imagePathList = new ArrayList<>();
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
         dataIsLoading.set(false);
         setCategoryId(1);
     }
@@ -264,7 +264,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
     }
 
     private void getGoods(int goodsId) {
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
 
         new Thread(() -> repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
             @Override

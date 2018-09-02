@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        GoodsDataRepository.destroyInstance();
+        GoodsDataRepository.INSTANCE.destroyInstance();
+        UserDataRepository.INSTANCE.destroyInstance();
         unBindService();
         stopService();
     }

@@ -11,15 +11,19 @@ import org.litepal.crud.DataSupport
  *
  * Created by 98620 on 2018/8/30.
  */
-class UserLocalDataSource private constructor() : UserDataSource {
+object UserLocalDataSource : UserDataSource {
+
+    private val TAG = "IMRemoteDataSource"
+
+    override fun destroyInstance() {
+        //do nothing here
+    }
 
     override fun login(callback: DataSource.GeneralCallback<User>, user: User) {}
 
     override fun register(callback: DataSource.GeneralCallback<String>, user: User) {
         //do nothing here
-
     }
-
 
     fun getThisUser(callback: DataSource.GeneralCallback<User>) {
         val userList = DataSupport.where("isLogin=?", "1").find(User::class.java)
@@ -73,28 +77,5 @@ class UserLocalDataSource private constructor() : UserDataSource {
     }
 
     override fun getSchoolList(callback: DataSource.GeneralCallback<List<School>>) {
-
-    }
-
-    companion object {
-
-        private var INSTANCE: UserLocalDataSource? = null
-        //    private ArrayList<ResponseGetUser.UserInfo> mCachedUserList = new ArrayList<>();
-
-        private val TAG = "IMRemoteDataSource"
-
-        val instance: UserLocalDataSource
-            get() {
-                if (INSTANCE != null) {
-                    return INSTANCE as UserLocalDataSource
-                } else {
-                    INSTANCE = UserLocalDataSource()
-                }
-                return INSTANCE!!
-            }
-
-        fun destroyInstance() {
-            INSTANCE = null
-        }
     }
 }
