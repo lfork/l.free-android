@@ -22,7 +22,10 @@ object UserDataRepository : UserDataSource {
 
     var userId: Int = 0
 
-    override fun destroyInstance(){
+    /**
+     * Clear cached data
+     */
+    fun destroyInstance(){
         remoteDataSource.destroyInstance()
         localDataSource.destroyInstance()
         mCachedUser = null;

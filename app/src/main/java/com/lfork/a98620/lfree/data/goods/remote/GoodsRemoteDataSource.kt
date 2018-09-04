@@ -26,7 +26,7 @@ import java.util.*
  */
 
 object GoodsRemoteDataSource : GoodsDataSource {
-    override fun destroyInstance() {
+    fun destroyInstance() {
        //Do nothing here temporarily
     }
 

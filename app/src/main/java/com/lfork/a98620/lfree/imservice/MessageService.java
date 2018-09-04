@@ -90,7 +90,7 @@ public class MessageService extends Service {
             FreeApplication.executeThreadInDefaultThreadPool(() -> {
                 //这里会获取一些连接的索引 dataRepository。。  用来及时地进行交互
                 //进行登录操作
-                repository = IMDataRepository.getInstance();
+                repository = IMDataRepository.Companion.getInstance();
                 repository.login(user, new LoginListener() {
                     @Override
                     public void succeed(User user) {
@@ -105,14 +105,14 @@ public class MessageService extends Service {
         }
 
         private void buildUDPConnection() {
-            messageDataRepository = MessageDataRepository.getInstance(user.getId());
+            messageDataRepository = MessageDataRepository.Companion.getInstance(user.getId());
             messageDataRepository.setMessageListener(this);
             repository.setServiceBinder(this);
         }
 
         public void closeConnection() {
-            MessageDataRepository.destroyInstance();
-            IMDataRepository.destroyInstance();
+            MessageDataRepository.Companion.destroyInstance();
+            IMDataRepository.Companion.destroyInstance();
         }
 
         public void sendMessage(Message message, DataSource.GeneralCallback<Message> callback) {

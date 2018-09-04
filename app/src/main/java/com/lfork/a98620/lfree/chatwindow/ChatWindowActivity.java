@@ -53,7 +53,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         viewModel = new ChatWindowViewModel(this);
         binding.setViewModel(viewModel);
         FreeApplication.executeThreadInDefaultThreadPool(() -> {
-            messageBinder = IMDataRepository.getInstance().getBinder();
+            messageBinder = IMDataRepository.Companion.getInstance().getBinder();
             if (messageBinder != null) {
                 messageBinder.setListener(viewModel.listener, userId);
             } else {

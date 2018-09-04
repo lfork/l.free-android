@@ -10,5 +10,8 @@ interface DataSource {
         fun failed(log: String)
     }
 
-    fun destroyInstance()
+//    /**
+//     * Clear cached data or destroy old instance(if you use companion object you should implemented this function).
+//     */
+//    fun destroyInstance()
 }

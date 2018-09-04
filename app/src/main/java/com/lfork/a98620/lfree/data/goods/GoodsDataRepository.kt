@@ -33,7 +33,7 @@ object GoodsDataRepository : GoodsDataSource {
     private var categories: List<Category>? = null
 
 
-    override fun destroyInstance() {
+    fun destroyInstance() {
         remoteDataSource.destroyInstance()
         localDataSource.destroyInstance()
         goodsMap.clear()

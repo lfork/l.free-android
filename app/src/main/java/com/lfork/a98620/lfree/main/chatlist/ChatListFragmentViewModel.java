@@ -36,7 +36,7 @@ public class ChatListFragmentViewModel extends BaseViewModel {
 
     private void getChatList() {
         FreeApplication.executeThreadInDefaultThreadPool(() -> {
-            repository = IMDataRepository.getInstance();
+            repository = IMDataRepository.Companion.getInstance();
             repository.getChatUserList(new DataSource.GeneralCallback<List<User>>() {
                 @Override
                 public void succeed(List<User> data) {

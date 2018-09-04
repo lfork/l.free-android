@@ -255,7 +255,7 @@ public class TCPConnection {
         Config.setConnected(connected);
     }
 
-    private boolean isRunning() {
+    public boolean isRunning() {
         return running;
     }
 

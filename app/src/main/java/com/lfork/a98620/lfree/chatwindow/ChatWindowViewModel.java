@@ -67,7 +67,7 @@ public class ChatWindowViewModel extends BaseViewModel {
         loadMessages();
         //判断当前用户有没有在好友列表中，然后进行addUser操作
         FreeApplication.executeThreadInDefaultThreadPool(() -> {
-            repository = IMDataRepository.getInstance();
+            repository = IMDataRepository.Companion.getInstance();
             if (!repository.isUserExisted(userId)) {
                 addUser(false);
             }
@@ -95,7 +95,7 @@ public class ChatWindowViewModel extends BaseViewModel {
         FreeApplication.executeThreadInDefaultThreadPool(() -> {
 
             if (msgMepository == null) {
-                msgMepository = MessageDataRepository.getInstance(0);
+                msgMepository = MessageDataRepository.Companion.getInstance(0);
             }
             MessageContentType type = MessageContentType.COMMUNICATION_USER;
             msgMepository.getMessages(userId, type, new DataSource.GeneralCallback<List<Message>>() {

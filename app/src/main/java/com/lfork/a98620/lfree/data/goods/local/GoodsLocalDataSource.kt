@@ -45,7 +45,7 @@ object GoodsLocalDataSource : GoodsDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun destroyInstance() {
+    fun destroyInstance() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

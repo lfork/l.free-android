@@ -15,7 +15,7 @@ object UserLocalDataSource : UserDataSource {
 
     private val TAG = "IMRemoteDataSource"
 
-    override fun destroyInstance() {
+    fun destroyInstance() {
         //do nothing here
     }
 

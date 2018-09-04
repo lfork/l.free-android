@@ -17,8 +17,6 @@ interface GoodsDataSource : DataSource {
 
     fun getCategories(callback: DataSource.GeneralCallback<List<Category>>)
 
-    //    void refreshData();  因为这里的数据都直接缓存到view+viewModel里面了。
-
     fun getGoods(callback: DataSource.GeneralCallback<GoodsDetailInfo>, goodsId: Int)
 
     fun uploadGoods(callback: DataSource.GeneralCallback<String>, g: Goods)

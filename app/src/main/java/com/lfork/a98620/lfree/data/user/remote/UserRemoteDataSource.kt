@@ -23,7 +23,7 @@ import java.io.File
  */
 
 object UserRemoteDataSource : UserDataSource {
-    override fun destroyInstance() {
+    fun destroyInstance() {
         // Do nothing here temporarily
     }
 
