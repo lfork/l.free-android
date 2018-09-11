@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.data.entity
+package com.lfork.a98620.lfree.data.base.entity
 
 import com.google.gson.annotations.SerializedName
 

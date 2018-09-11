@@ -1,6 +1,6 @@
 package com.lfork.a98620.lfree.register;
 
-import com.lfork.a98620.lfree.data.entity.School;
+import com.lfork.a98620.lfree.data.base.entity.School;
 
 import java.util.List;
 

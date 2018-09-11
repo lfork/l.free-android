@@ -15,7 +15,7 @@ import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
 import com.lfork.a98620.lfree.data.imdata.MessageDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;

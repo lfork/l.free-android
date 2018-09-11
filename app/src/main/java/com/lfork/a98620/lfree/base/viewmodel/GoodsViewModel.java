@@ -5,7 +5,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
-import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.base.entity.Goods;
 import com.lfork.a98620.lfree.base.Config;
 
 /**

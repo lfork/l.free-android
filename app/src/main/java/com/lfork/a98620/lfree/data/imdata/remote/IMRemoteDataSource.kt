@@ -2,8 +2,8 @@ package com.lfork.a98620.lfree.data.imdata.remote
 
 import com.google.gson.reflect.TypeToken
 import com.lfork.a98620.lfree.data.DataSource.GeneralCallback
-import com.lfork.a98620.lfree.data.entity.IMUser
-import com.lfork.a98620.lfree.data.entity.User
+import com.lfork.a98620.lfree.data.base.entity.IMUser
+import com.lfork.a98620.lfree.data.base.entity.User
 import com.lfork.a98620.lfree.data.imdata.IMDataSource
 import com.lfork.a98620.lfree.imservice.Config
 import com.lfork.a98620.lfree.imservice.TCPConnection

@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Category;
 import com.lfork.a98620.lfree.databinding.MainIndexViewpagerItemBinding;
 import com.lfork.a98620.lfree.goodsdetail.GoodsDetailActivity;
 import com.lfork.a98620.lfree.util.ToastUtil;

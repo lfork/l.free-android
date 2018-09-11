@@ -1,10 +1,10 @@
 package com.lfork.a98620.lfree.data.goods.local
 
 import com.lfork.a98620.lfree.data.DataSource
-import com.lfork.a98620.lfree.data.entity.Category
-import com.lfork.a98620.lfree.data.entity.Goods
-import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo
-import com.lfork.a98620.lfree.data.entity.Review
+import com.lfork.a98620.lfree.data.base.entity.Category
+import com.lfork.a98620.lfree.data.base.entity.Goods
+import com.lfork.a98620.lfree.data.base.entity.GoodsDetailInfo
+import com.lfork.a98620.lfree.data.base.entity.Review
 import com.lfork.a98620.lfree.data.goods.GoodsDataSource
 import org.litepal.crud.DataSupport
 

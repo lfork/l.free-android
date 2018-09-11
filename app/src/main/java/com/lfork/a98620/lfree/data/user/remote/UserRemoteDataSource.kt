@@ -3,10 +3,10 @@ package com.lfork.a98620.lfree.data.user.remote
 import android.text.TextUtils
 import com.google.gson.reflect.TypeToken
 import com.lfork.a98620.lfree.base.network.Result
-import com.lfork.a98620.lfree.base.network.api.UserApi
+import com.lfork.a98620.lfree.data.base.api.UserApi
 import com.lfork.a98620.lfree.data.DataSource
-import com.lfork.a98620.lfree.data.entity.School
-import com.lfork.a98620.lfree.data.entity.User
+import com.lfork.a98620.lfree.data.base.entity.School
+import com.lfork.a98620.lfree.data.base.entity.User
 import com.lfork.a98620.lfree.data.user.UserDataSource
 import com.lfork.a98620.lfree.util.JSONUtil
 import okhttp3.MediaType

@@ -5,18 +5,15 @@ import com.google.gson.reflect.TypeToken
 import com.lfork.a98620.lfree.base.Config
 import com.lfork.a98620.lfree.base.network.HttpService
 import com.lfork.a98620.lfree.base.network.Result
-import com.lfork.a98620.lfree.base.network.api.GoodsApi
+import com.lfork.a98620.lfree.data.base.api.GoodsApi
 import com.lfork.a98620.lfree.data.DataSource.GeneralCallback
-import com.lfork.a98620.lfree.data.entity.Category
-import com.lfork.a98620.lfree.data.entity.Goods
-import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo
-import com.lfork.a98620.lfree.data.entity.Review
+import com.lfork.a98620.lfree.data.base.entity.*
 import com.lfork.a98620.lfree.data.goods.GoodsDataSource
 import com.lfork.a98620.lfree.util.JSONUtil
-import okhttp3.FormBody
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.util.*
 
@@ -27,45 +24,38 @@ import java.util.*
 
 object GoodsRemoteDataSource : GoodsDataSource {
     fun destroyInstance() {
-       //Do nothing here temporarily
+        //Do nothing here temporarily
     }
 
     private val TAG = "IMRemoteDataSource"
 
-    private val api: GoodsApi
-
-    init {
-        api = HttpService.getNetWorkService(GoodsApi::class.java)
-    }
+    private val api = GoodsApi.create()
 
     override fun getGoodsList(callback: GeneralCallback<List<Goods>>, cursor: String, categoryId: Int) {
-        val url = Config.ServerURL + "/22y/goodsApp_getGoodsPageApp"
 
-        Log.d(TAG, "getGoodsList: $cursor")
-        val requestbody = FormBody.Builder()
-                .add("csId", categoryId.toString() + "")
-                .add("cursor", cursor + "")
-                .build()
-
-        val responseData = HttpService.getInstance().sendPostRequest(url, requestbody)
-
-        val result = JSONUtil.parseJson<Result<ArrayList<Goods>>>(responseData, object : TypeToken<Result<ArrayList<Goods>>>() {
-
-        })
-
-        if (result != null) {
-            val list = result.data
-            if (list != null && list.size > 0) {
-                callback.succeed(list)
-            } else {
-                callback.failed(result.message)
+        val call = api.getGoodsList(categoryId, cursor)
+        call.enqueue(object : Callback<Result<ArrayList<Goods>>?> {
+            override fun onFailure(call: Call<Result<ArrayList<Goods>>?>, t: Throwable) {
+                callback.failed("error：服务器异常、或者是没有网络连接")
             }
-        } else {
-            callback.failed("error：服务器异常、或者是没有网络连接")
-        }
+            override fun onResponse(call: Call<Result<ArrayList<Goods>>?>, response: Response<Result<ArrayList<Goods>>?>) {
+                val result = response.body()
+                if (result != null) {
+                    val u = result.data
+                    if (u != null) {
+                        callback.succeed(u)
+                    } else {
+                        callback.failed(result.message)
+                    }
+                } else {
+                    callback.failed("error")
+                }
+            }
+        });
     }
 
     override fun getUserGoodsList(callback: GeneralCallback<List<Goods>>, cursor: String, userId: String) {
+
         val url = Config.ServerURL + "/22y/user_getUserGoodsByUid"
         // http://www.lfork.top/22y/user_getUserGoodsByUid?studentId=2015215064&cursor=2018-04-08%2008:03:07
         val requestbody = FormBody.Builder()
@@ -138,7 +128,7 @@ object GoodsRemoteDataSource : GoodsDataSource {
 
     override fun uploadGoods(callback: GeneralCallback<String>, g: Goods) {
         val images = g.imagesPath
-        Log.d(TAG, "uploadGoods: " + g.publishDate!!)
+        Log.d(TAG, "uploadGoods: " + g.publishDate)
 
         val files = arrayOfNulls<RequestBody>(images!!.size)
 

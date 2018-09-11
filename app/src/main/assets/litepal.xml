@@ -30,8 +30,8 @@
             </list>
         -->
     <list>
-        <mapping class="com.lfork.a98620.lfree.data.entity.User"/>
-        <mapping class="com.lfork.a98620.lfree.data.entity.Category"/>
+        <mapping class="com.lfork.a98620.lfree.data.base.entity.User"/>
+        <mapping class="com.lfork.a98620.lfree.data.base.entity.Category"/>
         <mapping class="com.lfork.a98620.lfree.imservice.message.Message"/>
     </list>
 

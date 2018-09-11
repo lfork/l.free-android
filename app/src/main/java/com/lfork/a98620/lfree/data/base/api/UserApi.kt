@@ -1,8 +1,8 @@
-package com.lfork.a98620.lfree.base.network.api
+package com.lfork.a98620.lfree.data.base.api
 
 import com.lfork.a98620.lfree.base.network.HttpService
 import com.lfork.a98620.lfree.base.network.Result
-import com.lfork.a98620.lfree.data.entity.User
+import com.lfork.a98620.lfree.data.base.entity.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

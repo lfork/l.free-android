@@ -1,6 +1,7 @@
 package com.lfork.a98620.lfree.base.network;
 
 import com.google.gson.annotations.SerializedName;
+import com.lfork.a98620.lfree.data.DataSource;
 
 /**
  * 对服务器返回结果的进行JSON封装处理
@@ -39,4 +40,5 @@ public class Result<T> {
     public void setData(T data) {
         this.data = data;
     }
+
 }

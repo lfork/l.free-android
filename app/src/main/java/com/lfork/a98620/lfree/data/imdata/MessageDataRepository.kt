@@ -20,18 +20,13 @@ class MessageDataRepository private constructor(private val mMessageRemoteDataSo
 
 
     //每个联系人之间是有消息的, 每个群组也是有消息的
-    private val mCachedUserMessages: HashMap<String, List<Message>>    //key 为friend 和 Group的ID , mCachedGroupMessages
+    private val mCachedUserMessages: HashMap<String, List<Message>> = HashMap()    //key 为friend 和 Group的ID , mCachedGroupMessages
 
     private var mCachedUserMessagesIsDirty: Boolean = false//, mCachedGroupMessagesIsDirty;
 
     private var listener: MessageListener? = null
 
     private val messageQueueOfServer: List<Message>? = null   //****来自服务端的消息的队列，发送给服务端的消息不需要消息队列****
-
-    init {
-        mCachedUserMessages = HashMap()
-    }
-
 
     companion object {
         private var INSTANCE: MessageDataRepository? = null

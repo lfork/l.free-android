@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Category;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.entity.School;
+import com.lfork.a98620.lfree.data.base.entity.School;
 import com.lfork.a98620.lfree.databinding.RegisterActBinding;
 
 import java.util.List;

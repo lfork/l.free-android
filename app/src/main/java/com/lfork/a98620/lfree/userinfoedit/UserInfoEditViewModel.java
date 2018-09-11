@@ -9,8 +9,8 @@ import android.util.Log;
 
 import com.lfork.a98620.lfree.base.viewmodel.UserViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.School;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.School;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.base.Config;
 

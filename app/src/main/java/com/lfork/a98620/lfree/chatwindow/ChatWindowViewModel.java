@@ -9,7 +9,7 @@ import android.util.Log;
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.imservice.message.MessageContentType;
 import com.lfork.a98620.lfree.imservice.message.MessageType;
