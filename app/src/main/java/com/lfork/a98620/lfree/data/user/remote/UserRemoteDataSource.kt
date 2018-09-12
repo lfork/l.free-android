@@ -43,7 +43,7 @@ object UserRemoteDataSource : UserDataSource {
                     if (u != null) {
                         callback.succeed(u)
                     } else {
-                        callback.failed(result.message)
+                        callback.failed(result.message!!)
                     }
                 } else {
                     callback.failed("error")
@@ -68,9 +68,9 @@ object UserRemoteDataSource : UserDataSource {
                 val result = response.body()
                 if (result != null) {
                     if (result.code == 1) {
-                        callback.succeed(result.message)
+                        callback.succeed(result.message!!)
                     } else {
-                        callback.failed(result.message)
+                        callback.failed(result.message!!)
                     }
                 } else {
                     callback.failed("error 服务器异常")
@@ -103,9 +103,9 @@ object UserRemoteDataSource : UserDataSource {
                 val result = response.body()
                 if (result != null) {
                     if (result.code == 1) {
-                        callback.succeed(result.message)
+                        callback.succeed(result.message!!)
                     } else {
-                        callback.failed(result.message)
+                        callback.failed(result.message!!)
                     }
                 } else {
                     callback.failed("error 服务器异常")
@@ -128,9 +128,9 @@ object UserRemoteDataSource : UserDataSource {
                 val result = response.body()
                 if (result != null) {
                     if (result.code == 1) {
-                        callback.succeed(result.data)
+                        callback.succeed(result.data!!)
                     } else {
-                        callback.failed(result.message)
+                        callback.failed(result.message!!)
                     }
                 } else {
                     callback.failed("error 服务器异常")
@@ -152,9 +152,9 @@ object UserRemoteDataSource : UserDataSource {
                 val result = response.body()
                 if (result != null) {
                     if (result.code == 1) {
-                        callback.succeed(result.data)
+                        callback.succeed(result.data!!)
                     } else {
-                        callback.failed(result.message)
+                        callback.failed(result.message!!)
                     }
                 } else {
                     callback.failed("error 服务器异常")

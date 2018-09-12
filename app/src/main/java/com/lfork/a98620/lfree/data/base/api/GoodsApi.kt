@@ -6,7 +6,9 @@ import com.lfork.a98620.lfree.base.Config
 import com.lfork.a98620.lfree.base.network.HttpService
 import com.lfork.a98620.lfree.base.network.Result
 import com.lfork.a98620.lfree.data.DataSource
+import com.lfork.a98620.lfree.data.base.entity.Category
 import com.lfork.a98620.lfree.data.base.entity.Goods
+import com.lfork.a98620.lfree.data.base.entity.GoodsDetailInfo
 import com.lfork.a98620.lfree.data.base.entity.User
 import com.lfork.a98620.lfree.data.goods.remote.GoodsRemoteDataSource
 import com.lfork.a98620.lfree.util.JSONUtil
@@ -22,17 +24,6 @@ import java.util.ArrayList
  */
 interface GoodsApi {
 
-
-    /**
-     * 根据Id获取用户的完整信息
-     *
-     * @param userId .
-     * @return .
-     */
-    @GET("22y/user_info")
-    fun getUserInfo(@Query("studentId") userId: String): Call<Result<User>>
-
-
     /**
      * 根据商品的种类和当前页面的用于定位的时间信息 @param cursor 来查询商品信息
      *
@@ -41,37 +32,25 @@ interface GoodsApi {
      * @return 返回的查询结果
      */
     @GET("22y/goodsApp_getGoodsPageApp")
-    fun getGoodsList(@Query("csId") categoryId: Int, @Query("cursor") cursor: String): Call<Result<ArrayList<Goods>>>
+    fun getGoodsList(@Query("csId") categoryId: Int, @Query("cursor") cursor: String): Call<Result<List<Goods>>>
 
 
-//
-//    override fun getGoodsList(callback: DataSource.GeneralCallback<List<Goods>>, cursor: String, categoryId: Int) {
-//        val url = Config.ServerURL + "/22y/goodsApp_getGoodsPageApp"
-//
-//        Log.d(GoodsRemoteDataSource.TAG, "getGoodsList: $cursor")
-//        val requestbody = FormBody.Builder()
-//                .add("csId", categoryId.toString() + "")
-//                .add("cursor", cursor + "")
-//                .build()
-//
-//        val responseData = HttpService.getInstance().sendPostRequest(url, requestbody)
-//
-//        val result = JSONUtil.parseJson<Result<ArrayList<Goods>>>(responseData, object : TypeToken<Result<ArrayList<Goods>>>() {
-//
-//        })
-//
-//        if (result != null) {
-//            val list = result.data
-//            if (list != null && list.size > 0) {
-//                callback.succeed(list)
-//            } else {
-//                callback.failed(result.message)
-//            }
-//        } else {
-//            callback.failed("error：服务器异常、或者是没有网络连接")
-//        }
-//    }
+    @GET("22y/user_getUserGoodsByUid")
+    fun getUserGoodsList(@Query("studentId") userId: String, @Query("cursor") cursor: String): Call<Result<List<Goods>>>
 
+
+
+    @GET("22y/cs_getCsList")
+    fun getUserGoodsList(): Call<Result<List<Category>>>
+
+
+
+    @GET("22y/goods_getGoodsById")
+    fun getGoods(@Query("goodsId") goodsId:String): Call<Result<GoodsDetailInfo>>
+
+
+    @GET("22y/goodsSerach_getGoodsByName")
+    fun goodsSearch(@Query("goodsLikeName") keyword:String): Call<Result<List<Goods>>>
 
 
     companion object {
