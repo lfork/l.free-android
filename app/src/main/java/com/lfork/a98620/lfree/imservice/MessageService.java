@@ -15,7 +15,7 @@ import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.chatwindow.ChatWindowActivity;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.data.imdata.IMDataRepository;
 import com.lfork.a98620.lfree.data.imdata.MessageDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
@@ -48,7 +48,9 @@ public class MessageService extends Service {
         super.onDestroy();
     }
 
-    //为主线程提供服务控制器 进而控制消息的接收
+    /**
+     * 为主线程提供服务控制器 进而控制消息的接收
+     */
     public class MessageBinder extends Binder implements MessageListener {
 
         private User user;
@@ -78,7 +80,7 @@ public class MessageService extends Service {
 
         MessageBinder() {
             user = new User();
-            user.setId(UserDataRepository.getInstance().getUserId());
+            user.setId(UserDataRepository.INSTANCE.getUserId());
         }
 
         /**
@@ -88,7 +90,7 @@ public class MessageService extends Service {
             FreeApplication.executeThreadInDefaultThreadPool(() -> {
                 //这里会获取一些连接的索引 dataRepository。。  用来及时地进行交互
                 //进行登录操作
-                repository = IMDataRepository.getInstance();
+                repository = IMDataRepository.Companion.getInstance();
                 repository.login(user, new LoginListener() {
                     @Override
                     public void succeed(User user) {
@@ -103,15 +105,14 @@ public class MessageService extends Service {
         }
 
         private void buildUDPConnection() {
-            messageDataRepository = MessageDataRepository.getInstance(user.getId());
+            messageDataRepository = MessageDataRepository.Companion.getInstance(user.getId());
             messageDataRepository.setMessageListener(this);
             repository.setServiceBinder(this);
-
         }
 
         public void closeConnection() {
-            MessageDataRepository.destroyInstance();
-            IMDataRepository.destroyInstance();
+            MessageDataRepository.Companion.destroyInstance();
+            IMDataRepository.Companion.destroyInstance();
         }
 
         public void sendMessage(Message message, DataSource.GeneralCallback<Message> callback) {
@@ -146,7 +147,7 @@ public class MessageService extends Service {
 
 
     public void sendChatMsg(int senderID, String message) {
-        UserDataRepository repository = UserDataRepository.getInstance();
+        UserDataRepository repository = UserDataRepository.INSTANCE;
         repository.getUserInfo(new DataSource.GeneralCallback<User>() {
             @Override
             public void succeed(User data) {

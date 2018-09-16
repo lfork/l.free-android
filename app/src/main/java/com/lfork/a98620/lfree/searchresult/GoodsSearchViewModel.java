@@ -6,7 +6,7 @@ import android.databinding.ObservableField;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.base.entity.Goods;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class GoodsSearchViewModel extends BaseViewModel {
     public void startGoodsSearch(String keyword) {
         dataIsLoading.set(true);
         new Thread(() -> {
-            GoodsDataRepository.getInstance().goodsSearch(new DataSource.GeneralCallback<List<Goods>>() {
+            GoodsDataRepository.INSTANCE.goodsSearch(new DataSource.GeneralCallback<List<Goods>>() {
                 @Override
                 public void succeed(List<Goods> goodsList) {
                     ArrayList<GoodsSearchItemViewModel> tempItems = new ArrayList<>();

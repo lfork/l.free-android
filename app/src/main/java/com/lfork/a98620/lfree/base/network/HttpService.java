@@ -52,6 +52,9 @@ public class HttpService {
      */
     private static volatile HttpService INSTANCE = null;
 
+
+    private static Retrofit retrofitInstance = null;
+
     /**
      * Double-checked locking for singleton
      *
@@ -81,6 +84,35 @@ public class HttpService {
                 //设置连接超时时间
                 .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .build();
+    }
+
+    public static Retrofit getRetrofitInstance() {
+        if (retrofitInstance == null) {
+            synchronized (HttpService.class) {
+                if (retrofitInstance == null) {
+                    HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLogger());
+                    logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient client2 = new OkHttpClient()
+                            .newBuilder()
+                            .addNetworkInterceptor(logInterceptor)
+                            //设置读取超时时间
+                            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                            //设置写的超时时间
+                            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                            //设置连接超时时间
+                            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                            .build();
+
+                    retrofitInstance = new Retrofit.Builder()
+                            //配置OkHttp客户端 主要是设置日志
+                            .callFactory(client2)
+                            .baseUrl(Config.BaseURL)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                }
+            }
+        }
+        return retrofitInstance;
     }
 
     public void closeConnection() {
@@ -145,7 +177,6 @@ public class HttpService {
     }
 
 
-    private static Retrofit retrofitInstance = null;
 
     /**
      * 获取由retrofit 封装的，Json解析类型的网络服务,网路地址为基本的服务器地址

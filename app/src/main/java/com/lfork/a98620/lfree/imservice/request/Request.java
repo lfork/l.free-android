@@ -64,7 +64,7 @@ public class Request<T> {
 //    public String getLoginRequest() {
 //        StringBuilder str = new StringBuilder();
 //        str.append("[");
-//        String temp = "{\"taskType\":\"" + taskType + "\",\"username\":\"" + user.getUsername() + "\",\"password\":\""
+//        String temp = "{\"taskType\":\"" + taskType + "\",\"username\":\"" + user.getSellerName() + "\",\"password\":\""
 //                + user.getPassword() + "\"}";
 //        str.append(temp);
 //        str.append("]");
@@ -75,7 +75,7 @@ public class Request<T> {
 //        StringBuilder str = new StringBuilder();
 //        str.append("[");
 //        String temp = "{\"taskType\":\"" + taskType
-//                + "\",\"username\":\"" + user.getUsername()
+//                + "\",\"username\":\"" + user.getSellerName()
 //                + "\",\"senderId\":\"" + user.getId()
 //                + "\",\"content\":\"" + task
 //                + "\"}";
@@ -87,7 +87,7 @@ public class Request<T> {
 //    public String getRegisterRequest() {
 //        StringBuilder str = new StringBuilder();
 //        str.append("[");
-//        String temp = "{\"taskType\":\"" + taskType + "\",\"username\":\"" + user.getUsername() + "\",\"password\":\""
+//        String temp = "{\"taskType\":\"" + taskType + "\",\"username\":\"" + user.getSellerName() + "\",\"password\":\""
 //                + user.getPassword() + "\",\"nickname\":\"" + user.getNickname() + "\",\"phonenumber\":\""
 //                + user.getPhonenumber() + "\",\"email\":\"" + user.getEmail() + "\",\"gender\":\"" + user.getGender()
 //                + "\"}";

@@ -6,7 +6,7 @@ import android.text.format.DateFormat;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.base.entity.Goods;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 
@@ -44,7 +44,7 @@ public class MyGoodsViewModel extends BaseViewModel {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GoodsDataRepository.getInstance().getUserGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
+            GoodsDataRepository.INSTANCE.getUserGoodsList(new DataSource.GeneralCallback<List<Goods>>() {
                 @Override
                 public void succeed(List<Goods> goodsList) {
                     ArrayList<MyGoodsItemViewModel> tempItems = new ArrayList<>();
@@ -72,7 +72,7 @@ public class MyGoodsViewModel extends BaseViewModel {
                     dataIsEmpty.set(true);
                     showToast(log);
                 }
-            }, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString(), UserDataRepository.getInstance().getUserId() + "");
+            }, DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString(), UserDataRepository.INSTANCE.getUserId() + "");
            
         }).start();
     }

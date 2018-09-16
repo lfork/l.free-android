@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.lfork.a98620.lfree.base.viewmodel.UserViewModel;
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.base.Config;
 
@@ -32,7 +32,7 @@ public class UserInfoViewModel extends UserViewModel {
     }
 
     private void getUserInfo() {
-        UserDataRepository repository = UserDataRepository.getInstance();
+        UserDataRepository repository = UserDataRepository.INSTANCE;
                 repository.getUserInfo(new DataSource.GeneralCallback<User>() {
             @Override
             public void succeed(User user) {
@@ -47,10 +47,10 @@ public class UserInfoViewModel extends UserViewModel {
                 phone.set(user.getUserPhone());
                 studentNumber.set(user.getUserId() + "");
 
-                if (user.getSchool() == null) {
+                if (user.getUserSchool() == null) {
                     school.set("cuit");
                 } else {
-                    school.set(user.getSchool().getSchoolName());
+                    school.set(user.getUserSchool().getSchoolName());
                 }
 
 

@@ -4,8 +4,8 @@ import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.School;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.School;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.util.UserValidation;
 
@@ -47,7 +47,7 @@ public class RegisterInfoViewModel {
      * 简单的获取学校信息
      */
     private void getSchoolList() {
-        repository = UserDataRepository.getInstance();
+        repository = UserDataRepository.INSTANCE;
         repository.getSchoolList(new DataSource.GeneralCallback<List<School>>() {
             @Override
             public void succeed(List<School> data) {
@@ -72,7 +72,7 @@ public class RegisterInfoViewModel {
         user.setStudentId(studentId.get());
         user.setUserName(username.get());
         user.setUserPassword(password.get());
-        user.setSchool(new School(school.get()));
+        user.setUserSchool(new School(school.get(),""));
 
         String result = dataValidate();  //等于null，说明注册成功
         if (result == null) {

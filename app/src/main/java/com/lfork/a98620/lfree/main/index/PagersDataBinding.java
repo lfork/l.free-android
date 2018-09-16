@@ -3,7 +3,7 @@ package com.lfork.a98620.lfree.main.index;
 import android.databinding.BindingAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Category;
 
 import java.util.List;
 

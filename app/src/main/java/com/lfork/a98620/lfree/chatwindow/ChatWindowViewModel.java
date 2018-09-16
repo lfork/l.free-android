@@ -9,7 +9,7 @@ import android.util.Log;
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.base.FreeApplication;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.imservice.message.Message;
 import com.lfork.a98620.lfree.imservice.message.MessageContentType;
 import com.lfork.a98620.lfree.imservice.message.MessageType;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by 98620 on 2018/4/22.
  */
-public class ChatWindowViewModel extends BaseViewModel implements MessageListener {
+public class ChatWindowViewModel extends BaseViewModel {
 
     public final ObservableArrayList<Message> messages = new ObservableArrayList<>();
 
@@ -45,6 +45,17 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
     private boolean isAdded = false;
 
+    public MessageListener listener = new MessageListener() {
+        @Override
+        public void onReceived(Message message) {
+            message.setChatType(Message.ReceiveType);
+            if (message.getSenderID() == userId) {
+                messages.add(message);
+                navigator.notifyMessagesChanged();
+            }
+        }
+    };
+
 
     ChatWindowViewModel(Context context) {
         super(context);
@@ -56,7 +67,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
         loadMessages();
         //判断当前用户有没有在好友列表中，然后进行addUser操作
         FreeApplication.executeThreadInDefaultThreadPool(() -> {
-            repository = IMDataRepository.getInstance();
+            repository = IMDataRepository.Companion.getInstance();
             if (!repository.isUserExisted(userId)) {
                 addUser(false);
             }
@@ -84,7 +95,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
         FreeApplication.executeThreadInDefaultThreadPool(() -> {
 
             if (msgMepository == null) {
-                msgMepository = MessageDataRepository.getInstance(0);
+                msgMepository = MessageDataRepository.Companion.getInstance(0);
             }
             MessageContentType type = MessageContentType.COMMUNICATION_USER;
             msgMepository.getMessages(userId, type, new DataSource.GeneralCallback<List<Message>>() {
@@ -155,7 +166,7 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
 
         Log.d(TAG, "addUser: " + isExisted);
 
-        UserDataRepository userDataRepository = UserDataRepository.getInstance();
+        UserDataRepository userDataRepository = UserDataRepository.INSTANCE;
 
         userDataRepository.getUserInfo(userId, isExisted, new DataSource.GeneralCallback<User>() {
             @Override
@@ -184,12 +195,4 @@ public class ChatWindowViewModel extends BaseViewModel implements MessageListene
     }
 
 
-    @Override
-    public void onReceived(Message message) {
-        message.setChatType(Message.ReceiveType);
-        if (message.getSenderID() == userId) {
-            messages.add(message);
-            navigator.notifyMessagesChanged();
-        }
-    }
 }

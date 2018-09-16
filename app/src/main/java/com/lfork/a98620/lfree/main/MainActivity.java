@@ -21,6 +21,8 @@ import android.view.View;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.FreeApplication;
+import com.lfork.a98620.lfree.data.DataSource;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
@@ -31,6 +33,8 @@ import com.lfork.a98620.lfree.main.community.CommunityFragment;
 import com.lfork.a98620.lfree.main.index.IndexFragment;
 import com.lfork.a98620.lfree.main.myinfo.MyInfoFragment;
 import com.lfork.a98620.lfree.main.publishinfo.PublishInfoFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         binding.setViewModel(this);
 
         initData();
-        Log.d(TAG, "onCreate: ???"  + UserDataRepository.getInstance().getUserId());
+        Log.d(TAG, "onCreate: ???"  + UserDataRepository.INSTANCE.getUserId());
         initFragments();
         startService();
         bindService();
@@ -86,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        GoodsDataRepository.destroyInstance();
-        UserDataRepository.destroyInstance();
+        GoodsDataRepository.INSTANCE.destroyInstance();
+        UserDataRepository.INSTANCE.destroyInstance();
         unBindService();
         stopService();
     }
@@ -138,7 +142,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         SharedPreferences sharedPreferences = getSharedPreferences(FreeApplication.APP_SHARED_PREF, MODE_PRIVATE);
-        UserDataRepository.getInstance().setUserId(Integer.parseInt(sharedPreferences.getString("recent_user_id", "0")));
+        UserDataRepository.INSTANCE.setUserId(Integer.parseInt(sharedPreferences.getString("recent_user_id", "0")));
+        UserDataRepository.INSTANCE.getUserInfo(new DataSource.GeneralCallback<User>() {
+            @Override
+            public void succeed(User data) {
+                Log.d(TAG, "succeed: "  + "用户信息初始化成功");
+            }
+
+            @Override
+            public void failed(@NotNull String log) {
+                Log.d(TAG, "succeed: "  + "用户信息初始化失败:" + log);
+
+            }
+        },  UserDataRepository.INSTANCE.getUserId());
+
     }
 
     private void registerNotification() {

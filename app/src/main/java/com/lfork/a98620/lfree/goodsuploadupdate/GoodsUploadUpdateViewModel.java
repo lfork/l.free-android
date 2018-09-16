@@ -9,9 +9,9 @@ import android.util.Log;
 
 import com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.Category;
-import com.lfork.a98620.lfree.data.entity.Goods;
-import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
+import com.lfork.a98620.lfree.data.base.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Goods;
+import com.lfork.a98620.lfree.data.base.entity.GoodsDetailInfo;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.main.MainActivity;
@@ -61,7 +61,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
         super(context);
         setImageVisibility();
         imagePathList = new ArrayList<>();
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
         dataIsLoading.set(false);
         setCategoryId(1);
     }
@@ -168,7 +168,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
         g.setName(name.get());
         g.setDescription(description.get());
         g.setCoverImagePath(imagePathList.get(0));
-        g.setUserId(UserDataRepository.getInstance().getUserId());
+        g.setUserId(UserDataRepository.INSTANCE.getUserId());
         g.setOriginPrice(originPrice.get());
         g.setPrice(price.get());
         g.setCategoryId(getCategoryId());
@@ -264,7 +264,7 @@ public class GoodsUploadUpdateViewModel extends GoodsViewModel {
     }
 
     private void getGoods(int goodsId) {
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
 
         new Thread(() -> repository.getGoods(new DataSource.GeneralCallback<GoodsDetailInfo>() {
             @Override

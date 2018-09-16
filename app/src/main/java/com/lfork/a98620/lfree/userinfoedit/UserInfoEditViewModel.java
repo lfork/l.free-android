@@ -3,14 +3,15 @@ package com.lfork.a98620.lfree.userinfoedit;
 import android.app.Activity;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.lfork.a98620.lfree.base.viewmodel.UserViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.School;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.School;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.base.Config;
 
@@ -48,7 +49,7 @@ public class UserInfoEditViewModel extends UserViewModel {
     }
 
     private void getUserInfo() {
-        repository = UserDataRepository.getInstance();
+        repository = UserDataRepository.INSTANCE;
         repository.getUserInfo(new DataSource.GeneralCallback<User>() {
             @Override
             public void succeed(User user) {
@@ -62,7 +63,7 @@ public class UserInfoEditViewModel extends UserViewModel {
 
 
                 studentNumber.set(user.getUserId() + "");
-                school.set(user.getSchool().getSchoolName());
+                school.set(user.getUserSchool().getSchoolName());
                 getSchoolList();
             }
 
@@ -87,7 +88,7 @@ public class UserInfoEditViewModel extends UserViewModel {
         newUser.setUserName(mUser.getUserName());
         newUser.setUserEmail(email.get());
         newUser.setUserDesc(description.get());
-        newUser.setSchool(mUser.getSchool());
+        newUser.setUserSchool(mUser.getUserSchool());
 
         if (TextUtils.isEmpty(newUser.getUserDesc())) {
             showMessage("描述不能为空");
@@ -105,18 +106,18 @@ public class UserInfoEditViewModel extends UserViewModel {
         }
 
         isUpdating.set(true);
-        repository.updateUserInfo(new DataSource.GeneralCallback<String>() {
+        repository.updateUserInfo(new DataSource.GeneralCallback<User>() {
             @Override
-            public void succeed(String data) {
+            public void succeed(User data) {
                 isUpdating.set(false);
                 if (navigator != null) {
                     //跳转到详细信息的界面
-                    navigator.backToUserInfoAct(Activity.RESULT_OK, data);
+                    navigator.backToUserInfoAct(Activity.RESULT_OK, "更新成功");
                 }
             }
 
             @Override
-            public void failed(String log) {
+            public void failed(@NonNull String log) {
                 isUpdating.set(false);
                 if (navigator != null) {
                     //跳转到详细信息的界面
@@ -139,7 +140,7 @@ public class UserInfoEditViewModel extends UserViewModel {
      * 简单的获取学校信息
      */
     private void getSchoolList() {
-        repository = UserDataRepository.getInstance();
+        repository = UserDataRepository.INSTANCE;
         repository.getSchoolList(new DataSource.GeneralCallback<List<School>>() {
             @Override
             public void succeed(List<School> data) {
@@ -147,7 +148,7 @@ public class UserInfoEditViewModel extends UserViewModel {
                 schools = data;
                 Log.d(TAG, "succeed: " + data);
                 if (navigator != null) {
-                    navigator.setupSpinner(data, Integer.parseInt(mUser.getSchool().getId()));
+                    navigator.setupSpinner(data, Integer.parseInt(mUser.getUserSchool().getId()));
                 }
             }
 
@@ -173,7 +174,7 @@ public class UserInfoEditViewModel extends UserViewModel {
 
     public void setSchool(int position) {
         Log.d(TAG, "succeed: " + position + " " + schools.get(position));
-        mUser.setSchool(schools.get(position));
+        mUser.setUserSchool(schools.get(position));
     }
 
 }

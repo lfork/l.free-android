@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ class PagerItemAdapter extends PagerAdapter implements TabLayout.OnTabSelectedLi
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pageTitles.get(position).getName();
+        return pageTitles.get(position).getCsName();
     }
 
     public void replaceData(List<Category> items, ViewPager parent) {

@@ -5,7 +5,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
-import com.lfork.a98620.lfree.data.entity.Review;
+import com.lfork.a98620.lfree.data.base.entity.Review;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.base.Config;
 
@@ -41,7 +41,7 @@ public class ReviewItemViewModel extends BaseViewModel{
         content.set(review.getContent());
         id.set(review.getId());
         int reviewerId = review.getUser().getUserId();
-        if (reviewerId == UserDataRepository.getInstance().getUserId()) {
+        if (reviewerId == UserDataRepository.INSTANCE.getUserId()) {
             isReviewedByThisUser.set(true);
         }
     }

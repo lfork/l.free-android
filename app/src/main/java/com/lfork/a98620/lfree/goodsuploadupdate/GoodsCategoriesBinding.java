@@ -4,7 +4,7 @@ import android.databinding.BindingAdapter;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Category;
 
 import java.util.List;
 

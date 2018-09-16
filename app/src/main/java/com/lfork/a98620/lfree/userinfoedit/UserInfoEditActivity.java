@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.entity.School;
+import com.lfork.a98620.lfree.data.base.entity.School;
 import com.lfork.a98620.lfree.databinding.UserInfoThisEditActBinding;
 import com.lfork.a98620.lfree.util.ToastUtil;
 

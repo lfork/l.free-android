@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 import com.lfork.a98620.lfree.base.FreeApplication;
-import com.lfork.a98620.lfree.data.entity.IMUser;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.IMUser;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.imservice.request.Request;
 import com.lfork.a98620.lfree.imservice.request.Result;
 import com.lfork.a98620.lfree.imservice.request.UserRequestType;
@@ -255,7 +255,7 @@ public class TCPConnection {
         Config.setConnected(connected);
     }
 
-    private boolean isRunning() {
+    public boolean isRunning() {
         return running;
     }
 

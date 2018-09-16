@@ -36,7 +36,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
     protected void onResume() {
         super.onResume();
         if (messageBinder != null) {
-            messageBinder.setListener(viewModel, userId);
+            messageBinder.setListener(viewModel.listener, userId);
             viewModel.start();
         }
 
@@ -53,9 +53,9 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
         viewModel = new ChatWindowViewModel(this);
         binding.setViewModel(viewModel);
         FreeApplication.executeThreadInDefaultThreadPool(() -> {
-            messageBinder = IMDataRepository.getInstance().getBinder();
+            messageBinder = IMDataRepository.Companion.getInstance().getBinder();
             if (messageBinder != null) {
-                messageBinder.setListener(viewModel, userId);
+                messageBinder.setListener(viewModel.listener, userId);
             } else {
                 runOnUiThread(() -> {
                     ToastUtil.showShort(getApplicationContext(), "IM服务器异常,聊天功能开启失败");
@@ -66,7 +66,7 @@ public class ChatWindowActivity extends AppCompatActivity implements ChatWindowN
 
         });
         initActionBar(username);
-        int thisUserId = UserDataRepository.getInstance().getUserId();
+        int thisUserId = UserDataRepository.INSTANCE.getUserId();
         viewModel.setUserInfo(username, userId, thisUserId);
         viewModel.setNavigator(this);
         initUI();

@@ -231,6 +231,7 @@ public class GoodsUploadUpdateActivity extends AppCompatActivity implements Good
         viewModel.setImages(mSelected);
     }
 
+    @Override
     public void deleteImage(int index){
         //mSelected -1
         Log.d(TAG, "deleteImage: " + index);
@@ -243,6 +244,7 @@ public class GoodsUploadUpdateActivity extends AppCompatActivity implements Good
 
     }
 
+    @Override
     public void showMyDialog(int count) {
         tempImageCount = count;
         new PopupDialog(this, new PopupDialogOnclickListener() {

@@ -6,7 +6,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Category;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.util.ToastUtil;
 
@@ -48,7 +48,7 @@ public class IndexFragmentViewModel extends BaseObservable {
         announcementsUrls.add("https://mp.weixin.qq.com/s/tcg4CFph33DR69sYBpQhBQ");
         announcementsUrls.add("https://mp.weixin.qq.com/s/tAImac9BHMfxp_xRSZQ9dg");
 
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
         new Thread(() -> {
             repository.getCategories(new DataSource.GeneralCallback<List<Category>>() {
                 @Override

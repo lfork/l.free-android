@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.lfork.a98620.lfree.base.viewmodel.UserViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.main.MainActivity;
 import com.lfork.a98620.lfree.base.Config;
@@ -22,7 +22,7 @@ public class MyInfoFragmentViewModel extends UserViewModel {
     }
 
     private void getUserInfo() {
-        UserDataRepository repository = UserDataRepository.getInstance();
+        UserDataRepository repository = UserDataRepository.INSTANCE;
         repository.getUserInfo(new DataSource.GeneralCallback<User>() {
             @Override
             public void succeed(User data) {

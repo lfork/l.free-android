@@ -6,8 +6,8 @@ import android.databinding.ObservableBoolean;
 
 import com.lfork.a98620.lfree.base.BaseViewModel;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.Category;
-import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.base.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Goods;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.util.TimeUtil;
 
@@ -44,7 +44,7 @@ public class PagerItemViewModel extends BaseViewModel implements PagerDataRefres
     PagerItemViewModel(Context context, Category category) {
         super(context);
         this.category = category;
-        repository = GoodsDataRepository.getInstance();
+        repository = GoodsDataRepository.INSTANCE;
     }
 
     /**
