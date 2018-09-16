@@ -68,28 +68,11 @@ object GoodsRemoteDataSource : GoodsDataSource {
             builder.addFormDataPart("images", System.currentTimeMillis().toString() + "image.png", files[i])
                     .addFormDataPart("desc", "这个拿来干啥？？")
         }
-
         if (files.size == 1) {
             builder.addFormDataPart("desc", "只传了一张图片，没有描述")
         }
-
         val requestBody = builder.build()
-
-
-        val responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/goods_upload", requestBody)
-        val result = JSONUtil.parseJson<Result<String>>(responseData, object : TypeToken<Result<String>>() {
-
-        })
-
-        if (result != null) {
-            if (result.code == 1) {
-                callback.succeed(result.message!!)
-            } else {
-                callback.failed(result.message!!)
-            }
-        } else {
-            callback.failed("error 服务器异常")
-        }
+        api.uploadGoods(requestBody).enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun goodsSearch(callback: GeneralCallback<List<Goods>>, keyword: String) {
@@ -167,4 +150,6 @@ object GoodsRemoteDataSource : GoodsDataSource {
             callback.failed("error: 服务器异常")
         }
     }
+    //因为以前的接口设计有问题，所以这里不能直接迁移到retrofit上面去
+    //api.addReview(review.userId!!,review.goodsId!!, review.content!!).enqueue(MyRetrofitCallBack(callback))
 }

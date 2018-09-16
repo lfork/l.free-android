@@ -43,7 +43,7 @@ interface UserApi {
             @Field("studentId") studentId: String,
             @Field("userPassword") password: String,
             @Field("userName") username: String,
-            @Field("userSchool.id") schoolId: String): Call<Result<*>>
+            @Field("userSchool.id") schoolId: String): Call<Result<String>>
 
     /**
      * 根据Id获取用户的完整信息

@@ -51,7 +51,7 @@ object UserLocalDataSource : UserDataSource {
 
     }
 
-    override fun updateUserInfo(callback: DataSource.GeneralCallback<String>, user: User) {
+    override fun updateUserInfo(callback: DataSource.GeneralCallback<User>, user: User) {
 
         try {
             DataSupport.deleteAll(User::class.java, "islogin=0 and userid=? ", user.userId.toString() + "")

@@ -22,7 +22,7 @@ interface UserDataSource : DataSource{
      * @param callback call back with string result
      * @param user user information
      */
-    fun updateUserInfo(callback: GeneralCallback<String>, user: User)
+    fun updateUserInfo(callback: GeneralCallback<User>, user: User)
 
     /**
      * update user photo

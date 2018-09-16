@@ -6,16 +6,16 @@ import com.lfork.a98620.lfree.base.Config
 import com.lfork.a98620.lfree.base.network.HttpService
 import com.lfork.a98620.lfree.base.network.Result
 import com.lfork.a98620.lfree.data.DataSource
-import com.lfork.a98620.lfree.data.base.entity.Category
-import com.lfork.a98620.lfree.data.base.entity.Goods
-import com.lfork.a98620.lfree.data.base.entity.GoodsDetailInfo
-import com.lfork.a98620.lfree.data.base.entity.User
+import com.lfork.a98620.lfree.data.base.entity.*
 import com.lfork.a98620.lfree.data.goods.remote.GoodsRemoteDataSource
 import com.lfork.a98620.lfree.util.JSONUtil
 import okhttp3.FormBody
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
+import java.io.File
 import java.util.ArrayList
 
 /**
@@ -39,22 +39,47 @@ interface GoodsApi {
     fun getUserGoodsList(@Query("studentId") userId: String, @Query("cursor") cursor: String): Call<Result<List<Goods>>>
 
 
-
     @GET("22y/cs_getCsList")
     fun getUserGoodsList(): Call<Result<List<Category>>>
 
 
-
     @GET("22y/goods_getGoodsById")
-    fun getGoods(@Query("goodsId") goodsId:String): Call<Result<GoodsDetailInfo>>
+    fun getGoods(@Query("goodsId") goodsId: String): Call<Result<GoodsDetailInfo>>
 
 
     @GET("22y/goodsSerach_getGoodsByName")
-    fun goodsSearch(@Query("goodsLikeName") keyword:String): Call<Result<List<Goods>>>
+    fun goodsSearch(@Query("goodsLikeName") keyword: String): Call<Result<List<Goods>>>
+
+
+    /**
+     * 添加商品评论
+     *
+     * @param username studentId,email,username都行
+     * @param password 密码
+     * @return 指定请求数据的Call对象
+     */
+    @FormUrlEncoded
+    @POST("22y/review_reviewSave")
+    fun addReview(
+            @Field("userId") userId: String,
+            @Field("goodsId") goodsId: String,
+            @Field("reviewContext") content: String): Call<Result<Review>>
+
+
+    /**
+     * 更新用户头像 单文件上传实例
+     * Part的普通键值对需要用RequestBody来写
+     * RequestBody.create(null, studentId)
+     * @param fileBody  .
+     * @param studentId .
+     * @return .
+     */
+    @POST("22y/goods_upload")
+    fun uploadGoods(@Body multipartBody: MultipartBody): Call<Result<String>>
 
 
     companion object {
-        fun create() : GoodsApi {
+        fun create(): GoodsApi {
             val retrofit = HttpService.getRetrofitInstance()
             return retrofit.create(GoodsApi::class.java)
         }

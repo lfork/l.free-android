@@ -46,7 +46,7 @@ object GoodsLocalDataSource : GoodsDataSource {
     }
 
     fun destroyInstance() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //do nothing here
     }
 
     override fun getCategories(callback: DataSource.GeneralCallback<List<Category>>) {
