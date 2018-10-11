@@ -136,28 +136,4 @@ class MessageRemoteDataSource : MessageDataSource {
         this.listener = listener
     }
 
-//    companion object {
-//
-//        private var INSTANCE: MessageRemoteDataSource? = null  //负责消息的发送控制，和桥梁作用(连接View前端和数据后台)
-//
-//        fun getInstance(userId: Int): MessageRemoteDataSource {
-//            if (INSTANCE == null) {
-//                INSTANCE = MessageRemoteDataSource()
-//            }
-//            return INSTANCE as MessageRemoteDataSource
-//        }
-//
-//        private fun destroyInstance() {
-//            if (INSTANCE != null && INSTANCE!!.mConnection != null) {
-//
-//                if (INSTANCE!!.messageMaid != null) {
-//                    INSTANCE!!.messageMaid!!.close()
-//                }
-//
-//                INSTANCE!!.mConnection!!.closeConnection()
-//            }
-//
-//            INSTANCE = null
-//        }
-//    }
 }

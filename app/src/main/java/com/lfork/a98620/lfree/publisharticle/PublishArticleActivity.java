@@ -12,8 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lfork.a98620.lfree.R;
-import com.lfork.a98620.lfree.data.community.local.CommunityLocalDataSource;
-import com.lfork.a98620.lfree.data.entity.User;
+import com.lfork.a98620.lfree.data.base.entity.User;
 import com.lfork.a98620.lfree.databinding.ActivityPublishArticleBinding;
 import com.lfork.a98620.lfree.main.community.CommunityArticle;
 

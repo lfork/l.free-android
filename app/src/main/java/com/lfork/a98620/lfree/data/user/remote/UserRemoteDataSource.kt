@@ -2,11 +2,12 @@ package com.lfork.a98620.lfree.data.user.remote
 
 import android.text.TextUtils
 import com.google.gson.reflect.TypeToken
+import com.lfork.a98620.lfree.base.network.MyRetrofitCallBack
 import com.lfork.a98620.lfree.base.network.Result
-import com.lfork.a98620.lfree.base.network.api.UserApi
+import com.lfork.a98620.lfree.data.base.api.UserApi
 import com.lfork.a98620.lfree.data.DataSource
-import com.lfork.a98620.lfree.data.entity.School
-import com.lfork.a98620.lfree.data.entity.User
+import com.lfork.a98620.lfree.data.base.entity.School
+import com.lfork.a98620.lfree.data.base.entity.User
 import com.lfork.a98620.lfree.data.user.UserDataSource
 import com.lfork.a98620.lfree.util.JSONUtil
 import okhttp3.MediaType
@@ -26,65 +27,17 @@ object UserRemoteDataSource : UserDataSource {
     fun destroyInstance() {
         // Do nothing here temporarily
     }
-
-    private val api: UserApi
-
-    init {
-        api = UserApi.create()
-    }
+    private val api: UserApi = UserApi.create()
 
     override fun login(callback: DataSource.GeneralCallback<User>, user: User) {
-        val call = api.login(user.userName!!, user.userPassword!!)
-        call.enqueue(object : Callback<Result<User>> {
-            override fun onResponse(call: Call<Result<User>>, response: Response<Result<User>>) {
-                val result = response.body()
-                if (result != null) {
-                    val u = result.data
-                    if (u != null) {
-                        callback.succeed(u)
-                    } else {
-                        callback.failed(result.message)
-                    }
-                } else {
-                    callback.failed("error")
-                }
-            }
-
-            override fun onFailure(call: Call<Result<User>>, t: Throwable) {
-                callback.failed(t.message!!)
-            }
-        })
+        api.login(user.userName!!, user.userPassword!!).enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun register(callback: DataSource.GeneralCallback<String>, user: User) {
-        val call = api.register(
-                user.studentId!!,
-                user.userPassword!!,
-                user.userName!!,
-                user.userSchool!!.id)
-
-        call.enqueue(object : Callback<Result<*>> {
-            override fun onResponse(call: Call<Result<*>>, response: Response<Result<*>>) {
-                val result = response.body()
-                if (result != null) {
-                    if (result.code == 1) {
-                        callback.succeed(result.message)
-                    } else {
-                        callback.failed(result.message)
-                    }
-                } else {
-                    callback.failed("error 服务器异常")
-                }
-            }
-
-            override fun onFailure(call: Call<Result<*>>, t: Throwable) {
-                callback.failed(t.toString())
-            }
-        })
+        api.register(user.studentId!!, user.userPassword!!, user.userName!!, user.userSchool!!.id).enqueue(MyRetrofitCallBack(callback))
     }
 
-    override fun updateUserInfo(callback: DataSource.GeneralCallback<String>, user: User) {
-
+    override fun updateUserInfo(callback: DataSource.GeneralCallback<User>, user: User) {
         if (TextUtils.isEmpty(user.userDesc)) {
             user.userDesc = ""
         }
@@ -94,77 +47,17 @@ object UserRemoteDataSource : UserDataSource {
         if (TextUtils.isEmpty(user.userPhone)) {
             user.userPhone = ""
         }
-
-        val call = api.updateUserInfo(user.userId, user.userName!!, user.userSchool!!.id, user.userDesc!!, user.userEmail!!, user.userPhone!!)
-
-
-        call.enqueue(object : Callback<Result<User>> {
-            override fun onResponse(call: Call<Result<User>>, response: Response<Result<User>>) {
-                val result = response.body()
-                if (result != null) {
-                    if (result.code == 1) {
-                        callback.succeed(result.message)
-                    } else {
-                        callback.failed(result.message)
-                    }
-                } else {
-                    callback.failed("error 服务器异常")
-                }
-            }
-
-            override fun onFailure(call: Call<Result<User>>, t: Throwable) {
-                callback.failed(t.toString())
-            }
-        })
+        api.updateUserInfo(user.userId, user.userName!!, user.userSchool!!.id, user.userDesc!!, user.userEmail!!, user.userPhone!!).enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun updateUserPortrait(callback: DataSource.GeneralCallback<String>, studentId: String, localFilePath: String) {
         val fileBody = RequestBody.create(MediaType.parse("image/png"), File(localFilePath))
         val photo = MultipartBody.Part.createFormData("image", "image.png", fileBody)
-
-        val call = api.updatePortrait(photo, RequestBody.create(null, studentId))
-        call.enqueue(object : Callback<Result<String>> {
-            override fun onResponse(call: Call<Result<String>>, response: Response<Result<String>>) {
-                val result = response.body()
-                if (result != null) {
-                    if (result.code == 1) {
-                        callback.succeed(result.data)
-                    } else {
-                        callback.failed(result.message)
-                    }
-                } else {
-                    callback.failed("error 服务器异常")
-                }
-            }
-
-            override fun onFailure(call: Call<Result<String>>, t: Throwable) {
-                callback.failed(t.toString())
-            }
-        })
-
-
+        api.updatePortrait(photo, RequestBody.create(null, studentId)).enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun getUserInfo(callback: DataSource.GeneralCallback<User>, userId: Int) {
-        val call = api.getUserInfo(userId.toString() + "")
-        call.enqueue(object : Callback<Result<User>> {
-            override fun onResponse(call: Call<Result<User>>, response: Response<Result<User>>) {
-                val result = response.body()
-                if (result != null) {
-                    if (result.code == 1) {
-                        callback.succeed(result.data)
-                    } else {
-                        callback.failed(result.message)
-                    }
-                } else {
-                    callback.failed("error 服务器异常")
-                }
-            }
-
-            override fun onFailure(call: Call<Result<User>>, t: Throwable) {
-                callback.failed(t.toString())
-            }
-        })
+        api.getUserInfo(userId.toString() + "").enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun getSchoolList(callback: DataSource.GeneralCallback<List<School>>) {

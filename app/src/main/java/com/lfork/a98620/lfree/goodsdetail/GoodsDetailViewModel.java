@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel;
 import com.lfork.a98620.lfree.base.viewmodel.ViewModelNavigator;
 import com.lfork.a98620.lfree.data.DataSource;
-import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo;
-import com.lfork.a98620.lfree.data.entity.Review;
+import com.lfork.a98620.lfree.data.base.entity.GoodsDetailInfo;
+import com.lfork.a98620.lfree.data.base.entity.Review;
 import com.lfork.a98620.lfree.data.goods.GoodsDataRepository;
 import com.lfork.a98620.lfree.data.user.UserDataRepository;
 import com.lfork.a98620.lfree.base.Config;
@@ -145,12 +145,13 @@ public class GoodsDetailViewModel extends GoodsViewModel {
 
         Review r = new Review(review.get());
         r.setGoodsId(id + "");
+        r.setUser(UserDataRepository.INSTANCE.getMCachedUser());
         r.setUserId(UserDataRepository.INSTANCE.getUserId() + "");
         r.setTime(TimeUtil.getStandardTime());
         new Thread(() -> GoodsDataRepository.INSTANCE.addReview(new DataSource.GeneralCallback<Review>() {
             @Override
             public void succeed(Review data) {
-
+                data = r;
                 ReviewItemViewModel viewModel = new ReviewItemViewModel(data, navigator);
                 reviewItems.add(0, viewModel);
                 review.set("");
@@ -160,8 +161,6 @@ public class GoodsDetailViewModel extends GoodsViewModel {
                 }
                 reviewDataIsEmpty.set(false);
                 showMessage("评论成功");
-
-
             }
 
             @Override

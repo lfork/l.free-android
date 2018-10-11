@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.lfork.a98620.lfree.R;
 import com.lfork.a98620.lfree.base.image.GlideImageLoader;
-import com.lfork.a98620.lfree.data.entity.Category;
+import com.lfork.a98620.lfree.data.base.entity.Category;
 import com.lfork.a98620.lfree.databinding.MainIndexFragBinding;
 import com.lfork.a98620.lfree.searchresult.GoodsSearchActivity;
 import com.lfork.a98620.lfree.webclient.WebClient;

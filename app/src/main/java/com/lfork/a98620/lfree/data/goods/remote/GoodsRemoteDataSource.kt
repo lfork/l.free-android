@@ -4,21 +4,15 @@ import android.util.Log
 import com.google.gson.reflect.TypeToken
 import com.lfork.a98620.lfree.base.Config
 import com.lfork.a98620.lfree.base.network.HttpService
+import com.lfork.a98620.lfree.base.network.MyRetrofitCallBack
 import com.lfork.a98620.lfree.base.network.Result
-import com.lfork.a98620.lfree.base.network.api.GoodsApi
+import com.lfork.a98620.lfree.data.base.api.GoodsApi
 import com.lfork.a98620.lfree.data.DataSource.GeneralCallback
-import com.lfork.a98620.lfree.data.entity.Category
-import com.lfork.a98620.lfree.data.entity.Goods
-import com.lfork.a98620.lfree.data.entity.GoodsDetailInfo
-import com.lfork.a98620.lfree.data.entity.Review
+import com.lfork.a98620.lfree.data.base.entity.*
 import com.lfork.a98620.lfree.data.goods.GoodsDataSource
 import com.lfork.a98620.lfree.util.JSONUtil
-import okhttp3.FormBody
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.*
 import java.io.File
-import java.util.*
 
 /**
  *
@@ -27,118 +21,32 @@ import java.util.*
 
 object GoodsRemoteDataSource : GoodsDataSource {
     fun destroyInstance() {
-       //Do nothing here temporarily
+        //Do nothing here temporarily
     }
 
     private val TAG = "IMRemoteDataSource"
 
-    private val api: GoodsApi
-
-    init {
-        api = HttpService.getNetWorkService(GoodsApi::class.java)
-    }
+    private val api = GoodsApi.create()
 
     override fun getGoodsList(callback: GeneralCallback<List<Goods>>, cursor: String, categoryId: Int) {
-        val url = Config.ServerURL + "/22y/goodsApp_getGoodsPageApp"
-
-        Log.d(TAG, "getGoodsList: $cursor")
-        val requestbody = FormBody.Builder()
-                .add("csId", categoryId.toString() + "")
-                .add("cursor", cursor + "")
-                .build()
-
-        val responseData = HttpService.getInstance().sendPostRequest(url, requestbody)
-
-        val result = JSONUtil.parseJson<Result<ArrayList<Goods>>>(responseData, object : TypeToken<Result<ArrayList<Goods>>>() {
-
-        })
-
-        if (result != null) {
-            val list = result.data
-            if (list != null && list.size > 0) {
-                callback.succeed(list)
-            } else {
-                callback.failed(result.message)
-            }
-        } else {
-            callback.failed("error：服务器异常、或者是没有网络连接")
-        }
+        api.getGoodsList(categoryId, cursor).enqueue(MyRetrofitCallBack(callback));
     }
 
     override fun getUserGoodsList(callback: GeneralCallback<List<Goods>>, cursor: String, userId: String) {
-        val url = Config.ServerURL + "/22y/user_getUserGoodsByUid"
-        // http://www.lfork.top/22y/user_getUserGoodsByUid?studentId=2015215064&cursor=2018-04-08%2008:03:07
-        val requestbody = FormBody.Builder()
-                .add("studentId", userId)
-                .add("cursor", cursor)
-                .build()
-
-        val responseData = HttpService.getInstance().sendPostRequest(url, requestbody)
-
-        val result = JSONUtil.parseJson<Result<ArrayList<Goods>>>(responseData, object : TypeToken<Result<ArrayList<Goods>>>() {
-
-        })
-
-        if (result != null) {
-            val list = result.data
-            if (list != null && list.size > 0) {
-                callback.succeed(list)
-            } else {
-                callback.failed(result.message)
-            }
-        } else {
-            callback.failed("error：服务器异常、或者是没有网络连接")
-        }
+        api.getUserGoodsList(userId, cursor).enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun getCategories(callback: GeneralCallback<List<Category>>) {
-        val url = Config.ServerURL + "/22y/cs_getCsList"
-
-        val requestbody = FormBody.Builder()
-                .build()
-        val responseData = HttpService.getInstance().sendPostRequest(url, requestbody)
-        val result = JSONUtil.parseJson<Result<List<Category>>>(responseData, object : TypeToken<Result<List<Category>>>() {
-
-        })
-
-        if (result != null) {
-            val list = result.data
-            if (list != null) {
-                callback.succeed(list)
-            } else {
-                callback.failed(result.message)
-            }
-        } else {
-            callback.failed("error:1 服务器异常")
-        }
+        api.getUserGoodsList().enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun getGoods(callback: GeneralCallback<GoodsDetailInfo>, goodsId: Int) {
-        val url = Config.ServerURL + "/22y/goods_getGoodsById"
-
-        val requestbody = FormBody.Builder()
-                .add("goodsId", goodsId.toString() + "")
-                .build()
-        val responseData = HttpService.getInstance().sendPostRequest(url, requestbody)
-        val result = JSONUtil.parseJson<Result<GoodsDetailInfo>>(responseData, object : TypeToken<Result<GoodsDetailInfo>>() {
-
-        })
-
-        if (result != null) {
-            if (result.code == 1) {
-                callback.succeed(result.data)
-            } else {
-                callback.failed(result.message)
-            }
-        } else {
-            callback.failed("error: 服务器异常")
-        }
-
+        api.getGoods(goodsId.toString()).enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun uploadGoods(callback: GeneralCallback<String>, g: Goods) {
         val images = g.imagesPath
-        Log.d(TAG, "uploadGoods: " + g.publishDate!!)
+        Log.d(TAG, "uploadGoods: " + g.publishDate)
 
         val files = arrayOfNulls<RequestBody>(images!!.size)
 
@@ -160,51 +68,16 @@ object GoodsRemoteDataSource : GoodsDataSource {
             builder.addFormDataPart("images", System.currentTimeMillis().toString() + "image.png", files[i])
                     .addFormDataPart("desc", "这个拿来干啥？？")
         }
-
         if (files.size == 1) {
             builder.addFormDataPart("desc", "只传了一张图片，没有描述")
         }
-
         val requestBody = builder.build()
-
-
-        val responseData = HttpService.getInstance().sendPostRequest("http://www.lfork.top/22y/goods_upload", requestBody)
-        val result = JSONUtil.parseJson<Result<String>>(responseData, object : TypeToken<Result<String>>() {
-
-        })
-
-        if (result != null) {
-            if (result.code == 1) {
-                callback.succeed(result.message)
-            } else {
-                callback.failed(result.message)
-            }
-        } else {
-            callback.failed("error 服务器异常")
-        }
+        api.uploadGoods(requestBody).enqueue(MyRetrofitCallBack(callback))
     }
 
     override fun goodsSearch(callback: GeneralCallback<List<Goods>>, keyword: String) {
-        val url = Config.ServerURL + "/22y/goodsSerach_getGoodsByName"
-        val requestbody = FormBody.Builder()
-                .add("goodsLikeName", keyword)
-                .build()
-        val responseData = HttpService.getInstance().sendPostRequest(url, requestbody)
-        val result = JSONUtil.parseJson<Result<List<Goods>>>(responseData, object : TypeToken<Result<List<Goods>>>() {
+        api.goodsSearch(keyword).enqueue(MyRetrofitCallBack(callback))
 
-        })
-
-        if (result != null) {
-            if (result.code == 1) {
-                callback.succeed(result.data)
-            } else {
-                callback.failed(result.message)
-            }
-        } else {
-            callback.failed("error: 服务器异常")
-        }
-
-        //http://www.lfork.top/22y/goodsSerach_getGoodsByName?=Java
     }
 
     override fun deleteGoods(callback: GeneralCallback<String>, goodsId: Int) {
@@ -246,15 +119,14 @@ object GoodsRemoteDataSource : GoodsDataSource {
 
         if (result != null) {
             if (result.code == 1) {
-                callback.succeed(result.message)
+                callback.succeed(result.message!!)
             } else {
-                callback.failed(result.message)
+                callback.failed(result.message!!)
             }
         } else {
             callback.failed("error 服务器异常")
         }
     }
-
 
     override fun addReview(callback: GeneralCallback<Review>, review: Review) {
         val url = Config.ServerURL + "/22y/review_reviewSave"
@@ -272,10 +144,12 @@ object GoodsRemoteDataSource : GoodsDataSource {
             if (result.code == 1) {
                 callback.succeed(review)
             } else {
-                callback.failed(result.message)
+                callback.failed(result.message!!)
             }
         } else {
             callback.failed("error: 服务器异常")
         }
     }
+    //因为以前的接口设计有问题，所以这里不能直接迁移到retrofit上面去
+    //api.addReview(review.userId!!,review.goodsId!!, review.content!!).enqueue(MyRetrofitCallBack(callback))
 }

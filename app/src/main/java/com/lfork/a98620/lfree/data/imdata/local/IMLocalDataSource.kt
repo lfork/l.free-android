@@ -1,7 +1,7 @@
 package com.lfork.a98620.lfree.data.imdata.local
 
 import com.lfork.a98620.lfree.data.DataSource.GeneralCallback
-import com.lfork.a98620.lfree.data.entity.User
+import com.lfork.a98620.lfree.data.base.entity.User
 import com.lfork.a98620.lfree.data.imdata.IMDataSource
 import com.lfork.a98620.lfree.imservice.request.LoginListener
 import org.litepal.crud.DataSupport

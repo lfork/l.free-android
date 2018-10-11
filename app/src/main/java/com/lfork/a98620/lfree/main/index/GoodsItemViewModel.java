@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.lfork.a98620.lfree.base.viewmodel.GoodsViewModel;
-import com.lfork.a98620.lfree.data.entity.Goods;
+import com.lfork.a98620.lfree.data.base.entity.Goods;
 
 import java.lang.ref.WeakReference;
 

@@ -1,8 +1,8 @@
 package com.lfork.a98620.lfree.data.user
 
 import com.lfork.a98620.lfree.data.DataSource.GeneralCallback
-import com.lfork.a98620.lfree.data.entity.School
-import com.lfork.a98620.lfree.data.entity.User
+import com.lfork.a98620.lfree.data.base.entity.School
+import com.lfork.a98620.lfree.data.base.entity.User
 import com.lfork.a98620.lfree.data.user.local.UserLocalDataSource
 import com.lfork.a98620.lfree.data.user.remote.UserRemoteDataSource
 
@@ -16,7 +16,7 @@ object UserDataRepository : UserDataSource {
 
     private val localDataSource = UserLocalDataSource
 
-    private var mCachedUser: User? = null
+    var mCachedUser: User? = null
 
     private var mCachedUserIsDirty = true
 
@@ -51,9 +51,9 @@ object UserDataRepository : UserDataSource {
         remoteDataSource.register(callback, user)
     }
 
-    override fun updateUserInfo(callback: GeneralCallback<String>, user: User) {
-        remoteDataSource.updateUserInfo(object : GeneralCallback<String> {
-            override fun succeed(data: String) {
+    override fun updateUserInfo(callback: GeneralCallback<User>, user: User) {
+        remoteDataSource.updateUserInfo(object : GeneralCallback<User> {
+            override fun succeed(data: User) {
                 mCachedUserIsDirty = true
                 callback.succeed(data)
             }
@@ -84,7 +84,7 @@ object UserDataRepository : UserDataSource {
      * @param userId   userId
      */
     override fun getUserInfo(callback: GeneralCallback<User>, userId: Int) {
-        if (userId != userId) {
+        if (this.userId != userId) {
             remoteDataSource.getUserInfo(callback, userId)
             return
         }
